@@ -28,8 +28,8 @@ const FormAction = () => {
   })
   const { handleSubmit, errors } = methods
 
-  const onSubmit = data => {
-    alert('data', data)
+  const onSubmit = () => {
+    // alert('data', data)
   }
 
   const numberData = [
