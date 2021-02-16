@@ -1,0 +1,81 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb-base",
+    "airbnb/rules/react",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/prop-types": 0,
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-max-props-per-line": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/forbid-prop-types": "off",
+    "react/no-array-index-key": "off",
+    "no-underscore-dangle": 0,
+    "import/imports-first": ["off", "off"],
+    "import/newline-after-import": "error",
+    "import/prefer-default-export": "off",
+    "linebreak-style": "off",
+    "no-plusplus": "off",
+    "padded-blocks": "off",
+    "no-trailing-spaces": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ],
+    "import/no-unresolved": "off",
+    "import/no-absolute-path": "off",
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ]
+      }
+    ],
+    "import/named": "off",
+    "no-shadow": "off",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "arrow-parens": "off",
+    "no-async-promise-executor": "off",
+    "object-curly-newline": "off",
+    "spaced-comment": "off",
+    "react/button-has-type": [
+      0,
+      {
+        "button": true,
+        "submit": true,
+        "reset": true
+      }
+    ],
+    "global-require": 0,
+    "no-param-reassign": "off",
+    "no-restricted-syntax": "off",
+    "guard-for-in": "off"
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true
+  }
+}

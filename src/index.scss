@@ -1,0 +1,19 @@
+@import './global/style';
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  font-family: $font-family;
+}

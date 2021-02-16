@@ -1,0 +1,34 @@
+$font-family: 'Montserrat', sans-serrif;
+$background-color: #333;
+$main-color: #773be2;
+
+// Colors
+$primary: #195477;
+$primary-dark: #0f3e5c;
+$danger: #f00;
+$secondary: #f88801;
+$gray: #f8f8fa;
+
+$theme-colors: (
+  'primary': $primary,
+  'primary-dark': $primary-dark,
+  'secondary': $secondary,
+  'gray': $gray
+);
+
+$spacers: (
+  10: 10px,
+  12: 12px,
+  15: 15px,
+  20: 20px,
+  25: 25px,
+  30: 30px,
+  35: 35px,
+  40: 40px
+);
+
+@mixin for-tablet-and-less {
+  @media screen and (max-width: 900px) {
+    @content;
+  }
+}
