@@ -3,6 +3,7 @@
   "extends": [
     "airbnb-base",
     "airbnb/rules/react",
+    "plugin:jest/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
