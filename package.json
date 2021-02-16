@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll --testMatch **/src/**/*.test.js",
     "eslint": "eslint src --fix",
     "stylelint": "stylelint **/*.scss",
     "eject": "react-scripts eject",
