@@ -24,6 +24,7 @@ The project contains the following tree structure:
   /components - contains all reusable components
     /controls - contains all reusable input fields and input fields custom styles
   /global - contains all global variables and styles
+    /styles - contains the global styles
   /pages - contains all containers that represent a React Route
   /store - contains the global state of the webapp
   /utils - contains utility functions

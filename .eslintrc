@@ -1,8 +1,8 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "airbnb",
-    "airbnb/hooks",
+    "airbnb-base",
+    "airbnb-base/legacy",
     "airbnb/rules/react",
     "plugin:jest/recommended",
     "plugin:react-hooks/recommended",
