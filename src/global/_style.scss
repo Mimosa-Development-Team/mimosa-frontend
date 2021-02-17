@@ -3,7 +3,7 @@ $background-color: #333;
 $main-color: #773be2;
 
 // Colors
-$primary: #195477;
+$primary: #121a35;
 $primary-dark: #0f3e5c;
 $danger: #f00;
 $secondary: #f88801;
@@ -31,4 +31,10 @@ $spacers: (
   @media screen and (max-width: 900px) {
     @content;
   }
+}
+
+// temp: will be included in theme @k
+a {
+  color: #FFF;
+  display: block;
 }
