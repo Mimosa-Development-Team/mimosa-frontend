@@ -2,7 +2,9 @@
   "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
+    "airbnb-base/legacy",
     "airbnb/rules/react",
+    "plugin:jest/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
