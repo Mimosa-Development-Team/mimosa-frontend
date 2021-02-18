@@ -21,14 +21,15 @@ const VerticalTab = props => {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
-  console.log(data)
 
   return (
     <div className={`${styles.tabsWrapper}`}>
       <Grid container spacing={3}>
         <Grid item xs={3} />
         <Grid item xs={9}>
-          <Typography>Frequently Asked Questions</Typography>
+          <Typography variant="h5">
+            Frequently Asked Questions
+          </Typography>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -40,9 +41,19 @@ const VerticalTab = props => {
             aria-label="Vertical tabs example"
             className={`${styles.tabs}`}
             disableRipple="true"
+            classes={{
+              indicator: `${styles.tabIndicator}`
+            }}
           >
             {(data || []).map((data, key) => (
-              <Tab label={data.topic} {...a11yProps({ key })} />
+              <Tab
+                className={`${styles.tab}`}
+                label={data.topic}
+                {...a11yProps({ key })}
+                classes={{
+                  wrapper: `${styles.tabWrapper}`
+                }}
+              />
             ))}
           </Tabs>
         </Grid>
