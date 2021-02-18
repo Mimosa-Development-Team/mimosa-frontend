@@ -6,6 +6,22 @@
   
   .tabs {
     border-left: 1px solid $gray;
+  
+    .tabIndicator {
+      left: 0;
+      right: unset;
+      background-color: $primary
+    }
+  }
+
+  .tab {
+    padding: 10px 30px;
+
+    .tabWrapper {
+      display: block;
+      text-align: left;
+      text-transform: none;
+    }
   }
 }
 

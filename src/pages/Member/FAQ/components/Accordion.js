@@ -18,7 +18,7 @@ const TabPanel = props => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>{title}</Typography>
+          <Typography variant="h3">{title}</Typography>
         </AccordionSummary>
         <AccordionDetails
           className={`${styles.accordionDetails}`}

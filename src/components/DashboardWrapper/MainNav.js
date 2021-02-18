@@ -1,44 +1,24 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core'
 import Drawer from '@material-ui/core/Drawer'
 import PropTypes from 'prop-types'
-import { ReactComponent as Logo } from './logo.svg'
+import { ReactComponent as Logo } from 'assets/images/logo.svg'
 import NavLink from './NavLink'
-
-const drawerWidth = 300
-
-const style = {
-  root: {
-    display: 'flex'
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: '#121a35',
-    padding: '40px 45px'
-  },
-  sideMenu: {
-    marginTop: '30px'
-  }
-}
+import styles from './styles.module.scss'
 
 const MainNav = props => {
-  const { classes, links } = props
+  const { links } = props
   return (
-    <div className={classes.root}>
+    <div className={`${styles.drawerWrapper}`}>
       <Drawer
-        className={classes.drawer}
+        className={`${styles.drawer}`}
         variant="permanent"
         anchor="left"
         classes={{
-          paper: classes.drawerPaper
+          paper: `${styles.drawerPaper}`
         }}
       >
         <Logo />
-        <div className={classes.sideMenu}>
+        <div className={`${styles.sideMenu}`}>
           {links.map(link => (
             <NavLink
               key={link.to}
@@ -56,4 +36,4 @@ MainNav.propTypes = {
   links: PropTypes.array.isRequired
 }
 
-export default withStyles(style)(MainNav)
+export default MainNav
