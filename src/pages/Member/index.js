@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     height: '98vh',
     marginTop: '2vh',
     background: '#F1F5F8',
-    borderTopLeftRadius: '12px'
+    borderTopLeftRadius: '12px',
+    padding: '40px'
   }
 })
 

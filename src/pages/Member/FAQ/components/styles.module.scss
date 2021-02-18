@@ -1,0 +1,34 @@
+@import '~global/styles';
+
+.tabsWrapper {
+    background-color: transparent;
+    height: auto;
+  
+  .tabs {
+    border-left: 1px solid $gray;
+  }
+}
+
+.tabPanel {
+  width: 100%;
+}
+
+.accordionWrapper {
+  width: 100%;
+
+  .accordion {
+    width: 100%;
+    border-radius: 8px;
+    background: $white;
+    border: 1px solid $lightgray;
+    box-shadow: none;
+
+    .accordionSummary {
+      padding: 30px;
+    }
+
+    .accordionDetails {
+      padding: 10px 30px 30px 30px;
+    }
+  }
+}

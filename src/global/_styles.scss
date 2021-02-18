@@ -1,0 +1,87 @@
+$font-family: 'Montserrat', sans-serrif;
+$background-color: #333;
+$main-color: #773be2;
+
+// Colors
+$primary: #121a35;
+$primary-dark: #0f3e5c;
+$danger: #f00;
+$secondary: #EF8C20;
+$gray: #B2B4BD;
+$lightgray: #E6E9EB;
+$white: #FFF;
+
+$theme-colors: (
+  'primary': $primary,
+  'primary-dark': $primary-dark,
+  'secondary': $secondary,
+  'gray': $gray,
+  'white': $white,
+  'lightgray': $lightgray
+);
+
+$spacers: (
+  10: 10px,
+  12: 12px,
+  15: 15px,
+  20: 20px,
+  25: 25px,
+  30: 30px,
+  35: 35px,
+  40: 40px
+);
+
+@mixin for-tablet-and-less {
+  @media screen and (max-width: 900px) {
+    @content;
+  }
+}
+
+// temp: will be included in theme @k
+a {
+  color: #FFF;
+  display: block;
+}
+
+/** MUI Component Overrides **/
+
+.MuiTabs-root {
+  .MuiTab-root {
+    padding: 10px 30px;
+    
+    .MuiTab-wrapper {
+      display: block;
+      text-align: left;
+      text-transform: none;
+    }
+  }
+  
+  .MuiTabs-flexContainerVertical {
+    min-width: 250px;
+  }
+
+  .MuiTabs-indicator {
+    left: 0;
+    right: unset;
+    background-color: $secondary
+  }
+}
+
+.MuiAccordion-root {
+  .MuiAccordionSummary-root {
+    .MuiAccordionSummary-content {
+      margin: 0;
+      padding: 0;
+  
+      &.Mui-expanded {
+        margin: 0;
+      }
+    }
+
+    .MuiAccordionSummary-expandIcon {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
