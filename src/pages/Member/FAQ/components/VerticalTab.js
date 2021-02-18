@@ -26,7 +26,9 @@ const VerticalTab = () => {
       <Grid container spacing={3}>
         <Grid item xs={3} />
         <Grid item xs={9}>
-          <Typography>Frequently Asked Questions</Typography>
+          <Typography variant="h5">
+            Frequently Asked Questions
+          </Typography>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -38,8 +40,18 @@ const VerticalTab = () => {
             aria-label="Vertical tabs example"
             className={`${styles.tabs}`}
             disableRipple="true"
+            classes={{
+              indicator: `${styles.tabIndicator}`
+            }}
           >
-            <Tab label="General Topic" {...a11yProps(0)} />
+            <Tab
+              className={`${styles.tab}`}
+              label="General Topic"
+              {...a11yProps(0)}
+              classes={{
+                wrapper: `${styles.tabWrapper}`
+              }}
+            />
             <Tab label="General Topic" {...a11yProps(1)} />
             <Tab label="General Topic" {...a11yProps(2)} />
             <Tab label="General Topic" {...a11yProps(3)} />

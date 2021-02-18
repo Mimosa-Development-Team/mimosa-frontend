@@ -1,19 +1,18 @@
-$font-family: 'Montserrat', sans-serrif;
-$background-color: #333;
-$main-color: #773be2;
+$font-family: 'Roboto', sans-serrif;
+$background-color: #F1F5F8;
 
 // Colors
-$primary: #121a35;
-$primary-dark: #0f3e5c;
-$danger: #f00;
-$secondary: #EF8C20;
+$primary: #EF8C20;
+$secondary: #121B3C;
+$yellow: #F2BA1D;
 $gray: #B2B4BD;
 $lightgray: #E6E9EB;
+$darkgray1: #333333; // use in headers
+$darkgray2: #3A3A3A; // use in subheader / light headers
 $white: #FFF;
 
 $theme-colors: (
   'primary': $primary,
-  'primary-dark': $primary-dark,
   'secondary': $secondary,
   'gray': $gray,
   'white': $white,
@@ -45,28 +44,52 @@ a {
 
 /** MUI Component Overrides **/
 
-.MuiTabs-root {
-  .MuiTab-root {
-    padding: 10px 30px;
-    
-    .MuiTab-wrapper {
-      display: block;
-      text-align: left;
-      text-transform: none;
-    }
-  }
-  
-  .MuiTabs-flexContainerVertical {
-    min-width: 250px;
-  }
+// Typograhy
 
-  .MuiTabs-indicator {
-    left: 0;
-    right: unset;
-    background-color: $secondary
+.MuiTypography-root {
+  color: $darkgray1;
+
+  &.MuiTypography-h1 {
+    font-family: 'Roboto-Bold';
+    font-size: 24px;
+    letter-spacing: 0.75px;
+    line-height: 28px;
+  }
+  &.MuiTypography-h2 {
+    font-family: 'Roboto-Medium';
+    font-size: 20px;
+    letter-spacing: 0.4px;
+    line-height: 24px;
+  }
+  &.MuiTypography-h3 {
+    font-family: 'Roboto';
+    font-size: 20px;
+    letter-spacing: 0.13px;
+    line-height: 24px;
+    color: $darkgray2;
+  }
+  &.MuiTypography-h5 {
+    font-family: 'Roboto-Medium';
+    font-size: 14px;
+    letter-spacing: 0.44px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+  &.MuiTypography-body1 {
+    font-family: 'Roboto';
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 24px;
   }
 }
 
+
+// Component Overrides
+hr.MuiDivider-root {
+  margin: 30px 0;
+}
+
+// temp - move to vertical tab later @k
 .MuiAccordion-root {
   .MuiAccordionSummary-root {
     .MuiAccordionSummary-content {

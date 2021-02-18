@@ -1,0 +1,21 @@
+@import '~global/styles';
+
+.drawerWrapper {
+  display: flex;
+
+  .drawer {
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  .drawerPaper {
+    width: 300px;
+    background-color: $secondary;
+    padding: 40px 45px;
+  }
+
+  .sideMenu {
+    margin-top: 30px;
+  }
+}
+
