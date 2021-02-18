@@ -1,0 +1,37 @@
+@import '~global/styles';
+
+form.searchField {
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  max-width: 453px;
+  box-shadow: none;
+  height: 55px;
+  border: 1px solid rgba(178,180,189,0.5);
+  border-radius: 27.5px;
+  background-color: $white;
+  height: 45px;
+  border-radius: 25px;
+
+  &.large {
+    height: 55px;
+    border-radius: 27.5px;
+  }
+
+  .input {
+    flex: 1;
+    input {
+      padding: 0;
+      color: $gray2;
+      font-family: Roboto;
+      font-size: 16px;
+      font-style: italic;
+      letter-spacing: 0.1px;
+      line-height: 19px;
+    }
+  }
+
+  .iconButton {
+    padding: 0px;
+  }
+}
