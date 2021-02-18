@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import { withStyles } from '@material-ui/core'
 import VerticalTab from './components/VerticalTab'
+import { useFaq } from './hooks'
 
 const style = {
   header: {
@@ -14,7 +15,12 @@ const style = {
 }
 
 const MemberFAQ = props => {
+  const { faq, getFaq } = useFaq()
   const { classes } = props
+
+  useEffect(() => {
+    getFaq()
+  }, [])
 
   return (
     <div>
@@ -26,7 +32,7 @@ const MemberFAQ = props => {
         FAQ/Help
       </Typography>
       <Divider className={classes.divider} />
-      <VerticalTab />
+      <VerticalTab data={faq} />
     </div>
   )
 }

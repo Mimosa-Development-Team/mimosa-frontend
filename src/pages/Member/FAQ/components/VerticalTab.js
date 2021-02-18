@@ -14,12 +14,14 @@ function a11yProps(index) {
   }
 }
 
-const VerticalTab = () => {
+const VerticalTab = props => {
+  const { data } = props
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+  console.log(data)
 
   return (
     <div className={`${styles.tabsWrapper}`}>
@@ -39,32 +41,20 @@ const VerticalTab = () => {
             className={`${styles.tabs}`}
             disableRipple="true"
           >
-            <Tab label="General Topic" {...a11yProps(0)} />
-            <Tab label="General Topic" {...a11yProps(1)} />
-            <Tab label="General Topic" {...a11yProps(2)} />
-            <Tab label="General Topic" {...a11yProps(3)} />
-            <Tab label="General Topic" {...a11yProps(4)} />
+            {(data || []).map((data, key) => (
+              <Tab label={data.topic} {...a11yProps({ key })} />
+            ))}
           </Tabs>
         </Grid>
         <Grid item xs={9}>
-          <TabPanel value={value} index={0}>
-            <Accordion
-              title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"
-              content="Lorem ipsum"
-            />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            Item Two
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Item Three
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            Item Four
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            Item Five
-          </TabPanel>
+          {(data || []).map((data, key) => (
+            <TabPanel value={value} index={key}>
+              <Accordion
+                title={data.question}
+                content={data.fullDetails}
+              />
+            </TabPanel>
+          ))}
         </Grid>
       </Grid>
     </div>
