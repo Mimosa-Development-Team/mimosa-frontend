@@ -4,7 +4,7 @@ export const ROUTES = [
     to: '/'
   },
   {
-    title: 'My Contributions',
-    to: '/'
+    title: 'FAQ',
+    to: '/faq'
   }
 ]

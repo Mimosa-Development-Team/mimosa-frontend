@@ -2,15 +2,21 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { makeStyles, CssBaseline } from '@material-ui/core'
 import DashboardWrapper from 'components/DashboardWrapper'
-import PageHeader from 'components/DashboardWrapper/PageHeader'
-import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleOutlineTwoTone'
 import { ROUTES } from './constants'
 import Dashboard from './Home'
+import FAQ from './FAQ'
 
 const useStyles = makeStyles({
+  wrapper: {
+    display: 'flex'
+  },
   appMain: {
-    paddingLeft: '320px',
-    width: '100%'
+    flexGrow: 1,
+    height: '98vh',
+    marginTop: '2vh',
+    background: '#F1F5F8',
+    borderTopLeftRadius: '12px',
+    padding: '40px'
   }
 })
 
@@ -18,16 +24,14 @@ const Member = () => {
   const classes = useStyles()
   return (
     <BrowserRouter>
-      <DashboardWrapper links={ROUTES} />
-      <div className={classes.appMain}>
-        <PageHeader
-          title={ROUTES[0].title}
-          subTitle="Form design with validation"
-          icon={<PeopleOutlineTwoToneIcon fontSize="large" />}
-        />
-        <Switch>
-          <Route exact path="/" component={Dashboard} />
-        </Switch>
+      <div className={classes.wrapper}>
+        <DashboardWrapper links={ROUTES} />
+        <div className={classes.appMain}>
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/faq" component={FAQ} />
+          </Switch>
+        </div>
       </div>
       <CssBaseline />
     </BrowserRouter>
