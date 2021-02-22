@@ -2,11 +2,13 @@ import React from 'react'
 import Drawer from '@material-ui/core/Drawer'
 import PropTypes from 'prop-types'
 import { ReactComponent as Logo } from 'assets/images/logo.svg'
-import NavLink from './NavLink'
+import { useLocation } from 'react-router-dom'
 import styles from './styles.module.scss'
+import NavLink from './NavLink'
 
 const MainNav = props => {
   const { links } = props
+  const location = useLocation()
   return (
     <div className={`${styles.drawerWrapper}`}>
       <Drawer
@@ -18,14 +20,29 @@ const MainNav = props => {
         }}
       >
         <Logo />
-        <div className={`${styles.sideMenu}`}>
-          {links.map(link => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              title={link.title}
-            />
-          ))}
+        <div className={`${styles.topMenu}`}>
+          {links
+            .filter(link => link.location === 'top')
+            .map(link => (
+              <NavLink
+                to={link.to}
+                title={link.title}
+                icon={link.icon}
+                active={location.pathname === link.to}
+              />
+            ))}
+        </div>
+        <div className={`${styles.bottomMenu}`}>
+          {links
+            .filter(link => link.location === 'bottom')
+            .map(link => (
+              <NavLink
+                to={link.to}
+                title={link.title}
+                icon={link.icon}
+                active={location.pathname === link.to}
+              />
+            ))}
         </div>
       </Drawer>
     </div>
