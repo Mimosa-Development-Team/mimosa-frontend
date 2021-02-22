@@ -14,6 +14,21 @@ function a11yProps(index) {
   }
 }
 
+const Topic = props => {
+  const { topic } = props
+
+  return (
+    <div>
+      <Typography className={`${styles.topicHeader}`}>
+        {topic}
+      </Typography>
+      <Typography variant="body2">
+        Short description on this content for this topic
+      </Typography>
+    </div>
+  )
+}
+
 const VerticalTab = props => {
   const { data } = props
   const [value, setValue] = React.useState(0)
@@ -38,7 +53,7 @@ const VerticalTab = props => {
             orientation="vertical"
             value={value}
             onChange={handleChange}
-            aria-label="Vertical tabs example"
+            aria-label="FAQ Topics"
             className={`${styles.tabs}`}
             disableRipple="true"
             classes={{
@@ -48,10 +63,11 @@ const VerticalTab = props => {
             {(data || []).map((data, key) => (
               <Tab
                 className={`${styles.tab}`}
-                label={data.topic}
+                label={<Topic topic={data.topic} />}
                 {...a11yProps({ key })}
                 classes={{
-                  wrapper: `${styles.tabWrapper}`
+                  wrapper: `${styles.tabWrapper}`,
+                  selected: `${styles.tabSelected}`
                 }}
               />
             ))}

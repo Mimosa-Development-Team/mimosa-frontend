@@ -6,7 +6,7 @@
   
   .tabs {
     border-left: 1px solid $gray;
-  
+
     .tabIndicator {
       left: 0;
       right: unset;
@@ -21,6 +21,12 @@
       display: block;
       text-align: left;
       text-transform: none;
+    }
+  }
+
+  .tabSelected {
+    .topicHeader {
+      font-family: "Roboto-Medium";
     }
   }
 }
