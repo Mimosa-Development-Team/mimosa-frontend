@@ -37,10 +37,25 @@ $spacers: (
   }
 }
 
-// temp: will be included in theme @k
-a {
-  color: #FFF;
+// @temp: move to inner component scss @k
+
+a.navLink {
+  color: $white;
   display: block;
+  text-decoration: none;
+  font-family: 'Roboto';
+  font-size: 18px;
+  letter-spacing: 0.11px;
+  line-height: 21px;
+  margin-top: 25px;
+
+  &.active {
+    color: $yellow;
+  }
+
+  img {
+    margin-right: 13px;
+  }
 }
 
 /** Helper Classes **/

@@ -1,7 +1,8 @@
 import React from 'react'
 import MainNav from './MainNav'
 
-const DashboardWrapper = ({ children, links }) => {
+const DashboardWrapper = props => {
+  const { children, links } = props
   return (
     <div>
       <MainNav links={links} />
