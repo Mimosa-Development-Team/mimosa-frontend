@@ -14,9 +14,7 @@ function a11yProps(index) {
   }
 }
 
-const Questions = props => {
-  const { value, questions, qkey } = props
-
+const Questions = ({ value, questions, qkey }) => {
   return questions.map(data1 => {
     return (
       <TabPanel value={value} index={qkey}>
@@ -29,9 +27,7 @@ const Questions = props => {
   })
 }
 
-const Topic = props => {
-  const { topic } = props
-
+const Topic = ({ topic }) => {
   return (
     <div>
       <Typography className={`${styles.topicHeader}`}>
@@ -44,8 +40,7 @@ const Topic = props => {
   )
 }
 
-const VerticalTab = props => {
-  const { data } = props
+const VerticalTab = ({ data }) => {
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {

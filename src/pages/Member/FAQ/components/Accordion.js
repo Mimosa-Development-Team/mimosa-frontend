@@ -7,8 +7,7 @@ import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import styles from './styles.module.scss'
 
-const TabPanel = props => {
-  const { title, content } = props
+const TabPanel = ({ title, content }) => {
   const [expanded, setExpanded] = React.useState(false)
 
   const handleChange = panel => (event, isExpanded) => {

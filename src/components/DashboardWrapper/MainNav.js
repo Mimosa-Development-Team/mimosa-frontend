@@ -6,8 +6,7 @@ import { useLocation } from 'react-router-dom'
 import styles from './styles.module.scss'
 import NavLink from './NavLink'
 
-const MainNav = props => {
-  const { links } = props
+const MainNav = ({ links }) => {
   const location = useLocation()
   return (
     <div className={`${styles.drawerWrapper}`}>
