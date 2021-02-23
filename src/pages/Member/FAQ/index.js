@@ -10,7 +10,7 @@ const MemberFAQ = () => {
 
   useEffect(() => {
     getFaq()
-  })
+  }, [getFaq])
 
   return (
     <div>

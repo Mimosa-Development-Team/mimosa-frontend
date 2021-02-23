@@ -12,10 +12,13 @@
     width: 300px;
     background-color: $secondary;
     padding: 40px 45px;
+    height: 100vh;
+    position: relative;
   }
 
-  .sideMenu {
-    margin-top: 30px;
+  .bottomMenu {
+    position: absolute;
+    bottom: 40px;
   }
 }
 
