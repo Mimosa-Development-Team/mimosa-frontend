@@ -14,16 +14,31 @@ function a11yProps(index) {
   }
 }
 
+const Questions = props => {
+  const { value, questions, qkey } = props
+
+  return questions.map(data1 => {
+    return (
+      <TabPanel value={value} index={qkey}>
+        <Accordion
+          title={data1.question}
+          content={data1.full_details}
+        />
+      </TabPanel>
+    )
+  })
+}
+
 const Topic = props => {
   const { topic } = props
 
   return (
     <div>
       <Typography className={`${styles.topicHeader}`}>
-        {topic}
+        {topic.topic}
       </Typography>
       <Typography variant="body2">
-        Short description on this content for this topic
+        {topic.short_details}
       </Typography>
     </div>
   )
@@ -63,7 +78,7 @@ const VerticalTab = props => {
             {(data || []).map((data, key) => (
               <Tab
                 className={`${styles.tab}`}
-                label={<Topic topic={data.topic} />}
+                label={<Topic topic={data} />}
                 {...a11yProps({ key })}
                 classes={{
                   wrapper: `${styles.tabWrapper}`,
@@ -74,14 +89,15 @@ const VerticalTab = props => {
           </Tabs>
         </Grid>
         <Grid item xs={9}>
-          {(data || []).map((data, key) => (
-            <TabPanel value={value} index={key}>
-              <Accordion
-                title={data.question}
-                content={data.fullDetails}
+          {(data || []).map((data, key1) => {
+            return (
+              <Questions
+                value={value}
+                questions={data.questions}
+                qkey={key1}
               />
-            </TabPanel>
-          ))}
+            )
+          })}
         </Grid>
       </Grid>
     </div>
