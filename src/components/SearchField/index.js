@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
 import IconButton from '@material-ui/core/IconButton'
@@ -27,6 +28,10 @@ const SearchField = ({ variant }) => {
       </IconButton>
     </Paper>
   )
+}
+
+SearchField.propTypes = {
+  variant: PropTypes.string
 }
 
 export default SearchField

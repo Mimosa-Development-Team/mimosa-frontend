@@ -11,6 +11,7 @@ $lightgray: #E6E9EB;
 $darkgray1: #333333; // use in headers
 $darkgray2: #3A3A3A; // use in subheader / light headers
 $white: #FFF;
+$offwhite: #F1F5F8;
 
 $theme-colors: (
   'primary': $primary,
@@ -34,27 +35,6 @@ $spacers: (
 @mixin for-tablet-and-less {
   @media screen and (max-width: 900px) {
     @content;
-  }
-}
-
-// @temp: move to inner component scss @k
-
-a.navLink {
-  color: $white;
-  display: block;
-  text-decoration: none;
-  font-family: 'Roboto';
-  font-size: 18px;
-  letter-spacing: 0.11px;
-  line-height: 21px;
-  margin-top: 25px;
-
-  &.active {
-    color: $yellow;
-  }
-
-  img {
-    margin-right: 13px;
   }
 }
 
@@ -125,12 +105,13 @@ a.navLink {
 }
 
 
-// Component Overrides
+// Divider
+
 hr.MuiDivider-root {
   margin: 30px 0;
 }
 
-// temp - move to vertical tab later @k
+// Accordion
 .MuiAccordion-root {
   .MuiAccordionSummary-root {
     .MuiAccordionSummary-content {
