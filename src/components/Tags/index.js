@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Chip from '@material-ui/core/Chip'
 import styles from './styles.module.scss'
 
@@ -18,6 +19,10 @@ const Tags = ({ data }) => {
       })}
     </ul>
   )
+}
+
+Tags.propTypes = {
+  data: PropTypes.array.isRequired
 }
 
 export default Tags

@@ -20,5 +20,24 @@
     position: absolute;
     bottom: 40px;
   }
+
+  .navLink {
+    color: $white;
+    display: block;
+    text-decoration: none;
+    font-family: 'Roboto';
+    font-size: 18px;
+    letter-spacing: 0.11px;
+    line-height: 21px;
+    margin-top: 25px;
+  
+    &.active {
+      color: $yellow;
+    }
+  
+    img {
+      margin-right: 13px;
+    }
+  }
 }
 

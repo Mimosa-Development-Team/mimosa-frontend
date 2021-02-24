@@ -12,7 +12,7 @@ const CardButton = ({ action }) => {
     <IconButton
       disableRipple="true"
       aria-label={action}
-      className={`${styles.root}`}
+      className={`${styles.cardButton}`}
     >
       <img src={icons[action]} alt="" />
       {action}

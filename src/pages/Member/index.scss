@@ -1,0 +1,14 @@
+@import '~global/styles';
+
+.wrapper {
+  display: flex;
+}
+
+.appMain {
+  flex-grow: 1;
+  height: 98vh;
+  margin-top: 2vh;
+  background: $offwhite;
+  border-top-left-radius: 12px;
+  padding: 40px;
+}
