@@ -20,7 +20,7 @@ const Questions = ({ value, questions, qkey }) => {
       <TabPanel value={value} index={qkey}>
         <Accordion
           title={data1.question}
-          content={data1.full_details}
+          content={data1.fullDetails}
         />
       </TabPanel>
     )
@@ -34,7 +34,7 @@ const Topic = ({ topic }) => {
         {topic.topic}
       </Typography>
       <Typography variant="body2">
-        {topic.short_details}
+        {topic.shortDetails}
       </Typography>
     </div>
   )
