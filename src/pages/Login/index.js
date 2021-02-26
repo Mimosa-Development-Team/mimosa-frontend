@@ -1,53 +1,39 @@
-import React from 'react'
-import * as yup from 'yup'
+import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-
 import { Button } from '@material-ui/core'
 import { useUser } from './hooks'
 
-const loginFormSchema = yup.object().shape({
-  id: yup
-    .string()
-    .required('ORCID ID is required!')
-    .default('100001'),
-  name: yup
-    .string()
-    .required('Full Name is required!')
-    .default('Angelo'),
-  email: yup.string().email().default('angelo@offshorly.com'),
-  role: yup
-    .string()
-    .required('Role is required!')
-    .default('Regular')
-})
-
 const Login = () => {
-  const { getUser, isLoading } = useUser()
-  const { handleSubmit } = useForm({
-    resolver: yupResolver(loginFormSchema)
-  })
+  const { addToDo, isLoading } = useUser()
 
-  const loginFormOnSubmit = data => {
-    // For form validation example
-    // eslint-disable-next-line
-    console.log({ data })
-    getUser()
-  }
+  useEffect(() => {
+    if (window.location.hash) {
+      const params = window.location.hash.substr(1).split('&')
+      for (let i = 0; i < params.length; i++) {
+        const a = params[i].split('=')
+        // Now every parameter from the hash is beind handled this way
+        if (a[0] === 'id_token' && a[1]) {
+          const token = a[1]
+          addToDo({ token })
+        }
+      }
+    }
+  }, [addToDo])
+
   return (
     <div>
-      <form onSubmit={handleSubmit(loginFormOnSubmit)}>
-        <Button
-          disabled={isLoading}
-          type="submit"
-          variant="primary"
-        >
-          {isLoading ? 'Logging In...' : 'Login'}
-          <FontAwesomeIcon icon={faCoffee} />
-        </Button>
-      </form>
+      <Button
+        disabled={isLoading}
+        onClick={() => {
+          window.location.assign(
+            `https://sandbox.orcid.org/oauth/authorize?client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+          )
+        }}
+      >
+        {isLoading ? 'Logging In...' : 'Login'}
+        <FontAwesomeIcon icon={faCoffee} />
+      </Button>
     </div>
   )
 }

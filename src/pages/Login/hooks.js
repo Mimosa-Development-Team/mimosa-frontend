@@ -1,32 +1,34 @@
-import { useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 
-import { useGlobalState } from 'store/state'
+import { queryClient, useGlobalState } from 'store/state'
 
-import { getUserAPI } from './api'
+import { postUserAPI } from './api'
 import { USER_QUERY_KEY } from './constants'
 
 export const useUser = () => {
   const {
-    data,
-    isLoading,
-    error,
-    refetch,
-    isSuccess
-  } = useQuery(USER_QUERY_KEY, getUserAPI, {
-    enabled: false
+    data: addedData,
+    isLoading: addTodoLoading,
+    error: addToDoError,
+    isSuccess,
+    mutate
+  } = useMutation(postUserAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(USER_QUERY_KEY)
+    }
   })
 
   const globalState = useGlobalState()
 
   if (isSuccess) {
-    globalState.merge({ user: data, isLoggedIn: true })
+    globalState.merge({ user: addedData, isLoggedIn: true })
   }
 
   return {
-    getUser: refetch,
-    user: data,
-    isLoading,
-    isSuccess,
-    error
+    addToDo: mutate,
+    addedData,
+    addTodoLoading,
+    addToDoError,
+    isSuccess
   }
 }
