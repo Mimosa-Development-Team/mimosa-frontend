@@ -1,0 +1,22 @@
+@import '~global/styles';
+
+button.cardButton {
+  background: transparent;
+  font-family: "Roboto";
+  font-size: 14px;
+  letter-spacing: 0.44px;
+  line-height: 16px;
+  color: $primary;
+  text-transform: capitalize;
+  padding: 0;
+
+  &:hover,
+  &:focus {
+    background: inherit;
+  }
+
+  img {
+    margin-right: 7px;
+    width: 15px;
+  }
+}

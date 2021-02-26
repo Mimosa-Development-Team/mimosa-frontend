@@ -1,12 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import styles from './styles.module.scss'
 
-const SearchField = props => {
-  const { variant } = props
+const SearchField = ({ variant }) => {
   return (
     <Paper
       component="form"
@@ -28,6 +28,10 @@ const SearchField = props => {
       </IconButton>
     </Paper>
   )
+}
+
+SearchField.propTypes = {
+  variant: PropTypes.string
 }
 
 export default SearchField

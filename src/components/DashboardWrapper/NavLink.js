@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Anchor from 'components/Anchor'
+import { Link } from 'react-router-dom'
 import HomeIcon from 'assets/images/icons/home.svg'
 import HomeActiveIcon from 'assets/images/icons/home-active.svg'
 import ContribIcon from 'assets/images/icons/contributions.svg'
@@ -11,8 +11,9 @@ import FaqIcon from 'assets/images/icons/faq.svg'
 import FaqActiveIcon from 'assets/images/icons/faq-active.svg'
 import AboutIcon from 'assets/images/icons/about.svg'
 import AboutActiveIcon from 'assets/images/icons/about-active.svg'
+import styles from './styles.module.scss'
 
-const NavLink = ({ title, to, icon, active }) => {
+const NavLink = ({ title, icon, active, to, ...rest }) => {
   const icons = {
     home: HomeIcon,
     contributions: ContribIcon,
@@ -28,9 +29,12 @@ const NavLink = ({ title, to, icon, active }) => {
     about: AboutActiveIcon
   }
   return (
-    <Anchor
-      className={`navLink ${active ? 'active' : ''}`}
-      href={to}
+    <Link
+      className={`${styles.navLink} ${
+        active ? styles.active : ''
+      }`}
+      to={to}
+      {...rest}
     >
       {active ? (
         <img src={activeIcons[icon]} alt="" />
@@ -38,15 +42,15 @@ const NavLink = ({ title, to, icon, active }) => {
         <img src={icons[icon]} alt="" />
       )}
       {title}
-    </Anchor>
+    </Link>
   )
 }
 
 NavLink.propTypes = {
   title: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired
+  active: PropTypes.bool.isRequired,
+  to: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 }
 
 export default NavLink

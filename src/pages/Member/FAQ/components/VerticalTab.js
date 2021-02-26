@@ -14,38 +14,33 @@ function a11yProps(index) {
   }
 }
 
-const Questions = props => {
-  const { value, questions, qkey } = props
-
+const Questions = ({ value, questions, qkey }) => {
   return questions.map(data1 => {
     return (
       <TabPanel value={value} index={qkey}>
         <Accordion
           title={data1.question}
-          content={data1.full_details}
+          content={data1.fullDetails}
         />
       </TabPanel>
     )
   })
 }
 
-const Topic = props => {
-  const { topic } = props
-
+const Topic = ({ topic }) => {
   return (
     <div>
       <Typography className={`${styles.topicHeader}`}>
         {topic.topic}
       </Typography>
       <Typography variant="body2">
-        {topic.short_details}
+        {topic.shortDetails}
       </Typography>
     </div>
   )
 }
 
-const VerticalTab = props => {
-  const { data } = props
+const VerticalTab = ({ data }) => {
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
