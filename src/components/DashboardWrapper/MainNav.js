@@ -3,6 +3,7 @@ import Drawer from '@material-ui/core/Drawer'
 import PropTypes from 'prop-types'
 import { ReactComponent as Logo } from 'assets/images/logo.svg'
 import { useLocation } from 'react-router-dom'
+import ContributionTree from 'components/ContributionTree'
 import styles from './styles.module.scss'
 import NavLink from './NavLink'
 import AccountDropdown from './AccountDropdown'
@@ -31,6 +32,7 @@ const MainNav = ({ links }) => {
                 active={location.pathname === link.to}
               />
             ))}
+          <ContributionTree />
         </div>
         <div>
           {links
