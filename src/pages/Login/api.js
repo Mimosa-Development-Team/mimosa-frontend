@@ -1,5 +1,5 @@
-import { getRequest } from 'utils/http'
+import { postRequest } from 'utils/http'
 
-export function getUserAPI() {
-  return getRequest(`users/1`)
+export function postUserAPI(data) {
+  return postRequest(`/api/v1/users/auth`, data)
 }
