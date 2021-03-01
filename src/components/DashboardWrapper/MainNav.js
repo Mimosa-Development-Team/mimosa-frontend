@@ -5,6 +5,7 @@ import { ReactComponent as Logo } from 'assets/images/logo.svg'
 import { useLocation } from 'react-router-dom'
 import styles from './styles.module.scss'
 import NavLink from './NavLink'
+import AccountDropdown from './AccountDropdown'
 
 const MainNav = ({ links }) => {
   const location = useLocation()
@@ -18,8 +19,8 @@ const MainNav = ({ links }) => {
           paper: `${styles.drawerPaper}`
         }}
       >
-        <Logo />
-        <div className={`${styles.topMenu}`}>
+        <div>
+          <Logo />
           {links
             .filter(link => link.location === 'top')
             .map(link => (
@@ -31,7 +32,7 @@ const MainNav = ({ links }) => {
               />
             ))}
         </div>
-        <div className={`${styles.bottomMenu}`}>
+        <div>
           {links
             .filter(link => link.location === 'bottom')
             .map(link => (
@@ -42,6 +43,7 @@ const MainNav = ({ links }) => {
                 active={location.pathname === link.to}
               />
             ))}
+          <AccountDropdown />
         </div>
       </Drawer>
     </div>

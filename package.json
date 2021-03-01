@@ -19,6 +19,7 @@
     "date-fns": "^2.17.0",
     "localforage": "^1.9.0",
     "lodash": "^4.17.20",
+    "material-ui-popup-state": "^1.7.1",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
@@ -62,6 +63,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
