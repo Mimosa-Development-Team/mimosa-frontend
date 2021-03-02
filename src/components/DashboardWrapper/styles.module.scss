@@ -61,6 +61,7 @@
 
       .avatar {
         margin-right: 17px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
       }
 
       .icon {
