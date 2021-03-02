@@ -1,0 +1,32 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import ShowMoreText from 'react-show-more-text'
+import styles from './styles.module.scss'
+
+const Content = ({ content }) => {
+  return (
+    <div className={`${styles.bodyWrapper}`}>
+      <ShowMoreText
+        lines={2}
+        more="See more"
+        less="Show less"
+        className={`${styles.body}`}
+        anchorClass={`${styles.anchor}`}
+        expanded={false}
+      >
+        {content}
+        Lorem ipsum dolor sit amet, consectetur consectetur
+        adipiscing elit,sed do eiusmod tempor incididunt ut
+        labore et dminim veniam, quis nostrud exercitation
+        ullamco laboris nisi ut aliquip ex Lorem ipsum sit amet,
+        consecteturadipiscing elit, sed dotempor incididunt
+      </ShowMoreText>
+    </div>
+  )
+}
+
+Content.propTypes = {
+  content: PropTypes.any
+}
+
+export default Content

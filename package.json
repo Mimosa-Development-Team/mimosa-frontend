@@ -29,6 +29,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-select": "^4.1.0",
+    "react-show-more-text": "^1.4.6",
     "styled-components": "^5.2.1",
     "yup": "^0.32.8"
   },
