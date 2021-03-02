@@ -9,7 +9,7 @@ const ContributionTree = () => {
         Contribution Tree:
       </Typography>
       <ul className={`${styles.tree}`}>
-        <li className="question">Q</li>
+        <li>Q</li>
         <li>H</li>
         <li>E</li>
         <li>

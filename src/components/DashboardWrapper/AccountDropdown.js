@@ -7,7 +7,6 @@ import PopupState, {
 import Paper from '@material-ui/core/Paper'
 import Fade from '@material-ui/core/Fade'
 import Avatar from '@material-ui/core/Avatar'
-import AvatarImg from 'assets/images/sample-avatar.png'
 import ArrowIcon from 'assets/images/icons/arrow-down-white.png'
 import LogoutIcon from 'assets/images/icons/log-out.png'
 import styles from './styles.module.scss'
@@ -23,11 +22,7 @@ const AccountDropdown = () => {
             className={`${styles.button}`}
             {...bindToggle(popupState)}
           >
-            <Avatar
-              alt="user avatar"
-              src={AvatarImg}
-              className={`${styles.avatar}`}
-            />
+            <Avatar className={`${styles.avatar}`}>A</Avatar>
             Angelo
             <img
               alt="arrow down"

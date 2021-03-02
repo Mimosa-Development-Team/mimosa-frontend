@@ -70,7 +70,8 @@ const Login = () => {
               className={classes.submit}
               onClick={() => {
                 window.location.assign(
-                  `https://sandbox.orcid.org/oauth/authorize?client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+                  `https://sandbox.orcid.org/oauth/authorize?
+                  client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=${window.location.href}`
                 )
               }}
             >
