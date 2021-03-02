@@ -1,0 +1,102 @@
+@import '~global/styles';
+
+
+.contributionTree {
+  .title {
+    color: $white;
+    margin: 40px 0;
+  }
+  
+  ul.tree {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  
+    li { 
+      height: 18px;
+      width: 30px;
+      border-radius: 3px;
+      text-align: center;
+      margin-right: 7px;
+      position: relative;
+      color: $white;
+      cursor: pointer;
+
+      &:first-child {
+        background: $yellow;
+      }
+      &:nth-child(2) {
+        background: $lightbrown;
+      }
+      &:nth-child(3) {
+        background: $green;
+      }
+      &:nth-child(4) {
+        background: $indigo;
+      }
+  
+      &::after {
+        content: '';
+        width: 7px;
+        display: block;
+        position: absolute;
+        right: -7px;
+        top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      ul.subtree {
+        list-style-type: none;
+        position: absolute;
+        top: -12px;
+        left: 4px;
+
+        li {
+          margin-bottom: 5px;
+          background: $purple;
+          &:first-child {
+            &::after {
+              content: '';
+              width: 7px;
+              display: block;
+              position: absolute;
+              left: -7px;
+              top: 8px;
+              border-top: 1px solid rgba(255, 255, 255, 0.5);
+              border-left: 1px solid rgba(255, 255, 255, 0.5);
+              height: 13px;
+              border-bottom: none;
+            }
+          }
+          &:nth-child(2) {
+            &::after {
+              content: '';
+              width: 7px;
+              display: block;
+              position: absolute;
+              left: -7px;
+              top: -3px;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+              border-left: 1px solid rgba(255, 255, 255, 0.5);
+              height: 13px;
+              border-top: none !important;
+            }
+          }
+          &::after {
+            content: '';
+            width: 7px;
+            display: block;
+            position: absolute;
+            left: -7px;
+            top: -13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            height: 23px;
+            border-top: none;
+          }
+        }
+      }
+    }
+  }
+}

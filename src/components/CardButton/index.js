@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from 'assets/images/icons/edit.png'
+import ContributeIcon from 'assets/images/icons/contribute.svg'
 import styles from './styles.module.scss'
 
 const CardButton = ({ action }) => {
   const icons = {
-    edit: EditIcon
+    edit: EditIcon,
+    contribute: ContributeIcon
   }
   return (
     <IconButton
