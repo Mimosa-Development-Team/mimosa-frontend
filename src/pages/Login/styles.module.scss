@@ -1,0 +1,91 @@
+@import '~global/styles';
+
+.lgContainer {
+  display: flex;
+  min-height: 99vh;
+  max-height: 99vh;
+
+  .left {
+    width: 50vw;
+
+    .leftContainer {
+      height: 100%;
+      padding: 20px;
+      background-color: $secondary;
+      border-radius: 4vh;
+      background-clip: content-box, padding-box;
+
+      .halfLogo {
+        // position: relative;
+        left: 0;
+        position: relative;
+        // margin-top: 20vh;
+
+        img {
+          position: absolute;
+          bottom: 0;
+          width: 10vh;
+        }
+      }
+
+      .leftContent {
+        margin-left: 10vw;
+        margin-right: 10vw;
+        margin-top: 5vw;
+
+        .leftText {
+          margin-top: 5vh;
+          color: white;
+        }
+
+        .contentImage {
+          margin-top: 5vh;
+        }
+
+        .pagination {
+          margin-top: 5vh;
+          float: right;
+
+          .slideRight {
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  .right {
+    width: 50vw;
+
+    .rightContent {
+      position: relative;
+      top: 30vh;
+      width: 70%;
+      margin: auto;
+    }
+    
+    p {
+      color: #A8A9AA;
+      margin-top: 1vh;
+    }
+
+    button {
+      margin-top: 3vh;
+      background-color: #AFD731;
+      color: white;
+      border-color: transparent;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+  }
+
+  .logo {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 15%;
+    left: 49%;
+    margin-top: -50px;
+    margin-left: -50px;
+  }
+}
