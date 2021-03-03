@@ -4,7 +4,6 @@ $background-color: #F1F5F8;
 // Colors
 $primary: #EF8C20;
 $secondary: #121B3C;
-$yellow: #F2BA1D;
 $gray: #B2B4BD;
 $gray2: #8E8E8E; // use in placeholders
 $lightgray: #E6E9EB;
@@ -12,6 +11,16 @@ $darkgray1: #333333; // use in headers
 $darkgray2: #3A3A3A; // use in subheader / light headers
 $white: #FFF;
 $offwhite: #F1F5F8;
+$darkblue: #0A122D;
+$darkorange: #EF5F20;
+// use in contribution heirarchy - in order QHED-AAA
+$yellow: #F2BA1D;
+$lightbrown: #EC8A21;
+$green: #12B255;
+$indigo: #3476D6;
+$purple: #724586;
+
+$avatar-colors: $yellow, $lightbrown, $green, $indigo, $purple, $darkblue, $darkorange, $primary, $secondary;
 
 $theme-colors: (
   'primary': $primary,

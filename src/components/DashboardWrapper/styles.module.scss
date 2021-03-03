@@ -13,12 +13,10 @@
     background-color: $secondary;
     padding: 40px 45px;
     height: 100vh;
-    position: relative;
-  }
-
-  .bottomMenu {
-    position: absolute;
-    bottom: 40px;
+    display: flex;
+    justify-content: flex-start; 
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .navLink {
@@ -37,6 +35,78 @@
   
     img {
       margin-right: 13px;
+    }
+  }
+
+  .accountDropdown {
+    margin-top: 30px;
+    width: 209px;
+    margin-left: -1px;
+    
+    .button {
+      background: $darkblue;
+      border-radius: 8px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 25px;
+      color: $white;
+      font-family: Roboto;
+      font-size: 18px;
+      letter-spacing: 0.11px;
+      line-height: 21px;
+      position: relative;
+      width: 100%;
+      cursor: pointer;
+
+      .avatar {
+        margin-right: 17px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
+      }
+
+      .icon {
+        position: absolute;
+        right: 15px;
+      }
+    }
+
+    .button[aria-describedby="account-popper"] {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top: 1px solid #050D27;
+      .icon {
+        transform: rotate(180deg)
+      }
+    }
+
+    .popper {
+      width: 209px;
+      margin: 0;
+      padding: 0;
+      left: 1px !important; // @k check why
+
+      .popperButton {
+        width: 100%;
+        padding: 33px 25px;
+        background: $darkblue;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        color: $darkorange;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        font-family: Roboto;
+        font-size: 18px;
+        letter-spacing: 0.11px;
+        line-height: 21px;
+        cursor: pointer;
+
+        .icon {
+          margin-right: 18px;
+        }
+      }
     }
   }
 }
