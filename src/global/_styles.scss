@@ -55,6 +55,12 @@ $spacers: (
   }
 }
 
+.mb {
+  &-15 {
+    margin-bottom: 15px;
+  }
+}
+
 // aligns element inside class
 .align {
   &-center {
@@ -79,7 +85,7 @@ $spacers: (
     line-height: 28px;
   }
   &.MuiTypography-h2 {
-    font-family: 'Roboto-Medium';
+    font-family: 'Roboto';
     font-size: 20px;
     letter-spacing: 0.4px;
     line-height: 24px;
@@ -136,6 +142,15 @@ hr.MuiDivider-root {
       padding: 0;
       margin: 0;
     }
+  }
+}
+
+// Contribution Colors
+
+// @temp: move when data is available
+span {
+  &.question {
+    color: $yellow;
   }
 }
 

@@ -1,0 +1,36 @@
+@import '~global/styles';
+
+.paper {
+  border: 1px solid $lightgray;
+  border-radius: 8px;
+  background-color: $white;
+  padding: 30px;
+}
+
+// Header 
+.type {
+  font-family: 'Roboto-Medium';
+  text-transform: capitalize;
+}
+
+.bodyWrapper {
+  margin-top: 12px;
+  margin-bottom: 7px;
+
+  .body {
+    font-family: 'Roboto';
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 24px;
+  }
+
+  .anchor {
+    font-family: 'Roboto';
+    font-size: 14px;
+    letter-spacing: 0.09px;
+    line-height: 16px;
+    color: $primary;
+    text-decoration: none;
+  }
+}
+
