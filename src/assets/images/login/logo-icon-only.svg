@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="99px" height="100px" viewBox="0 0 99 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>9E9DC3D8-91C5-4C04-81E4-4216BEBBF261</title>
+    <defs>
+        <polygon id="path-1" points="0 0.305983288 98.3136543 0.305983288 98.3136543 70.8913883 0 70.8913883"></polygon>
+    </defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="log-in" transform="translate(-681.000000, -70.000000)">
+            <g id="logo-icon-only" transform="translate(681.000000, 70.000000)">
+                <polygon id="Fill-1" fill="#F2BA1D" points="37.2727273 100 61.3636364 100 61.3636364 0 37.2727273 0"></polygon>
+                <polygon id="Fill-3" fill="#EF8C20" points="0 65.0227102 86.3878529 15 98.1818182 35.4318353 11.7922592 85.4545455"></polygon>
+                <g id="Group-7" transform="translate(0.000000, 14.090909)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-6"></g>
+                    <polygon id="Fill-5" fill="#3476D6" mask="url(#mask-2)" points="11.7669384 0.305983288 98.314508 50.3627225 86.5467159 70.8913883 -0.000853728393 20.8346491"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
