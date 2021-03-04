@@ -1,0 +1,15 @@
+@import '~global/styles';
+
+.deprecatedWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 15px;
+  color: $red;
+  font-family: 'Roboto-Medium';
+  font-size: 16px;
+  letter-spacing: 0.1px;
+  line-height: 24px;
+}

@@ -7,6 +7,17 @@
   padding: 30px;
 }
 
+// Parent Title 
+
+.parentTitleWrapper {
+  margin-bottom: 10px;
+
+  .parentTitle {
+    line-height: 19px;
+    color: $gray3;
+  }
+}
+
 // Header 
 .type {
   font-family: 'Roboto-Medium';
@@ -31,6 +42,49 @@
     line-height: 16px;
     color: $primary;
     text-decoration: none;
+  }
+}
+
+.footer {
+  display: flex;
+  margin-top: 15px;
+  align-items: center;
+
+  h5.meta {
+    font-family: 'Roboto';
+    text-transform: none;
+    color: $lightgray2;
+
+    &.author {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      font-size: 15px;
+    }
+  }
+  .metaDivider {
+    margin: 0 10px;
+  }
+  .metaButton {
+    padding: 0;
+    min-width: unset;
+    font-family: 'Roboto';
+    font-size: 14px;
+    letter-spacing: 0.09px;
+    line-height: 16px;
+    color: $lightgray2;
+
+    &:hover {
+      background: inherit;
+    }
+    img {
+      margin-right: 6px;
+    }
   }
 }
 
