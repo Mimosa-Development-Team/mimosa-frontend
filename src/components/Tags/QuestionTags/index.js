@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Chip from '@material-ui/core/Chip'
 import styles from './styles.module.scss'
 
-const Tags = ({ data }) => {
+const QuestionTags = ({ data }) => {
   return (
     <ul className={`${styles.root}`}>
       {(data || []).map((data, key) => {
@@ -21,8 +21,8 @@ const Tags = ({ data }) => {
   )
 }
 
-Tags.propTypes = {
+QuestionTags.propTypes = {
   data: PropTypes.array.isRequired
 }
 
-export default Tags
+export default QuestionTags
