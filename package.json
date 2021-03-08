@@ -17,7 +17,9 @@
     "@material-ui/pickers": "^3.2.10",
     "autoprefixer": "^10.2.1",
     "axios": "^0.21.1",
+    "better-docs": "^2.3.2",
     "date-fns": "^2.17.0",
+    "jsdoc": "^3.6.6",
     "localforage": "^1.9.0",
     "lodash": "^4.17.20",
     "material-ui-popup-state": "^1.7.1",
@@ -38,6 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "docs": "jsdoc -c jsdoc.conf.json",
     "test": "react-scripts test --watchAll=false --passWithNoTests",
     "eslint": "eslint src --fix",
     "stylelint": "stylelint **/*.scss",
