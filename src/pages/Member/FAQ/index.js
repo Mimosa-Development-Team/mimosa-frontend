@@ -13,7 +13,7 @@ const MemberFAQ = () => {
   }, [getFaq])
 
   return (
-    <div>
+    <div className="padding-40">
       <Typography variant="h1" align="center">
         FAQ/Help
       </Typography>

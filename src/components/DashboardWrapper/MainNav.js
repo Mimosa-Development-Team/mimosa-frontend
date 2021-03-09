@@ -26,6 +26,7 @@ const MainNav = ({ links }) => {
             .filter(link => link.location === 'top')
             .map(link => (
               <NavLink
+                key={link.id}
                 to={link.to}
                 title={link.title}
                 icon={link.icon}
@@ -39,6 +40,7 @@ const MainNav = ({ links }) => {
             .filter(link => link.location === 'bottom')
             .map(link => (
               <NavLink
+                key={link.id}
                 to={link.to}
                 title={link.title}
                 icon={link.icon}

@@ -1,0 +1,14 @@
+@import '~global/styles';
+
+.questionWrapper {
+  display: flex;
+  width: 100%;
+  background: $secondary;
+
+  .contentWrapper {
+    background: $offwhite;
+    flex-grow: 1;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+}
