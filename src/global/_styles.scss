@@ -51,6 +51,11 @@ $spacers: (
 }
 
 /** Helper Classes **/
+.padding {
+  &-40 {
+    padding: 40px;
+  }
+}
 
 .mt {
   &-10 {
