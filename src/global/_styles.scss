@@ -18,12 +18,12 @@ $darkorange: #EF5F20;
 $red: #E50E56; //use in refute hypothesis
 // use in contribution heirarchy - in order QHED-AAA
 $yellow: #F2BA1D;
-$lightbrown: #EC8A21;
+$orange: #EC8A21;
 $green: #12B255;
 $indigo: #3476D6;
 $purple: #724586;
 
-$avatar-colors: $yellow, $lightbrown, $green, $indigo, $purple, $darkblue, $darkorange, $primary, $secondary;
+$avatar-colors: $yellow, $orange, $green, $indigo, $purple, $darkorange, $primary, $secondary;
 
 $theme-colors: (
   'primary': $primary,
@@ -159,6 +159,18 @@ hr.MuiDivider-root {
 span {
   &.question {
     color: $yellow;
+  }
+  &.hypothesis {
+    color: $orange;
+  }
+  &.experiment {
+    color: $green;
+  }
+  &.data {
+    color: $indigo;
+  }
+  &.analysis {
+    color: $purple;
   }
 }
 

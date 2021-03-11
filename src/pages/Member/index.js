@@ -5,6 +5,7 @@ import DashboardWrapper from 'components/DashboardWrapper'
 import { ROUTES } from './constants'
 import Dashboard from './Home'
 import FAQ from './FAQ'
+import Question from './Question'
 import './index.scss'
 
 const Member = () => {
@@ -14,7 +15,7 @@ const Member = () => {
         <DashboardWrapper links={ROUTES} />
         <div className="appMain">
           <Switch>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/" component={Question} />
             <Route
               path="/my-contributions"
               component={Dashboard}

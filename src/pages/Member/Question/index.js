@@ -15,8 +15,10 @@ const Question = () => {
   return (
     <div className={`${styles.questionWrapper}`}>
       <div className={`${styles.contentWrapper}`}>
-        <Typography variant="h1">Question</Typography>
-        <ContributionHeirarchy data={contribution} />
+        <Typography className={`${styles.title}`} variant="h1">
+          Question
+        </Typography>
+        <ContributionHeirarchy contributions={contribution} />
       </div>
       <Sidebar />
     </div>
