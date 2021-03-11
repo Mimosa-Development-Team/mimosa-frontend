@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
-import ParentTitle from './ParentTitle'
+import Footer from 'components/Card/Footer'
 import Header from './Header'
 import Content from './Content'
-import Footer from './Footer'
+import ParentTitle from './ParentTitle'
 import styles from './styles.module.scss'
 
 const Card = ({
@@ -21,7 +21,7 @@ const Card = ({
 }) => {
   return (
     <Paper elevation={0} className={`${styles.paper}`}>
-      {!treeView && type !== 'question' && (
+      {!treeView && type !== 'question' && parentTitle && (
         <ParentTitle type={type} title={parentTitle} />
       )}
       <Header
@@ -46,7 +46,7 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.any,
   author: PropTypes.string,
-  date: PropTypes.any
+  date: PropTypes.string
 }
 
 export default Card
