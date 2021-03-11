@@ -32,7 +32,7 @@ const Header = ({
 Header.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  questionTags: PropTypes.array,
+  questionTags: PropTypes.node,
   analysisTag: PropTypes.string,
   deprecated: PropTypes.bool
 }

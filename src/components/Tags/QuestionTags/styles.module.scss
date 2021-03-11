@@ -8,12 +8,7 @@
   padding: 0;
   margin-bottom: 15px;
 
-  .chip {
-    color: $gray;
-    font-family: "Roboto-Medium";
-    font-size: 12px;
-    letter-spacing: 0.38px;
-    line-height: 14px;
+  .chip { 
     text-align: center;
     margin-right: 5px;
     border: 1px solid rgba(178, 180, 189, 0.5);
@@ -23,6 +18,11 @@
 
     span {
       padding: 0 8px;
+      font-family: "Roboto-Medium";
+      color: $gray;
+      font-size: 12px;
+      letter-spacing: 0.38px;
+      line-height: 14px;
     }
   }
 }
