@@ -7,11 +7,14 @@ import Comments from 'components/Card/Footer/Comments'
 import Bookmark from 'components/Card/Footer/Bookmark'
 import styles from './styles.module.scss'
 
-const Footer = ({ author, date }) => {
+const Footer = ({ author, datePosted, dateModified }) => {
   return (
     <div className={`${styles.footer}`}>
       {author && <AuthorMeta author={author} />}
-      <DateMeta date={date} />
+      <DateMeta
+        datePosted={datePosted}
+        dateModified={dateModified}
+      />
       <Media />
       <Comments />
       <Bookmark />
@@ -21,7 +24,8 @@ const Footer = ({ author, date }) => {
 
 Footer.propTypes = {
   author: PropTypes.string,
-  date: PropTypes.string.isRequired
+  datePosted: PropTypes.string.isRequired,
+  dateModified: PropTypes.string
 }
 
 export default Footer

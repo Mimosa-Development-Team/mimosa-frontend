@@ -4,11 +4,14 @@ import Typography from '@material-ui/core/Typography'
 import moment from 'moment'
 import styles from './styles.module.scss'
 
-const DateMeta = ({ date }) => {
+const DateMeta = ({ datePosted, dateModified }) => {
   return (
     <div className={`${styles.metaWrapper}`}>
       <Typography className={`${styles.meta}`} variant="h5">
-        Last modified {moment(date).format('MMM. D, YYYY')}
+        {dateModified ? 'Last modified ' : ''}
+        {moment(dateModified || datePosted).format(
+          'MMM. D, YYYY'
+        )}
       </Typography>
       <span className={`${styles.metaDivider}`}>·</span>
     </div>
@@ -16,7 +19,8 @@ const DateMeta = ({ date }) => {
 }
 
 DateMeta.propTypes = {
-  date: PropTypes.string.isRequired
+  datePosted: PropTypes.string.isRequired,
+  dateModified: PropTypes.string
 }
 
 export default DateMeta

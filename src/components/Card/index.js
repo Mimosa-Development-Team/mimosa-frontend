@@ -17,7 +17,8 @@ const Card = ({
   title,
   content,
   author,
-  date
+  datePosted,
+  dateModified
 }) => {
   return (
     <Paper elevation={0} className={`${styles.paper}`}>
@@ -32,7 +33,11 @@ const Card = ({
         title={title}
       />
       {content && <Content content={content} />}
-      <Footer author={author} date={date} />
+      <Footer
+        author={author}
+        datePosted={datePosted}
+        dateModified={dateModified}
+      />
     </Paper>
   )
 }
@@ -46,7 +51,8 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.any,
   author: PropTypes.string,
-  date: PropTypes.string
+  datePosted: PropTypes.string.isRequired,
+  dateModified: PropTypes.string
 }
 
 export default Card
