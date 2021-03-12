@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 import { queryClient, useGlobalState } from 'store/state'
 
 import { postUserAPI } from './api'
-import { USER_QUERY_KEY } from './constants'
+import { USER_LOGIN_KEY } from './constants'
 
 export const useUser = () => {
   const {
@@ -14,7 +14,7 @@ export const useUser = () => {
     mutate
   } = useMutation(postUserAPI, {
     onSuccess: () => {
-      queryClient.invalidateQueries(USER_QUERY_KEY)
+      queryClient.invalidateQueries(USER_LOGIN_KEY)
     }
   })
 
