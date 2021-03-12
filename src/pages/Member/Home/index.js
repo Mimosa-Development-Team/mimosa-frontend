@@ -31,12 +31,17 @@ const MemberDashboard = () => {
         </Button>
       </div>
       <div className={`${styles.content}`}>
-        <Card
-          tags={data.tags}
-          type={data.type}
-          title={data.title}
-          content={data.content}
-        />
+        <Link
+          to="/contribution"
+          style={{ textDecoration: 'none' }}
+        >
+          <Card
+            tags={data.tags}
+            type={data.type}
+            title={data.title}
+            content={data.content}
+          />
+        </Link>
       </div>
     </div>
   )

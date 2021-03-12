@@ -5,10 +5,17 @@
   width: 100%;
   background: $secondary;
 
+  .title {
+    margin-bottom: 15px;
+  }
+
   .contentWrapper {
     background: $offwhite;
-    flex-grow: 1;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+    padding: 40px;
+    max-height: 98vh;
+    overflow-y: scroll;
+    width: 100%;
   }
 }

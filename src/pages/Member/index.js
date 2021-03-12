@@ -6,6 +6,7 @@ import { ROUTES } from './constants'
 import Dashboard from './Home'
 import QuestionForm from './QuestionForm'
 import FAQ from './FAQ'
+import Question from './Question'
 import './index.scss'
 
 const Member = () => {
@@ -16,10 +17,7 @@ const Member = () => {
         <div className="appMain">
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route
-              path="/my-contributions"
-              component={Dashboard}
-            />
+            <Route path="/contribution" component={Question} />
             <Route
               path="/contribution-form"
               component={QuestionForm}

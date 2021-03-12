@@ -15,11 +15,6 @@ const Content = ({ content }) => {
         expanded={false}
       >
         {content}
-        Lorem ipsum dolor sit amet, consectetur consectetur
-        adipiscing elit,sed do eiusmod tempor incididunt ut
-        labore et dminim veniam, quis nostrud exercitation
-        ullamco laboris nisi ut aliquip ex Lorem ipsum sit amet,
-        consecteturadipiscing elit, sed dotempor incididunt
       </ShowMoreText>
     </div>
   )
