@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import dotenv from 'global/environment'
-
+import localForage from 'localforage'
 import { handleHttpError } from './handleHttpError'
 
 const axiosInstance = axios.create({
@@ -11,6 +11,11 @@ const axiosInstance = axios.create({
 function makeHttpRequest(apiCall) {
   return new Promise(async (resolve, reject) => {
     try {
+      const { user } = await localForage.getItem('globalState')
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${
+        user ? user.token : ''
+      }`
+
       const req = await apiCall()
       resolve(req.data)
     } catch (e) {

@@ -12,18 +12,31 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
       }
     ],
     "react/prop-types": 0,
+    "react/jsx-wrap-multilines": 0,
     "react/jsx-one-expression-per-line": "off",
+    "no-use-before-define": [
+      "error",
+      {
+        "variables": false
+      }
+    ],
     "react/jsx-max-props-per-line": "off",
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
     "react/forbid-prop-types": "off",
     "react/no-array-index-key": "off",
     "no-underscore-dangle": 0,
-    "import/imports-first": ["off", "off"],
+    "import/imports-first": [
+      "off",
+      "off"
+    ],
     "import/newline-after-import": "error",
     "import/prefer-default-export": "off",
     "linebreak-style": "off",
@@ -53,7 +66,12 @@
     ],
     "import/named": "off",
     "no-shadow": "off",
-    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
     "arrow-parens": "off",
     "no-async-promise-executor": "off",
     "object-curly-newline": "off",

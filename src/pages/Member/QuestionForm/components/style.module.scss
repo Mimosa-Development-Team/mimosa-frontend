@@ -1,0 +1,53 @@
+@import '~global/styles';
+
+.wrapper {
+  padding: 20px;
+
+  .link {
+    text-decoration: none;
+    color: black;
+    font-size: large;
+
+    .label {
+      position: absolute;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  }
+
+  .form {
+    margin-top: 3vh;
+
+    .label {
+      color: black;
+
+      .required {
+        color: 'red';
+      }
+    }
+
+    .input {
+      margin-top: 1em;
+    }
+  }
+
+  .btnGroup {
+    margin: auto 0 auto auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .questionBtn {
+      margin-left: 20px;
+      color: white;
+      background-color: $primary;
+      border-radius: 27.5px;
+    }
+
+    .draftBtn {
+      color: $primary;
+      border-color: 2px solid black;
+      background-color: white;
+      border-radius: 27.5px;
+    }
+  }
+}
