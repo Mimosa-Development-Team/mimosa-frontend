@@ -4,6 +4,7 @@ import { CssBaseline } from '@material-ui/core'
 import DashboardWrapper from 'components/DashboardWrapper'
 import { ROUTES } from './constants'
 import Dashboard from './Home'
+import QuestionForm from './QuestionForm'
 import FAQ from './FAQ'
 import './index.scss'
 
@@ -18,6 +19,10 @@ const Member = () => {
             <Route
               path="/my-contributions"
               component={Dashboard}
+            />
+            <Route
+              path="/contribution-form"
+              component={QuestionForm}
             />
             <Route path="/bookmarks" component={Dashboard} />
             <Route path="/about" component={Dashboard} />

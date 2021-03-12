@@ -1,0 +1,26 @@
+@import '~global/styles';
+
+.homeWrapper {
+  padding: 50px;
+
+  .groupHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .searchBox {
+      width: 100%;
+    }
+
+    .questionBtn {
+      color: white;
+      font-weight: bold;
+      background-color: $primary;
+      border-radius: 27.5px;
+    }
+  }
+
+  .content {
+    margin-top: 2em;
+  }
+}
