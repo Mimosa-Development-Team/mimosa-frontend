@@ -14,7 +14,7 @@ const Comments = () => {
         <img src={CommentIcon} alt="" />
         30
       </Button>
-      <span className={`${styles.metaDivider}`}>·</span>
+      {/* <span className={`${styles.metaDivider}`}>·</span> */}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import AuthorMeta from 'components/Card/Footer/AuthorMeta'
 import DateMeta from 'components/Card/Footer/DateMeta'
 import Media from 'components/Card/Footer/Media'
 import Comments from 'components/Card/Footer/Comments'
-import Bookmark from 'components/Card/Footer/Bookmark'
+// import Bookmark from 'components/Card/Footer/Bookmark'
 import styles from './styles.module.scss'
 
 const Footer = ({ author, datePosted, dateModified }) => {
@@ -17,7 +17,7 @@ const Footer = ({ author, datePosted, dateModified }) => {
       />
       <Media />
       <Comments />
-      <Bookmark />
+      {/* <Bookmark /> */}
     </div>
   )
 }

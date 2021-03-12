@@ -46,6 +46,7 @@ const ContributionHeirarchy = ({ contributions }) => {
           title={data.subject}
           content={data.details}
           questionTags={data.tags}
+          analysisTag={data.hypothesisStatus}
           datePosted={data.createdAt}
           dateModified={data.updatedAt}
         />
