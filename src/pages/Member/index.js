@@ -23,7 +23,7 @@ const Member = () => {
               path="/my-contributions"
               component={Dashboard}
             />
-            <Route path="/bookmarks" component={Dashboard} />
+            {/* <Route path="/bookmarks" component={Dashboard} /> */}
             <Route path="/about" component={Dashboard} />
             <Route path="/faq" component={FAQ} />
           </Switch>

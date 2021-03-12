@@ -8,7 +8,7 @@ import styles from './styles.module.scss'
 const AnalysisTag = ({ variant }) => {
   let tagLabel
   let tagIcon
-  if (variant === 'support') {
+  if (variant === 'supports') {
     tagLabel = 'Supports Hypothesis'
     tagIcon = (
       <ArrowDropUpIcon
@@ -17,7 +17,7 @@ const AnalysisTag = ({ variant }) => {
       />
     )
   }
-  if (variant === 'refute') {
+  if (variant === 'refutes') {
     tagLabel = 'Refutes Hypothesis'
     tagIcon = (
       <ArrowDropDownIcon
@@ -32,14 +32,14 @@ const AnalysisTag = ({ variant }) => {
       label={tagLabel}
       icon={tagIcon}
       className={`${styles.chip} ${
-        variant === 'support' ? styles.support : styles.refute
+        variant === 'supports' ? styles.support : styles.refute
       }`}
     />
   )
 }
 
 AnalysisTag.propTypes = {
-  variant: PropTypes.string.isRequired
+  variant: PropTypes.oneOf(['supports', 'refutes'])
 }
 
 export default AnalysisTag

@@ -13,13 +13,13 @@ export const ROUTES = [
     location: 'top',
     icon: 'contributions'
   },
-  {
-    id: 3,
-    title: 'Bookmarks',
-    to: '/bookmarks',
-    location: 'top',
-    icon: 'bookmarks'
-  },
+  // {
+  //   id: 3,
+  //   title: 'Bookmarks',
+  //   to: '/bookmarks',
+  //   location: 'top',
+  //   icon: 'bookmarks'
+  // },
   {
     id: 4,
     title: 'About Mimosa',
