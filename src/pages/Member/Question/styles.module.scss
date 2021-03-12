@@ -1,21 +1,5 @@
 @import '~global/styles';
 
-.questionWrapper {
-  display: flex;
-  width: 100%;
-  background: $secondary;
-
-  .title {
-    margin-bottom: 15px;
-  }
-
-  .contentWrapper {
-    background: $offwhite;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    padding: 40px;
-    max-height: 98vh;
-    overflow-y: scroll;
-    width: 100%;
-  }
+.title {
+  margin-bottom: 15px;
 }
