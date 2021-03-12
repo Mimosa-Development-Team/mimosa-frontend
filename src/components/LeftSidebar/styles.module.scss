@@ -1,23 +1,26 @@
 @import '~global/styles';
 
-.drawerWrapper {
+.drawer {
+  min-width: 45px;
+  max-width: 300px;
+  flex-shrink: 0;
+  display: block;
+  height: 100vh;
+}
+
+div.drawerPaper {
+  background-color: $secondary;
+  position: inherit;
+  overflow: hidden;
+}
+
+.mainNav {
+  padding: 45px 40px;
   display: flex;
-
-  .drawer {
-    width: 300px;
-    flex-shrink: 0;
-  }
-
-  .drawerPaper {
-    width: 300px;
-    background-color: $secondary;
-    padding: 40px 45px;
-    height: 100vh;
-    display: flex;
-    justify-content: flex-start; 
-    flex-direction: column;
-    justify-content: space-between;
-  }
+  justify-content: flex-start; 
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 
   .navLink {
     color: $white;
@@ -110,4 +113,5 @@
     }
   }
 }
+
 
