@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
-const ContributionHeirarchy = ({ contributions }) => {
+const ContributionHeirarchy = ({ contribution }) => {
   const ConditionalWrapper = ({
     condition,
     wrapper,
@@ -13,23 +13,27 @@ const ContributionHeirarchy = ({ contributions }) => {
   const CategoryWrapper = ({ data }) => {
     return (
       <>
-        <CardWrapper data={data} />
-        <ConditionalWrapper
-          condition={data.children.length > 1}
-          wrapper={children => (
-            <ul
-              className={`${styles[data.children[0].category]} ${
-                styles.childWrapper
-              }`}
+        {data ? (
+          <>
+            <CardWrapper data={data} />{' '}
+            <ConditionalWrapper
+              condition={data.children.length > 1}
+              wrapper={children => (
+                <ul
+                  className={`${
+                    styles[data.children[0].category]
+                  } ${styles.childWrapper}`}
+                >
+                  {children}
+                </ul>
+              )}
             >
-              {children}
-            </ul>
-          )}
-        >
-          {(data.children || []).map(data => {
-            return <CategoryWrapper data={data} />
-          })}
-        </ConditionalWrapper>
+              {(data.children || []).map(data => {
+                return <CategoryWrapper data={data} />
+              })}
+            </ConditionalWrapper>
+          </>
+        ) : null}
       </>
     )
   }
@@ -39,6 +43,7 @@ const ContributionHeirarchy = ({ contributions }) => {
         className={`${styles[data.category]} ${
           styles.contribution
         }`}
+        key={data.id}
       >
         <Card
           treeView
@@ -56,16 +61,14 @@ const ContributionHeirarchy = ({ contributions }) => {
   return (
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>
-        {(contributions || []).map(data => {
-          return <CategoryWrapper data={data} />
-        })}
+        <CategoryWrapper data={contribution} />
       </ul>
     </div>
   )
 }
 
 ContributionHeirarchy.propTypes = {
-  contributions: PropTypes.array
+  contribution: PropTypes.object.isRequired
 }
 
 export default ContributionHeirarchy

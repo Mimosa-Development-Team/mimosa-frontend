@@ -33,7 +33,7 @@ Header.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   questionTags: PropTypes.node,
-  analysisTag: PropTypes.oneOf(['supports', 'refutes']),
+  analysisTag: PropTypes.any,
   deprecated: PropTypes.bool
 }
 
