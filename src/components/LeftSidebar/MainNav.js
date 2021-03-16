@@ -7,7 +7,12 @@ import NavLink from './NavLink'
 import AccountDropdown from './AccountDropdown'
 import styles from './styles.module.scss'
 
-const MainNav = ({ links }) => {
+const MainNav = ({
+  links,
+  contribution,
+  activeContribution,
+  onTreeClick
+}) => {
   const location = useLocation()
   return (
     <div className={`${styles.mainNav}`}>
@@ -24,7 +29,13 @@ const MainNav = ({ links }) => {
               active={location.pathname === link.to}
             />
           ))}
-        <ContributionTree />
+        {contribution && (
+          <ContributionTree
+            contribution={contribution}
+            activeContribution={activeContribution}
+            onTreeClick={onTreeClick}
+          />
+        )}
       </div>
       <div>
         {links
@@ -45,7 +56,9 @@ const MainNav = ({ links }) => {
 }
 
 MainNav.propTypes = {
-  links: PropTypes.array.isRequired
+  links: PropTypes.array.isRequired,
+  contribution: PropTypes.object,
+  activeContribution: PropTypes.object
 }
 
 export default MainNav

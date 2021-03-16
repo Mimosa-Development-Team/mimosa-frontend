@@ -33,17 +33,21 @@ const ContributionDetails = ({
           )
         })}
       </div>
-      <div>
-        <Typography className={`${styles.metaTitle}`}>
-          Posted by:
-        </Typography>
-        <div className={`${styles.avatarName} ${styles.poster}`}>
-          <Avatar className={`${styles.avatar}`}>
-            {poster.charAt(0)}
-          </Avatar>
-          {poster}
+      {poster ? (
+        <div>
+          <Typography className={`${styles.metaTitle}`}>
+            Posted by:
+          </Typography>
+          <div
+            className={`${styles.avatarName} ${styles.poster}`}
+          >
+            <Avatar className={`${styles.avatar}`}>
+              {poster.charAt(0)}
+            </Avatar>
+            {poster}
+          </div>
         </div>
-      </div>
+      ) : null}
       <div>
         <Typography className={`${styles.metaTitle}`}>
           Date Posted:
