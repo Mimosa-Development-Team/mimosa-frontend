@@ -1,0 +1,11 @@
+@import '~global/styles';
+
+p.avatarName {
+  display: inline-flex;
+  align-items: center;
+  color: $white;
+  
+  .avatar {
+    margin-right: 17px;
+  }
+}

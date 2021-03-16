@@ -65,7 +65,7 @@ const VerticalTab = ({ data }) => {
             onChange={handleChange}
             aria-label="FAQ Topics"
             className={`${styles.tabs}`}
-            disableRipple="true"
+            disableRipple
             classes={{
               indicator: `${styles.tabIndicator}`
             }}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
-const ContributionHeirarchy = ({ contributions }) => {
+const ContributionHeirarchy = ({ contribution }) => {
   const ConditionalWrapper = ({
     condition,
     wrapper,
@@ -14,6 +14,7 @@ const ContributionHeirarchy = ({ contributions }) => {
     return (
       <>
         <CardWrapper data={data} />
+        {/* {JSON.stringify(data)} */}
         <ConditionalWrapper
           condition={data.children.length > 1}
           wrapper={children => (
@@ -39,6 +40,7 @@ const ContributionHeirarchy = ({ contributions }) => {
         className={`${styles[data.category]} ${
           styles.contribution
         }`}
+        key={data.id}
       >
         <Card
           treeView
@@ -56,16 +58,19 @@ const ContributionHeirarchy = ({ contributions }) => {
   return (
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>
-        {(contributions || []).map(data => {
+        {/* {JSON.stringify(contribution)} */}
+        {/* <CardWrapper data={contribution} /> */}
+        <CategoryWrapper data={contribution} />
+        {/* {(contribution.children || []).map(data => {
           return <CategoryWrapper data={data} />
-        })}
+        })} */}
       </ul>
     </div>
   )
 }
 
 ContributionHeirarchy.propTypes = {
-  contributions: PropTypes.array
+  contribution: PropTypes.object.isRequired
 }
 
 export default ContributionHeirarchy

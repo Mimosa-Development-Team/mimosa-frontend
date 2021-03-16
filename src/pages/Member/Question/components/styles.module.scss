@@ -6,6 +6,7 @@
     padding: 0;
     li.contribution {
       position: relative;
+      cursor: pointer;
       &.question {
         padding: 0;
       }
@@ -15,7 +16,10 @@
       &.analysis {
         padding-left: 40px;
       }
-
+      // activeColor
+      &.question.active > div {
+        border: 1px solid $yellow;
+      }
       &.hypothesis::after {
         content: '';
         width: 20px;
@@ -75,6 +79,31 @@
           border-top: none !important;
         }
       }
+    }
+  }
+}
+
+
+.contributionDetails {
+  padding: 40px;
+  color: $white;
+
+  .title {
+    color: $white;
+  }
+
+  .metaTitle {
+    font-family: 'Roboto-Medium';
+    margin-top: 15px;
+    margin-bottom: 8px;
+    color: $white;
+  }
+
+  .avatarName {
+    color: $white;
+
+    span {
+      background: nth($avatar-colors, random(length($avatar-colors)));
     }
   }
 }

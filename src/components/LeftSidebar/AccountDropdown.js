@@ -49,7 +49,7 @@ const AccountDropdown = () => {
           </Paper>
           <Popper
             placement="top"
-            disablePortal="true"
+            disablePortal
             className={`${styles.popper}`}
             {...bindPopper(popupState)}
             transition
