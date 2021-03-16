@@ -18,6 +18,10 @@ const Question = () => {
 
   const [activeContribution, setActiveContribution] = useState(0)
 
+  const handleClick = contribution => {
+    setActiveContribution(contribution)
+  }
+
   useEffect(() => {
     getContribution()
     if (contribution) {
@@ -26,7 +30,13 @@ const Question = () => {
   }, [contribution, getContribution])
   return (
     <>
-      <LeftSidebar showNav links={ROUTES} />
+      <LeftSidebar
+        showNav
+        links={ROUTES}
+        contribution={contribution}
+        activeContribution={activeContribution}
+        onTreeClick={handleClick}
+      />
       {isLoading ? (
         'Loading ...'
       ) : (
@@ -39,7 +49,11 @@ const Question = () => {
               Question
             </Typography>
             {/* {JSON.stringify(contribution)} */}
-            <ContributionHeirarchy contribution={contribution} />
+            <ContributionHeirarchy
+              contribution={contribution}
+              activeContribution={activeContribution}
+              onCardClick={handleClick}
+            />
           </PageContentWrapper>
           <RightSidebar>
             <ContributionDetails

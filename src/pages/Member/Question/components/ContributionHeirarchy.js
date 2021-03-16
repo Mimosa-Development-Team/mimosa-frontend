@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
-const ContributionHeirarchy = ({ contribution }) => {
+const ContributionHeirarchy = ({
+  contribution,
+  activeContribution,
+  onCardClick
+}) => {
   const ConditionalWrapper = ({
     condition,
     wrapper,
@@ -42,8 +46,9 @@ const ContributionHeirarchy = ({ contribution }) => {
       <li
         className={`${styles[data.category]} ${
           styles.contribution
-        }`}
+        } ${data === activeContribution ? styles.active : ''}`}
         key={data.id}
+        onClick={() => onCardClick(data)}
       >
         <Card
           treeView
@@ -68,7 +73,8 @@ const ContributionHeirarchy = ({ contribution }) => {
 }
 
 ContributionHeirarchy.propTypes = {
-  contribution: PropTypes.object.isRequired
+  contribution: PropTypes.object,
+  activeContribution: PropTypes.object
 }
 
 export default ContributionHeirarchy

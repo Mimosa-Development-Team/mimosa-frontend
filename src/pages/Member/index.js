@@ -13,7 +13,7 @@ const Member = () => {
       <div className="wrapper">
         <div className="appMain">
           <Switch>
-            <Route exact path="/" component={Question} />
+            <Route exact path="/" component={Dashboard} />
             <Route path="/contribution" component={Question} />
             <Route
               path="/contribution-form"
