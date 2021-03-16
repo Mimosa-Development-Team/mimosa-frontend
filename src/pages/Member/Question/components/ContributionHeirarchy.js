@@ -13,24 +13,27 @@ const ContributionHeirarchy = ({ contribution }) => {
   const CategoryWrapper = ({ data }) => {
     return (
       <>
-        <CardWrapper data={data} />
-        {/* {JSON.stringify(data)} */}
-        <ConditionalWrapper
-          condition={data.children.length > 1}
-          wrapper={children => (
-            <ul
-              className={`${styles[data.children[0].category]} ${
-                styles.childWrapper
-              }`}
+        {data ? (
+          <>
+            <CardWrapper data={data} />{' '}
+            <ConditionalWrapper
+              condition={data.children.length > 1}
+              wrapper={children => (
+                <ul
+                  className={`${
+                    styles[data.children[0].category]
+                  } ${styles.childWrapper}`}
+                >
+                  {children}
+                </ul>
+              )}
             >
-              {children}
-            </ul>
-          )}
-        >
-          {(data.children || []).map(data => {
-            return <CategoryWrapper data={data} />
-          })}
-        </ConditionalWrapper>
+              {(data.children || []).map(data => {
+                return <CategoryWrapper data={data} />
+              })}
+            </ConditionalWrapper>
+          </>
+        ) : null}
       </>
     )
   }
@@ -58,12 +61,7 @@ const ContributionHeirarchy = ({ contribution }) => {
   return (
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>
-        {/* {JSON.stringify(contribution)} */}
-        {/* <CardWrapper data={contribution} /> */}
         <CategoryWrapper data={contribution} />
-        {/* {(contribution.children || []).map(data => {
-          return <CategoryWrapper data={data} />
-        })} */}
       </ul>
     </div>
   )

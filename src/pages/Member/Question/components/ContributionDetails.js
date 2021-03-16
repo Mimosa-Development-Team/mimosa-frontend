@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
 import moment from 'moment'
-import AvatarName from 'components/AvatarName'
 import styles from './styles.module.scss'
 
 const ContributionDetails = ({
@@ -20,12 +20,16 @@ const ContributionDetails = ({
         <Typography className={`${styles.metaTitle}`}>
           Authors:
         </Typography>
-        {(authors || []).map(data => {
+        {(authors || []).map(author => {
           return (
-            <AvatarName
-              className={`${styles.author}`}
-              name={data.name}
-            />
+            <div
+              className={`${styles.avatarName} ${styles.author}`}
+            >
+              <Avatar className={`${styles.avatar}`}>
+                {author.name.charAt(0)}
+              </Avatar>
+              {author.name}
+            </div>
           )
         })}
       </div>
@@ -33,10 +37,12 @@ const ContributionDetails = ({
         <Typography className={`${styles.metaTitle}`}>
           Posted by:
         </Typography>
-        <AvatarName
-          className={`${styles.poster}`}
-          name={poster}
-        />
+        <div className={`${styles.avatarName} ${styles.poster}`}>
+          <Avatar className={`${styles.avatar}`}>
+            {poster.charAt(0)}
+          </Avatar>
+          {poster}
+        </div>
       </div>
       <div>
         <Typography className={`${styles.metaTitle}`}>

@@ -100,10 +100,35 @@
   }
 
   .avatarName {
-    color: $white;
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
 
-    span {
-      background: nth($avatar-colors, random(length($avatar-colors)));
+    &.author:not(:last-of-type) {
+      margin-bottom: 15px;
     }
+
+    &.author {
+      color: $white;
+      .avatar {
+        margin-right: 23px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
+      }
+    }
+
+    &.poster {
+      font-family: 'Roboto-Medium';
+      color: rgba(255, 255, 255, 0.5);
+      .avatar {
+        margin-right: 10px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
+      }
+    }
+  }
+
+  .date {
+    color: rgba(255, 255, 255, 0.5);
   }
 }
