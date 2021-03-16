@@ -29,11 +29,13 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
-        <ContributionTree
-          contribution={contribution}
-          activeContribution={activeContribution}
-          onTreeClick={onTreeClick}
-        />
+        {contribution && (
+          <ContributionTree
+            contribution={contribution}
+            activeContribution={activeContribution}
+            onTreeClick={onTreeClick}
+          />
+        )}
       </div>
       <div>
         {links
