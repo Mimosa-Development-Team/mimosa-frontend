@@ -6,7 +6,8 @@ import styles from './styles.module.scss'
 const ContributionHeirarchy = ({
   contribution,
   activeContribution,
-  onCardClick
+  onCardClick,
+  contributionRef
 }) => {
   const ConditionalWrapper = ({
     condition,
@@ -48,6 +49,9 @@ const ContributionHeirarchy = ({
           styles.contribution
         } ${data === activeContribution ? styles.active : ''}`}
         key={data.id}
+        ref={
+          data === activeContribution ? contributionRef : null
+        }
         onClick={() => onCardClick(data)}
       >
         <Card

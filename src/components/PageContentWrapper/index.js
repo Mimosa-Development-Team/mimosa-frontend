@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import CustomScrollbar from 'components/CustomScrollbar'
 import styles from './styles.module.scss'
 
 const PageContentWrapper = ({ children }) => {
   return (
-    <div className={`${styles.pageWrapper}`}>
-      <div className={`${styles.contentWrapper}`}>
-        {children}
-      </div>
+    <div className={`${styles.contentWrapper}`}>
+      <CustomScrollbar>{children}</CustomScrollbar>
     </div>
   )
 }

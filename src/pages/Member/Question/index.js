@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Typography from '@material-ui/core/Typography'
 import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
@@ -17,6 +17,15 @@ const Question = () => {
   } = useContribution()
 
   const [activeContribution, setActiveContribution] = useState(0)
+
+  const contributionRef = useCallback(node => {
+    if (node !== null) {
+      node.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      })
+    }
+  }, [])
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
@@ -53,6 +62,7 @@ const Question = () => {
               contribution={contribution}
               activeContribution={activeContribution}
               onCardClick={handleClick}
+              contributionRef={contributionRef}
             />
           </PageContentWrapper>
           <RightSidebar>

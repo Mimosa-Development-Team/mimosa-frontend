@@ -1,16 +1,9 @@
 @import '~global/styles';
 
-.pageWrapper {
-  display: flex;
+.contentWrapper {
+  background: $offwhite;
+  border-top-left-radius: 12px;
+  padding: 40px 40px 40px 40px;
+  max-height: 98vh;
   width: 100%;
-  background: $secondary;
-  
-  .contentWrapper {
-    background: $offwhite;
-    border-top-left-radius: 12px;
-    padding: 40px;
-    max-height: 98vh;
-    overflow-y: scroll;
-    width: 100%;
-  }
 }
