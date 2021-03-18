@@ -7,7 +7,13 @@ import Comments from 'components/Card/Footer/Comments'
 // import Bookmark from 'components/Card/Footer/Bookmark'
 import styles from './styles.module.scss'
 
-const Footer = ({ author, datePosted, dateModified }) => {
+const Footer = ({
+  author,
+  datePosted,
+  dateModified,
+  commentCount,
+  relatedMediaCount
+}) => {
   return (
     <div className={`${styles.footer}`}>
       {author && <AuthorMeta author={author} />}
@@ -15,8 +21,8 @@ const Footer = ({ author, datePosted, dateModified }) => {
         datePosted={datePosted}
         dateModified={dateModified}
       />
-      <Media />
-      <Comments />
+      <Media relatedMediaCount={relatedMediaCount} />
+      <Comments commentCount={commentCount} />
       {/* <Bookmark /> */}
     </div>
   )
@@ -25,7 +31,8 @@ const Footer = ({ author, datePosted, dateModified }) => {
 Footer.propTypes = {
   author: PropTypes.string,
   datePosted: PropTypes.string.isRequired,
-  dateModified: PropTypes.string
+  dateModified: PropTypes.string,
+  commentCount: PropTypes.string
 }
 
 export default Footer
