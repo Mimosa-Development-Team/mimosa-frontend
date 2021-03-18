@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import CommentIcon from 'assets/images/icons/comment.svg'
 import styles from './styles.module.scss'
 
-const Comments = () => {
+const Comments = ({ commentCount }) => {
   return (
     <div>
       <Button
@@ -12,7 +12,7 @@ const Comments = () => {
         className={`${styles.metaButton}`}
       >
         <img src={CommentIcon} alt="" />
-        30
+        {commentCount}
       </Button>
       {/* <span className={`${styles.metaDivider}`}>·</span> */}
     </div>

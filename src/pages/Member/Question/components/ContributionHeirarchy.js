@@ -63,6 +63,8 @@ const ContributionHeirarchy = ({
           analysisTag={data.hypothesisStatus}
           datePosted={data.createdAt}
           dateModified={data.updatedAt}
+          commentCount={data.commentCount}
+          relatedMediaCount={data.relatedMediaCount}
         />
       </li>
     )

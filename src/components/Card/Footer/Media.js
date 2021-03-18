@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import MediaIcon from 'assets/images/icons/media.svg'
 import styles from './styles.module.scss'
 
-const Media = () => {
+const Media = ({ relatedMediaCount }) => {
   return (
     <div className={`${styles.metaWrapper}`}>
       <Button
@@ -11,7 +11,8 @@ const Media = () => {
         aria-label="media"
         className={`${styles.metaButton}`}
       >
-        <img src={MediaIcon} alt="" />1
+        <img src={MediaIcon} alt="" />
+        {relatedMediaCount}
       </Button>
       <span className={`${styles.metaDivider}`}>·</span>
     </div>
