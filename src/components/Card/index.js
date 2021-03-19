@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import Footer from 'components/Card/Footer'
 import Header from './Header'
 import Content from './Content'
 import ParentTitle from './ParentTitle'
+import QuestionDetails from './QuestionDetails'
 import styles from './styles.module.scss'
 
 const Card = ({
@@ -22,6 +23,12 @@ const Card = ({
   commentCount,
   relatedMediaCount
 }) => {
+  const [showDetails, setShowDetails] = useState(false)
+
+  const handleClick = () => {
+    setShowDetails(!showDetails)
+  }
+
   return (
     <Paper elevation={0} className={`${styles.paper}`}>
       {!treeView && type !== 'question' && parentTitle && (
@@ -41,7 +48,9 @@ const Card = ({
         dateModified={dateModified}
         commentCount={commentCount}
         relatedMediaCount={relatedMediaCount}
+        onMetaClick={handleClick}
       />
+      {showDetails && <QuestionDetails />}
     </Paper>
   )
 }

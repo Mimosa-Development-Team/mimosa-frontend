@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Grid from '@material-ui/core/Grid'
@@ -41,7 +41,7 @@ const Topic = ({ topic }) => {
 }
 
 const VerticalTab = ({ data }) => {
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
