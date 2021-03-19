@@ -1,9 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
-const ContributionHeirarchy = ({ contributions }) => {
+const ContributionHeirarchy = ({
+  contribution,
+  activeContribution,
+  onCardClick,
+  contributionRef
+}) => {
+  const history = useHistory()
   const ConditionalWrapper = ({
     condition,
     wrapper,
@@ -13,23 +20,27 @@ const ContributionHeirarchy = ({ contributions }) => {
   const CategoryWrapper = ({ data }) => {
     return (
       <>
-        <CardWrapper data={data} />
-        <ConditionalWrapper
-          condition={data.children.length > 1}
-          wrapper={children => (
-            <ul
-              className={`${styles[data.children[0].category]} ${
-                styles.childWrapper
-              }`}
+        {data ? (
+          <>
+            <CardWrapper data={data} />{' '}
+            <ConditionalWrapper
+              condition={data.children.length > 1}
+              wrapper={children => (
+                <ul
+                  className={`${
+                    styles[data.children[0].category]
+                  } ${styles.childWrapper}`}
+                >
+                  {children}
+                </ul>
+              )}
             >
-              {children}
-            </ul>
-          )}
-        >
-          {(data.children || []).map(data => {
-            return <CategoryWrapper data={data} />
-          })}
-        </ConditionalWrapper>
+              {(data.children || []).map(data => {
+                return <CategoryWrapper data={data} />
+              })}
+            </ConditionalWrapper>
+          </>
+        ) : null}
       </>
     )
   }
@@ -38,7 +49,18 @@ const ContributionHeirarchy = ({ contributions }) => {
       <li
         className={`${styles[data.category]} ${
           styles.contribution
-        }`}
+        } ${data === activeContribution ? styles.active : ''}`}
+        key={data.id}
+        ref={
+          data === activeContribution ? contributionRef : null
+        }
+        onClick={() => {
+          onCardClick(data)
+          history.push('/contribution-form', {
+            data,
+            type: 'update'
+          })
+        }}
       >
         <Card
           treeView
@@ -46,25 +68,26 @@ const ContributionHeirarchy = ({ contributions }) => {
           title={data.subject}
           content={data.details}
           questionTags={data.tags}
+          analysisTag={data.hypothesisStatus}
           datePosted={data.createdAt}
           dateModified={data.updatedAt}
         />
       </li>
     )
   }
+
   return (
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>
-        {(contributions || []).map(data => {
-          return <CategoryWrapper data={data} />
-        })}
+        <CategoryWrapper data={contribution} />
       </ul>
     </div>
   )
 }
 
 ContributionHeirarchy.propTypes = {
-  contributions: PropTypes.array
+  contribution: PropTypes.object,
+  activeContribution: PropTypes.object
 }
 
 export default ContributionHeirarchy

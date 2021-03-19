@@ -46,7 +46,7 @@ Card.propTypes = {
   treeView: PropTypes.bool,
   type: PropTypes.string.isRequired,
   questionTags: PropTypes.array,
-  analysisTag: PropTypes.string,
+  analysisTag: PropTypes.any,
   deprecated: PropTypes.bool,
   title: PropTypes.string.isRequired,
   content: PropTypes.any,

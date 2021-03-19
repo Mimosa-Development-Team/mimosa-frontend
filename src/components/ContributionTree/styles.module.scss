@@ -22,18 +22,27 @@
       position: relative;
       color: $white;
       cursor: pointer;
+      text-transform: uppercase;
+      line-height: 18px;
 
-      &:first-child {
+      &.active ~ li {
+        opacity: 0.5;
+      }
+
+      &.question {
         background: $yellow;
       }
-      &:nth-child(2) {
+      &.hypothesis {
         background: $orange;
       }
-      &:nth-child(3) {
+      &.experiment {
         background: $green;
       }
-      &:nth-child(4) {
+      &.data {
         background: $indigo;
+      }
+      &.analysis {
+        background: $purple;
       }
   
       &::after {
@@ -45,56 +54,59 @@
         top: 8px;
         border-top: 1px solid rgba(255, 255, 255, 0.5);
       }
+    }
 
-      ul.subtree {
-        list-style-type: none;
-        position: absolute;
-        top: -12px;
-        left: 4px;
+    ul.subtree {
+      list-style-type: none;
+      padding-left: 7px;
+      margin-top: 3px;
 
-        li {
-          margin-bottom: 5px;
-          background: $purple;
-          &:first-child {
-            &::after {
-              content: '';
-              width: 7px;
-              display: block;
-              position: absolute;
-              left: -7px;
-              top: 8px;
-              border-top: 1px solid rgba(255, 255, 255, 0.5);
-              border-left: 1px solid rgba(255, 255, 255, 0.5);
-              height: 13px;
-              border-bottom: none;
-            }
-          }
-          &:nth-child(2) {
-            &::after {
-              content: '';
-              width: 7px;
-              display: block;
-              position: absolute;
-              left: -7px;
-              top: -3px;
-              border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-              border-left: 1px solid rgba(255, 255, 255, 0.5);
-              height: 13px;
-              border-top: none !important;
-            }
-          }
+      li {
+        margin-bottom: 5px;
+        opacity: 0.5;
+
+        &.active {
+          opacity: 1;
+        }
+        &:first-child {
           &::after {
             content: '';
             width: 7px;
             display: block;
             position: absolute;
             left: -7px;
-            top: -13px;
+            top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            height: 13px;
+            border-bottom: none;
+          }
+        }
+        &:nth-child(2) {
+          &::after {
+            content: '';
+            width: 7px;
+            display: block;
+            position: absolute;
+            left: -7px;
+            top: -3px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
             border-left: 1px solid rgba(255, 255, 255, 0.5);
-            height: 23px;
-            border-top: none;
+            height: 13px;
+            border-top: none !important;
           }
+        }
+        &::after {
+          content: '';
+          width: 7px;
+          display: block;
+          position: absolute;
+          left: -7px;
+          top: -13px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+          border-left: 1px solid rgba(255, 255, 255, 0.5);
+          height: 23px;
+          border-top: none;
         }
       }
     }

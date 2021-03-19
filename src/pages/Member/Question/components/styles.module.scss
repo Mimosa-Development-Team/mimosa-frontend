@@ -6,6 +6,7 @@
     padding: 0;
     li.contribution {
       position: relative;
+      cursor: pointer;
       &.question {
         padding: 0;
       }
@@ -15,7 +16,22 @@
       &.analysis {
         padding-left: 40px;
       }
-
+      // activeColor
+      &.question.active > div {
+        border: 1px solid $yellow;
+      }
+      &.hypothesis.active > div {
+        border: 1px solid $orange;
+      }
+      &.experiment.active > div {
+        border: 1px solid $green;
+      }
+      &.data.active > div {
+        border: 1px solid $indigo;
+      }
+      &.analysis.active > div {
+        border: 1px solid $purple;
+      }
       &.hypothesis::after {
         content: '';
         width: 20px;
@@ -76,5 +92,55 @@
         }
       }
     }
+  }
+}
+
+
+.contributionDetails {
+  padding: 40px;
+  color: $white;
+
+  .title {
+    color: $white;
+  }
+
+  .metaTitle {
+    font-family: 'Roboto-Medium';
+    margin-top: 15px;
+    margin-bottom: 8px;
+    color: $white;
+  }
+
+  .avatarName {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
+
+    &.author:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+
+    &.author {
+      color: $white;
+      .avatar {
+        margin-right: 23px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
+      }
+    }
+
+    &.poster {
+      font-family: 'Roboto-Medium';
+      color: rgba(255, 255, 255, 0.5);
+      .avatar {
+        margin-right: 10px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
+      }
+    }
+  }
+
+  .date {
+    color: rgba(255, 255, 255, 0.5);
   }
 }
