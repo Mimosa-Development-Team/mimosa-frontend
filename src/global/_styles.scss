@@ -174,3 +174,26 @@ span {
   }
 }
 
+// Buttons target root mui classes later @k
+
+button.btn {
+  box-sizing: border-box;
+  height: 45px;
+  border-radius: 27px;
+
+  span {
+    font-family: 'Roboto-Medium';
+  }
+
+  &.outline {
+    border: 1px dashed $primary;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.09px;
+    line-height: 16px;
+    color: $primary;
+    padding: 0 45px;
+    box-shadow: none;
+  }
+}
