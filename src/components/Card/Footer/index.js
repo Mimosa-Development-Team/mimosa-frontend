@@ -12,7 +12,8 @@ const Footer = ({
   datePosted,
   dateModified,
   commentCount,
-  relatedMediaCount
+  relatedMediaCount,
+  onMetaClick
 }) => {
   return (
     <div className={`${styles.footer}`}>
@@ -21,8 +22,18 @@ const Footer = ({
         datePosted={datePosted}
         dateModified={dateModified}
       />
-      <Media relatedMediaCount={relatedMediaCount} />
-      <Comments commentCount={commentCount} />
+      {relatedMediaCount > 0 && (
+        <Media
+          relatedMediaCount={relatedMediaCount}
+          onMetaClick={onMetaClick}
+        />
+      )}
+      {commentCount > 0 && (
+        <Comments
+          commentCount={commentCount}
+          onMetaClick={onMetaClick}
+        />
+      )}
       {/* <Bookmark /> */}
     </div>
   )
