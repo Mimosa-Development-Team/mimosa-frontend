@@ -33,6 +33,7 @@ const ContributionForm = props => {
         return (
           <FormControls.QuestionForm
             profile={getRawData(user).user}
+            questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
             userData={userData}
             type={props.match.params.type}
@@ -58,6 +59,7 @@ const ContributionForm = props => {
         return (
           <FormControls.HypothesisForm
             profile={getRawData(user).user}
+            questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
             userData={userData}
             type={props.match.params.type}
@@ -83,6 +85,7 @@ const ContributionForm = props => {
         return (
           <FormControls.ExperimentForm
             profile={getRawData(user).user}
+            questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
             userData={userData}
             type={props.match.params.type}
@@ -108,6 +111,7 @@ const ContributionForm = props => {
         return (
           <FormControls.DataForm
             profile={getRawData(user).user}
+            questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
             userData={userData}
             type={props.match.params.type}
@@ -133,6 +137,7 @@ const ContributionForm = props => {
         return (
           <FormControls.AnalysisForm
             profile={getRawData(user).user}
+            questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
             userData={userData}
             type={props.match.params.type}
@@ -158,6 +163,7 @@ const ContributionForm = props => {
         return (
           <FormControls.ContributionForm
             profile={getRawData(user).user}
+            questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
             userData={userData}
             type={props.match.params.type}

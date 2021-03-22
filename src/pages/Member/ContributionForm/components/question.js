@@ -115,7 +115,7 @@ function Form(props) {
             style={{ textAlign: 'right' }}
             variant="subtitle1"
           >
-            Saved as Draft Nov. 20, 2020 10:30 AM
+            {/* // Saved as Draft Nov. 20, 2020 10:30 AM */}
           </Typography>
         </Grid>
         <Grid item sm={12}>

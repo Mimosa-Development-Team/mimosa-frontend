@@ -1,5 +1,17 @@
 @import '~global/styles';
 
+.button {
+  background-color: $primary;
+  color: white;
+  border-color: $primary;
+
+  &:hover {
+    background-color: white;
+    color: $primary;
+    border-color: white;
+  }
+}
+
 .form {
   .typography {
     text-decoration: none;
