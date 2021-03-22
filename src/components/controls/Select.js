@@ -1,42 +1,47 @@
 import React from 'react'
-import {
-  FormControl,
-  InputLabel,
-  Select as MuiSelect,
-  MenuItem,
-  FormHelperText
-} from '@material-ui/core'
+import { Select, MenuItem, InputLabel } from '@material-ui/core'
+import { Controller } from 'react-hook-form'
+import styles from './style.module.scss'
 
-export default function Select(props) {
+export default function Input(props) {
   const {
     name,
+    control,
+    type,
     label,
-    value,
-    error = null,
-    onChange,
-    options
+    asterisk,
+    data,
+    errors,
+    ...propsList
   } = props
-
   return (
-    <FormControl
-      variant="outlined"
-      {...(error && { error: true })}
-    >
-      <InputLabel>{label}</InputLabel>
-      <MuiSelect
-        label={label}
+    <div className={`${styles.inputControl}`}>
+      <InputLabel className={`${styles.label}`}>
+        {label}{' '}
+        {asterisk ? (
+          <span className={`${styles.required}`}>*</span>
+        ) : null}
+      </InputLabel>
+      <Controller
+        render={({ onChange }) => (
+          <Select
+            size="small"
+            variant="outlined"
+            className={`${styles.input}`}
+            onChange={onChange}
+            {...propsList}
+            control={control}
+          >
+            {data.map((x, i) => (
+              <MenuItem value={x} key={i}>
+                {x}
+              </MenuItem>
+            ))}
+          </Select>
+        )}
         name={name}
-        value={value}
-        onChange={onChange}
-      >
-        <MenuItem value="">None</MenuItem>
-        {options.map(item => (
-          <MenuItem key={item.id} value={item.id}>
-            {item.title}
-          </MenuItem>
-        ))}
-      </MuiSelect>
-      {error && <FormHelperText>{error}</FormHelperText>}
-    </FormControl>
+        control={control}
+      />
+    </div>
   )
 }

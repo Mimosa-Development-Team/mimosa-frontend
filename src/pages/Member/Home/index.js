@@ -1,6 +1,6 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
-import { Link } from 'react-router-dom'
 import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
@@ -19,6 +19,8 @@ const data = {
 }
 
 const MemberDashboard = () => {
+  const history = useHistory()
+
   return (
     <>
       <LeftSidebar showNav links={ROUTES} />
@@ -26,27 +28,28 @@ const MemberDashboard = () => {
         <div className={`${styles.groupHeader}`}>
           <SearchField className={`${styles.searchBox}`} />
           <Button
-            component={Link}
-            to="/contribution-form"
             className={`${styles.questionBtn}`}
             size="large"
             variant="contained"
+            onClick={() => {
+              history.push('/contribution-form/question/new', {
+                type: 'new'
+              })
+            }}
           >
             <AddBoxIcon /> NEW QUESTION
           </Button>
         </div>
-        <div className={`${styles.content}`}>
-          <Link
-            to="/contribution"
-            style={{ textDecoration: 'none' }}
-          >
-            <Card
-              tags={data.tags}
-              type={data.type}
-              title={data.title}
-              content={data.content}
-            />
-          </Link>
+        <div
+          className={`${styles.content}`}
+          onClick={() => history.push('/contribution')}
+        >
+          <Card
+            tags={data.tags}
+            type={data.type}
+            title={data.title}
+            content={data.content}
+          />
         </div>
       </PageContentWrapper>
     </>

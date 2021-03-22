@@ -1,0 +1,62 @@
+@import '~global/styles';
+
+.form {
+  .typography {
+    text-decoration: none;
+  }
+
+  .question {
+    color: '#F2BA32';
+  }
+
+  .hypothesis {
+    color: '#EC8A2A';
+  }
+  
+  .experiment {
+    color: '#54B356';
+  }
+
+  .data {
+    color: '#3576D6';
+  }
+
+  .analysis {
+    color: '#724586';
+  }
+
+  .addMedia {
+    width: 18vh;
+    height: 5vh;
+    color: #ef8c20;
+    font-weight: bold;
+    border-color: #ef8c20;
+    border-radius: 3vh;
+  }
+
+  .btnContainer {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    text-align: end;
+
+    .publishBtn {
+      width: 18vh;
+      height: 5vh;
+      margin-left: 20px;
+      color: white;
+      font-weight: bold;
+      background-color: #ef8c20;
+      border-radius: 3vh;
+    }
+
+    .addBtn {
+      width: 18vh;
+      height: 5vh;
+      color: #ef8c20;
+      font-weight: bold;
+      border-color: #ef8c20;
+      border-radius: 3vh;
+    }
+  }
+}

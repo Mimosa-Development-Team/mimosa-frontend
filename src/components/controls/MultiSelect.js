@@ -1,72 +1,82 @@
 import React from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { TextField, Chip } from '@material-ui/core'
+import { TextField, InputLabel } from '@material-ui/core'
+import { Controller } from 'react-hook-form'
+import styles from './style.module.scss'
 
-export default function MultiSelect(props) {
-  const {
-    name,
-    label,
-    value,
-    data,
-    placeholder,
-    error = null,
-    onChange
-  } = props
+export default function ControlledAutocomplete({
+  options = [],
+  label,
+  control,
+  defaultValue,
+  asterisk,
+  name,
+  ...propsList
+}) {
   return (
-    <div>
-      <Autocomplete
-        multiple
-        id="tags-filled"
-        name={name}
-        options={data}
-        getOptionLabel={option => {
-          return option.name ? option.name : option
-        }}
-        defaultValue={value}
-        freeSolo
-        onChange={(e, values) => {
-          if (typeof values === 'object' && values !== null) {
-            onChange(name, values)
-          } else {
-            onChange(name, { name: values })
-          }
-
-          onChange(
-            name,
-            values.map(val => {
-              let obj = {}
-              if (data.some(field => field.name)) {
-                if (typeof val === 'object' && val !== null) {
-                  obj = val
-                } else {
-                  obj.name = val
-                }
+    <div className={`${styles.multiSelectControl}`}>
+      <InputLabel className={`${styles.label}`}>
+        {label}{' '}
+        {asterisk ? (
+          <span className={`${styles.required}`}>*</span>
+        ) : null}
+      </InputLabel>
+      <Controller
+        render={({ onChange, ...props }) => (
+          <Autocomplete
+            freeSolo
+            multiple
+            size="small"
+            options={options}
+            getOptionLabel={option => {
+              return option.name ? option.name : option
+            }}
+            renderInput={params => (
+              <TextField
+                className={`${styles.input}`}
+                {...params}
+                placeholder={label}
+                {...propsList}
+                margin="normal"
+                variant="outlined"
+              />
+            )}
+            onChange={(e, values) => {
+              if (
+                typeof values === 'object' &&
+                values !== null
+              ) {
+                onChange(values)
               } else {
-                return val
+                onChange({ name: values })
               }
-              return obj
-            })
-          )
-        }}
-        renderTags={(value, getProps) => {
-          return value.map((option, index) => (
-            <Chip
-              variant="outlined"
-              label={option.name ? option.name : option}
-              {...getProps({ index })}
-            />
-          ))
-        }}
-        renderInput={params => (
-          <TextField
-            name={name}
-            {...params}
-            variant="outlined"
-            label={label}
-            placeholder={placeholder}
-            {...(error && { error: true, helperText: error })}
+
+              onChange(
+                values.map(val => {
+                  let obj = {}
+                  if (options.some(field => field.name)) {
+                    if (
+                      typeof val === 'object' &&
+                      val !== null
+                    ) {
+                      obj = val
+                    } else {
+                      obj.name = val
+                    }
+                  } else {
+                    return val
+                  }
+                  return obj
+                })
+              )
+            }}
+            {...props}
           />
         )}
+        onChange={([, data]) => data}
+        defaultValue={defaultValue}
+        name={name}
+        control={control}
       />
     </div>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import Dashboard from './Home'
-import QuestionForm from './QuestionForm'
+import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
 import Question from './Question'
 import './index.scss'
@@ -16,8 +16,8 @@ const Member = () => {
             <Route exact path="/" component={Dashboard} />
             <Route path="/contribution" component={Question} />
             <Route
-              path="/contribution-form"
-              component={QuestionForm}
+              path="/contribution-form/:type/:method"
+              component={ContributionForm}
             />
             <Route
               path="/my-contributions"

@@ -55,6 +55,7 @@ const ContributionHeirarchy = ({
         onClick={() => onCardClick(data)}
       >
         <Card
+          data={data}
           treeView
           type={data.category}
           title={data.subject}
@@ -63,8 +64,6 @@ const ContributionHeirarchy = ({
           analysisTag={data.hypothesisStatus}
           datePosted={data.createdAt}
           dateModified={data.updatedAt}
-          commentCount={data.commentCount}
-          relatedMediaCount={data.relatedMediaCount}
         />
       </li>
     )

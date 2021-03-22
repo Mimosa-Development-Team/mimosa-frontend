@@ -11,6 +11,7 @@ import styles from './styles.module.scss'
 const Card = ({
   treeView,
   type,
+  data,
   parentTitle,
   questionTags,
   analysisTag,
@@ -44,6 +45,7 @@ const Card = ({
       {content && <Content content={content} />}
       <Footer
         author={author}
+        data={data}
         datePosted={datePosted}
         dateModified={dateModified}
         commentCount={commentCount}

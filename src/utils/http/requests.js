@@ -17,7 +17,6 @@ function makeHttpRequest(apiCall) {
           localData.user ? localData.user.token : ''
         }`
       }
-
       const req = await apiCall()
       resolve(req.data)
     } catch (e) {
