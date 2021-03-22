@@ -11,7 +11,10 @@ import styles from './style.module.scss'
 export default function DialogNotification({
   updateIsLoadingContribution,
   addLoadingContribution,
-  reset
+  reset,
+  status,
+  type,
+  addedData
 }) {
   const history = useHistory()
   const [dialogStatus, setDialogStatus] = useState(false)
@@ -51,7 +54,12 @@ export default function DialogNotification({
           onClick={() => {
             reset()
             setDialogStatus(!dialogStatus)
-            history.push(`/`)
+            if (status === 'draft') {
+              history.push(`/contribution-form/${type}/new`, {
+                type: 'new',
+                data: addedData
+              })
+            }
           }}
           autoFocus
         >

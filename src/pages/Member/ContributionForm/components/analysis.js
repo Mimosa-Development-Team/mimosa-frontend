@@ -29,10 +29,11 @@ function Form(props) {
     addLoadingContribution,
     addContribution,
     updateContribution,
-    questionUuid
+    questionUuid,
+    addedData
   } = props
 
-  const [status, setStatus] = useState('publish')
+  const [status] = useState('publish')
   const { handleSubmit, errors, control, reset } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -81,6 +82,9 @@ function Form(props) {
       <DialogNotification
         updateIsLoadingContribution={updateIsLoadingContribution}
         addLoadingContribution={addLoadingContribution}
+        status={status}
+        addedData={addedData ? addedData.data : null}
+        type="hypothesis"
         reset={reset}
       />
       <Grid
@@ -172,13 +176,6 @@ function Form(props) {
           />
         </Grid>
         <Grid item className={`${styles.btnContainer}`} xs={12}>
-          <Button
-            className={`${styles.addBtn}`}
-            variant="outlined"
-            onClick={() => setStatus('draft')}
-          >
-            ADD DATA
-          </Button>
           <Button
             type="submit"
             className={`${styles.publishBtn}`}
