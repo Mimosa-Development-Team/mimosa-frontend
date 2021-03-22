@@ -1,5 +1,9 @@
 @import '~global/styles';
 
+.wrapper {
+  margin-left: 7px;
+}
+
 button.cardButton {
   background: transparent;
   font-family: "Roboto";
@@ -18,5 +22,15 @@ button.cardButton {
   img {
     margin-right: 7px;
     width: 15px;
+  }
+
+  &.edit {
+    margin-left: 7px;
+  }
+
+  &.contribute {
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
 }
