@@ -16,7 +16,8 @@ const Footer = ({
   dateModified,
   commentCount,
   relatedMediaCount,
-  onMetaClick
+  onMetaClick,
+  questionUuid
 }) => {
   const history = useHistory()
 
@@ -79,7 +80,8 @@ const Footer = ({
                   )}/new`,
                   {
                     type: 'new',
-                    data
+                    data,
+                    questionUuid
                   }
                 )
               }}

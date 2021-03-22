@@ -29,7 +29,8 @@ function Form(props) {
     addLoadingContribution,
     addContribution,
     updateContribution,
-    questionUuid
+    questionUuid,
+    addedData
   } = props
 
   const [status, setStatus] = useState('publish')
@@ -81,6 +82,9 @@ function Form(props) {
       <DialogNotification
         updateIsLoadingContribution={updateIsLoadingContribution}
         addLoadingContribution={addLoadingContribution}
+        status={status}
+        addedData={addedData ? addedData.data : null}
+        type="data"
         reset={reset}
       />
       <Grid
@@ -169,6 +173,7 @@ function Form(props) {
             className={`${styles.addBtn}`}
             variant="outlined"
             onClick={() => setStatus('draft')}
+            type="submit"
           >
             ADD DATA
           </Button>

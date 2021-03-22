@@ -57,7 +57,6 @@ const Question = () => {
             >
               Question
             </Typography>
-            {/* {JSON.stringify(contribution)} */}
             <ContributionHeirarchy
               questionUuid={
                 contribution ? contribution.uuid : ''

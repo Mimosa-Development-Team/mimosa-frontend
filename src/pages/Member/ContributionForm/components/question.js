@@ -31,7 +31,8 @@ function Form(props) {
     updateIsLoadingContribution,
     addLoadingContribution,
     addContribution,
-    updateContribution
+    updateContribution,
+    addedData
   } = props
   const [status, setStatus] = useState('publish')
 
@@ -89,6 +90,9 @@ function Form(props) {
       <DialogNotification
         updateIsLoadingContribution={updateIsLoadingContribution}
         addLoadingContribution={addLoadingContribution}
+        status={status}
+        addedData={addedData ? addedData.data : null}
+        type="hypothesis"
         reset={reset}
       />
       <Grid
@@ -107,7 +111,7 @@ function Form(props) {
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h1" gutterBottom>
-            Add Question
+            {method === 'new' ? 'ADD' : 'EDIT'} Question
           </Typography>
         </Grid>
         <Grid item sm={6}>
@@ -268,6 +272,7 @@ function Form(props) {
             className={`${styles.addBtn}`}
             variant="outlined"
             onClick={() => setStatus('draft')}
+            type="submit"
           >
             ADD HYPOTHESIS
           </Button>

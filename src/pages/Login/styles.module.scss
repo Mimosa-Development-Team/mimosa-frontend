@@ -62,16 +62,21 @@
       top: 30vh;
       width: 70%;
       margin: auto;
+
+      .loader {
+        width: 100%;
+        margin-left: 30%;
+      }
     }
-    
+
     p {
-      color: #A8A9AA;
+      color: #a8a9aa;
       margin-top: 1vh;
     }
 
     button {
       margin-top: 3vh;
-      background-color: #AFD731;
+      background-color: #afd731;
       color: white;
       border-color: transparent;
       font-weight: bold;

@@ -35,6 +35,8 @@ const ContributionForm = props => {
             profile={getRawData(user).user}
             questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
+            addedData={addedContribution}
+            updatedData={updatedContribution}
             userData={userData}
             type={props.match.params.type}
             method={props.match.params.method}
@@ -61,6 +63,7 @@ const ContributionForm = props => {
             profile={getRawData(user).user}
             questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
+            addedData={addedContribution}
             userData={userData}
             type={props.match.params.type}
             method={props.match.params.method}
@@ -87,6 +90,7 @@ const ContributionForm = props => {
             profile={getRawData(user).user}
             questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
+            addedData={addedContribution}
             userData={userData}
             type={props.match.params.type}
             method={props.match.params.method}
@@ -113,6 +117,7 @@ const ContributionForm = props => {
             profile={getRawData(user).user}
             questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
+            addedData={addedContribution}
             userData={userData}
             type={props.match.params.type}
             method={props.match.params.method}
@@ -139,6 +144,7 @@ const ContributionForm = props => {
             profile={getRawData(user).user}
             questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
+            addedData={addedContribution}
             userData={userData}
             type={props.match.params.type}
             method={props.match.params.method}
@@ -165,6 +171,7 @@ const ContributionForm = props => {
             profile={getRawData(user).user}
             questionUuid={props.location.state.questionUuid}
             tagsData={tagsData}
+            addedData={addedContribution}
             userData={userData}
             type={props.match.params.type}
             method={props.match.params.method}
