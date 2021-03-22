@@ -5,7 +5,7 @@ import EditIcon from 'assets/images/icons/edit.png'
 import ContributeIcon from 'assets/images/icons/contribute.svg'
 import styles from './styles.module.scss'
 
-const CardButton = ({ action }) => {
+const CardButton = ({ action, ...propsList }) => {
   const icons = {
     edit: EditIcon,
     contribute: ContributeIcon
@@ -15,6 +15,7 @@ const CardButton = ({ action }) => {
       disableRipple="true"
       aria-label={action}
       className={`${styles.cardButton}`}
+      {...propsList}
     >
       <img src={icons[action]} alt="" />
       {action}
