@@ -25,9 +25,12 @@ export default function Input(props) {
       <Controller
         render={({ onChange }) => (
           <Select
+            size="small"
+            variant="outlined"
             className={`${styles.input}`}
             onChange={onChange}
             {...propsList}
+            control={control}
           >
             {data.map((x, i) => (
               <MenuItem value={x} key={i}>

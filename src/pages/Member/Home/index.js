@@ -28,12 +28,11 @@ const MemberDashboard = () => {
         <div className={`${styles.groupHeader}`}>
           <SearchField className={`${styles.searchBox}`} />
           <Button
-            to="/contribution-form"
             className={`${styles.questionBtn}`}
             size="large"
             variant="contained"
             onClick={() => {
-              history.push('/contribution-form', {
+              history.push('/contribution-form/question/new', {
                 type: 'new'
               })
             }}

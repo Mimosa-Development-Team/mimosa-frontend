@@ -16,7 +16,7 @@ const Member = () => {
             <Route exact path="/" component={Dashboard} />
             <Route path="/contribution" component={Question} />
             <Route
-              path="/contribution-form"
+              path="/contribution-form/:type/:method"
               component={ContributionForm}
             />
             <Route

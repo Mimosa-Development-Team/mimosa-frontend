@@ -26,6 +26,7 @@ export default function ControlledAutocomplete({
           <Autocomplete
             freeSolo
             multiple
+            size="small"
             options={options}
             getOptionLabel={option => {
               return option.name ? option.name : option

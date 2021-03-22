@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
-import getRawData from 'utils/parsing/Proxy'
 import { useForm } from 'react-hook-form'
-import { Button, Grid, Typography } from '@material-ui/core'
+import {
+  Button,
+  Grid,
+  Typography,
+  Paper
+} from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import DialogNotification from './dialog'
 import styles from './style.module.scss'
 
 const schema = yup.object().shape({
@@ -16,52 +21,55 @@ const schema = yup.object().shape({
 
 function Form(props) {
   const {
-    propsData,
+    data,
     profile,
-    type
-    // contributionAction,
-    // request
+    type,
+    method,
+    updateIsLoadingContribution,
+    addLoadingContribution,
+    addContribution,
+    updateContribution
   } = props
 
   const [status, setStatus] = useState('publish')
-
-  const { handleSubmit, errors, control } = useForm({
+  const { handleSubmit, errors, control, reset } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      category:
-        propsData && propsData.question
-          ? propsData.question
-          : 'question',
-      subject:
-        propsData && propsData.subject ? propsData.subject : '',
-      details:
-        propsData && propsData.details ? propsData.details : '',
-      parentId: null,
-      parentUuid: null
+      category: '',
+      subject: method === 'new' ? '' : data.subject,
+      details: method === 'new' ? '' : data.details,
+      userId: null,
+      status: 'publish',
+      version: '1.0.0',
+      hypothesisStatus: 'SUPPORTS HYPOTHESIS'
     }
   })
 
-  const submitForm = data => {
+  const submitForm = val => {
     const formFields = {
       category: type,
-      subject: data.subject,
-      details: data.details,
+      subject: val.subject,
+      details: val.details,
       tags: [],
-      author: [],
-      userId: getRawData(profile).user.id,
+      author: [
+        {
+          name: `${profile.firstName} ${profile.lastName}`,
+          id: profile.uuid
+        }
+      ],
+      userId: profile.id,
       status,
       version: '1.0.0',
-      parentId: null,
-      parentUuid: null
+      parentId: method === 'new' ? 0 : data.id,
+      parentUuid: method === 'new' ? 0 : data.uuid,
+      hypothesisStatus: val.hypothesisStatus
     }
-    console.log(formFields)
-    // if (request === 'new') {
-    //   contributionAction(formFields)
-    // } else {
-    //   contributionAction(formFields, propsData.uuid)
-    // }
-
-    // reset()
+    if (method === 'new') {
+      addContribution(formFields)
+    } else {
+      formFields.id = data.id
+      updateContribution(formFields)
+    }
   }
 
   return (
@@ -69,6 +77,11 @@ function Form(props) {
       onSubmit={handleSubmit(submitForm)}
       className={`${styles.form}`}
     >
+      <DialogNotification
+        updateIsLoadingContribution={updateIsLoadingContribution}
+        addLoadingContribution={addLoadingContribution}
+        reset={reset}
+      />
       <Grid
         container
         direction="row"
@@ -77,16 +90,14 @@ function Form(props) {
         spacing={4}
       >
         <Grid item sm={12}>
-          <Link to="/" className={`${styles.typography}`}>
+          <Link
+            to="/contribution"
+            className={`${styles.typography}`}
+          >
             <Typography variant="h6" gutterBottom>
               <ArrowBackIcon /> Back
             </Typography>
           </Link>
-        </Grid>
-        <Grid item sm={12}>
-          <Typography variant="subtitle1" gutterBottom>
-            This contribution will fall under Question
-          </Typography>
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h1" gutterBottom>
@@ -101,16 +112,35 @@ function Form(props) {
             Saved as Draft Nov. 20, 2020 10:30 AM
           </Typography>
         </Grid>
+        <Grid item sm={12}>
+          <Typography variant="subtitle1" gutterBottom>
+            This contribution will fall under Experiment
+          </Typography>
+          <Paper
+            style={{
+              paddingLeft: '10px',
+              paddingTop: '10px',
+              paddingBottom: '10px'
+            }}
+          >
+            <span style={{ color: '#5BCA89' }}>Experiment</span>:
+            {data.subject}
+          </Paper>
+        </Grid>
         <Grid item sm={6}>
-          <Typography variant="h3" gutterBottom>
-            Hypothesis
+          <Typography
+            style={{ color: '#3576D6', fontWeight: 'bold' }}
+            variant="h3"
+            gutterBottom
+          >
+            Data
           </Typography>
         </Grid>
         <Grid item sm={12}>
           <Controls.Input
             type="text"
             name="subject"
-            label="Hypothesis: What is your answer to this question?"
+            label="What is this dataset about?"
             control={control}
             asterisk
             placeholder="e.g. Sud ut perspiciatis unde omnis iste natus error sit voluptatem accusantum"
@@ -125,9 +155,22 @@ function Form(props) {
             name="details"
             asterisk
             control={control}
-            label="Add some details about your research question"
-            placeholder="e.g. Why do you think it's and interesting question? Are there any related resources to better understand the context of the question?"
-            defaultValue=""
+            label="Describe your data"
+            placeholder="e.g. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
+            errors={errors}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Controls.Select
+            name="hypothesisStatus"
+            asterisk
+            control={control}
+            data={[
+              'SUPPORTS HYPOTHESIS',
+              'REFUTES HYPOTHESIS',
+              'UNCLEAR'
+            ]}
+            label="What is the verdict of your analysis? "
             errors={errors}
           />
         </Grid>
@@ -137,7 +180,7 @@ function Form(props) {
             variant="outlined"
             onClick={() => setStatus('draft')}
           >
-            ADD EXPERIMENT
+            ADD DATA
           </Button>
           <Button
             type="submit"
@@ -145,7 +188,7 @@ function Form(props) {
             variant="contained"
             id="submit"
           >
-            PUBLISH NOW
+            {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
           </Button>
         </Grid>
       </Grid>

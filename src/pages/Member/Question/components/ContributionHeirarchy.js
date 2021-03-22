@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
@@ -10,7 +9,6 @@ const ContributionHeirarchy = ({
   onCardClick,
   contributionRef
 }) => {
-  const history = useHistory()
   const ConditionalWrapper = ({
     condition,
     wrapper,
@@ -54,15 +52,10 @@ const ContributionHeirarchy = ({
         ref={
           data === activeContribution ? contributionRef : null
         }
-        onClick={() => {
-          onCardClick(data)
-          history.push('/contribution-form', {
-            data,
-            type: 'update'
-          })
-        }}
+        onClick={() => onCardClick(data)}
       >
         <Card
+          data={data}
           treeView
           type={data.category}
           title={data.subject}
@@ -71,13 +64,10 @@ const ContributionHeirarchy = ({
           analysisTag={data.hypothesisStatus}
           datePosted={data.createdAt}
           dateModified={data.updatedAt}
-          commentCount={data.commentCount}
-          relatedMediaCount={data.relatedMediaCount}
         />
       </li>
     )
   }
-
   return (
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>

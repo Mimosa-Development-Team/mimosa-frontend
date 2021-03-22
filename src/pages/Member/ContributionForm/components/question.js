@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
-import getRawData from 'utils/parsing/Proxy'
 import { useForm } from 'react-hook-form'
 import {
   Button,
@@ -12,6 +11,7 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import DialogNotification from './dialog'
 import styles from './style.module.scss'
 
 const schema = yup.object().shape({
@@ -24,68 +24,61 @@ function Form(props) {
   const {
     tagsData,
     userData,
-    propsData,
-    profile
-    // contributionAction
+    data,
+    profile,
+    type,
+    method,
+    updateIsLoadingContribution,
+    addLoadingContribution,
+    addContribution,
+    updateContribution
   } = props
-
   const [status, setStatus] = useState('publish')
 
-  const { handleSubmit, errors, control } = useForm({
+  const { handleSubmit, errors, control, reset } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      category:
-        propsData && propsData.question
-          ? propsData.question
-          : 'question',
-      subject:
-        propsData && propsData.subject ? propsData.subject : '',
-      details:
-        propsData && propsData.details ? propsData.details : '',
-      tags: propsData && propsData.tags ? propsData.tags : [],
+      category: data && data.category ? data.category : '',
+      subject: data && data.subject ? data.subject : '',
+      details: data && data.details ? data.details : '',
+      tags: data && data.tags ? data.tags : [],
       author:
-        propsData && propsData.author
-          ? propsData.author
+        data && data.author
+          ? data.author
           : [
               {
-                id: getRawData(profile).user.id,
-                name: `${getRawData(profile).user.firstName} ${
-                  getRawData(profile).user.lastName
-                }`
+                id: profile.id,
+                name: `${profile.firstName} ${profile.lastName}`
               }
             ],
-      userId:
-        propsData && propsData.userId ? propsData.userId : null,
-      status:
-        propsData && propsData.status
-          ? propsData.status
-          : 'publish',
+      userId: profile.id,
+      status: 'publish',
       version: '1.0.0',
       parentId: null,
       parentUuid: null
     }
   })
 
-  const submitForm = data => {
+  const submitForm = val => {
     const formFields = {
-      category: '',
-      subject: data.subject,
-      details: data.details,
-      tags: data.tags,
-      author: data.author,
-      userId: getRawData(profile).user.id,
+      category: type,
+      subject: val.subject,
+      details: val.details,
+      tags: val.tags,
+      author: val.author,
+      userId: profile.id,
       status,
       version: '1.0.0',
       parentId: null,
-      parentUuid: null
+      parentUuid: null,
+      hypothesisStatus: ''
     }
-    console.log(formFields)
-    // if (request === 'new') {
-    //   contributionAction(formFields)
-    // } else {
-    //   contributionAction(formFields, propsData.uuid)
-    // }
-    // reset()
+    if (method === 'new') {
+      addContribution(formFields)
+    } else {
+      formFields.id = data.id
+      updateContribution(formFields)
+    }
   }
 
   return (
@@ -93,6 +86,11 @@ function Form(props) {
       onSubmit={handleSubmit(submitForm)}
       className={`${styles.form}`}
     >
+      <DialogNotification
+        updateIsLoadingContribution={updateIsLoadingContribution}
+        addLoadingContribution={addLoadingContribution}
+        reset={reset}
+      />
       <Grid
         container
         direction="row"
@@ -125,7 +123,6 @@ function Form(props) {
             type="text"
             name="subject"
             label="In one sentence, what is your research question?"
-            defaultValue=""
             control={control}
             asterisk
             placeholder="e.g. Can an algorithm distinguish living organisms from non-living this?"
@@ -142,7 +139,6 @@ function Form(props) {
             control={control}
             label="Add some details about your research question"
             placeholder="e.g. Why do you think it's and interesting question? Are there any related resources to better understand the context of the question?"
-            defaultValue=""
             errors={errors}
           />
         </Grid>
@@ -156,7 +152,6 @@ function Form(props) {
             type="text"
             name="conferenceName"
             label="Conference name"
-            defaultValue=""
             control={control}
             placeholder="Conference title"
             {...(errors.conferenceName && {
@@ -170,7 +165,6 @@ function Form(props) {
             type="date"
             name="presentationDate"
             label="Presentation Date"
-            defaultValue=""
             control={control}
             {...(errors.presentationDate && {
               error: true,
@@ -183,7 +177,6 @@ function Form(props) {
             type="time"
             name="startTime"
             label="Start Time"
-            defaultValue=""
             control={control}
             {...(errors.startTime && {
               error: true,
@@ -196,7 +189,6 @@ function Form(props) {
             type="time"
             name="endTime"
             label="End Time"
-            defaultValue=""
             control={control}
             {...(errors.endTime && {
               error: true,
@@ -204,13 +196,12 @@ function Form(props) {
             })}
           />
         </Grid>
-        <Grid item sm={3}>
+        <Grid item sm={12}>
           <Controls.Input
             type="text"
             name="mediaTitle"
             label="Medial Title"
             placeholder="Files Title"
-            defaultValue=""
             control={control}
             {...(errors.mediaTitle && {
               error: true,
@@ -218,13 +209,12 @@ function Form(props) {
             })}
           />
         </Grid>
-        <Grid item sm={3}>
+        <Grid item sm={12}>
           <Controls.Input
             type="text"
             name="mediaLink"
             label="Medial Link"
             placeholder="e.g. Link to video presentation or conference paper"
-            defaultValue=""
             control={control}
             {...(errors.mediaLink && {
               error: true,
@@ -287,7 +277,7 @@ function Form(props) {
             variant="contained"
             id="submit"
           >
-            PUBLISH NOW
+            {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
           </Button>
         </Grid>
       </Grid>

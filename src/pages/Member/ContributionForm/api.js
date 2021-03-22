@@ -12,6 +12,6 @@ export const postContributionAPI = data => {
   return postRequest(`/api/v1/contribution`, data)
 }
 
-export const putContributionAPI = (data, id) => {
-  return putRequest(`/api/v1/contribution/${id}`, data)
+export const putContributionAPI = data => {
+  return putRequest(`/api/v1/contribution/${data.id}`, data)
 }

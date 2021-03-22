@@ -27,6 +27,7 @@ export default function Input(props) {
         label={label}
         render={({ onChange, value }) => (
           <TextField
+            size="small"
             type={type}
             className={`${styles.input}`}
             onChange={onChange}
