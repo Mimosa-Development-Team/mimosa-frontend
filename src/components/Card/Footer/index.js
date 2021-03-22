@@ -53,32 +53,42 @@ const Footer = ({
         />
       )}
       {/* <Bookmark /> */}
-      <button
-        onClick={() => {
-          history.push(
-            `/contribution-form/${data.category}/update`,
-            {
-              type: 'update',
-              data
-            }
-          )
-        }}
-      >
-        Edit
-      </button>
-      <button
-        onClick={() => {
-          history.push(
-            `/contribution-form/${getType(data.category)}/new`,
-            {
-              type: 'new',
-              data
-            }
-          )
-        }}
-      >
-        Contribute
-      </button>
+
+      <div className={`${styles.rightFooter}`}>
+        <button
+          onClick={() => {
+            history.push(
+              `/contribution-form/${data.category}/update`,
+              {
+                type: 'update',
+                data
+              }
+            )
+          }}
+        >
+          Edit
+        </button>
+        {(data &&
+          data.category !== 'analysis' &&
+          data.children.length <= 0) ||
+        data.category === 'data' ? (
+          <button
+            onClick={() => {
+              history.push(
+                `/contribution-form/${getType(
+                  data.category
+                )}/new`,
+                {
+                  type: 'new',
+                  data
+                }
+              )
+            }}
+          >
+            Contribute
+          </button>
+        ) : null}
+      </div>
     </div>
   )
 }

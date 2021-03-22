@@ -48,6 +48,7 @@ const MemberDashboard = () => {
             tags={data.tags}
             type={data.type}
             title={data.title}
+            form={false}
             content={data.content}
           />
         </div>

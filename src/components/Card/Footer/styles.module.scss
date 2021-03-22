@@ -5,6 +5,19 @@
   margin-top: 15px;
   align-items: center;
 
+  .rightFooter {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+
+    button {
+      background-color: white;
+      color: $primary;
+      border: none;
+      cursor: context-menu;
+    }
+  }
+
   .metaWrapper {
     display: flex;
     align-items: center;
