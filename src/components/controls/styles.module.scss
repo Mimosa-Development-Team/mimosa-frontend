@@ -1,0 +1,22 @@
+@import '~global/styles';
+
+.input {
+  height: 45px;
+  border: 1px solid rgba(178,180,189,0.5);
+  border-radius: 8px;
+  padding: 0 17px;
+  color: $gray;
+  font-size: 16px;
+  letter-spacing: 0.1px;
+  line-height: 19px;
+  background: $white;
+  width: 100%;
+
+  &.white {
+    background: $white;
+  }
+
+  &.offwhite{
+    background: $offwhite;
+  }
+}

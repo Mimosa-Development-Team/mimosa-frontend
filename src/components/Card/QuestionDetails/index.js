@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
+import CommentsOverview from '../CommentsOverview'
 import RelatedMedia from './RelatedMedia'
-import CommentsOverview from './CommentsOverview'
 import styles from './styles.module.scss'
 
 function TabPanel(props) {

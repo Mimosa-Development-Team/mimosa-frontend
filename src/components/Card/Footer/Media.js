@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 const Media = ({ relatedMediaCount, onMetaClick }) => {
   return (
     <div className={`${styles.metaWrapper}`}>
+      <span className={`${styles.metaDivider}`}>·</span>
       <Button
         disableRipple="true"
         aria-label="media"
@@ -15,7 +16,6 @@ const Media = ({ relatedMediaCount, onMetaClick }) => {
         <img src={MediaIcon} alt="" />
         {relatedMediaCount}
       </Button>
-      <span className={`${styles.metaDivider}`}>·</span>
     </div>
   )
 }

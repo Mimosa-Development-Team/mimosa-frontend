@@ -13,7 +13,6 @@ const DateMeta = ({ datePosted, dateModified }) => {
           'MMM. D, YYYY'
         )}
       </Typography>
-      <span className={`${styles.metaDivider}`}>·</span>
     </div>
   )
 }

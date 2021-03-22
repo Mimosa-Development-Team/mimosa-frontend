@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 const Comments = ({ commentCount, onMetaClick }) => {
   return (
     <div>
+      <span className={`${styles.metaDivider}`}>·</span>
       <Button
         disableRipple="true"
         aria-label="comment"
