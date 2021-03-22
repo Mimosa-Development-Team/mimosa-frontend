@@ -111,7 +111,7 @@ function Form(props) {
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h1" gutterBottom>
-            {method === 'new' ? 'ADD' : 'EDIT'} Question
+            {method === 'new' ? 'Add' : 'Edit'} Question
           </Typography>
         </Grid>
         <Grid item sm={6}>
@@ -268,14 +268,16 @@ function Form(props) {
           />
         </Grid>
         <Grid item className={`${styles.btnContainer}`} xs={12}>
-          <Button
-            className={`${styles.addBtn}`}
-            variant="outlined"
-            onClick={() => setStatus('draft')}
-            type="submit"
-          >
-            ADD HYPOTHESIS
-          </Button>
+          {method === 'update' ? (
+            <Button
+              className={`${styles.addBtn}`}
+              variant="outlined"
+              onClick={() => setStatus('draft')}
+              type="submit"
+            >
+              ADD HYPOTHESIS
+            </Button>
+          ) : null}
           <Button
             type="submit"
             className={`${styles.publishBtn}`}

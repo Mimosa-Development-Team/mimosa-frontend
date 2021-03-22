@@ -44,7 +44,7 @@ const MemberDashboard = () => {
           className={`${styles.content}`}
           onClick={() => {
             history.push(
-              '/contribution/736db584-4e09-4930-9297-d293d260b10d'
+              '/contribution/a56c199f-be27-4be9-acf5-aeb924eafcc1'
             )
           }}
         >
@@ -60,7 +60,7 @@ const MemberDashboard = () => {
           className={`${styles.content}`}
           onClick={() => {
             history.push(
-              '/contribution/d4397f81-25b8-493d-a6e6-7e99ee19fcc3'
+              '/contribution/376d8977-5edd-4c23-a1f0-63dc6beea457'
             )
           }}
         >
