@@ -42,18 +42,18 @@ const Footer = ({
         datePosted={datePosted}
         dateModified={dateModified}
       />
-      {/* {relatedMediaCount > 0 && ( */}
-      <Media
-        relatedMediaCount={relatedMediaCount}
-        onMetaClick={onMetaClick}
-      />
-      {/* // )} */}
-      {/* {commentCount > 0 && ( */}
-      <Comments
-        commentCount={commentCount}
-        onMetaClick={onMetaClick}
-      />
-      {/* // )} */}
+      {data.category === 'question' && (
+        <>
+          <Media
+            relatedMediaCount={relatedMediaCount}
+            onMetaClick={onMetaClick}
+          />
+          <Comments
+            commentCount={commentCount}
+            onMetaClick={onMetaClick}
+          />
+        </>
+      )}
       {data ? (
         <>
           <CardButton

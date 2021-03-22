@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import Footer from 'components/Card/Footer'
 import Header from './Header'
 import Content from './Content'
@@ -26,40 +27,56 @@ const Card = ({
   relatedMediaCount
 }) => {
   const [showDetails, setShowDetails] = useState(false)
+  const [activeTab, setActiveTab] = useState(0)
 
-  const handleClick = () => {
-    setShowDetails(!showDetails)
+  const handleClick = newValue => {
+    setShowDetails(true)
+    setActiveTab(newValue)
+  }
+
+  const handleClickAway = () => {
+    setShowDetails(false)
+  }
+
+  const handleChange = (event, newValue) => {
+    setActiveTab(newValue)
   }
 
   return (
-    <Paper elevation={0} className={`${styles.paper}`}>
-      {!treeView && type !== 'question' && parentTitle && (
-        <ParentTitle type={type} title={parentTitle} />
-      )}
-      <div className={`${styles.contentWrapper}`}>
-        <Header
-          type={type}
-          questionTags={questionTags}
-          analysisTag={analysisTag}
-          deprecated={deprecated}
-          title={title}
-        />
-        {content && <Content content={content} />}
-        <Footer
-          data={data}
-          questionUuid={questionUuid}
-          author={author}
-          datePosted={datePosted}
-          dateModified={dateModified}
-          commentCount={commentCount}
-          relatedMediaCount={relatedMediaCount}
-          onMetaClick={handleClick}
-        />
-      </div>
-      {showDetails && (
-        <QuestionDetails contributionId={data.id} />
-      )}
-    </Paper>
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Paper elevation={0} className={`${styles.paper}`}>
+        {!treeView && type !== 'question' && parentTitle && (
+          <ParentTitle type={type} title={parentTitle} />
+        )}
+        <div className={`${styles.contentWrapper}`}>
+          <Header
+            type={type}
+            questionTags={questionTags}
+            analysisTag={analysisTag}
+            deprecated={deprecated}
+            title={title}
+          />
+          {content && <Content content={content} />}
+          <Footer
+            data={data}
+            questionUuid={questionUuid}
+            author={author}
+            datePosted={datePosted}
+            dateModified={dateModified}
+            commentCount={commentCount}
+            relatedMediaCount={relatedMediaCount}
+            onMetaClick={handleClick}
+          />
+        </div>
+        {showDetails && (
+          <QuestionDetails
+            contributionId={data.id}
+            activeTab={activeTab}
+            handleTabChange={handleChange}
+          />
+        )}
+      </Paper>
+    </ClickAwayListener>
   )
 }
 
