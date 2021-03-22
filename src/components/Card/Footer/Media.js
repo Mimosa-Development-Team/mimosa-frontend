@@ -11,7 +11,7 @@ const Media = ({ relatedMediaCount, onMetaClick }) => {
         disableRipple="true"
         aria-label="media"
         className={`${styles.metaButton}`}
-        onClick={onMetaClick}
+        onClick={() => onMetaClick(0)}
       >
         <img src={MediaIcon} alt="" />
         {relatedMediaCount}

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
 import CommentsOverview from '../CommentsOverview'
-import RelatedMedia from './RelatedMedia'
+import RelatedMedia from '../RelatedMedia'
 import styles from './styles.module.scss'
 
 function TabPanel(props) {
@@ -29,18 +29,16 @@ function a11yProps(index) {
   }
 }
 
-const QuestionDetails = ({ contributionId }) => {
-  const [value, setValue] = useState(0)
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
-
+const QuestionDetails = ({
+  contributionId,
+  activeTab,
+  handleTabChange
+}) => {
   return (
     <div className={`${styles.questionDetails}`}>
       <Tabs
-        value={value}
-        onChange={handleChange}
+        value={activeTab}
+        onChange={handleTabChange}
         aria-label="simple tabs"
         className={`${styles.tabs}`}
         disableRipple
@@ -69,10 +67,10 @@ const QuestionDetails = ({ contributionId }) => {
           }}
         />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={activeTab} index={0}>
         <RelatedMedia />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={activeTab} index={1}>
         <CommentsOverview contributionId={contributionId} />
       </TabPanel>
     </div>

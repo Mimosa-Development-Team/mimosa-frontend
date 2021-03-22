@@ -11,7 +11,7 @@ const Comments = ({ commentCount, onMetaClick }) => {
         disableRipple="true"
         aria-label="comment"
         className={`${styles.metaButton}`}
-        onClick={onMetaClick}
+        onClick={() => onMetaClick(1)}
       >
         <img src={CommentIcon} alt="" />
         {commentCount}
