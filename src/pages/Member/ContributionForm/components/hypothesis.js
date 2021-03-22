@@ -101,7 +101,7 @@ function Form(props) {
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h1" gutterBottom>
-            {method === 'new' ? 'ADD' : 'EDIT'} Hypothesis
+            {method === 'new' ? 'Add' : 'Edit'} Hypothesis
           </Typography>
         </Grid>
         <Grid item sm={6}>
