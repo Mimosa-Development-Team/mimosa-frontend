@@ -56,4 +56,43 @@
   .button {
     padding: 5px;
   }
+
+  .popper {
+    padding: 15px;
+    background: $white;
+    border-radius: 8px;
+    box-shadow: 0 2px 30px 0 rgba(0,0,0,0.15);
+    position: relative;
+    min-width: 100px;
+
+    &:after{
+      content:'';
+      position: absolute;
+      border: 10px solid transparent;
+      border-bottom: 10px solid $white;
+      top: -20px;
+      left: 40%;
+    }
+  }
+
+  button.actionButton {
+    background: transparent;
+    font-family: "Roboto";
+    font-size: 15px;
+    letter-spacing: 0.44px;
+    line-height: 16px;
+    color: $darkgray1;
+    text-transform: capitalize;
+    padding: 0;
+  
+    &:hover,
+    &:focus {
+      background: inherit;
+    }
+  
+    img {
+      margin-right: 7px;
+      width: 15px;
+    }
+  }
 }
