@@ -6,7 +6,7 @@ import ContentImage from 'assets/images/login/slide1.png'
 import LeftSlide from 'assets/images/login/left-slider.png'
 import RightSlide from 'assets/images/login/right-slider.png'
 import OrcidLogo from 'assets/images/login/orcid-icon.png'
-// import HalfIcon from 'assets/images/login/half-icon.png'
+import dotenv from 'global/environment'
 import { useUser } from './hooks'
 import styles from './styles.module.scss'
 
@@ -82,7 +82,7 @@ const Login = () => {
             size="large"
             onClick={() => {
               window.location.assign(
-                `https://sandbox.orcid.org/oauth/authorize?client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+                `${dotenv.orcidUrl}${window.location.href}`
               )
             }}
           >
