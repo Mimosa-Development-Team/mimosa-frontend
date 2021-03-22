@@ -89,10 +89,7 @@ function Form(props) {
         spacing={4}
       >
         <Grid item sm={12}>
-          <Link
-            to="/contribution"
-            className={`${styles.typography}`}
-          >
+          <Link to="/" className={`${styles.typography}`}>
             <Typography variant="h6" gutterBottom>
               <ArrowBackIcon /> Back
             </Typography>

@@ -42,7 +42,27 @@ const MemberDashboard = () => {
         </div>
         <div
           className={`${styles.content}`}
-          onClick={() => history.push('/contribution')}
+          onClick={() => {
+            history.push(
+              '/contribution/a56c199f-be27-4be9-acf5-aeb924eafcc1'
+            )
+          }}
+        >
+          <Card
+            tags={data.tags}
+            type={data.type}
+            title={data.title}
+            form={false}
+            content={data.content}
+          />
+        </div>
+        <div
+          className={`${styles.content}`}
+          onClick={() => {
+            history.push(
+              '/contribution/376d8977-5edd-4c23-a1f0-63dc6beea457'
+            )
+          }}
         >
           <Card
             tags={data.tags}
