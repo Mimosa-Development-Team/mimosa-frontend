@@ -7,7 +7,8 @@ const ContributionHeirarchy = ({
   contribution,
   activeContribution,
   onCardClick,
-  contributionRef
+  contributionRef,
+  questionUuid
 }) => {
   const ConditionalWrapper = ({
     condition,
@@ -57,6 +58,7 @@ const ContributionHeirarchy = ({
         <Card
           data={data}
           treeView
+          questionUuid={questionUuid}
           type={data.category}
           title={data.subject}
           content={data.details}

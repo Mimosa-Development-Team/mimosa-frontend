@@ -1,5 +1,13 @@
 @import '~global/styles';
 
+button {
+  background-color: white;
+  color: $primary;
+  border: none;
+  cursor: context-menu;
+  font-size: 16px;
+}
+
 .footer {
   display: flex;
   margin-top: 15px;
@@ -9,13 +17,6 @@
     position: absolute;
     right: 0;
     padding: 20px;
-
-    button {
-      background-color: white;
-      color: $primary;
-      border: none;
-      cursor: context-menu;
-    }
   }
 
   .metaWrapper {

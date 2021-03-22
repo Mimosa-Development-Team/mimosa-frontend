@@ -17,6 +17,7 @@ const Card = ({
   analysisTag,
   deprecated,
   title,
+  questionUuid,
   content,
   author,
   datePosted,
@@ -46,6 +47,7 @@ const Card = ({
       <Footer
         author={author}
         data={data}
+        questionUuid={questionUuid}
         datePosted={datePosted}
         dateModified={dateModified}
         commentCount={commentCount}

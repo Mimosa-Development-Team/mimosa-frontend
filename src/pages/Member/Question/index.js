@@ -59,6 +59,9 @@ const Question = () => {
             </Typography>
             {/* {JSON.stringify(contribution)} */}
             <ContributionHeirarchy
+              questionUuid={
+                contribution ? contribution.uuid : ''
+              }
               contribution={contribution}
               activeContribution={activeContribution}
               onCardClick={handleClick}

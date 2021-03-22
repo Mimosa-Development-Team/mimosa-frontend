@@ -28,7 +28,8 @@ function Form(props) {
     updateIsLoadingContribution,
     addLoadingContribution,
     addContribution,
-    updateContribution
+    updateContribution,
+    questionUuid
   } = props
 
   const [status, setStatus] = useState('publish')
@@ -60,8 +61,8 @@ function Form(props) {
       userId: profile.id,
       status,
       version: '1.0.0',
-      parentId: method === 'new' ? 0 : data.id,
-      parentUuid: method === 'new' ? 0 : data.uuid,
+      parentId: method === 'new' ? data.id : data.parentId,
+      parentUuid: method === 'new' ? questionUuid : data.uuid,
       hypothesisStatus: val.hypothesisStatus
     }
     if (method === 'new') {
@@ -101,7 +102,8 @@ function Form(props) {
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h1" gutterBottom>
-            Publish Contribution
+            {method === 'new' ? 'Publish' : 'Update'}{' '}
+            Contribution
           </Typography>
         </Grid>
         <Grid item sm={6}>
@@ -109,31 +111,33 @@ function Form(props) {
             style={{ textAlign: 'right' }}
             variant="subtitle1"
           >
-            Saved as Draft Nov. 20, 2020 10:30 AM
+            {/* {/* // Saved as Draft Nov. 20, 2020 10:30 AM */}{' '}
           </Typography>
         </Grid>
-        <Grid item sm={12}>
-          <Typography variant="subtitle1" gutterBottom>
-            This contribution will fall under Experiment
-          </Typography>
-          <Paper
-            style={{
-              paddingLeft: '10px',
-              paddingTop: '10px',
-              paddingBottom: '10px'
-            }}
-          >
-            <span style={{ color: '#5BCA89' }}>Experiment</span>:
-            {data.subject}
-          </Paper>
-        </Grid>
+        {method === 'new' ? (
+          <Grid item sm={12}>
+            <Typography variant="subtitle1" gutterBottom>
+              This contribution will fall under Data
+            </Typography>
+            <Paper
+              style={{
+                paddingLeft: '10px',
+                paddingTop: '10px',
+                paddingBottom: '10px'
+              }}
+            >
+              <span style={{ color: '#5E92DE' }}>Data</span>:
+              {data.subject}
+            </Paper>
+          </Grid>
+        ) : null}
         <Grid item sm={6}>
           <Typography
-            style={{ color: '#3576D6', fontWeight: 'bold' }}
+            style={{ color: '#724586', fontWeight: 'bold' }}
             variant="h3"
             gutterBottom
           >
-            Data
+            Analysis
           </Typography>
         </Grid>
         <Grid item sm={12}>
