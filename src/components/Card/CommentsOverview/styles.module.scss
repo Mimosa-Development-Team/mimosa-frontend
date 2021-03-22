@@ -1,0 +1,59 @@
+
+@import '~global/styles';
+
+.commentsWrapper {
+  padding: 0 30px;
+  width: 100%;
+
+  .commentField {
+    display: inline-flex;
+    width: 100%;
+
+    .avatar {
+      margin-right: 17px;
+      background: nth($avatar-colors, random(length($avatar-colors)));
+    }
+  }
+
+  .comment {
+    padding-top: 30px;
+    margin-top: 30px;
+    border-top: 1px solid rgba(178, 180, 189, 0.5);
+    position: relative;
+
+    .contentWrapper {
+      display: inline-flex;
+
+      .avatar {
+        margin-right: 17px;
+        background: nth($avatar-colors, random(length($avatar-colors)));
+      }
+
+      .name {
+        font-family: 'Roboto-Medium';
+        margin-bottom: 12px;
+      }
+
+      .details {
+        margin-bottom: 17px;
+      }
+
+      .date {
+        font-size: 14px;
+        letter-spacing: 0.09px;
+        line-height: 16px;
+        color: $lightgray2;
+      }
+    }
+  }
+}
+
+.actionsWrapper {
+  position: absolute;
+  right: 5px;
+  top: 25px;
+
+  .button {
+    padding: 5px;
+  }
+}

@@ -2,9 +2,14 @@
 @import '~global/styles';
 
 .questionDetails {
-  padding-top: 30px;
+  border-top: 1px solid rgba(178, 180, 189, 0.5);
+  padding: 30px 0;
 
   .tabs {
+    min-height: 0;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding: 0 30px;
     .tabIndicator {
       display: none;
     }
@@ -13,6 +18,7 @@
   .tab {
     padding: 0;
     text-align: left;
+    min-height: 0;
 
     .tabWrapper {
       font-family: 'Roboto-Medium';
@@ -28,14 +34,5 @@
 
   .tabSelected {
     border: none;
-  }
-
-  .commentsWrapper {
-    display: inline-flex;
-
-    .avatar {
-      margin-right: 17px;
-      background: nth($avatar-colors, random(length($avatar-colors)));
-    }
   }
 }

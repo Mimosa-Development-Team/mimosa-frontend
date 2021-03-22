@@ -36,24 +36,26 @@ const Card = ({
       {!treeView && type !== 'question' && parentTitle && (
         <ParentTitle type={type} title={parentTitle} />
       )}
-      <Header
-        type={type}
-        questionTags={questionTags}
-        analysisTag={analysisTag}
-        deprecated={deprecated}
-        title={title}
-      />
-      {content && <Content content={content} />}
-      <Footer
-        author={author}
-        data={data}
-        questionUuid={questionUuid}
-        datePosted={datePosted}
-        dateModified={dateModified}
-        commentCount={commentCount}
-        relatedMediaCount={relatedMediaCount}
-        onMetaClick={handleClick}
-      />
+      <div className={`${styles.contentWrapper}`}>
+        <Header
+          type={type}
+          questionTags={questionTags}
+          analysisTag={analysisTag}
+          deprecated={deprecated}
+          title={title}
+        />
+        {content && <Content content={content} />}
+        <Footer
+          data={data}
+          questionUuid={questionUuid}
+          author={author}
+          datePosted={datePosted}
+          dateModified={dateModified}
+          commentCount={commentCount}
+          relatedMediaCount={relatedMediaCount}
+          onMetaClick={handleClick}
+        />
+      </div>
       {showDetails && <QuestionDetails />}
     </Paper>
   )
