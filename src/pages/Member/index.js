@@ -14,7 +14,10 @@ const Member = () => {
         <div className="appMain">
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/contribution" component={Question} />
+            <Route
+              path="/contribution/:id"
+              component={Question}
+            />
             <Route
               path="/contribution-form/:type/:method"
               component={ContributionForm}
