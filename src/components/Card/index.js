@@ -56,7 +56,9 @@ const Card = ({
           onMetaClick={handleClick}
         />
       </div>
-      {showDetails && <QuestionDetails />}
+      {showDetails && (
+        <QuestionDetails contributionId={data.id} />
+      )}
     </Paper>
   )
 }

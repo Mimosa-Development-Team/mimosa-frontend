@@ -1,23 +1,24 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
+import moment from 'moment'
 import Actions from './Actions'
 import styles from './styles.module.scss'
 
-const Comment = () => {
+const Comment = ({ comment, date }) => {
   return (
     <div className={`${styles.comment}`}>
       <div className={`${styles.contentWrapper}`}>
-        <Avatar className={`${styles.avatar}`}>K</Avatar>
+        <Avatar className={`${styles.avatar}`}>T</Avatar>
         <div>
           <Typography className={`${styles.name}`}>
-            Chidi Anagonye
+            Temp Name
           </Typography>
           <Typography className={`${styles.details}`}>
-            We dont have consensus on
+            {comment}
           </Typography>
           <Typography className={`${styles.date}`}>
-            Just now
+            {moment(date).format('MMM. D, YYYY hh:mm A')}
           </Typography>
         </div>
       </div>

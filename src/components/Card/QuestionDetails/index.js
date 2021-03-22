@@ -29,7 +29,7 @@ function a11yProps(index) {
   }
 }
 
-const QuestionDetails = () => {
+const QuestionDetails = ({ contributionId }) => {
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
@@ -73,7 +73,7 @@ const QuestionDetails = () => {
         <RelatedMedia />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CommentsOverview />
+        <CommentsOverview contributionId={contributionId} />
       </TabPanel>
     </div>
   )

@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 // import Controls from 'components/controls/Controls'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
 import Comment from './Comment'
+import { useComments } from './hooks'
 import styles from './styles.module.scss'
 
-const CommentsOverview = () => {
+const CommentsOverview = ({ contributionId }) => {
   const { user } = useGlobalState()
+
+  const { comments, getComments } = useComments(contributionId)
+
+  useEffect(() => {
+    getComments()
+  }, [getComments])
+
   return (
     <div className={`${styles.commentsWrapper}`}>
       <div className={`${styles.commentField}`}>
@@ -21,7 +29,14 @@ const CommentsOverview = () => {
           background="offwhite"
         /> */}
       </div>
-      <Comment />
+      {(comments || []).map(data => {
+        return (
+          <Comment
+            comment={data.comment}
+            date={data.updatedAt}
+          />
+        )
+      })}
     </div>
   )
 }
