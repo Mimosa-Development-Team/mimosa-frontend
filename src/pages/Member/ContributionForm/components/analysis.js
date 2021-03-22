@@ -164,16 +164,12 @@ function Form(props) {
             errors={errors}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={4}>
           <Controls.Select
             name="hypothesisStatus"
             asterisk
             control={control}
-            data={[
-              'SUPPORTS HYPOTHESIS',
-              'REFUTES HYPOTHESIS',
-              'UNCLEAR'
-            ]}
+            data={['supports', 'refutes']}
             label="What is the verdict of your analysis? "
             errors={errors}
           />

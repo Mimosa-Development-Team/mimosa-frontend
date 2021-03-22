@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
+import { useHistory } from 'react-router-dom'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
+import styles from './style.module.scss'
 
 export default function DialogNotification({
   updateIsLoadingContribution,
   addLoadingContribution,
   reset
 }) {
+  const history = useHistory()
   const [dialogStatus, setDialogStatus] = useState(false)
   useEffect(() => {
     if (addLoadingContribution) {
@@ -29,7 +32,7 @@ export default function DialogNotification({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Contribution Management
+        Contribution Form
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
@@ -43,14 +46,16 @@ export default function DialogNotification({
           Disagree
         </Button> */}
         <Button
+          className={`${styles.button}`}
+          variant="contained"
           onClick={() => {
             reset()
             setDialogStatus(!dialogStatus)
+            history.push(`/contribution`)
           }}
-          color="primary"
           autoFocus
         >
-          Agree
+          Close
         </Button>
       </DialogActions>
     </Dialog>
