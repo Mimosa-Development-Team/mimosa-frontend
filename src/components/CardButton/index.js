@@ -11,15 +11,20 @@ const CardButton = ({ action, ...propsList }) => {
     contribute: ContributeIcon
   }
   return (
-    <IconButton
-      disableRipple="true"
-      aria-label={action}
-      className={`${styles.cardButton}`}
-      {...propsList}
-    >
-      <img src={icons[action]} alt="" />
-      {action}
-    </IconButton>
+    <div className={`${styles.wrapper}`}>
+      {action === 'edit' && (
+        <span className={`${styles.metaDivider}`}>·</span>
+      )}
+      <IconButton
+        disableRipple="true"
+        aria-label={action}
+        className={`${styles.cardButton} ${styles[action]}`}
+        {...propsList}
+      >
+        <img src={icons[action]} alt="" />
+        {action}
+      </IconButton>
+    </div>
   )
 }
 
