@@ -51,7 +51,7 @@ export default function DialogNotification({
           onClick={() => {
             reset()
             setDialogStatus(!dialogStatus)
-            history.push(`/contribution`)
+            history.push(`/`)
           }}
           autoFocus
         >
