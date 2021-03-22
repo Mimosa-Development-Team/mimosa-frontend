@@ -53,30 +53,40 @@ const Footer = ({
         onMetaClick={onMetaClick}
       />
       {/* // )} */}
-      <CardButton
-        action="edit"
-        onClick={() => {
-          history.push(
-            `/contribution-form/${data.category}/update`,
-            {
-              type: 'update',
-              data
-            }
-          )
-        }}
-      />
-      <CardButton
-        action="contribute"
-        onClick={() => {
-          history.push(
-            `/contribution-form/${getType(data.category)}/new`,
-            {
-              type: 'new',
-              data
-            }
-          )
-        }}
-      />
+      {data ? (
+        <>
+          <CardButton
+            action="edit"
+            onClick={() => {
+              history.push(
+                `/contribution-form/${data.category}/update`,
+                {
+                  type: 'update',
+                  data
+                }
+              )
+            }}
+          />
+          {(data.category !== 'analysis' &&
+            data.children.length <= 0) ||
+          data.category === 'data' ? (
+            <CardButton
+              action="contribute"
+              onClick={() => {
+                history.push(
+                  `/contribution-form/${getType(
+                    data.category
+                  )}/new`,
+                  {
+                    type: 'new',
+                    data
+                  }
+                )
+              }}
+            />
+          ) : null}
+        </>
+      ) : null}
     </div>
   )
 }
