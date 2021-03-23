@@ -14,8 +14,6 @@ const Footer = ({
   data,
   datePosted,
   dateModified,
-  commentCount,
-  relatedMediaCount,
   onMetaClick,
   questionUuid
 }) => {
@@ -45,11 +43,11 @@ const Footer = ({
       {data && data.category === 'question' && (
         <>
           <Media
-            relatedMediaCount={relatedMediaCount}
+            relatedMediaCount={data.relatedMediaCount}
             onMetaClick={onMetaClick}
           />
           <Comments
-            commentCount={commentCount}
+            commentCount={data.commentCount}
             onMetaClick={onMetaClick}
           />
         </>
@@ -96,8 +94,7 @@ const Footer = ({
 Footer.propTypes = {
   author: PropTypes.string,
   datePosted: PropTypes.string.isRequired,
-  dateModified: PropTypes.string,
-  commentCount: PropTypes.string
+  dateModified: PropTypes.string
 }
 
 export default Footer

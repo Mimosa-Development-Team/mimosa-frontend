@@ -22,9 +22,7 @@ const Card = ({
   content,
   author,
   datePosted,
-  dateModified,
-  commentCount,
-  relatedMediaCount
+  dateModified
 }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -63,8 +61,6 @@ const Card = ({
             author={author}
             datePosted={datePosted}
             dateModified={dateModified}
-            commentCount={commentCount}
-            relatedMediaCount={relatedMediaCount}
             onMetaClick={handleClick}
           />
         </div>
@@ -90,9 +86,7 @@ Card.propTypes = {
   content: PropTypes.any,
   author: PropTypes.string,
   datePosted: PropTypes.string.isRequired,
-  dateModified: PropTypes.string,
-  commentCount: PropTypes.string,
-  relatedMediaCount: PropTypes.string
+  dateModified: PropTypes.string
 }
 
 export default Card
