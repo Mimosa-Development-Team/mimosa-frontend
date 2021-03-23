@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
 import { useForm } from 'react-hook-form'
 import {
@@ -20,6 +20,7 @@ const schema = yup.object().shape({
 })
 
 function Form(props) {
+  const history = useHistory()
   const {
     data,
     profile,
@@ -93,11 +94,14 @@ function Form(props) {
         spacing={4}
       >
         <Grid item sm={12}>
-          <Link to="/" className={`${styles.typography}`}>
+          <div
+            onClick={() => history.goBack()}
+            className={`${styles.typography}`}
+          >
             <Typography variant="h6" gutterBottom>
               <ArrowBackIcon /> Back
             </Typography>
-          </Link>
+          </div>
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h1" gutterBottom>
