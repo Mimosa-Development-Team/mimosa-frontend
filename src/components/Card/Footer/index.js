@@ -42,7 +42,7 @@ const Footer = ({
         datePosted={datePosted}
         dateModified={dateModified}
       />
-      {data.category === 'question' && (
+      {data && data.category === 'question' && (
         <>
           <Media
             relatedMediaCount={relatedMediaCount}
