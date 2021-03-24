@@ -22,10 +22,6 @@ const Member = () => {
               path="/contribution-form/:type/:method"
               component={ContributionForm}
             />
-            <Route
-              path="/my-contributions"
-              component={Dashboard}
-            />
             {/* <Route path="/bookmarks" component={Dashboard} /> */}
             <Route path="/about" component={Dashboard} />
             <Route path="/faq" component={FAQ} />
