@@ -44,7 +44,7 @@ const MemberDashboard = () => {
           className={`${styles.content}`}
           onClick={() => {
             history.push(
-              '/contribution/a56c199f-be27-4be9-acf5-aeb924eafcc1'
+              '/contribution/15cc3bab-4e89-4fd8-92a3-1e70840d7858'
             )
           }}
         >

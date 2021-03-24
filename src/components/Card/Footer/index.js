@@ -61,7 +61,8 @@ const Footer = ({
                 `/contribution-form/${data.category}/update`,
                 {
                   type: 'update',
-                  data
+                  data,
+                  questionUuid
                 }
               )
             }}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Backdrop } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import LogoIcon from 'assets/images/login/logo-icon-only.svg'
 import Logo from 'assets/images/logo.svg'
 import ContentImage from 'assets/images/login/slide1.png'
@@ -32,58 +32,56 @@ const Login = () => {
 
   return (
     <>
-      {loading ? (
-        <Backdrop open={loading}>
-          <img src={loader} />
-        </Backdrop>
-      ) : (
-        <div className={`${styles.lgContainer}`}>
-          <div className={`${styles.left}`}>
-            <div className={`${styles.leftContainer}`}>
-              <div className={`${styles.leftContent}`}>
-                <div className={`${styles.mainLogo}`}>
-                  <img src={Logo} />
-                </div>
-                <div className={`${styles.leftText}`}>
-                  <h2>Survey the state of your field.</h2>
-                  <h2>Share you research as you go.</h2>
-                  <h2>Get fast feedback.</h2>
-                  <h2>Find like-minded collaborators.</h2>
-                </div>
-                <div className={`${styles.contentImage}`}>
-                  <img src={ContentImage} />
-                </div>
-                <div className={`${styles.slider}`}>
-                  <div className={`${styles.sliderDots}`}>
-                    <a className={`${styles.sliderIndicator}`} />
-                    <a className={`${styles.slideDot}`} />
-                    <a className={`${styles.slideDot}`} />
-                    <a className={`${styles.slideDot}`} />
-                  </div>
-                </div>
-                <div className={`${styles.pagination}`}>
-                  <img
-                    className={`${styles.slideLeft}`}
-                    src={LeftSlide}
-                  />
-                  <img
-                    className={`${styles.slideRight}`}
-                    src={RightSlide}
-                  />
+      <div className={`${styles.lgContainer}`}>
+        <div className={`${styles.left}`}>
+          <div className={`${styles.leftContainer}`}>
+            <div className={`${styles.leftContent}`}>
+              <div className={`${styles.mainLogo}`}>
+                <img src={Logo} />
+              </div>
+              <div className={`${styles.leftText}`}>
+                <h2>Survey the state of your field.</h2>
+                <h2>Share you research as you go.</h2>
+                <h2>Get fast feedback.</h2>
+                <h2>Find like-minded collaborators.</h2>
+              </div>
+              <div className={`${styles.contentImage}`}>
+                <img src={ContentImage} />
+              </div>
+              <div className={`${styles.slider}`}>
+                <div className={`${styles.sliderDots}`}>
+                  <a className={`${styles.sliderIndicator}`} />
+                  <a className={`${styles.slideDot}`} />
+                  <a className={`${styles.slideDot}`} />
+                  <a className={`${styles.slideDot}`} />
                 </div>
               </div>
-              {/* <div className={`${styles.halfLogo}`}>
+              <div className={`${styles.pagination}`}>
+                <img
+                  className={`${styles.slideLeft}`}
+                  src={LeftSlide}
+                />
+                <img
+                  className={`${styles.slideRight}`}
+                  src={RightSlide}
+                />
+              </div>
+            </div>
+            {/* <div className={`${styles.halfLogo}`}>
        <img src={HalfIcon} />
      </div> */}
-            </div>
           </div>
-          <div className={`${styles.right}`}>
-            <div className={`${styles.rightContent}`}>
-              <h2 component="h1" variant="h5">
-                Welcome back
-              </h2>
-              <p>Loremn ipsum dolor sit amet , consectetur</p>
-              <p>adipiscing elit, sed do eiusmod tempor.</p>
+        </div>
+        <div className={`${styles.right}`}>
+          <div className={`${styles.rightContent}`}>
+            <h2 component="h1" variant="h5">
+              Welcome back
+            </h2>
+            <p>Loremn ipsum dolor sit amet , consectetur</p>
+            <p>adipiscing elit, sed do eiusmod tempor.</p>
+            {loading ? (
+              <img src={loader} />
+            ) : (
               <Button
                 type="submit"
                 disabled={isLoading}
@@ -98,13 +96,13 @@ const Login = () => {
                 <img src={OrcidLogo} />
                 Log in with ORCID
               </Button>
-            </div>
-          </div>
-          <div className={`${styles.logo}`}>
-            <img src={LogoIcon} />
+            )}
           </div>
         </div>
-      )}
+        <div className={`${styles.logo}`}>
+          <img src={LogoIcon} />
+        </div>
+      </div>
     </>
   )
 }

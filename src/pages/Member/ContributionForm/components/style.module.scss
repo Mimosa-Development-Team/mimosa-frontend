@@ -13,6 +13,8 @@
 }
 
 .form {
+  padding-right: 5vh;
+
   .typography {
     text-decoration: none;
   }
@@ -68,6 +70,15 @@
       color: #ef8c20;
       font-weight: bold;
       border-color: #ef8c20;
+      border-radius: 3vh;
+    }
+    
+    .deleteBtn {
+      width: 18vh;
+      height: 5vh;
+      color: red;
+      font-weight: bold;
+      border-color: red;
       border-radius: 3vh;
     }
   }

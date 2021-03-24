@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
-import FormControls from './components/index'
+import Contribution from './components/contribution'
 import styles from './style.module.scss'
 import { useQuestionForm } from './hooks'
 
 const ContributionForm = props => {
+  const { location, match } = props
   const { user } = useGlobalState()
   const {
     getTags,
@@ -19,7 +20,9 @@ const ContributionForm = props => {
     addErrorContribution,
     updatedContribution,
     updateIsLoadingContribution,
-    updateErrorContribution
+    updateErrorContribution,
+    addIsSuccessContribution,
+    updateIsSuccessContribution
   } = useQuestionForm()
 
   useEffect(() => {
@@ -27,176 +30,30 @@ const ContributionForm = props => {
     getUser()
   }, [getTags, getUser])
 
-  const renderForm = () => {
-    switch (props.match.params.type) {
-      case 'question':
-        return (
-          <FormControls.QuestionForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            updatedData={updatedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'hypothesis':
-        return (
-          <FormControls.HypothesisForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'experiment':
-        return (
-          <FormControls.ExperimentForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'data':
-        return (
-          <FormControls.DataForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'analysis':
-        return (
-          <FormControls.AnalysisForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      default:
-        return (
-          <FormControls.ContributionForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-    }
-  }
-
   return (
-    <div className={`${styles.homeWrapper}`}>{renderForm()}</div>
+    <div className={`${styles.homeWrapper}`}>
+      <Contribution
+        profile={getRawData(user).user}
+        questionUuid={location.state.questionUuid}
+        tagsData={tagsData}
+        addedData={addedContribution}
+        updatedData={updatedContribution}
+        userData={userData}
+        type={match.params.type}
+        method={match.params.method}
+        data={location.state.data ? location.state.data : null}
+        addedContribution={addedContribution}
+        addErrorContribution={addErrorContribution}
+        updatedContribution={updatedContribution}
+        updateIsLoadingContribution={updateIsLoadingContribution}
+        updateErrorContribution={updateErrorContribution}
+        addLoadingContribution={addLoadingContribution}
+        addIsSuccessContribution={addIsSuccessContribution}
+        updateIsSuccessContribution={updateIsSuccessContribution}
+        addContribution={addContribution}
+        updateContribution={updateContribution}
+      />
+    </div>
   )
 }
 
