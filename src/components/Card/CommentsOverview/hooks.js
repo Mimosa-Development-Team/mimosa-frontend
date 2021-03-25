@@ -1,7 +1,11 @@
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
+import { queryClient } from 'store/state'
 
-import { getCommentsAPI } from './api'
-import { COMMENT_QUERY_KEY } from './constants'
+import { getCommentsAPI, postCommentAPI } from './api'
+import {
+  COMMENT_QUERY_KEY,
+  COMMENT_POST_QUERY_KEY
+} from './constants'
 
 export const useComments = id => {
   const {
@@ -14,11 +18,28 @@ export const useComments = id => {
     enabled: false
   })
 
+  const {
+    data: addedComment,
+    isLoading: addLoadingComment,
+    error: addErrorComment,
+    mutate: postMutate
+  } = useMutation(postCommentAPI, {
+    onSuccess: () => {
+      refetch()
+      queryClient.invalidateQueries(COMMENT_POST_QUERY_KEY)
+    }
+  })
+
   return {
     getComments: refetch,
     comments: data,
     isLoading,
     isSuccess,
-    error
+    error,
+
+    addComment: postMutate,
+    addedComment,
+    addLoadingComment,
+    addErrorComment
   }
 }
