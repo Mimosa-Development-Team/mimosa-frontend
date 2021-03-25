@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-// import Card from 'components/Card'
+import Card from 'components/Card'
 import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
@@ -8,6 +8,7 @@ import { Button } from '@material-ui/core'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
+import { useQuestions } from './hooks'
 
 // const data = {
 //   category: 'question',
@@ -21,6 +22,11 @@ import styles from './style.module.scss'
 
 const MemberDashboard = () => {
   const history = useHistory()
+  const { questions, getQuestions } = useQuestions()
+
+  useEffect(() => {
+    getQuestions()
+  }, [getQuestions])
 
   return (
     <>
@@ -41,26 +47,20 @@ const MemberDashboard = () => {
             <AddBoxIcon /> NEW QUESTION
           </Button>
         </div>
-        <div
-          className={`${styles.content}`}
-          onClick={() => {
-            history.push(
-              '/contribution/a56c199f-be27-4be9-acf5-aeb924eafcc1'
-            )
-          }}
-        >
-          {/* <Card data={data} form={false} /> */}
-        </div>
-        <div
-          className={`${styles.content}`}
-          onClick={() => {
-            history.push(
-              '/contribution/376d8977-5edd-4c23-a1f0-63dc6beea457'
-            )
-          }}
-        >
-          {/* <Card data={data} form={false} /> */}
-        </div>
+        {questions ? (
+          <>
+            {(questions || []).map(data => (
+              <div
+                className={`${styles.content}`}
+                onClick={() => {
+                  history.push(`/contribution/${data.uuid}`)
+                }}
+              >
+                <Card data={data} form={false} />
+              </div>
+            ))}
+          </>
+        ) : null}
       </PageContentWrapper>
     </>
   )
