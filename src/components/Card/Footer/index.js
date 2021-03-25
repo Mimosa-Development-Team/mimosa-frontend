@@ -67,6 +67,7 @@ const Footer = ({
             }}
           />
           {(data.category !== 'analysis' &&
+            data.children !== undefined &&
             data.children.length <= 0) ||
           data.category === 'data' ? (
             <CardButton
