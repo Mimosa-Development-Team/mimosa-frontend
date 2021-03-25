@@ -10,7 +10,7 @@ import {
 } from 'material-ui-popup-state/hooks'
 import Fade from '@material-ui/core/Fade'
 import EditIcon from 'assets/images/icons/edit.png'
-// import DeleteIcon from 'assets/images/icons/delete.svg'
+import DeleteIcon from 'assets/images/icons/delete.svg'
 import styles from './styles.module.scss'
 
 const Actions = ({ ...propsList }) => {
@@ -42,11 +42,20 @@ const Actions = ({ ...propsList }) => {
                 <IconButton
                   disableRipple="true"
                   aria-label="edit"
-                  className={`${styles.actionButton}`}
+                  className={`${styles.actionButton} mb-10`}
                   {...propsList}
                 >
                   <img src={EditIcon} alt="" />
                   Edit
+                </IconButton>
+                <IconButton
+                  disableRipple="true"
+                  aria-label="delete"
+                  className={`${styles.actionButton}`}
+                  {...propsList}
+                >
+                  <img src={DeleteIcon} alt="" />
+                  Delete
                 </IconButton>
               </>
             </Fade>
