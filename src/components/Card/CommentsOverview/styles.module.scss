@@ -13,6 +13,10 @@
       margin-right: 17px;
       background: nth($avatar-colors, random(length($avatar-colors)));
     }
+
+    .form, .input{
+      width: 100%;
+    }
   }
 
   .comment {

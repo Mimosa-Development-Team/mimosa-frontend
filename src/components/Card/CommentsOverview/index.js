@@ -45,7 +45,10 @@ const CommentsOverview = ({ contributionId }) => {
         <Avatar className={`${styles.avatar}`}>
           {getRawData(user).user.firstName.charAt(0)}
         </Avatar>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={`${styles.form}`}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Controls.Input
             className={`${styles.input}`}
             name="comment"
