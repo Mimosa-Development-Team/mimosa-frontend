@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography'
 import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
 import RightSidebar from 'components/RightSidebar'
+import loader from 'assets/images/loader_loading.gif'
 import { ROUTES } from '../constants'
 import ContributionHeirarchy from './components/ContributionHeirarchy'
 import ContributionDetails from './components/ContributionDetails'
@@ -47,7 +48,9 @@ const Question = () => {
         onTreeClick={handleClick}
       />
       {isLoading ? (
-        'Loading ...'
+        <div className="loaderWrapper">
+          <img src={loader} alt="Loading ..." />
+        </div>
       ) : (
         <>
           <PageContentWrapper backNav>
