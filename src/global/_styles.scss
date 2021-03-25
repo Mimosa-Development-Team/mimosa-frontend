@@ -67,6 +67,9 @@ $spacers: (
 }
 
 .mb {
+  &-10 {
+    margin-bottom: 10px !important;
+  }
   &-15 {
     margin-bottom: 15px;
   }

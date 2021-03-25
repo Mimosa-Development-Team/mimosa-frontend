@@ -68,7 +68,7 @@ const QuestionDetails = ({
         />
       </Tabs>
       <TabPanel value={activeTab} index={0}>
-        <RelatedMedia />
+        <RelatedMedia contributionId={contributionId} />
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
         <CommentsOverview contributionId={contributionId} />

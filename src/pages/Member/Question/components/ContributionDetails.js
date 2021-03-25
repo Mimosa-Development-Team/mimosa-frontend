@@ -16,24 +16,26 @@ const ContributionDetails = ({
       <Typography className={`${styles.title}`} variant="h5">
         Contribution Details
       </Typography>
-      <div>
-        <Typography className={`${styles.metaTitle}`}>
-          Authors:
-        </Typography>
-        {(authors || []).map(author => {
-          return (
-            <div
-              className={`${styles.avatarName} ${styles.author}`}
-            >
-              <Avatar className={`${styles.avatar}`}>
-                {author.name.charAt(0)}
-              </Avatar>
-              {author.name}
-            </div>
-          )
-        })}
-      </div>
-      {poster ? (
+      {authors && (
+        <div>
+          <Typography className={`${styles.metaTitle}`}>
+            Authors:
+          </Typography>
+          {(authors || []).map(author => {
+            return (
+              <div
+                className={`${styles.avatarName} ${styles.author}`}
+              >
+                <Avatar className={`${styles.avatar}`}>
+                  {author.name.charAt(0)}
+                </Avatar>
+                {author.name}
+              </div>
+            )
+          })}
+        </div>
+      )}
+      {poster && (
         <div>
           <Typography className={`${styles.metaTitle}`}>
             Posted by:
@@ -47,7 +49,7 @@ const ContributionDetails = ({
             {poster}
           </div>
         </div>
-      ) : null}
+      )}
       <div>
         <Typography className={`${styles.metaTitle}`}>
           Date Posted:
@@ -60,16 +62,20 @@ const ContributionDetails = ({
         <Typography className={`${styles.metaTitle}`}>
           Date Modified:
         </Typography>
-        <Typography className={`${styles.date}`}>
-          {moment(dateModified).format('MMM. D, YYYY')}
-        </Typography>
+        {datePosted !== dateModified ? (
+          <Typography className={`${styles.date}`}>
+            {moment(dateModified).format('MMM. D, YYYY')}
+          </Typography>
+        ) : (
+          '---'
+        )}
       </div>
     </div>
   )
 }
 
 ContributionDetails.propTypes = {
-  authors: PropTypes.array.isRequired,
+  authors: PropTypes.array,
   poster: PropTypes.string.isRequired,
   datePosted: PropTypes.string.isRequired,
   dateModified: PropTypes.string

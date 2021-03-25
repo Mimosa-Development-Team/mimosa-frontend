@@ -15,7 +15,7 @@ const Footer = ({
   datePosted,
   dateModified,
   onMetaClick,
-  questionUuid
+  questionUuid = ''
 }) => {
   const history = useHistory()
 
