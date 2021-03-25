@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '@material-ui/core'
 import Conference from './Conference'
 import Media from './Media'
+import { useMedia } from './hooks'
 import styles from './styles.module.scss'
 
-const RelatedMedia = () => {
+const RelatedMedia = ({ contributionId }) => {
+  const { media, getMedia } = useMedia(contributionId)
+
+  useEffect(() => {
+    getMedia()
+  }, [getMedia])
+
   return (
     <div>
       <div className={`${styles.contentWrapper}`}>
-        <Conference />
-        <Media />
+        {media && <Conference conference={media.conference} />}
+        {media && <Media media={media.media} />}
       </div>
       <div className={`${styles.buttonWrapper}`}>
         <Button

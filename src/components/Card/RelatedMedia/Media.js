@@ -6,7 +6,7 @@ import PDFIcon from 'assets/images/icons/pdf.svg'
 import VideoIcon from 'assets/images/icons/video-camera.svg'
 import styles from './styles.module.scss'
 
-const Media = () => {
+const Media = ({ media }) => {
   const icons = {
     pdf: PDFIcon,
     video: VideoIcon
@@ -14,32 +14,40 @@ const Media = () => {
   return (
     <div className={`${styles.media}`}>
       <ul>
-        <li>
-          <div className={`${styles.mediaIcon}`}>
-            <span>
-              <img src={icons.video} alt="PDF" />
-            </span>
-          </div>
-          <div>
-            <Typography className={`${styles.title}`}>
-              Video Title
-            </Typography>
-            <Typography className={`${styles.meta}`}>
-              MP4
-              <span className={`${styles.metaDivider}`}>|</span>
-              English
-              <span className={`${styles.metaDivider}`}>|</span>
-              By Lorem Ipsum
-            </Typography>
-            <Link className={`${styles.link}`}>
-              <span className={`${styles.icon}`}>
-                <img src={LinkIcon} alt="" />
-              </span>
-              https://www.youtube.com/results?search_query=algorithm
-            </Link>
-          </div>
-        </li>
-        <li>
+        {(media || []).map(data => {
+          return (
+            <li key={data.id}>
+              <div className={`${styles.mediaIcon}`}>
+                <span>
+                  <img src={icons.video} alt="PDF" />
+                </span>
+              </div>
+              <div>
+                <Typography className={`${styles.title}`}>
+                  {data.mediaDetails.title}
+                </Typography>
+                <Typography className={`${styles.meta}`}>
+                  MP4
+                  <span className={`${styles.metaDivider}`}>
+                    |
+                  </span>
+                  English
+                  <span className={`${styles.metaDivider}`}>
+                    |
+                  </span>
+                  By {data.userFullName}
+                </Typography>
+                <Link className={`${styles.link}`}>
+                  <span className={`${styles.icon}`}>
+                    <img src={LinkIcon} alt="" />
+                  </span>
+                  {data.mediaDetails.link}
+                </Link>
+              </div>
+            </li>
+          )
+        })}
+        {/* <li>
           <div className={`${styles.mediaIcon}`}>
             <span>
               <img src={icons.pdf} alt="PDF" />
@@ -63,7 +71,7 @@ const Media = () => {
               https://www.youtube.com/results?search_query=algorithm
             </Link>
           </div>
-        </li>
+        </li> */}
       </ul>
     </div>
   )

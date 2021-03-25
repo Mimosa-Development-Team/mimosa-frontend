@@ -5,14 +5,14 @@ import moment from 'moment'
 import Actions from './Actions'
 import styles from './styles.module.scss'
 
-const Comment = ({ comment, date }) => {
+const Comment = ({ comment, date, username, hasActions }) => {
   return (
     <div className={`${styles.comment}`}>
       <div className={`${styles.contentWrapper}`}>
         <Avatar className={`${styles.avatar}`}>T</Avatar>
         <div>
           <Typography className={`${styles.name}`}>
-            Temp Name
+            {username}
           </Typography>
           <Typography className={`${styles.details}`}>
             {comment}
@@ -22,7 +22,7 @@ const Comment = ({ comment, date }) => {
           </Typography>
         </div>
       </div>
-      <Actions />
+      {hasActions && <Actions />}
     </div>
   )
 }
