@@ -9,22 +9,7 @@ import ParentTitle from './ParentTitle'
 import QuestionDetails from './QuestionDetails'
 import styles from './styles.module.scss'
 
-const Card = ({
-  treeView,
-  type,
-  data,
-  parentTitle,
-  questionTags,
-  analysisTag,
-  deprecated,
-  title,
-  questionUuid,
-  content,
-  author,
-  datePosted,
-  dateModified,
-  isExpanded
-}) => {
+const Card = ({ treeView, data, parentTitle, isExpanded }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
 
@@ -42,54 +27,59 @@ const Card = ({
   }
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <Paper elevation={0} className={`${styles.paper}`}>
-        {!treeView && type !== 'question' && parentTitle && (
-          <ParentTitle type={type} title={parentTitle} />
-        )}
-        <div className={`${styles.contentWrapper}`}>
-          <Header
-            type={type}
-            questionTags={questionTags}
-            analysisTag={analysisTag}
-            deprecated={deprecated}
-            title={title}
-          />
-          {content && (
-            <Content content={content} isExpanded={isExpanded} />
-          )}
-          <Footer
-            data={data}
-            questionUuid={questionUuid}
-            author={author}
-            datePosted={datePosted}
-            dateModified={dateModified}
-            onMetaClick={handleClick}
-          />
-        </div>
-        {showDetails && (
-          <QuestionDetails
-            contributionId={data.id}
-            activeTab={activeTab}
-            handleTabChange={handleChange}
-          />
-        )}
-      </Paper>
-    </ClickAwayListener>
+    <>
+      {data ? (
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <Paper elevation={0} className={`${styles.paper}`}>
+            {!treeView &&
+              data.category !== 'question' &&
+              parentTitle && (
+                <ParentTitle
+                  type={data.category}
+                  title={parentTitle}
+                />
+              )}
+            <div className={`${styles.contentWrapper}`}>
+              <Header
+                type={data.category}
+                questionTags={data.tags}
+                analysisTag={data.hypothesisStatus}
+                deprecated={data.status === 'deprecated'}
+                title={data.subject}
+              />
+              {data.details && (
+                <Content
+                  content={data.details}
+                  isExpanded={isExpanded}
+                />
+              )}
+              <Footer
+                data={data}
+                questionUuid={data.uuid}
+                author={treeView ? null : data.postedBy}
+                datePosted={data.createdAt}
+                dateModified={data.updatedAt}
+                onMetaClick={handleClick}
+              />
+            </div>
+            {showDetails && (
+              <QuestionDetails
+                contributionId={data.id}
+                activeTab={activeTab}
+                handleTabChange={handleChange}
+              />
+            )}
+          </Paper>
+        </ClickAwayListener>
+      ) : null}
+    </>
   )
 }
 
 Card.propTypes = {
+  data: PropTypes.any,
   treeView: PropTypes.bool,
-  type: PropTypes.string.isRequired,
-  questionTags: PropTypes.array,
-  analysisTag: PropTypes.any,
-  deprecated: PropTypes.bool,
-  title: PropTypes.string.isRequired,
-  content: PropTypes.any,
-  author: PropTypes.string,
-  datePosted: PropTypes.string.isRequired,
-  dateModified: PropTypes.string
+  isExpanded: PropTypes.bool
 }
 
 export default Card

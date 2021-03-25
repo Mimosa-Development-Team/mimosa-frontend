@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import Card from 'components/Card'
+// import Card from 'components/Card'
 import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
@@ -9,14 +9,15 @@ import AddBoxIcon from '@material-ui/icons/AddBox'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 
-const data = {
-  type: 'question',
-  title: 'Can an algorithm distinguish?',
-  content: 'Sed ut perspiciatis unde omnis iste',
-  author: 'Chidi Anagonye',
-  date: 'Nov. 1, 2020',
-  tags: ['Hot Topic', 'Recent']
-}
+// const data = {
+//   category: 'question',
+//   subject: 'Can an algorithm distinguish?',
+//   details: 'Sed ut perspiciatis unde omnis iste',
+//   author: ['Chidi Anagonye'],
+//   postedBy: 'Chidi Anagonye',
+//   dateCreated: 'Nov. 1, 2020',
+//   tags: ['Hot Topic', 'Recent']
+// }
 
 const MemberDashboard = () => {
   const history = useHistory()
@@ -48,13 +49,7 @@ const MemberDashboard = () => {
             )
           }}
         >
-          <Card
-            tags={data.tags}
-            type={data.type}
-            title={data.title}
-            form={false}
-            content={data.content}
-          />
+          {/* <Card data={data} form={false} /> */}
         </div>
         <div
           className={`${styles.content}`}
@@ -64,13 +59,7 @@ const MemberDashboard = () => {
             )
           }}
         >
-          <Card
-            tags={data.tags}
-            type={data.type}
-            title={data.title}
-            form={false}
-            content={data.content}
-          />
+          {/* <Card data={data} form={false} /> */}
         </div>
       </PageContentWrapper>
     </>
