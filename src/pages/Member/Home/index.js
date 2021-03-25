@@ -53,9 +53,7 @@ const MemberDashboard = () => {
               <div
                 className={`${styles.content}`}
                 onClick={() => {
-                  history.push(
-                    '/contribution/a56c199f-be27-4be9-acf5-aeb924eafcc1'
-                  )
+                  history.push(`/contribution/${data.uuid}`)
                 }}
               >
                 <Card data={data} form={false} />
