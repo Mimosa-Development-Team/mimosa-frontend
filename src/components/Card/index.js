@@ -22,7 +22,8 @@ const Card = ({
   content,
   author,
   datePosted,
-  dateModified
+  dateModified,
+  isExpanded
 }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -54,7 +55,9 @@ const Card = ({
             deprecated={deprecated}
             title={title}
           />
-          {content && <Content content={content} />}
+          {content && (
+            <Content content={content} isExpanded={isExpanded} />
+          )}
           <Footer
             data={data}
             questionUuid={questionUuid}

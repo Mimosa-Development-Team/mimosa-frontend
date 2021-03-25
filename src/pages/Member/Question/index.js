@@ -50,7 +50,7 @@ const Question = () => {
         'Loading ...'
       ) : (
         <>
-          <PageContentWrapper>
+          <PageContentWrapper backNav>
             <Typography
               className={`${styles.title}`}
               variant="h1"

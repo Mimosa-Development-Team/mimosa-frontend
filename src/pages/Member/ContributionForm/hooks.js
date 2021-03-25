@@ -4,16 +4,18 @@ import {
   getUserAPI,
   getTagsAPI,
   postContributionAPI,
-  putContributionAPI
+  putContributionAPI,
+  getRelatedMediaAPI
 } from './api'
 import {
   USER_QUERY_KEY,
   TAGS_QUERY_KEY,
   CONTRIBUTION_POST_QUERY_KEY,
-  CONTRIBUTION_PUT_QUERY_KEY
+  CONTRIBUTION_PUT_QUERY_KEY,
+  RELATEDMEDIA_GET_QUERY_KEY
 } from './constants'
 
-export const useQuestionForm = () => {
+export const useQuestionForm = id => {
   const { data: user, refetch: userFetch } = useQuery(
     USER_QUERY_KEY,
     getUserAPI,
@@ -25,6 +27,17 @@ export const useQuestionForm = () => {
   const { data: tags, refetch: tagsFetch } = useQuery(
     TAGS_QUERY_KEY,
     getTagsAPI,
+    {
+      enabled: false
+    }
+  )
+
+  const {
+    data: relatedMedia,
+    refetch: relatedMediaFetch
+  } = useQuery(
+    [RELATEDMEDIA_GET_QUERY_KEY, { id }],
+    getRelatedMediaAPI,
     {
       enabled: false
     }
@@ -60,6 +73,9 @@ export const useQuestionForm = () => {
 
     getUser: userFetch,
     userData: user,
+
+    relatedMediaData: relatedMedia,
+    getRelatedMedia: relatedMediaFetch,
 
     addContribution: postMutate,
     addedContribution,

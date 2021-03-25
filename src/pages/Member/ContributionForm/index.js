@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { useEffect } from 'react'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
@@ -7,6 +8,7 @@ import { useQuestionForm } from './hooks'
 
 const ContributionForm = props => {
   const { location, match } = props
+  // const { id } = props.location.state.data
   const { user } = useGlobalState()
   const {
     getTags,
@@ -22,7 +24,9 @@ const ContributionForm = props => {
     updateIsLoadingContribution,
     updateErrorContribution,
     addIsSuccessContribution,
-    updateIsSuccessContribution
+    updateIsSuccessContribution,
+    getRelatedMedia,
+    relatedMediaData
   } = useQuestionForm()
 
   useEffect(() => {
@@ -36,6 +40,7 @@ const ContributionForm = props => {
         profile={getRawData(user).user}
         questionUuid={location.state.questionUuid}
         tagsData={tagsData}
+        relatedMediaData={relatedMediaData}
         addedData={addedContribution}
         updatedData={updatedContribution}
         userData={userData}
@@ -52,6 +57,7 @@ const ContributionForm = props => {
         updateIsSuccessContribution={updateIsSuccessContribution}
         addContribution={addContribution}
         updateContribution={updateContribution}
+        getRelatedMedia={getRelatedMedia}
       />
     </div>
   )

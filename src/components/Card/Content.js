@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ShowMoreText from 'react-show-more-text'
+import parse from 'html-react-parser'
 import styles from './styles.module.scss'
 
-const Content = ({ content }) => {
+const Content = ({ content, isExpanded }) => {
   return (
     <div className={`${styles.bodyWrapper}`}>
       <ShowMoreText
         lines={2}
         more="See more"
-        less="Show less"
+        less=""
         className={`${styles.body}`}
         anchorClass={`${styles.anchor}`}
-        expanded={false}
+        expanded={isExpanded}
       >
-        {content}
+        {parse(content)}
       </ShowMoreText>
     </div>
   )
