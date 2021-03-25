@@ -24,9 +24,10 @@
       cursor: pointer;
       text-transform: uppercase;
       line-height: 18px;
+      opacity: 0.5;
 
-      &.active ~ li {
-        opacity: 0.5;
+      &.active {
+        opacity: 1;
       }
 
       &.question {

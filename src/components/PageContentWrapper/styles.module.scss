@@ -3,7 +3,15 @@
 .contentWrapper {
   background: $offwhite;
   border-top-left-radius: 12px;
-  padding: 40px 40px 40px 40px;
+  padding: 60px 40px 40px 40px;
   max-height: 98vh;
   width: 100%;
+}
+
+.backNav {
+  margin-bottom: 30px;
+  cursor: pointer;
+  h4.back {
+    font-family: 'Roboto';
+  }
 }
