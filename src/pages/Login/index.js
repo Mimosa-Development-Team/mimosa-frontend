@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Backdrop } from '@material-ui/core'
+import { Backdrop, Button } from '@material-ui/core'
 import LogoIcon from 'assets/images/login/logo-icon-only.svg'
 import Logo from 'assets/images/logo.svg'
 import ContentImage from 'assets/images/login/slide1.png'
@@ -33,7 +33,11 @@ const Login = () => {
   return (
     <>
       {loading ? (
-        <Backdrop open={loading}>
+        <Backdrop
+          open={!loading}
+          style={{ backgroundColor: '#E2E2E4' }}
+          variant="outlined"
+        >
           <img src={loader} />
         </Backdrop>
       ) : (
@@ -72,9 +76,6 @@ const Login = () => {
                   />
                 </div>
               </div>
-              {/* <div className={`${styles.halfLogo}`}>
-       <img src={HalfIcon} />
-     </div> */}
             </div>
           </div>
           <div className={`${styles.right}`}>

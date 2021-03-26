@@ -14,8 +14,7 @@ const Footer = ({
   data,
   datePosted,
   dateModified,
-  onMetaClick,
-  questionUuid = ''
+  onMetaClick
 }) => {
   const history = useHistory()
 
@@ -61,7 +60,8 @@ const Footer = ({
                 `/contribution-form/${data.category}/update`,
                 {
                   type: 'update',
-                  data
+                  data,
+                  questionUuid: data.parentQuestionId
                 }
               )
             }}
@@ -80,7 +80,7 @@ const Footer = ({
                   {
                     type: 'new',
                     data,
-                    questionUuid
+                    questionUuid: data.parentQuestionId
                   }
                 )
               }}

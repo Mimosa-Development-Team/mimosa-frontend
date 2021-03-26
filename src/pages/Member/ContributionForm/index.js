@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react'
+/* eslint-disable react/destructuring-assignment */
+import React, { useEffect, useState } from 'react'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
-import FormControls from './components/index'
+import Contribution from './components/contribution'
 import styles from './style.module.scss'
 import { useQuestionForm } from './hooks'
 
 const ContributionForm = props => {
+  const { location, match } = props
+  // const { id } = props.location.state.data
   const { user } = useGlobalState()
+  const [id, setId] = useState(null)
   const {
     getTags,
     getUser,
@@ -19,184 +23,67 @@ const ContributionForm = props => {
     addErrorContribution,
     updatedContribution,
     updateIsLoadingContribution,
-    updateErrorContribution
-  } = useQuestionForm()
+    updateErrorContribution,
+    addIsSuccessContribution,
+    updateIsSuccessContribution,
+    relatedMediaData,
+    deleteContribution,
+    deleteIsLoadingContribution,
+    deleteErrorContribution,
+    deleteMutate,
+    deleteIsSuccessContribution,
+    getRelatedMedia
+  } = useQuestionForm(id)
 
   useEffect(() => {
     getTags()
     getUser()
-  }, [getTags, getUser])
-
-  const renderForm = () => {
-    switch (props.match.params.type) {
-      case 'question':
-        return (
-          <FormControls.QuestionForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            updatedData={updatedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'hypothesis':
-        return (
-          <FormControls.HypothesisForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'experiment':
-        return (
-          <FormControls.ExperimentForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'data':
-        return (
-          <FormControls.DataForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      case 'analysis':
-        return (
-          <FormControls.AnalysisForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
-      default:
-        return (
-          <FormControls.ContributionForm
-            profile={getRawData(user).user}
-            questionUuid={props.location.state.questionUuid}
-            tagsData={tagsData}
-            addedData={addedContribution}
-            userData={userData}
-            type={props.match.params.type}
-            method={props.match.params.method}
-            data={
-              props.location.state.data
-                ? props.location.state.data
-                : null
-            }
-            addedContribution={addedContribution}
-            addErrorContribution={addErrorContribution}
-            updatedContribution={updatedContribution}
-            updateIsLoadingContribution={
-              updateIsLoadingContribution
-            }
-            updateErrorContribution={updateErrorContribution}
-            addLoadingContribution={addLoadingContribution}
-            addContribution={addContribution}
-            updateContribution={updateContribution}
-          />
-        )
+    const fetch = async () => {
+      await setId(location.state.data.id)
+      await getRelatedMedia()
     }
-  }
+    if (match.params.method === 'update') {
+      fetch()
+    }
+  }, [
+    getTags,
+    getUser,
+    match.params.method,
+    getRelatedMedia,
+    location
+  ])
 
   return (
-    <div className={`${styles.homeWrapper}`}>{renderForm()}</div>
+    <div className={`${styles.homeWrapper}`}>
+      <Contribution
+        profile={getRawData(user).user}
+        tagsData={tagsData}
+        relatedMediaData={relatedMediaData}
+        addedData={addedContribution}
+        updatedData={updatedContribution}
+        questionUuid={location.state.questionUuid}
+        userData={userData}
+        type={match.params.type}
+        method={match.params.method}
+        data={location.state.data ? location.state.data : null}
+        addedContribution={addedContribution}
+        addErrorContribution={addErrorContribution}
+        updatedContribution={updatedContribution}
+        updateIsLoadingContribution={updateIsLoadingContribution}
+        updateErrorContribution={updateErrorContribution}
+        addLoadingContribution={addLoadingContribution}
+        addIsSuccessContribution={addIsSuccessContribution}
+        updateIsSuccessContribution={updateIsSuccessContribution}
+        addContribution={addContribution}
+        updateContribution={updateContribution}
+        getRelatedMedia={getRelatedMedia}
+        deleteContribution={deleteContribution}
+        deleteIsLoadingContribution={deleteIsLoadingContribution}
+        deleteErrorContribution={deleteErrorContribution}
+        deleteMutate={deleteMutate}
+        deleteIsSuccessContribution={deleteIsSuccessContribution}
+      />
+    </div>
   )
 }
 
