@@ -14,8 +14,7 @@ const Footer = ({
   data,
   datePosted,
   dateModified,
-  onMetaClick,
-  questionUuid = ''
+  onMetaClick
 }) => {
   const history = useHistory()
 
@@ -62,12 +61,13 @@ const Footer = ({
                 {
                   type: 'update',
                   data,
-                  questionUuid
+                  questionUuid: data.parentQuestionId
                 }
               )
             }}
           />
           {(data.category !== 'analysis' &&
+            data.children !== undefined &&
             data.children.length <= 0) ||
           data.category === 'data' ? (
             <CardButton
@@ -80,7 +80,7 @@ const Footer = ({
                   {
                     type: 'new',
                     data,
-                    questionUuid
+                    questionUuid: data.parentQuestionId
                   }
                 )
               }}

@@ -5,14 +5,16 @@ import {
   getTagsAPI,
   postContributionAPI,
   putContributionAPI,
-  getRelatedMediaAPI
+  getRelatedMediaAPI,
+  deleteContributionAPI
 } from './api'
 import {
   USER_QUERY_KEY,
   TAGS_QUERY_KEY,
   CONTRIBUTION_POST_QUERY_KEY,
   CONTRIBUTION_PUT_QUERY_KEY,
-  RELATEDMEDIA_GET_QUERY_KEY
+  RELATEDMEDIA_GET_QUERY_KEY,
+  CONTRIBUTION_DELETE_QUERY_KEY
 } from './constants'
 
 export const useQuestionForm = id => {
@@ -56,6 +58,20 @@ export const useQuestionForm = id => {
   })
 
   const {
+    data: deleteContribution,
+    isLoading: deleteIsLoadingContribution,
+    error: deleteErrorContribution,
+    mutate: deleteMutate,
+    isSuccess: deleteIsSuccessContribution
+  } = useMutation(deleteContributionAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        CONTRIBUTION_DELETE_QUERY_KEY
+      )
+    }
+  })
+
+  const {
     data: updatedContribution,
     isLoading: updateIsLoadingContribution,
     error: updateErrorContribution,
@@ -87,6 +103,12 @@ export const useQuestionForm = id => {
     updatedContribution,
     updateIsLoadingContribution,
     updateErrorContribution,
-    updateIsSuccessContribution
+    updateIsSuccessContribution,
+
+    deleteContribution,
+    deleteIsLoadingContribution,
+    deleteErrorContribution,
+    deleteMutate,
+    deleteIsSuccessContribution
   }
 }

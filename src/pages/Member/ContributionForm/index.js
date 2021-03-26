@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
 import Contribution from './components/contribution'
@@ -10,6 +10,7 @@ const ContributionForm = props => {
   const { location, match } = props
   // const { id } = props.location.state.data
   const { user } = useGlobalState()
+  const [id, setId] = useState(null)
   const {
     getTags,
     getUser,
@@ -25,24 +26,42 @@ const ContributionForm = props => {
     updateErrorContribution,
     addIsSuccessContribution,
     updateIsSuccessContribution,
-    getRelatedMedia,
-    relatedMediaData
-  } = useQuestionForm()
+    relatedMediaData,
+    deleteContribution,
+    deleteIsLoadingContribution,
+    deleteErrorContribution,
+    deleteMutate,
+    deleteIsSuccessContribution,
+    getRelatedMedia
+  } = useQuestionForm(id)
 
   useEffect(() => {
     getTags()
     getUser()
-  }, [getTags, getUser])
+    const fetch = async () => {
+      await setId(location.state.data.id)
+      await getRelatedMedia()
+    }
+    if (match.params.method === 'update') {
+      fetch()
+    }
+  }, [
+    getTags,
+    getUser,
+    match.params.method,
+    getRelatedMedia,
+    location
+  ])
 
   return (
     <div className={`${styles.homeWrapper}`}>
       <Contribution
         profile={getRawData(user).user}
-        questionUuid={location.state.questionUuid}
         tagsData={tagsData}
         relatedMediaData={relatedMediaData}
         addedData={addedContribution}
         updatedData={updatedContribution}
+        questionUuid={location.state.questionUuid}
         userData={userData}
         type={match.params.type}
         method={match.params.method}
@@ -58,6 +77,11 @@ const ContributionForm = props => {
         addContribution={addContribution}
         updateContribution={updateContribution}
         getRelatedMedia={getRelatedMedia}
+        deleteContribution={deleteContribution}
+        deleteIsLoadingContribution={deleteIsLoadingContribution}
+        deleteErrorContribution={deleteErrorContribution}
+        deleteMutate={deleteMutate}
+        deleteIsSuccessContribution={deleteIsSuccessContribution}
       />
     </div>
   )

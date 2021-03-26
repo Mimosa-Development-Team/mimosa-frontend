@@ -55,7 +55,6 @@ const Card = ({ treeView, data, parentTitle, isExpanded }) => {
               )}
               <Footer
                 data={data}
-                questionUuid={data.uuid}
                 author={treeView ? null : data.postedBy}
                 datePosted={data.createdAt}
                 dateModified={data.updatedAt}

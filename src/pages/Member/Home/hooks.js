@@ -1,39 +1,24 @@
-import { useMutation, useQuery } from 'react-query'
-import { queryClient } from 'store/state'
+import { useQuery } from 'react-query'
 
-import { addToDoAPI, getToDosAPI } from './api'
-import { TO_DO_QUERY_KEY } from './constants'
+import { getQuestionsAPI } from './api'
+import { QUESTIONS_QUERY_KEY } from './constants'
 
-export const useToDos = () => {
+export const useQuestions = () => {
   const {
     data,
     isLoading,
     error,
     refetch,
     isSuccess
-  } = useQuery(TO_DO_QUERY_KEY, getToDosAPI)
-
-  const {
-    data: addedData,
-    isLoading: addToDoLoading,
-    error: addToDoError,
-    mutate
-  } = useMutation(addToDoAPI, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(TO_DO_QUERY_KEY)
-    }
+  } = useQuery(QUESTIONS_QUERY_KEY, getQuestionsAPI, {
+    enabled: false
   })
 
   return {
-    getToDos: refetch,
-    toDos: data,
+    getQuestions: refetch,
+    questions: data,
     isLoading,
     isSuccess,
-    error,
-
-    addToDo: mutate,
-    addedData,
-    addToDoLoading,
-    addToDoError
+    error
   }
 }

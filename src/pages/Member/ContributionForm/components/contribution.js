@@ -1,19 +1,24 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
 import { useForm } from 'react-hook-form'
+import moment from 'moment'
 import {
   Button,
   Divider,
   Grid,
-  Typography
+  Typography,
+  Card,
+  CardContent
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import ModalDialog from 'components/Dialog/formDialog'
+import ModalDialog from 'components/Dialog/dialog'
+import ModalDelete from 'components/Dialog/delete'
 import capitalizeText from 'utils/parsing/capitalize'
+import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
 
 function Form(props) {
@@ -34,14 +39,43 @@ function Form(props) {
     addIsSuccessContribution,
     updateIsSuccessContribution,
     addedData,
-    questionUuid
+    questionUuid,
+    relatedMediaData,
+    deleteContribution,
+    deleteIsLoadingContribution,
+    // deleteErrorContribution,
+    deleteMutate
   } = props
+
+  const [status, setStatus] = useState('publish')
+  const [relatedMediaList, setRelatedMediaList] = useState([])
+  const [deleteForm, setDeleteForm] = useState(false)
+
+  useEffect(() => {
+    setRelatedMediaList(relatedMediaData || [])
+  }, [relatedMediaData])
 
   const questionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field'),
     details: yup.string().required('* Mandatory Field'),
     tags: yup.array().min(1, 'Must be selected').required(),
-    author: yup.array().min(1, 'Must be selected').required()
+    author: yup.array().min(1, 'Must be selected').required(),
+    presentationDate: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    }),
+    startTime: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    }),
+    endTime: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    }),
+    mediaLink: yup.string().when('mediaTitle', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    })
   })
 
   const contributionSchema = yup.object().shape({
@@ -49,35 +83,13 @@ function Form(props) {
     details: yup.string().required('* Mandatory Field')
   })
 
-  const [status, setStatus] = useState('publish')
-  const [relatedMediaList, setRelatedMediaList] = useState([])
-  const [conferenceName, setconferenceName] = useState('')
-  const [presentationDate, setpresentationDate] = useState('')
-  const [startTime, setstartTime] = useState('')
-  const [endTime, setendTime] = useState('')
-  const [mediaTitle, setmediaTitle] = useState('')
-  const [mediaLink, setmediaLink] = useState('')
-
-  useEffect(() => {
-    // if (props.relatedMedia) {
-    //   props.relatedMedia.map(x => {
-    //     return setRelatedMediaList(prevArry => [
-    //       ...prevArry,
-    //       {
-    //         conferenceName: x.conferenceName,
-    //         presentationDate:
-    //           x.conferenceDateDetails.presentationDetails,
-    //         startTime: x.conferenceDateDetails.startTime,
-    //         endTime: x.conferenceDateDetails.endTime,
-    //         mediaTitle: x.mediaDetails.mediaTitle,
-    //         mediaLink: x.mediaDetails.mediaLink
-    //       }
-    //     ])
-    //   })
-    // }
-  }, [])
-
-  const { handleSubmit, errors, control } = useForm({
+  const {
+    handleSubmit,
+    errors,
+    control,
+    getValues,
+    setValue
+  } = useForm({
     resolver: yupResolver(
       type === 'question' ? questionSchema : contributionSchema
     ),
@@ -123,7 +135,7 @@ function Form(props) {
       tags: val.tags ? val.tags : [],
       author: val.author ? val.author : [],
       userId: profile.id,
-      status,
+      status: method === 'update' ? 'deprecated' : status,
       version: '1.0.0',
       parentId:
         method === 'new'
@@ -132,14 +144,13 @@ function Form(props) {
             : 0
           : data.parentId,
       parentUuid:
-        method === 'new'
-          ? questionUuid
-          : data && data.uuid
-          ? data.uuid
-          : 0,
+        data && data.parentQuestionId
+          ? data.parentQuestionId
+          : questionUuid || 0,
       hypothesisStatus: '',
       relatedMedia: relatedMediaList
     }
+
     if (method === 'new') {
       addContribution(formFields)
     } else {
@@ -190,6 +201,49 @@ function Form(props) {
       })
     }
 
+    if (type === 'question' && status === 'publish') {
+      url = history.goBack()
+    }
+
+    if (type === 'hypothesis' && status === 'draft') {
+      url = history.push('/contribution-form/experiment/new', {
+        type: 'new',
+        data: addedData.data,
+        questionUuid
+      })
+    }
+
+    if (type === 'hypothesis' && status === 'publish') {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
+    if (type === 'experiment' && status === 'draft') {
+      url = history.push('/contribution-form/data/new', {
+        type: 'new',
+        data: addedData.data,
+        questionUuid
+      })
+    }
+
+    if (type === 'experiment' && status === 'publish') {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
+    if (type === 'data' && status === 'draft') {
+      url = history.push('/contribution-form/analysis/new', {
+        type: 'new',
+        data: addedData.data,
+        questionUuid
+      })
+    }
+    if (type === 'data' && status === 'publish') {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
+    if (type === 'analysis' && status === 'publish') {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
     return url
   }
 
@@ -197,20 +251,20 @@ function Form(props) {
     setRelatedMediaList(prevArry => [
       ...prevArry,
       {
-        conferenceName,
-        presentationDate,
-        startTime,
-        endTime,
-        mediaTitle,
-        mediaLink
+        conferenceName: getValues('conferenceName'),
+        presentationDate: getValues('presentationDate'),
+        startTime: getValues('startTime'),
+        endTime: getValues('endTime'),
+        mediaTitle: getValues('mediaTitle'),
+        mediaLink: getValues('mediaLink')
       }
     ])
-    setconferenceName('')
-    setpresentationDate('')
-    setstartTime('')
-    setendTime('')
-    setmediaTitle('')
-    setmediaLink('')
+    setValue('conferenceName', '')
+    setValue('presentationDate', '')
+    setValue('startTime', '')
+    setValue('endTime', '')
+    setValue('mediaTitle', '')
+    setValue('mediaLink', '')
   }
 
   const updateFieldChanged = (name, index, value) => {
@@ -221,6 +275,40 @@ function Form(props) {
       return item
     })
     setRelatedMediaList(newArr)
+  }
+
+  const getSubjectLabel = val => {
+    switch (val) {
+      case 'question':
+        return 'In one sentence, what is your research question?'
+      case 'hypothesis':
+        return 'Hypothesis: What is your answer to this question?'
+      case 'experiment':
+        return 'What is experiment testing?'
+      case 'data':
+        return 'Data'
+      case 'analysis':
+        return 'Data'
+      default:
+        return null
+    }
+  }
+
+  const getDetailsLabel = val => {
+    switch (val) {
+      case 'question':
+        return 'Add some details about your research question'
+      case 'hypothesis':
+        return 'Add some details to you reasoning'
+      case 'experiment':
+        return 'Experimental Protocol: describe how to perform this experiment'
+      case 'data':
+        return 'Data'
+      case 'analysis':
+        return 'Data'
+      default:
+        return null
+    }
   }
 
   return (
@@ -245,6 +333,19 @@ function Form(props) {
         errorHeader="Error"
         onClose={() => getUrl()}
         method={method}
+      />
+      <ModalDelete
+        header={`Delete a ${
+          data ? capitalizeText(data.category) : ''
+        }`}
+        content={`Are you sure you want to delete this ${
+          data ? capitalizeText(data.category) : ''
+        }`}
+        deleteContribution={deleteContribution}
+        deleteIsLoadingContribution={deleteIsLoadingContribution}
+        deleteMutate={deleteMutate}
+        id={data ? data.id : null}
+        deleteForm={deleteForm}
       />
       <form
         onSubmit={handleSubmit(submitForm)}
@@ -278,14 +379,24 @@ function Form(props) {
               style={{ textAlign: 'right' }}
               variant="subtitle1"
             >
-              {/* // Saved as Draft Nov. 20, 2020 10:30 AM */}
+              {data && data.status === 'draft'
+                ? moment(new Date(data.updatedAt)).format('lll')
+                : null}
             </Typography>
           </Grid>
+          {type !== 'question' && method === 'new' ? (
+            <Grid item sm={12}>
+              <ContributionHeader
+                data={data}
+                type={capitalizeText(type)}
+              />
+            </Grid>
+          ) : null}
           <Grid item sm={12}>
             <Controls.Input
               type="text"
               name="subject"
-              label="In one sentence, what is your research question?"
+              label={getSubjectLabel(type)}
               control={control}
               asterisk
               placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
@@ -300,7 +411,7 @@ function Form(props) {
               name="details"
               asterisk
               control={control}
-              label="Add some details about your research question"
+              label={getDetailsLabel(type)}
               placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
               errors={errors}
             />
@@ -313,14 +424,11 @@ function Form(props) {
                 </Typography>
               </Grid>
               <Grid item sm={12}>
-                <Controls.CustomInput
+                <Controls.Input
                   type="text"
                   name="conferenceName"
                   label="Conference name"
-                  onChange={e => {
-                    setconferenceName(e.target.value)
-                  }}
-                  value={conferenceName}
+                  control={control}
                   placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
                   {...(errors.conferenceName && {
                     error: true,
@@ -329,14 +437,11 @@ function Form(props) {
                 />
               </Grid>
               <Grid item sm={2}>
-                <Controls.CustomInput
+                <Controls.Input
                   type="date"
                   name="presentationDate"
                   label="Presentation Date"
-                  onChange={e => {
-                    setpresentationDate(e.target.value)
-                  }}
-                  value={presentationDate}
+                  control={control}
                   {...(errors.presentationDate && {
                     error: true,
                     helperText: errors.presentationDate.message
@@ -344,12 +449,10 @@ function Form(props) {
                 />
               </Grid>
               <Grid item sm={2}>
-                <Controls.CustomInput
+                <Controls.Input
                   type="time"
                   name="startTime"
                   label="Start Time"
-                  onChange={e => setstartTime(e.target.value)}
-                  value={startTime}
                   control={control}
                   {...(errors.startTime && {
                     error: true,
@@ -358,12 +461,10 @@ function Form(props) {
                 />
               </Grid>
               <Grid item sm={2}>
-                <Controls.CustomInput
+                <Controls.Input
                   type="time"
                   name="endTime"
                   label="End Time"
-                  onChange={e => setendTime(e.target.value)}
-                  value={endTime}
                   control={control}
                   {...(errors.endTime && {
                     error: true,
@@ -375,12 +476,10 @@ function Form(props) {
                 <Divider variant="middle" />
               </Grid>
               <Grid item sm={12}>
-                <Controls.CustomInput
+                <Controls.Input
                   type="text"
                   name="mediaTitle"
                   label="Medial Title"
-                  onChange={e => setmediaTitle(e.target.value)}
-                  value={mediaTitle}
                   placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
                   control={control}
                   {...(errors.mediaTitle && {
@@ -390,12 +489,10 @@ function Form(props) {
                 />
               </Grid>
               <Grid item sm={12}>
-                <Controls.CustomInput
+                <Controls.Input
                   type="text"
                   name="mediaLink"
                   label="Medial Link"
-                  onChange={e => setmediaLink(e.target.value)}
-                  value={mediaLink}
                   placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
                   control={control}
                   {...(errors.mediaLink && {
@@ -413,112 +510,124 @@ function Form(props) {
                   ADD MEDIA
                 </Button>
               </Grid>
-              {relatedMediaList.map((x, index) => {
-                return (
-                  <Grid
-                    container
-                    direction="row"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                    spacing={2}
-                    key={index}
-                  >
-                    <Grid item sm={12}>
-                      <Controls.CustomInput
-                        type="text"
-                        label="Conference name"
-                        onChange={e => {
-                          updateFieldChanged(
-                            'conferenceName',
-                            index,
-                            e.target.value
-                          )
+
+              {relatedMediaList && relatedMediaList.length > 0
+                ? relatedMediaList.map((x, index) => {
+                    return (
+                      <Card
+                        style={{
+                          width: '100%',
+                          marginTop: '1em'
                         }}
-                        value={x.conferenceName}
-                        placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
-                      />
-                    </Grid>
-                    <Grid item sm={2}>
-                      <Controls.CustomInput
-                        type="date"
-                        label="Presentation Date"
-                        onChange={e => {
-                          updateFieldChanged(
-                            'presentationDate',
-                            index,
-                            e.target.value
-                          )
-                        }}
-                        value={x.presentationDate}
-                      />
-                    </Grid>
-                    <Grid item sm={2}>
-                      <Controls.CustomInput
-                        type="time"
-                        label="Start Time"
-                        onChange={e => {
-                          updateFieldChanged(
-                            'startTime',
-                            index,
-                            e.target.value
-                          )
-                        }}
-                        value={x.startTime}
-                        control={control}
-                      />
-                    </Grid>
-                    <Grid item sm={2}>
-                      <Controls.CustomInput
-                        type="time"
-                        label="End Time"
-                        onChange={e => {
-                          updateFieldChanged(
-                            'endTime',
-                            index,
-                            e.target.value
-                          )
-                        }}
-                        value={x.endTime}
-                        control={control}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Divider variant="middle" />
-                    </Grid>
-                    <Grid item sm={12}>
-                      <Controls.CustomInput
-                        type="text"
-                        label="Medial Title"
-                        onChange={e => {
-                          updateFieldChanged(
-                            'mediaTitle',
-                            index,
-                            e.target.value
-                          )
-                        }}
-                        value={x.mediaTitle}
-                        placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
-                      />
-                    </Grid>
-                    <Grid item sm={12}>
-                      <Controls.CustomInput
-                        type="text"
-                        name="mediaLink"
-                        label="Medial Link"
-                        onChange={e => {
-                          updateFieldChanged(
-                            'mediaLink',
-                            index,
-                            e.target.value
-                          )
-                        }}
-                        value={x.mediaLink}
-                        placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
-                      />
-                    </Grid>
-                  </Grid>
-                )
-              })}
+                      >
+                        <CardContent>
+                          <Grid
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="flex-start"
+                            spacing={2}
+                            key={index}
+                          >
+                            <Grid item sm={12}>
+                              <Controls.CustomInput
+                                type="text"
+                                label="Conference name"
+                                onChange={e => {
+                                  updateFieldChanged(
+                                    'conferenceName',
+                                    index,
+                                    e.target.value
+                                  )
+                                }}
+                                value={x.conferenceName}
+                                placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
+                              />
+                            </Grid>
+                            <Grid item sm={2}>
+                              <Controls.CustomInput
+                                type="date"
+                                label="Presentation Date"
+                                onChange={e => {
+                                  updateFieldChanged(
+                                    'presentationDate',
+                                    index,
+                                    e.target.value
+                                  )
+                                }}
+                                value={x.presentationDate}
+                              />
+                            </Grid>
+                            <Grid item sm={2}>
+                              <Controls.CustomInput
+                                type="time"
+                                label="Start Time"
+                                onChange={e => {
+                                  updateFieldChanged(
+                                    'startTime',
+                                    index,
+                                    e.target.value
+                                  )
+                                }}
+                                value={x.startTime}
+                                control={control}
+                              />
+                            </Grid>
+                            <Grid item sm={2}>
+                              <Controls.CustomInput
+                                type="time"
+                                label="End Time"
+                                onChange={e => {
+                                  updateFieldChanged(
+                                    'endTime',
+                                    index,
+                                    e.target.value
+                                  )
+                                }}
+                                value={x.endTime}
+                                control={control}
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Divider variant="middle" />
+                            </Grid>
+                            <Grid item sm={12}>
+                              <Controls.CustomInput
+                                type="text"
+                                label="Medial Title"
+                                onChange={e => {
+                                  updateFieldChanged(
+                                    'mediaTitle',
+                                    index,
+                                    e.target.value
+                                  )
+                                }}
+                                value={x.mediaTitle}
+                                placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
+                              />
+                            </Grid>
+                            <Grid item sm={12}>
+                              <Controls.CustomInput
+                                type="text"
+                                name="mediaLink"
+                                label="Medial Link"
+                                onChange={e => {
+                                  updateFieldChanged(
+                                    'mediaLink',
+                                    index,
+                                    e.target.value
+                                  )
+                                }}
+                                value={x.mediaLink}
+                                placeholder="sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium"
+                              />
+                            </Grid>
+                          </Grid>
+                        </CardContent>
+                      </Card>
+                    )
+                  })
+                : null}
               <Grid item xs={12}>
                 <Divider variant="middle" />
               </Grid>
@@ -578,8 +687,7 @@ function Form(props) {
               <Button
                 className={`${styles.deleteBtn}`}
                 variant="outlined"
-                onClick={() => setStatus('draft')}
-                type="submit"
+                onClick={() => setDeleteForm(true)}
               >
                 DELETE
               </Button>
@@ -587,7 +695,6 @@ function Form(props) {
             <Button
               type="submit"
               className={`${styles.publishBtn}`}
-              onClick={() => setStatus('publish')}
               variant="contained"
               id="submit"
             >

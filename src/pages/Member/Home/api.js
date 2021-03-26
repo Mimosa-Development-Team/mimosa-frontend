@@ -1,9 +1,5 @@
-import { getRequest, postRequest } from 'utils/http'
+import { getRequest } from 'utils/http'
 
-export const getToDosAPI = () => {
-  return getRequest(`user/1/todos`)
-}
-
-export const addToDoAPI = newToDo => {
-  return postRequest('/todos', newToDo)
+export const getQuestionsAPI = () => {
+  return getRequest(`api/v1/contribution/questions`)
 }

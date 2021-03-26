@@ -1,4 +1,9 @@
-import { putRequest, postRequest, getRequest } from 'utils/http'
+import {
+  putRequest,
+  postRequest,
+  getRequest,
+  deleteRequest
+} from 'utils/http'
 
 export const getUserAPI = () => {
   return getRequest(`/api/v1/users/list`)
@@ -18,5 +23,9 @@ export const putContributionAPI = data => {
 
 export const getRelatedMediaAPI = data => {
   const { id } = data.queryKey[1]
-  return getRequest(`/api/v1/related-media/${id}`)
+  return getRequest(`/api/v1/related-media/list/${id}`)
+}
+
+export const deleteContributionAPI = id => {
+  return deleteRequest(`/api/v1/contribution/${id}`)
 }

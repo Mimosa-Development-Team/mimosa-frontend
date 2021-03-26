@@ -3,13 +3,27 @@ import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import LinkIcon from 'assets/images/icons/link.svg'
 import PDFIcon from 'assets/images/icons/pdf.svg'
+import FileIcon from 'assets/images/icons/file.svg'
 import VideoIcon from 'assets/images/icons/video-camera.svg'
+import { VIDEO_EXTENSIONS } from './extensions'
 import styles from './styles.module.scss'
 
 const Media = ({ media }) => {
   const icons = {
     pdf: PDFIcon,
-    video: VideoIcon
+    video: VideoIcon,
+    file: FileIcon
+  }
+  const checkFile = file => {
+    let type = 'file'
+    const fileExtension = file.split('.').pop()
+    if (VIDEO_EXTENSIONS.indexOf(fileExtension) > -1) {
+      type = 'video'
+    }
+    if (fileExtension === 'pdf') {
+      type = fileExtension
+    }
+    return type
   }
   return (
     <div className={`${styles.media}`}>
@@ -19,7 +33,12 @@ const Media = ({ media }) => {
             <li key={data.id}>
               <div className={`${styles.mediaIcon}`}>
                 <span>
-                  <img src={icons.video} alt="PDF" />
+                  <img
+                    src={
+                      icons[checkFile(data.mediaDetails.link)]
+                    }
+                    alt="media icon"
+                  />
                 </span>
               </div>
               <div>
@@ -47,6 +66,7 @@ const Media = ({ media }) => {
             </li>
           )
         })}
+        {/* {JSON.stringify(EXTENSIONS)} */}
         {/* <li>
           <div className={`${styles.mediaIcon}`}>
             <span>
