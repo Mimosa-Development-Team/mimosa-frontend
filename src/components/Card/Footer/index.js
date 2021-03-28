@@ -44,6 +44,7 @@ const Footer = ({
           <Media
             relatedMediaCount={data.relatedMediaCount}
             onMetaClick={onMetaClick}
+            poster={data && data.parentQuestionId}
           />
           <Comments
             commentCount={data.commentCount}

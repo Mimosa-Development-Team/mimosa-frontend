@@ -16,6 +16,41 @@
   }
 }
 
+.radioControl {
+  .label {
+    color: black;
+    margin-bottom: 12px;
+  }
+
+  .input {
+    width: 100%;
+    margin-top: 13px;
+    background-color: white;
+  }
+
+  .required {
+    color: red;
+  }
+
+  .radio {
+    border-style: solid;
+    border-color: grey;
+    color: grey;
+    padding: 5px;
+    border-width: thin;
+    border-radius: 1.5em;
+  }
+
+  .radioActive {
+    border-style: solid;
+    border-color: $primary;
+    color: $primary;
+    padding: 5px;
+    border-width: thin;
+    border-radius: 1.5em;
+  }
+}
+
 .multiSelectControl {
   .label {
     color: black;
