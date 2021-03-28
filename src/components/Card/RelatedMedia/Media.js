@@ -1,6 +1,5 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import { Typography, Link } from '@material-ui/core'
 import LinkIcon from 'assets/images/icons/link.svg'
 import PDFIcon from 'assets/images/icons/pdf.svg'
 import FileIcon from 'assets/images/icons/file.svg'
@@ -33,12 +32,15 @@ const Media = ({ media }) => {
             <li key={data.id}>
               <div className={`${styles.mediaIcon}`}>
                 <span>
-                  <img
-                    src={
-                      icons[checkFile(data.mediaDetails.link)]
-                    }
-                    alt="media icon"
-                  />
+                  {data.mediaDetails &&
+                  data.mediaDetails.link ? (
+                    <img
+                      src={
+                        icons[checkFile(data.mediaDetails.link)]
+                      }
+                      alt="media icon"
+                    />
+                  ) : null}
                 </span>
               </div>
               <div>

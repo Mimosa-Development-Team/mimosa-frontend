@@ -59,7 +59,8 @@ export default function ModalDialog({
   onClose,
   method,
   onDelete,
-  errorHeader
+  errorHeader,
+  onReset
   // success
 }) {
   const [open, setOpen] = useState(false)
@@ -117,6 +118,7 @@ export default function ModalDialog({
               onClick={() => {
                 setOpen(!open)
                 onClose()
+                onReset()
               }}
             >
               CLOSE
@@ -138,6 +140,7 @@ export default function ModalDialog({
               onClick={() => {
                 setOpen(!open)
                 onClose()
+                onReset()
               }}
             >
               CLOSE

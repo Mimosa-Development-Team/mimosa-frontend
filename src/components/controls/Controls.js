@@ -4,6 +4,7 @@ import Button from './Button'
 import MultiSelect from './MultiSelect'
 import Quill from './Quill'
 import CustomInput from './CustomInput'
+import RadioControl from './Radio'
 
 const Controls = {
   Input,
@@ -11,7 +12,8 @@ const Controls = {
   Quill,
   Button,
   MultiSelect,
-  CustomInput
+  CustomInput,
+  RadioControl
 }
 
 export default Controls

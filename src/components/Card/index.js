@@ -59,6 +59,7 @@ const Card = ({ treeView, data, parentTitle, isExpanded }) => {
                 datePosted={data.createdAt}
                 dateModified={data.updatedAt}
                 onMetaClick={handleClick}
+                parentQuestionId={data.parentQuestionId}
               />
             </div>
             {showDetails && (

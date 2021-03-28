@@ -8,8 +8,8 @@ import styles from './styles.module.scss'
 const Conference = ({ conference }) => {
   return (
     <>
-      {(conference || []).map(data => {
-        return (
+      {(conference || []).map((data, i) => {
+        return i === 0 ? (
           <div className={`${styles.conference}`}>
             <Typography variant="h4">
               {data.conferenceName}
@@ -33,7 +33,7 @@ const Conference = ({ conference }) => {
               </Typography>
             </div>
           </div>
-        )
+        ) : null
       })}
     </>
   )
