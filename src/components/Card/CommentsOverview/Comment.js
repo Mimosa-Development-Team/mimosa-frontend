@@ -5,7 +5,13 @@ import moment from 'moment'
 import Actions from './Actions'
 import styles from './styles.module.scss'
 
-const Comment = ({ comment, date, username, hasActions }) => {
+const Comment = ({
+  comment,
+  datePosted,
+  dateModified,
+  username,
+  hasActions
+}) => {
   return (
     <div className={`${styles.comment}`}>
       <div className={`${styles.contentWrapper}`}>
@@ -18,7 +24,9 @@ const Comment = ({ comment, date, username, hasActions }) => {
             {comment}
           </Typography>
           <Typography className={`${styles.date}`}>
-            {moment(date).format('MMM. D, YYYY hh:mm A')}
+            {moment(dateModified || datePosted).format(
+              'MMM. D, YYYY hh:mm A'
+            )}
           </Typography>
         </div>
       </div>
