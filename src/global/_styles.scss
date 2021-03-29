@@ -75,6 +75,12 @@ $spacers: (
   }
 }
 
+.mr {
+  &-30 {
+    margin-right: 30px !important;
+  }
+}
+
 // aligns element inside class
 .align {
   &-center {
@@ -207,7 +213,7 @@ button.btn {
     font-family: 'Roboto-Medium';
   }
 
-  &.outline {
+  &.dashed {
     border: 1px dashed $primary;
     background: transparent;
     font-size: 14px;
@@ -216,6 +222,61 @@ button.btn {
     color: $primary;
     padding: 0 45px;
     box-shadow: none;
+  }
+
+  &.contained {
+    border-radius: 25px;
+    background-color: $primary;
+    font-size: 14px;
+    letter-spacing: 0.44px;
+    line-height: 16px;
+    padding: 0 60px;
+    color: $white;
+  }
+
+  &.outline {
+    border-radius: 25px;
+    background-color: transparent;
+    border: 1px solid $primary;
+    font-size: 14px;
+    letter-spacing: 0.44px;
+    line-height: 16px;
+    padding: 0 60px;
+    color: $primary;
+  }
+}
+
+// dialog 
+div.dialog {
+  min-height: 250px;
+  width: 480px;
+  border-radius: 8px;
+  background-color: $white;
+  box-shadow: 0 2px 30px 0 rgba(0,0,0,0.15);
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &.centered {
+    text-align: center;
+  }
+
+  .dialogTitle {
+    font-family: "Roboto-Bold";
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.63px;
+    line-height: 24px;
+    &.delete {
+      color: $red;
+    }
+  }
+
+  .dialogContent {
+    margin-top: 25px;
+    margin-bottom: 40px;
   }
 }
 

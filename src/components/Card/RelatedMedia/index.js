@@ -183,7 +183,7 @@ const RelatedMedia = ({ contributionId }) => {
       </div>
       <div className={`${styles.buttonWrapper}`}>
         <Button
-          className="btn outline align-center"
+          className="btn dashed align-center"
           size="large"
           variant="contained"
           onClick={() => setOpen(true)}

@@ -2,12 +2,25 @@
 @import '~global/styles';
 
 .commentsWrapper {
-  padding: 0 30px;
   width: 100%;
 
   .commentField {
     display: inline-flex;
     width: 100%;
+    padding: 20px 30px 30px 30px;
+
+    &.active {
+      background: $offwhite;
+      border-bottom: none;
+
+      &+ .comment {
+        border-top: none;
+      } 
+    }
+
+    &+ .comment {
+      margin-top: 0;
+    }
 
     .avatar {
       margin-right: 17px;
@@ -19,11 +32,27 @@
     }
   }
 
+  p.editMeta {
+    color: $lightgray2;
+    font-size: 14px;
+    letter-spacing: 0.09px;
+    line-height: 16px;
+    margin-top: 10px;
+    .metaButton {
+      color: $primary;
+      margin-left: 3px;
+      cursor: pointer;
+    }
+    .metaDivider {
+      margin: 0 5px;
+    }
+  }
+
   .comment {
-    padding-top: 30px;
-    margin-top: 30px;
-    border-top: 1px solid rgba(178, 180, 189, 0.5);
     position: relative;
+    border-top: 1px solid rgba(178, 180, 189, 0.5);
+    margin-top: 30px;
+    padding: 30px 30px 0 30px;
 
     .contentWrapper {
       display: inline-flex;
@@ -54,7 +83,7 @@
 
 .actionsWrapper {
   position: absolute;
-  right: 5px;
+  right: 25px;
   top: 25px;
 
   .button {
