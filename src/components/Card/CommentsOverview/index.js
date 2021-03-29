@@ -65,7 +65,8 @@ const CommentsOverview = ({ contributionId }) => {
         return (
           <Comment
             comment={data.comment}
-            date={data.updatedAt}
+            datePosted={data.createdAt}
+            dateModified={data.updatedAt}
             username={data.mmUser.fullName}
             hasActions={
               getRawData(user).user.orcidId ===

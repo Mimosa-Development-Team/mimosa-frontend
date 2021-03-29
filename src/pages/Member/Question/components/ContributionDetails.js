@@ -16,7 +16,7 @@ const ContributionDetails = ({
       <Typography className={`${styles.title}`} variant="h5">
         Contribution Details
       </Typography>
-      {authors && (
+      {authors.length > 0 && (
         <div>
           <Typography className={`${styles.metaTitle}`}>
             Authors:
@@ -58,18 +58,16 @@ const ContributionDetails = ({
           {moment(datePosted).format('MMM. D, YYYY')}
         </Typography>
       </div>
-      <div>
-        <Typography className={`${styles.metaTitle}`}>
-          Date Modified:
-        </Typography>
-        {datePosted !== dateModified ? (
+      {dateModified && (
+        <div>
+          <Typography className={`${styles.metaTitle}`}>
+            Date Modified:
+          </Typography>
           <Typography className={`${styles.date}`}>
             {moment(dateModified).format('MMM. D, YYYY')}
           </Typography>
-        ) : (
-          '---'
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
