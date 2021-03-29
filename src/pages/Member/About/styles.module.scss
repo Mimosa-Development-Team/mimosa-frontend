@@ -39,16 +39,12 @@
   }
 }
 
-.link {
-  color: $primary !important;
-}
-
 .author {
   display: block;
   color: $primary;
 }
 
-.paper {
+.contentPaper {
   padding: 30px;
   padding-right: 70px;
   margin-bottom: 48px;
@@ -84,7 +80,7 @@
   }
 }
 
-.partnerTitle {
+.partnerLogo {
   color: $secondary;
   font-size: 53px;
   font-weight: 600;

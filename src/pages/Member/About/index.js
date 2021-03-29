@@ -47,7 +47,7 @@ const About = () => {
               Who we are
             </Typography>
 
-            <Paper elevation={0} className={styles.paper}>
+            <Paper elevation={0} className={styles.contentPaper}>
               <p>
                 Mimosa is a project by Lana Sinapayen, associate
                 researcher at Sony Computer Science Laboratories
@@ -139,7 +139,7 @@ const About = () => {
               Our Partners and Accreditation
             </Typography>
 
-            <div className={styles.partnerTitle}>
+            <div className={styles.partnerLogo}>
               eLife
               <span>eLife Innovation Leaders 2020</span>
             </div>
