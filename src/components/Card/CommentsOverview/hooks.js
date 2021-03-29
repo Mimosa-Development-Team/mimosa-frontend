@@ -45,6 +45,7 @@ export const useComments = id => {
     isSuccess: updateIsSuccessComment
   } = useMutation(putCommentAPI, {
     onSuccess: () => {
+      refetch()
       queryClient.invalidateQueries(COMMENT_PUT_QUERY_KEY)
     }
   })
@@ -57,6 +58,7 @@ export const useComments = id => {
     isSuccess: deleteIsSuccessComment
   } = useMutation(deleteCommentAPI, {
     onSuccess: () => {
+      refetch()
       queryClient.invalidateQueries(COMMENT_DELETE_QUERY_KEY)
     }
   })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Typography } from '@material-ui/core'
+import { Avatar } from '@material-ui/core'
 import Controls from 'components/controls/Controls'
 import ModalDelete from 'components/Dialog/delete'
 import { useForm } from 'react-hook-form'
@@ -107,7 +107,7 @@ const CommentsOverview = ({ contributionId }) => {
               addLoadingComment={addLoadingComment}
               addErrorComment={addErrorComment}
             />
-            {editing && (
+            {/* {editing && (
               <Typography className={`${styles.editMeta}`}>
                 Escape to
                 <span className={`${styles.metaButton}`}>
@@ -121,7 +121,7 @@ const CommentsOverview = ({ contributionId }) => {
                   Save
                 </span>
               </Typography>
-            )}
+            )} */}
           </form>
         </div>
         {(comments || []).map(data => {
