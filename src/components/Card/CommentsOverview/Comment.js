@@ -5,32 +5,34 @@ import moment from 'moment'
 import Actions from './Actions'
 import styles from './styles.module.scss'
 
-const Comment = ({
-  comment,
-  datePosted,
-  dateModified,
-  username,
-  hasActions
-}) => {
+const Comment = ({ data, hasActions, onEdit, onDelete }) => {
   return (
     <div className={`${styles.comment}`}>
       <div className={`${styles.contentWrapper}`}>
-        <Avatar className={`${styles.avatar}`}>T</Avatar>
+        <Avatar className={`${styles.avatar}`}>
+          {data.mmUser.fullName.charAt(0)}
+        </Avatar>
         <div>
           <Typography className={`${styles.name}`}>
-            {username}
+            {data.mmUser.fullName}
           </Typography>
           <Typography className={`${styles.details}`}>
-            {comment}
+            {data.comment}
           </Typography>
           <Typography className={`${styles.date}`}>
-            {moment(dateModified || datePosted).format(
+            {moment(data.updatedAt || data.createdAt).format(
               'MMM. D, YYYY hh:mm A'
             )}
           </Typography>
         </div>
       </div>
-      {hasActions && <Actions />}
+      {hasActions && (
+        <Actions
+          data={data}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      )}
     </div>
   )
 }

@@ -1,67 +1,18 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import {
-  Modal,
-  Typography,
-  Button,
-  makeStyles
-} from '@material-ui/core'
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 500,
-    // height: 300,
-    borderRadius: '1em',
-    backgroundColor: 'white',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
-    outline: 'none'
-  },
-  content: {
-    marginTop: '35px'
-  },
-  buttonDiv: {
-    padding: theme.spacing(4)
-  },
-  buttonCancel: {
-    padding: '1em',
-    width: '40%',
-    borderRadius: '2em',
-    color: '#ef8c20',
-    height: '3em',
-    borderColor: '#ef8c20'
-  },
-  buttonClose: {
-    padding: '1em',
-    width: '40%',
-    float: 'right',
-    borderRadius: '2em',
-    color: '#ef8c20',
-    height: '3em',
-    borderColor: '#ef8c20'
-  },
-  buttonSubmit: {
-    width: '40%',
-    float: 'right',
-    borderRadius: '2em',
-    backgroundColor: '#ef8c20',
-    height: '3em',
-    color: 'white'
-  }
-}))
+// import { useHistory } from 'react-router-dom'
+import { Modal, Typography, Button } from '@material-ui/core'
 
 export default function ModalDialog({
   header,
   content,
-  deleteContribution,
-  deleteIsLoadingContribution,
+  deleteItem,
+  deleteIsLoadingItem,
   deleteMutate,
   deleteForm,
   id
 }) {
-  const history = useHistory()
+  // const history = useHistory()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -69,20 +20,6 @@ export default function ModalDialog({
       setOpen(true)
     }
   }, [deleteForm, setOpen])
-
-  function getModalStyle() {
-    const top = 50
-    const left = 50
-
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`
-    }
-  }
-
-  const [modalStyle] = useState(getModalStyle)
-  const classes = useStyles()
 
   return (
     <Modal
@@ -92,50 +29,48 @@ export default function ModalDialog({
       onClose={() => setOpen(!open)}
       disableBackdropClick
     >
-      <div style={modalStyle} className={classes.paper}>
-        <Typography variant="h1" align="center" color="error">
+      <div className="dialog centered">
+        <Typography variant="h2" className="dialogTitle delete">
           {header}
         </Typography>
-        <div className={classes.content}>
+        <div className="dialogContent">
           <Typography
             variant="subtitle1"
             id="simple-modal-description"
             align="center"
           >
-            {deleteContribution
-              ? 'Your contribution was successfully delete.'
+            {deleteItem
+              ? 'Your contribution was successfully deleted.'
               : null || content}
           </Typography>
         </div>
-        {deleteContribution ? (
-          <div className={classes.buttonDiv}>
-            <Button
-              variant="outlined"
-              className={classes.buttonClose}
-              disabled={deleteIsLoadingContribution}
-              onClick={() => history.push('/')}
-            >
-              CLOSE
-            </Button>
-          </div>
+        {deleteItem ? (
+          <Button
+            variant="outlined"
+            className="btn outline"
+            disabled={deleteIsLoadingItem}
+            onClick={() => setOpen(!open)}
+          >
+            CLOSE
+          </Button>
         ) : (
-          <div className={classes.buttonDiv}>
+          <>
             <Button
-              className={classes.buttonCancel}
+              className="btn outline mr-30"
               variant="outlined"
-              disabled={deleteIsLoadingContribution}
+              disabled={deleteIsLoadingItem}
               onClick={() => setOpen(!open)}
             >
               CLOSE
             </Button>
             <Button
               variant="contained"
-              className={classes.buttonSubmit}
+              className="btn contained"
               onClick={() => deleteMutate(id)}
             >
               DELETE
             </Button>
-          </div>
+          </>
         )}
       </div>
     </Modal>

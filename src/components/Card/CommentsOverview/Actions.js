@@ -13,11 +13,12 @@ import EditIcon from 'assets/images/icons/edit.png'
 import DeleteIcon from 'assets/images/icons/delete.svg'
 import styles from './styles.module.scss'
 
-const Actions = ({ ...propsList }) => {
+const Actions = ({ data, onEdit, onDelete, ...propsList }) => {
   const popupState = usePopupState({
     variant: 'popper',
     popupId: 'actionsPopper'
   })
+
   return (
     <ClickAwayListener onClickAway={popupState.close}>
       <div className={`${styles.actionsWrapper}`}>
@@ -44,6 +45,7 @@ const Actions = ({ ...propsList }) => {
                   aria-label="edit"
                   className={`${styles.actionButton} mb-10`}
                   {...propsList}
+                  onClick={() => onEdit(data)}
                 >
                   <img src={EditIcon} alt="" />
                   Edit
@@ -53,6 +55,7 @@ const Actions = ({ ...propsList }) => {
                   aria-label="delete"
                   className={`${styles.actionButton}`}
                   {...propsList}
+                  onClick={() => onDelete(data)}
                 >
                   <img src={DeleteIcon} alt="" />
                   Delete

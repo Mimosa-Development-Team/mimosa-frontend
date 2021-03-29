@@ -1,10 +1,17 @@
 import { useMutation, useQuery } from 'react-query'
 import { queryClient } from 'store/state'
 
-import { getCommentsAPI, postCommentAPI } from './api'
+import {
+  getCommentsAPI,
+  postCommentAPI,
+  putCommentAPI,
+  deleteCommentAPI
+} from './api'
 import {
   COMMENT_QUERY_KEY,
-  COMMENT_POST_QUERY_KEY
+  COMMENT_POST_QUERY_KEY,
+  COMMENT_PUT_QUERY_KEY,
+  COMMENT_DELETE_QUERY_KEY
 } from './constants'
 
 export const useComments = id => {
@@ -30,6 +37,30 @@ export const useComments = id => {
     }
   })
 
+  const {
+    data: updatedComment,
+    isLoading: updateIsLoadingComment,
+    error: updateErrorComment,
+    mutate: updateMutate,
+    isSuccess: updateIsSuccessComment
+  } = useMutation(putCommentAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(COMMENT_PUT_QUERY_KEY)
+    }
+  })
+
+  const {
+    data: deleteComment,
+    isLoading: deleteIsLoadingComment,
+    error: deleteErrorComment,
+    mutate: deleteMutate,
+    isSuccess: deleteIsSuccessComment
+  } = useMutation(deleteCommentAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(COMMENT_DELETE_QUERY_KEY)
+    }
+  })
+
   return {
     getComments: refetch,
     comments: data,
@@ -40,6 +71,18 @@ export const useComments = id => {
     addComment: postMutate,
     addedComment,
     addLoadingComment,
-    addErrorComment
+    addErrorComment,
+
+    updateComment: updateMutate,
+    updatedComment,
+    updateIsLoadingComment,
+    updateErrorComment,
+    updateIsSuccessComment,
+
+    deleteComment,
+    deleteIsLoadingComment,
+    deleteErrorComment,
+    deleteMutate,
+    deleteIsSuccessComment
   }
 }
