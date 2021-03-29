@@ -16,7 +16,7 @@ const ContributionDetails = ({
       <Typography className={`${styles.title}`} variant="h5">
         Contribution Details
       </Typography>
-      {authors.length > 0 && (
+      {authors && authors.length > 0 && (
         <div>
           <Typography className={`${styles.metaTitle}`}>
             Authors:
