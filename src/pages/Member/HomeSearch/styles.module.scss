@@ -1,0 +1,33 @@
+@import '~global/styles';
+
+.groupHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .searchBox {
+    width: 100%;
+  }
+
+  .questionBtn {
+    color: white;
+    font-weight: bold;
+    background-color: $primary;
+    border-radius: 27.5px;
+  }
+}
+
+.paperListHeader {
+  margin-top: 4em;
+  margin-bottom: 1.5em;
+}
+
+.content {
+  margin-top: .5em;
+  cursor: pointer;
+}
+
+.term {
+  font-family: 'Roboto-Bold';
+  color: $primary;
+}
