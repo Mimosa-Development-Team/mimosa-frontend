@@ -25,14 +25,19 @@ const About = () => {
             <p>
               Mimosa is a platform for open collaboration in
               science. Read the Mimosa Manifesto{' '}
-              <Link href="#">[link]</Link> to see how an ideal
-              version of Mimosa would be after after release.
-              Mimosa is built on the principles of Open Access,
-              Open Source, Micro Publication, Incremental
-              improvement through feedback, Virtuous incentives,
-              Reciprocity, Reciprocity, Inclusivity,
-              Professionalisation of roles, Salient deprecation,
-              and Replication.
+              <Link
+                target="_blank"
+                href="https://drive.google.com/file/d/1A8FXj3euP9u8YCN1KZNAX-WkcM8Bdo_P/view"
+              >
+                [link]
+              </Link>{' '}
+              to see how an ideal version of Mimosa would be
+              after after release. Mimosa is built on the
+              principles of Open Access, Open Source, Micro
+              Publication, Incremental improvement through
+              feedback, Virtuous incentives, Reciprocity,
+              Reciprocity, Inclusivity, Professionalisation of
+              roles, Salient deprecation, and Replication.
               <span className={styles.author}>
                 Project by: Lana Sinapayen
               </span>
@@ -56,17 +61,26 @@ const About = () => {
 
               <p>
                 Invision design prototype:{' '}
-                <Link href="https://bit.ly/3t4RJNk">
+                <Link
+                  target="_blank"
+                  href="https://bit.ly/3t4RJNk"
+                >
                   https://bit.ly/3t4RJNk
                 </Link>
                 <br />
                 Google doc for comments:{' '}
-                <Link href="https://bit.ly/3cgEB0K">
+                <Link
+                  target="_blank"
+                  href="https://bit.ly/3cgEB0K"
+                >
                   https://bit.ly/3cgEB0K
                 </Link>
                 <br />
                 TL;DR in 7 slides:{' '}
-                <Link href="https://bit.ly/30wXwi8">
+                <Link
+                  target="_blank"
+                  href="https://bit.ly/30wXwi8"
+                >
                   https://bit.ly/30wXwi8
                 </Link>
               </p>
@@ -76,7 +90,7 @@ const About = () => {
               <p>
                 Debates happen where there is wiggle room for
                 interpretation. There is no debate when all
-                parties agree or when all parties know why they
+                parties agree, or when all parties know why they
                 disagree.
               </p>
 
@@ -85,27 +99,26 @@ const About = () => {
                   Scientific debates can be settled by agreeing
                   on an experimental protocol.
                 </strong>{' '}
-                Good protocols identify the wiggle room and
+                Good protocols identify wiggle room and
                 preemptively get rid of it, by fixing the
                 interpretation of experimental results before the
-                experiment proceeds. “Are infections between
-                expecting mothers transmitted by contact? Let us
-                have some doctors wash their hands between
-                births. If their patients have better survival
-                rates than usual, let us agree that infections
-                travel between patients on the hands of doctors.”
+                experiment proceeds. “Are doctors transmitting
+                deadly illnesses from cadavers to birthing
+                mothers? Have some doctors wash their hands after
+                autopsies. Let us agree that if their patients
+                have better survival rates than usual, it means
+                that infections travel on the hands of doctors
+                (Carter 1985).”
+              </p>
+
+              <p>
                 Experimental results might tell you which way the
                 settlement goes, but ideally the debate itself
                 ends with the protocol. From this point of view,
                 Science is the art of defining convincing
-                protocols.
-              </p>
-
-              <p>
-                That is why scientific papers are more
-                interesting and more rigorous when they are
-                written by two people who start out genuinely
-                disagreeing.
+                protocols: scientific papers are more interesting
+                and more rigorous when they are written by two
+                people who start out genuinely disagreeing.
               </p>
 
               <p>
@@ -113,8 +126,20 @@ const About = () => {
                 and disagreement in science into a productive,
                 collaborative format. Mimosa also tries to
                 address many of the{' '}
-                <Link href="#">numerous recognised issues</Link>{' '}
-                within the current format for sharing science.
+                <Link
+                  target="_blank"
+                  href="https://www.theguardian.com/higher-education-network/2018/may/21/scientists-access-journals-researcher-article"
+                >
+                  numerous recognised issues
+                </Link>{' '}
+                within the current format for sharing science,
+                born at a different time and for{' '}
+                <Link
+                  target="_blank"
+                  href="https://www.theguardian.com/science/2017/jun/27/profitable-business-scientific-publishing-bad-for-science"
+                >
+                  the wrong reasons.
+                </Link>{' '}
               </p>
 
               <p>
@@ -122,7 +147,13 @@ const About = () => {
                 suspicion. It is now a major platform for finding
                 information, used by all demographics. Wikipedia
                 has a famous rule:{' '}
-                <Link href="#">“No original research”</Link>.
+                <Link
+                  target="_blank"
+                  href="https://en.wikipedia.org/wiki/Wikipedia:No_original_research"
+                >
+                  “No original research”
+                </Link>
+                .
               </p>
 
               <p>
@@ -130,7 +161,7 @@ const About = () => {
                   Mimosa aspires to be that free,
                   open-collaborative online platform created and
                   maintained by a community of volunteer
-                  contributors dedicated to original research.
+                  contributors, dedicated to original research.
                 </strong>
               </p>
             </Paper>
