@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import moment from 'moment'
+import Author from './Author'
 import styles from './styles.module.scss'
 
 const ContributionDetails = ({
@@ -22,16 +23,7 @@ const ContributionDetails = ({
             Authors:
           </Typography>
           {(authors || []).map(author => {
-            return (
-              <div
-                className={`${styles.avatarName} ${styles.author}`}
-              >
-                <Avatar className={`${styles.avatar}`}>
-                  {author.name.charAt(0)}
-                </Avatar>
-                {author.name}
-              </div>
-            )
+            return <Author author={author} />
           })}
         </div>
       )}

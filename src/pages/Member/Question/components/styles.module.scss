@@ -130,6 +130,12 @@
         margin-right: 23px;
         background: nth($avatar-colors, random(length($avatar-colors)));
       }
+
+      .defaultAvatar {
+        padding: 0;
+        margin-right: 23px;
+        width: 40px;
+      }
     }
 
     &.poster {
