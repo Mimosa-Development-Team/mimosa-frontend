@@ -9,7 +9,14 @@ import ParentTitle from './ParentTitle'
 import QuestionDetails from './QuestionDetails'
 import styles from './styles.module.scss'
 
-const Card = ({ treeView, data, parentTitle, isExpanded }) => {
+const Card = ({
+  treeView,
+  data,
+  parentTitle,
+  isExpanded,
+  hideDetails,
+  hideEdit
+}) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
 
@@ -47,7 +54,7 @@ const Card = ({ treeView, data, parentTitle, isExpanded }) => {
                 deprecated={data.status === 'deprecated'}
                 title={data.subject}
               />
-              {data.details && (
+              {hideDetails !== true && data.details && (
                 <Content
                   content={data.details}
                   isExpanded={isExpanded}
@@ -60,6 +67,7 @@ const Card = ({ treeView, data, parentTitle, isExpanded }) => {
                 dateModified={data.updatedAt}
                 onMetaClick={handleClick}
                 parentQuestionId={data.parentQuestionId}
+                hideEdit={hideEdit}
               />
             </div>
             {showDetails && (

@@ -40,6 +40,8 @@ button {
       height: 20px;
       margin-right: 8px;
       font-size: 15px;
+      padding-top: 2px;
+      background: nth($avatar-colors, random(length($avatar-colors)));
     }
   }
   .metaDivider {

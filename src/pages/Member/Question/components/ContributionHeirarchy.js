@@ -58,6 +58,8 @@ const ContributionHeirarchy = ({
           data={data}
           treeView
           isExpanded={data === activeContribution}
+          hideDetails={false}
+          hideEdit={false}
         />
       </li>
     )
