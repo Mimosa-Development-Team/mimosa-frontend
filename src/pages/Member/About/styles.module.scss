@@ -1,0 +1,98 @@
+@import '~global/styles';
+
+@mixin pseudo-background {
+  content: '';
+  width: 215px;
+  height: 215px;
+  position: absolute;
+  background: url('/assets/images/login/logo-icon-only.svg') no-repeat;
+  background-size: contain;
+}
+
+
+.container {
+  a  {
+    color: $primary;
+    display: inline-block;
+  }
+
+  h5 {
+    font-weight: 600;
+  }
+}
+
+.summary {
+  color: $indigo;
+  font-size: 18px;
+  line-height: 1.7;
+
+  a {
+    white-space: nowrap;
+    &::before {
+      content: url('/assets/images/icons/link.svg');
+      margin-right: 3px;
+    }
+  }
+
+  svg {
+    margin-bottom: 40px;
+  }
+}
+
+.author {
+  display: block;
+  color: $primary;
+}
+
+.contentPaper {
+  padding: 30px;
+  padding-right: 70px;
+  margin-bottom: 48px;
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.contactPaper {
+  margin-top: 40px;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  ::before {
+    @include pseudo-background;
+    bottom: -120px;
+    left: -40px;
+   
+  }
+
+  ::after {
+    @include pseudo-background;
+    top: -78px;
+    right: -135px;
+  }
+}
+
+.partnerLogo {
+  color: $secondary;
+  font-size: 53px;
+  font-weight: 600;
+  letter-spacing: 3.24px;
+  line-height: 1;
+  margin-bottom: 43px;
+
+  span {
+    display: block;
+    font-size: 14px;
+    letter-spacing: -0.11px;
+    line-height: 14px;
+  }
+}
+

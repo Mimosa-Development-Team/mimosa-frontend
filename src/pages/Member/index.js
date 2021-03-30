@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import Dashboard from './Home'
+import About from './About'
 import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
 import Question from './Question'
@@ -22,7 +23,7 @@ const Member = () => {
             path="/my-contributions"
             component={Dashboard}
           />
-          <Route path="/about" component={Dashboard} />
+          <Route path="/about" component={About} />
           <Route path="/faq" component={FAQ} />
         </Switch>
       </div>
