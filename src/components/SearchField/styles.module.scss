@@ -1,10 +1,10 @@
 @import '~global/styles';
 
-form.searchField {
+div.searchField {
   padding: 0 25px;
   display: flex;
   align-items: center;
-  max-width: 453px;
+  max-width: 470px;
   width: 100%;
   box-shadow: none;
   height: 55px;
@@ -23,7 +23,7 @@ form.searchField {
     flex: 1;
     input {
       padding: 0;
-      color: $gray2;
+      // color: $gray2;
       font-family: Roboto;
       font-size: 16px;
       font-style: italic;
