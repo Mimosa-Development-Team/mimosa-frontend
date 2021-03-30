@@ -6,19 +6,10 @@ import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import { Button } from '@material-ui/core'
 import AddBoxIcon from '@material-ui/icons/AddBox'
+import Typography from '@material-ui/core/Typography'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 import { useQuestions } from './hooks'
-
-// const data = {
-//   category: 'question',
-//   subject: 'Can an algorithm distinguish?',
-//   details: 'Sed ut perspiciatis unde omnis iste',
-//   author: ['Chidi Anagonye'],
-//   postedBy: 'Chidi Anagonye',
-//   dateCreated: 'Nov. 1, 2020',
-//   tags: ['Hot Topic', 'Recent']
-// }
 
 const MemberDashboard = () => {
   const history = useHistory()
@@ -49,6 +40,14 @@ const MemberDashboard = () => {
         </div>
         {questions ? (
           <>
+            <div className={`${styles.paperListHeader}`}>
+              <Typography
+                className={`${styles.title}`}
+                variant="h5"
+              >
+                Paper List
+              </Typography>
+            </div>
             {(questions || []).map(data => (
               <div
                 className={`${styles.content}`}
@@ -56,7 +55,12 @@ const MemberDashboard = () => {
                   history.push(`/contribution/${data.uuid}`)
                 }}
               >
-                <Card data={data} form={false} />
+                <Card
+                  data={data}
+                  form={false}
+                  hideDetails
+                  hideEdit
+                />
               </div>
             ))}
           </>

@@ -14,7 +14,8 @@ const Footer = ({
   data,
   datePosted,
   dateModified,
-  onMetaClick
+  onMetaClick,
+  hideEdit
 }) => {
   const history = useHistory()
 
@@ -52,7 +53,7 @@ const Footer = ({
           />
         </>
       )}
-      {data ? (
+      {hideEdit !== true && data ? (
         <>
           <CardButton
             action="edit"
