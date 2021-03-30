@@ -52,24 +52,30 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ModalDialog({
-  header,
   content,
-  loading,
-  error,
-  onClose,
+  header,
   method,
-  onDelete,
-  errorHeader,
-  onReset
-  // success
+  submitLoading,
+  submitSuccess,
+  modal,
+  data,
+  onReset,
+  // submitError,
+  submit,
+  url
 }) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (loading) {
+    if (modal) {
       setOpen(true)
     }
-  }, [loading, setOpen])
+  }, [modal, setOpen])
+
+  const submitForm = () => {
+    submit(data)
+    onReset()
+  }
 
   function getModalStyle() {
     const top = 50
@@ -94,12 +100,8 @@ export default function ModalDialog({
       disableBackdropClick
     >
       <div style={modalStyle} className={classes.paper}>
-        <Typography
-          variant="h1"
-          align="center"
-          color={method === 'delete' || error ? 'error' : ''}
-        >
-          {error ? errorHeader : header}
+        <Typography variant="h1" align="center">
+          {header}
         </Typography>
         <div className={classes.content}>
           <Typography
@@ -107,46 +109,40 @@ export default function ModalDialog({
             id="simple-modal-description"
             align="center"
           >
-            {error || content}
+            {content}
           </Typography>
         </div>
-        {method === 'delete' ? (
-          <div className={classes.buttonDiv}>
+        <div style={{ marginTop: '30px' }}>
+          {submitSuccess ? (
             <Button
-              className={classes.buttonCancel}
-              variant="outlined"
-              onClick={() => {
-                setOpen(!open)
-                onClose()
-                onReset()
-              }}
+              variant="outlined ml-30 mt-30"
+              className="btn outline"
+              onClick={() => url()}
+              style={{ float: 'right' }}
             >
               CLOSE
             </Button>
-            <Button
-              variant="contained"
-              className={classes.buttonSubmit}
-              onClick={onDelete}
-            >
-              DELETE
-            </Button>
-          </div>
-        ) : (
-          <div className={classes.buttonDiv}>
-            <Button
-              variant="outlined"
-              className={classes.buttonClose}
-              disabled={loading}
-              onClick={() => {
-                setOpen(!open)
-                onClose()
-                onReset()
-              }}
-            >
-              CLOSE
-            </Button>
-          </div>
-        )}
+          ) : (
+            <>
+              <Button
+                className="btn outline mr-30 mt-30"
+                variant="outlined"
+                onClick={() => setOpen(!open)}
+              >
+                CLOSE
+              </Button>
+              <Button
+                variant="contained"
+                className="btn contained"
+                style={{ float: 'right' }}
+                disabled={submitLoading}
+                onClick={() => submitForm()}
+              >
+                {method === 'new' ? 'PUBLISH' : 'UPDATE'}
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </Modal>
   )

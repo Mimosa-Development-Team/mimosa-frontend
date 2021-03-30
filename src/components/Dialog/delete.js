@@ -10,7 +10,8 @@ export default function ModalDialog({
   deleteIsLoadingItem,
   deleteMutate,
   deleteForm,
-  id
+  id,
+  url
 }) {
   // const history = useHistory()
   const [open, setOpen] = useState(false)
@@ -49,7 +50,7 @@ export default function ModalDialog({
             variant="outlined"
             className="btn outline"
             disabled={deleteIsLoadingItem}
-            onClick={() => setOpen(!open)}
+            onClick={() => (url ? url() : setOpen(!open))}
           >
             CLOSE
           </Button>
@@ -59,7 +60,7 @@ export default function ModalDialog({
               className="btn outline mr-30"
               variant="outlined"
               disabled={deleteIsLoadingItem}
-              onClick={() => setOpen(!open)}
+              onClick={() => (url ? url() : setOpen(!open))}
             >
               CLOSE
             </Button>
