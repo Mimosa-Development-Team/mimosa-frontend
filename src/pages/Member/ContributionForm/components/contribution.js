@@ -188,11 +188,7 @@ function Form(props) {
     }
 
     if (type === 'question' && status === 'publish') {
-      url = history.goBack()
-    }
-
-    if (type === 'question' && status === 'publish') {
-      url = history.goBack()
+      url = history.push('/')
     }
 
     if (type === 'hypothesis' && status === 'draft') {
