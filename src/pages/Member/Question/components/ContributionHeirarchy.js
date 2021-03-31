@@ -22,7 +22,10 @@ const ContributionHeirarchy = ({
           <>
             <CardWrapper data={data} />{' '}
             <ConditionalWrapper
-              condition={data.children.length > 1}
+              condition={
+                data.children.length > 1 ||
+                data.category === 'data'
+              }
               wrapper={children => (
                 <ul
                   className={`${
