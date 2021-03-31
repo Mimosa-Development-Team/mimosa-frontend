@@ -46,6 +46,15 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     height: '3em',
     color: '#ef8c20'
+  },
+  buttonOnClose: {
+    width: '40%',
+    float: 'left',
+    borderRadius: '2em',
+    borderColor: '#ef8c20',
+    backgroundColor: 'white',
+    height: '3em',
+    color: '#ef8c20'
   }
 }))
 
@@ -113,7 +122,6 @@ const RelatedMedia = ({ contributionId }) => {
         aria-describedby="simple-modal-description"
         open={open}
         onClose={() => setOpen(!open)}
-        disableBackdropClick
       >
         <div style={modalStyle} className={classes.paper}>
           <Typography variant="h1">Add Related Media</Typography>
@@ -162,6 +170,13 @@ const RelatedMedia = ({ contributionId }) => {
                   </Grid>
                 ) : (
                   <Grid item sm={12}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setOpen(false)}
+                      className={classes.buttonOnClose}
+                    >
+                      CLOSE
+                    </Button>
                     <Button
                       variant="contained"
                       type="submit"
