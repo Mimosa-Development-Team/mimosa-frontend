@@ -5,7 +5,11 @@ import styles from './styles.module.scss'
 const DeprecatedTag = () => {
   return (
     <div className={`${styles.deprecatedWrapper}`}>
-      <img src={DeprecatedIcon} alt="deprecated" />
+      <img
+        className={`${styles.icon}`}
+        src={DeprecatedIcon}
+        alt="deprecated"
+      />
       Deprecated
     </div>
   )
