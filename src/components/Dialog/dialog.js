@@ -6,6 +6,7 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -48,6 +49,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#ef8c20',
     height: '3em',
     color: 'white'
+  },
+  icon: {
+    fontSize: '93px',
+    color: 'green'
+  },
+  success: {
+    fontWeight: 'bold'
   }
 }))
 
@@ -95,31 +103,42 @@ export default function ModalDialog({
     >
       <div style={modalStyle} className={classes.paper}>
         <Typography variant="h1" align="center">
-          {header}
+          {submitSuccess ? (
+            <div>
+              <CheckCircleOutlineIcon className={classes.icon} />
+              <p>Succcess</p>
+            </div>
+          ) : (
+            header
+          )}
         </Typography>
         <div className={classes.content}>
           <Typography
             variant="subtitle1"
             id="simple-modal-description"
             align="center"
+            color="success"
           >
-            {content}
+            {submitSuccess
+              ? method === 'new'
+                ? 'Your contribution has been successfully published'
+                : 'Your changes has been successfully saved'
+              : content}
           </Typography>
         </div>
-        <div style={{ marginTop: '30px' }}>
+        <div style={{ marginTop: '30px', textAlign: 'center' }}>
           {submitSuccess ? (
             <Button
               variant="outlined ml-30 mt-30"
-              className="btn outline"
+              className="btn contained"
               onClick={() => {
                 setModal(!modal)
                 url()
                 onReset()
                 reset()
               }}
-              style={{ float: 'right' }}
             >
-              CLOSE
+              OK
             </Button>
           ) : (
             <>
@@ -128,7 +147,7 @@ export default function ModalDialog({
                 variant="outlined"
                 onClick={() => setModal(!modal)}
               >
-                CLOSE
+                CANCEL
               </Button>
               <Button
                 variant="contained"
@@ -141,7 +160,7 @@ export default function ModalDialog({
                 }}
               >
                 {method === 'new' && status === 'draft'
-                  ? 'CONTINUE'
+                  ? 'SAVE AS DRAFT'
                   : method === 'new'
                   ? 'PUBLISH'
                   : 'UPDATE'}

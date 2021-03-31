@@ -199,7 +199,7 @@ function Form(props) {
     }
 
     if (type === 'question' && status === 'draft' && back) {
-      url = history.push(`/contribution/${data.uuid}`)
+      url = history.push(`/contribution/${addedData.data.uuid}`)
     }
 
     if (type === 'question' && status === 'publish') {
@@ -247,7 +247,11 @@ function Form(props) {
     }
 
     if (type === 'data' && status === 'draft' && back) {
-      url = history.push(`/contribution/${questionUuid}`)
+      url = history.push(`/contribution/${questionUuid}`, {
+        type: 'new',
+        data: addedData.data,
+        questionUuid
+      })
     }
 
     if (type === 'data' && status === 'publish') {
@@ -333,16 +337,16 @@ function Form(props) {
         type={capitalizeText(type)}
         header={
           back
-            ? 'When exiting form and changes are not yet published'
+            ? `Draft Contribution`
             : method === 'new'
             ? 'Publish Contribution'
             : 'Update Contribution'
         }
         content={
           back
-            ? `This ${capitalizeText(
+            ? `Your ${capitalizeText(
                 type
-              )} will been saved as draft.`
+              )} will be saved as draft. Do you want to proceed?`
             : method === 'new'
             ? `Are you sure you want to ${status} this ${capitalizeText(
                 type
