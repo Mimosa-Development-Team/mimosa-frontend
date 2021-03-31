@@ -49,6 +49,8 @@ function Form(props) {
   const [status, setStatus] = useState('publish')
   const [relatedMediaList, setRelatedMediaList] = useState([])
   const [deleteForm, setDeleteForm] = useState(false)
+  const [openForm, setOpenForm] = useState(false)
+  const [formData, setFormData] = useState(false)
 
   useEffect(() => {
     setRelatedMediaList(
@@ -67,27 +69,7 @@ function Form(props) {
 
   const questionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field'),
-    author: yup.array().min(1, 'Must be selected').required(),
-    presentationDate: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    startTime: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    endTime: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    link: yup.string().when('title', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    hypothesisStatus: yup.string().when('category', {
-      is: value => value === 'analysis',
-      then: yup.string().required('* Mandatory Field')
-    })
+    author: yup.array().min(1, 'Must be selected').required()
   })
 
   const contributionSchema = yup.object().shape({
@@ -187,45 +169,12 @@ function Form(props) {
         formFields.relatedMedia.push(relatedMediaList[i])
       }
     }
-
-    if (method === 'new') {
-      addContribution(formFields)
-    } else {
+    if (data) {
       formFields.id = data.id
-      updateContribution(formFields)
     }
-  }
 
-  const setHeader = () => {
-    switch (method) {
-      case 'new':
-        return `Creating new ${capitalizeText(type)}`
-      case 'update':
-        return `Updating ${capitalizeText(type)}`
-      case 'delete':
-        return `Delete a ${capitalizeText(type)}`
-      default:
-        return ''
-    }
-  }
-
-  const setContent = () => {
-    switch (method) {
-      case 'new':
-        return `Thank you for submitting new ${capitalizeText(
-          type
-        )} as ${capitalizeText(status)}`
-      case 'update':
-        return `Your request to update ${capitalizeText(
-          type
-        )} is submitted as ${capitalizeText(status)}.`
-      case 'delete':
-        return `Are you sure you want to delete the ${capitalizeText(
-          type
-        )} as ${capitalizeText(status)}`
-      default:
-        return ''
-    }
+    setFormData(formFields)
+    setOpenForm(true)
   }
 
   const getUrl = () => {
@@ -239,7 +188,7 @@ function Form(props) {
     }
 
     if (type === 'question' && status === 'publish') {
-      url = history.goBack()
+      url = history.push('/')
     }
 
     if (type === 'hypothesis' && status === 'draft') {
@@ -347,26 +296,44 @@ function Form(props) {
   return (
     <>
       <ModalDialog
-        header={setHeader()}
-        content={setContent()}
-        loading={
-          addLoadingContribution || updateIsLoadingContribution
+        type={capitalizeText(type)}
+        header={
+          method === 'new'
+            ? 'Publish Contribution'
+            : 'Update Contribution'
         }
-        success={
-          addIsSuccessContribution || updateIsSuccessContribution
-            ? `Success`
-            : ''
+        content={
+          method === 'new'
+            ? `Are you sure you want to publish this ${capitalizeText(
+                type
+              )}?`
+            : `Do you want to publish changes to this ${capitalizeText(
+                type
+              )}?`
         }
-        data={addedData}
-        onReset={() => reset()}
-        error={
-          addErrorContribution || updateErrorContribution
-            ? 'An unexpected error has occured. Please try again.'
-            : false
-        }
-        errorHeader="Error"
-        onClose={() => getUrl()}
         method={method}
+        submitLoading={
+          method === 'new'
+            ? addLoadingContribution
+            : updateIsLoadingContribution
+        }
+        submitSuccess={
+          method === 'new'
+            ? addIsSuccessContribution
+            : updateIsSuccessContribution
+        }
+        submit={
+          method === 'new' ? addContribution : updateContribution
+        }
+        modal={openForm}
+        data={formData}
+        onReset={() => reset()}
+        submitError={
+          method === 'new'
+            ? addErrorContribution
+            : updateErrorContribution
+        }
+        url={() => getUrl()}
       />
       <ModalDelete
         header={`Delete a ${
@@ -375,9 +342,16 @@ function Form(props) {
         content={`Are you sure you want to delete this ${
           data ? capitalizeText(data.category) : ''
         }`}
-        deleteContribution={deleteContribution}
+        deleteItem={deleteContribution}
         deleteIsLoadingContribution={deleteIsLoadingContribution}
         deleteMutate={deleteMutate}
+        url={() => {
+          return type === 'question'
+            ? history.push('/')
+            : history.push(
+                `/contribution/${data.parentQuestionId}`
+              )
+        }}
         id={data ? data.id : null}
         deleteForm={deleteForm}
       />

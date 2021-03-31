@@ -12,11 +12,10 @@ export default function RadioControl(props) {
   const {
     name,
     control,
-    type,
+    // type,
     label,
-    asterisk,
-    errors,
-    ...propsList
+    asterisk
+    // ...propsList
   } = props
   return (
     <div className={`${styles.radioControl}`}>
@@ -30,12 +29,13 @@ export default function RadioControl(props) {
         name={name}
         control={control}
         label={label}
+        defaultValue="supports"
         render={({ onChange, value }) => (
           <RadioGroup
             aria-label="hypothesisStatus"
             onChange={onChange}
             value={value || ''}
-            {...propsList}
+            error
             row
           >
             <FormControlLabel
