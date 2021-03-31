@@ -35,7 +35,7 @@ const Login = () => {
 
   const submitLogin = () => {
     setLoading(true)
-    setTimeout(function () {
+    setTimeout(() => {
       addToDo({ token })
     }, 2000)
   }
