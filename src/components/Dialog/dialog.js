@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Modal,
   Typography,
@@ -58,20 +58,14 @@ export default function ModalDialog({
   submitLoading,
   submitSuccess,
   modal,
+  setModal,
   data,
   onReset,
-  // submitError,
+  status,
+  reset,
   submit,
   url
 }) {
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (modal) {
-      setOpen(true)
-    }
-  }, [modal, setOpen])
-
   const submitForm = () => {
     submit(data)
     onReset()
@@ -95,8 +89,8 @@ export default function ModalDialog({
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      open={open}
-      onClose={() => setOpen(!open)}
+      open={modal}
+      onClose={() => setModal(!modal)}
       disableBackdropClick
     >
       <div style={modalStyle} className={classes.paper}>
@@ -117,7 +111,12 @@ export default function ModalDialog({
             <Button
               variant="outlined ml-30 mt-30"
               className="btn outline"
-              onClick={() => url()}
+              onClick={() => {
+                setModal(!modal)
+                url()
+                onReset()
+                reset()
+              }}
               style={{ float: 'right' }}
             >
               CLOSE
@@ -127,7 +126,7 @@ export default function ModalDialog({
               <Button
                 className="btn outline mr-30 mt-30"
                 variant="outlined"
-                onClick={() => setOpen(!open)}
+                onClick={() => setModal(!modal)}
               >
                 CLOSE
               </Button>
@@ -136,9 +135,16 @@ export default function ModalDialog({
                 className="btn contained"
                 style={{ float: 'right' }}
                 disabled={submitLoading}
-                onClick={() => submitForm()}
+                onClick={() => {
+                  submitForm()
+                  onReset()
+                }}
               >
-                {method === 'new' ? 'PUBLISH' : 'UPDATE'}
+                {method === 'new' && status === 'draft'
+                  ? 'CONTINUE'
+                  : method === 'new'
+                  ? 'PUBLISH'
+                  : 'UPDATE'}
               </Button>
             </>
           )}
