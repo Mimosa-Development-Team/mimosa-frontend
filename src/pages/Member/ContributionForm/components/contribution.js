@@ -37,6 +37,8 @@ function Form(props) {
     updateErrorContribution,
     addIsSuccessContribution,
     updateIsSuccessContribution,
+    resetAdd,
+    resetUpdate,
     addedData,
     questionUuid,
     relatedMediaData,
@@ -50,7 +52,7 @@ function Form(props) {
   const [relatedMediaList, setRelatedMediaList] = useState([])
   const [deleteForm, setDeleteForm] = useState(false)
   const [openForm, setOpenForm] = useState(false)
-  const [formData, setFormData] = useState(false)
+  const [formData, setFormData] = useState(null)
 
   useEffect(() => {
     setRelatedMediaList(
@@ -73,9 +75,13 @@ function Form(props) {
   })
 
   const contributionSchema = yup.object().shape({
-    subject: yup.string().required('* Mandatory Field'),
-    details: yup.string().required('* Mandatory Field')
+    subject: yup.string().required('* Mandatory Field')
   })
+
+  // const analysisSchema = yup.object().shape({
+  //   subject: yup.string().required('* Mandatory Field'),
+  //   hypothesisStatus: yup.string().required('* Mandatory Field')
+  // })
 
   const {
     handleSubmit,
@@ -83,7 +89,8 @@ function Form(props) {
     control,
     getValues,
     setValue,
-    reset
+    reset,
+    formState
   } = useForm({
     resolver: yupResolver(
       type === 'question' ? questionSchema : contributionSchema
@@ -169,6 +176,7 @@ function Form(props) {
         formFields.relatedMedia.push(relatedMediaList[i])
       }
     }
+
     if (data) {
       formFields.id = data.id
     }
@@ -177,9 +185,12 @@ function Form(props) {
     setOpenForm(true)
   }
 
+  const [back, setBack] = useState(false)
+
   const getUrl = () => {
     let url = ''
-    if (type === 'question' && status === 'draft') {
+
+    if (type === 'question' && status === 'draft' && !back) {
       url = history.push('/contribution-form/hypothesis/new', {
         type: 'new',
         data: addedData.data,
@@ -187,11 +198,15 @@ function Form(props) {
       })
     }
 
+    if (type === 'question' && status === 'draft' && back) {
+      url = history.push(`/contribution/${data.uuid}`)
+    }
+
     if (type === 'question' && status === 'publish') {
       url = history.push('/')
     }
 
-    if (type === 'hypothesis' && status === 'draft') {
+    if (type === 'hypothesis' && status === 'draft' && !back) {
       url = history.push('/contribution-form/experiment/new', {
         type: 'new',
         data: addedData.data,
@@ -199,11 +214,15 @@ function Form(props) {
       })
     }
 
+    if (type === 'hypothesis' && status === 'draft' && back) {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
     if (type === 'hypothesis' && status === 'publish') {
       url = history.push(`/contribution/${questionUuid}`)
     }
 
-    if (type === 'experiment' && status === 'draft') {
+    if (type === 'experiment' && status === 'draft' && !back) {
       url = history.push('/contribution-form/data/new', {
         type: 'new',
         data: addedData.data,
@@ -211,23 +230,38 @@ function Form(props) {
       })
     }
 
+    if (type === 'experiment' && status === 'draft' && back) {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
     if (type === 'experiment' && status === 'publish') {
       url = history.push(`/contribution/${questionUuid}`)
     }
 
-    if (type === 'data' && status === 'draft') {
+    if (type === 'data' && status === 'draft' && !back) {
       url = history.push('/contribution-form/analysis/new', {
         type: 'new',
         data: addedData.data,
         questionUuid
       })
     }
+
+    if (type === 'data' && status === 'draft' && back) {
+      url = history.push(`/contribution/${questionUuid}`)
+    }
+
     if (type === 'data' && status === 'publish') {
       url = history.push(`/contribution/${questionUuid}`)
     }
 
-    if (type === 'analysis' && status === 'publish') {
+    if (type === 'analysis') {
       url = history.push(`/contribution/${questionUuid}`)
+    }
+
+    if (method === 'update' && type === 'question') {
+      url = history.push(
+        `/contribution/${data.parentQuestionId}`
+      )
     }
 
     return url
@@ -298,13 +332,19 @@ function Form(props) {
       <ModalDialog
         type={capitalizeText(type)}
         header={
-          method === 'new'
+          back
+            ? 'When exiting form and changes are not yet published'
+            : method === 'new'
             ? 'Publish Contribution'
             : 'Update Contribution'
         }
         content={
-          method === 'new'
-            ? `Are you sure you want to publish this ${capitalizeText(
+          back
+            ? `This ${capitalizeText(
+                type
+              )} will been saved as draft.`
+            : method === 'new'
+            ? `Are you sure you want to ${status} this ${capitalizeText(
                 type
               )}?`
             : `Do you want to publish changes to this ${capitalizeText(
@@ -326,14 +366,17 @@ function Form(props) {
           method === 'new' ? addContribution : updateContribution
         }
         modal={openForm}
+        setModal={setOpenForm}
         data={formData}
         onReset={() => reset()}
+        reset={method === 'new' ? resetAdd : resetUpdate}
         submitError={
           method === 'new'
             ? addErrorContribution
             : updateErrorContribution
         }
         url={() => getUrl()}
+        status={status}
       />
       <ModalDelete
         header={`Delete a ${
@@ -367,20 +410,46 @@ function Form(props) {
           spacing={2}
         >
           <Grid item sm={12}>
-            <div
-              onClick={() => getUrl()}
-              className={`${styles.backNav}`}
-            >
-              <Typography
-                className={`${styles.back}`}
-                variant="h4"
+            {formState.isDirty ? (
+              <button
+                onClick={() => {
+                  setStatus('draft')
+                  setBack(true)
+                }}
+                // type="submit"
+                className={`${styles.btnBack}`}
               >
-                <span className={`${styles.icon}`}>
-                  <img src={BackIcon} alt="back" />
-                </span>
-                Back
-              </Typography>
-            </div>
+                <div className={`${styles.backNav}`}>
+                  <Typography
+                    className={`${styles.back}`}
+                    variant="h4"
+                  >
+                    <span className={`${styles.icon}`}>
+                      <img src={BackIcon} alt="back" />
+                    </span>
+                    Back
+                  </Typography>
+                </div>
+              </button>
+            ) : (
+              <button
+                onClick={() => getUrl()}
+                // type="submit"
+                className={`${styles.btnBack}`}
+              >
+                <div className={`${styles.backNav}`}>
+                  <Typography
+                    className={`${styles.back}`}
+                    variant="h4"
+                  >
+                    <span className={`${styles.icon}`}>
+                      <img src={BackIcon} alt="back" />
+                    </span>
+                    Back
+                  </Typography>
+                </div>
+              </button>
+            )}
           </Grid>
           <Grid item sm={6}>
             <Typography variant="h1" gutterBottom>
@@ -626,7 +695,10 @@ function Form(props) {
                 <Button
                   className={`${styles.addBtn}`}
                   variant="outlined"
-                  onClick={() => setStatus('draft')}
+                  onClick={() => {
+                    setStatus('draft')
+                    setBack(false)
+                  }}
                   type="submit"
                 >
                   ADD {type === 'question' ? 'Hypothesis' : ''}
@@ -640,7 +712,10 @@ function Form(props) {
               <Button
                 className={`${styles.deleteBtn}`}
                 variant="outlined"
-                onClick={() => setDeleteForm(true)}
+                onClick={() => {
+                  setDeleteForm(true)
+                  setBack(false)
+                }}
               >
                 DELETE
               </Button>
@@ -649,8 +724,10 @@ function Form(props) {
               type="submit"
               className={`${styles.publishBtn}`}
               variant="contained"
-              id="submit"
-              onClick={() => setStatus('publish')}
+              onClick={() => {
+                setStatus('publish')
+                setBack(false)
+              }}
             >
               {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
             </Button>

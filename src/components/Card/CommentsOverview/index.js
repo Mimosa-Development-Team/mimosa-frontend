@@ -84,6 +84,7 @@ const CommentsOverview = ({ contributionId }) => {
         deleteMutate={deleteMutate}
         id={activeComment}
         deleteForm={deleteForm}
+        setDeleteForm={setDeleteForm}
       />
       <div className={`${styles.commentsWrapper}`}>
         <div

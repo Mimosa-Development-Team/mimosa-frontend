@@ -50,7 +50,8 @@ export const useQuestionForm = id => {
     isLoading: addLoadingContribution,
     error: addErrorContribution,
     mutate: postMutate,
-    isSuccess: addIsSuccessContribution
+    isSuccess: addIsSuccessContribution,
+    reset: resetAdd
   } = useMutation(postContributionAPI, {
     onSuccess: () => {
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
@@ -76,7 +77,8 @@ export const useQuestionForm = id => {
     isLoading: updateIsLoadingContribution,
     error: updateErrorContribution,
     mutate: updateMutate,
-    isSuccess: updateIsSuccessContribution
+    isSuccess: updateIsSuccessContribution,
+    reset: resetUpdate
   } = useMutation(putContributionAPI, {
     onSuccess: () => {
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
@@ -98,12 +100,14 @@ export const useQuestionForm = id => {
     addLoadingContribution,
     addErrorContribution,
     addIsSuccessContribution,
+    resetAdd,
 
     updateContribution: updateMutate,
     updatedContribution,
     updateIsLoadingContribution,
     updateErrorContribution,
     updateIsSuccessContribution,
+    resetUpdate,
 
     deleteContribution,
     deleteIsLoadingContribution,

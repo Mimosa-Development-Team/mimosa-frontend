@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 // import { useHistory } from 'react-router-dom'
 import { Modal, Typography, Button } from '@material-ui/core'
 
@@ -10,24 +10,18 @@ export default function ModalDialog({
   deleteIsLoadingItem,
   deleteMutate,
   deleteForm,
+  setDeleteForm,
   id,
   url
 }) {
   // const history = useHistory()
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (deleteForm) {
-      setOpen(true)
-    }
-  }, [deleteForm, setOpen])
 
   return (
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      open={open}
-      onClose={() => setOpen(!open)}
+      open={deleteForm}
+      onClose={() => setDeleteForm(!deleteForm)}
       disableBackdropClick
     >
       <div className="dialog centered">
@@ -50,7 +44,9 @@ export default function ModalDialog({
             variant="outlined"
             className="btn outline"
             disabled={deleteIsLoadingItem}
-            onClick={() => (url ? url() : setOpen(!open))}
+            onClick={() => {
+              return url ? url() : setDeleteForm(!deleteForm)
+            }}
           >
             CLOSE
           </Button>
@@ -60,7 +56,9 @@ export default function ModalDialog({
               className="btn outline mr-30"
               variant="outlined"
               disabled={deleteIsLoadingItem}
-              onClick={() => (url ? url() : setOpen(!open))}
+              onClick={() => {
+                return url ? url() : setDeleteForm(!deleteForm)
+              }}
             >
               CLOSE
             </Button>

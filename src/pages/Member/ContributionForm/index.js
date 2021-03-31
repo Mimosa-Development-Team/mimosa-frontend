@@ -32,7 +32,9 @@ const ContributionForm = props => {
     deleteErrorContribution,
     deleteMutate,
     deleteIsSuccessContribution,
-    getRelatedMedia
+    getRelatedMedia,
+    resetAdd,
+    resetUpdate
   } = useQuestionForm(id)
 
   useEffect(() => {
@@ -77,6 +79,8 @@ const ContributionForm = props => {
         addContribution={addContribution}
         updateContribution={updateContribution}
         getRelatedMedia={getRelatedMedia}
+        resetAdd={resetAdd}
+        resetUpdate={resetUpdate}
         deleteContribution={deleteContribution}
         deleteIsLoadingContribution={deleteIsLoadingContribution}
         deleteErrorContribution={deleteErrorContribution}
