@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
+import Banner from './components/Banner'
 import { useQuestions } from './hooks'
 
 const MemberDashboard = () => {
@@ -64,6 +65,15 @@ const MemberDashboard = () => {
             </Button>
           </div>
           <>
+            <div className={`${styles.homeBanner}`}>
+              <Typography
+                className={`${styles.title}`}
+                variant="h1"
+              >
+                Home
+              </Typography>
+              <Banner />
+            </div>
             {questions ? (
               <>
                 <div className={`${styles.paperListHeader}`}>

@@ -17,8 +17,52 @@
   }
 }
 
+.homeBanner {
+  margin-top: 1.5em;
+  
+  .title {
+    margin-bottom: .5em;
+  }
+
+  .bannerDiv {
+    box-shadow: unset;
+    display: flex;
+    margin-bottom: 3em;
+    
+    .details {
+      display: flex;
+      align-items: center;
+      padding: 0 2em;
+      
+      .introImg {
+        margin-right: 20px;
+        padding-top: 10px;
+      }
+
+      .contents {
+        .closeIcon {
+          float: right;
+          margin-top: -10px;
+          font-size: 22px;
+          color: #bfc1c8;
+          cursor: pointer;
+        }
+
+        .leadTitle {
+          font-weight: bold;
+          padding-bottom: .5em;
+        }
+    
+        .leadContent {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
 .paperListHeader {
-  margin-top: 4em;
+  margin-top: 2em;
   margin-bottom: 1.5em;
 }
 
