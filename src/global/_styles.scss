@@ -159,6 +159,13 @@ hr.MuiDivider-root {
   margin: 30px 0;
 }
 
+.cardBody {
+  *, 
+  img {
+    max-width: 100%;
+  }
+}
+
 // Accordion
 .MuiAccordion-root {
   .MuiAccordionSummary-root {
