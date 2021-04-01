@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form'
 import { InputLabel } from '@material-ui/core'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import styles from './style.module.scss'
 
 const modules = {
   toolbar: [
@@ -52,19 +51,17 @@ export default function Input(props) {
     ...propsList
   } = props
   return (
-    <div className={`${styles.inputControl}`}>
-      <InputLabel className={`${styles.label}`}>
+    <div className="inputWrapper">
+      <InputLabel className="label">
         {label}{' '}
-        {asterisk ? (
-          <span className={`${styles.required}`}>*</span>
-        ) : null}
+        {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
       <Controller
         control={control}
         name={name}
         render={({ onChange, value }) => (
           <ReactQuill
-            className={`${styles.input}`}
+            className="input"
             modules={modules}
             formats={formats}
             onChange={description => onChange(description)}
@@ -73,7 +70,7 @@ export default function Input(props) {
           />
         )}
       />
-      <p className={`${styles.error}`}>
+      <p className="error">
         {errors[name] ? errors[name].message : null}
       </p>
     </div>
