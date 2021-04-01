@@ -567,6 +567,7 @@ function Form(props) {
                         alignItems="flex-start"
                         spacing={2}
                         key={index}
+                        style={{ margin: '0' }}
                       >
                         <Grid item xs={12}>
                           <Divider variant="middle" />
@@ -716,7 +717,7 @@ function Form(props) {
             ) : null}
             {method === 'update' ? (
               <Button
-                className="btn primary submitBtn"
+                className="btn delete submitBtn mr-30"
                 variant="outlined"
                 onClick={() => {
                   setDeleteForm(true)
