@@ -1,7 +1,6 @@
 import React from 'react'
 import { TextField, InputLabel } from '@material-ui/core'
 import { Controller } from 'react-hook-form'
-import styles from './style.module.scss'
 
 export default function Input(props) {
   const {
@@ -14,12 +13,10 @@ export default function Input(props) {
     ...propsList
   } = props
   return (
-    <div className={`${styles.inputControl}`}>
-      <InputLabel className={`${styles.label}`}>
+    <div className="inputWrapper">
+      <InputLabel className="label">
         {label}{' '}
-        {asterisk ? (
-          <span className={`${styles.required}`}>*</span>
-        ) : null}
+        {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
       <Controller
         name={name}
@@ -29,7 +26,7 @@ export default function Input(props) {
           <TextField
             size="small"
             type={type}
-            className={`${styles.input}`}
+            className="input"
             onChange={onChange}
             variant="outlined"
             value={value || ''}

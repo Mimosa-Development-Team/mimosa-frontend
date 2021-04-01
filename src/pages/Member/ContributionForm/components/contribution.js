@@ -467,14 +467,15 @@ function Form(props) {
             </Typography>
           </Grid>
           <Grid item sm={6}>
-            <Typography
-              style={{ textAlign: 'right' }}
-              variant="subtitle1"
-            >
-              {data && data.status === 'draft'
-                ? moment(new Date(data.updatedAt)).format('lll')
-                : null}
-            </Typography>
+            {data && data.status === 'draft' && (
+              <Typography
+                className={`${styles.draftText}`}
+                variant="subtitle1"
+              >
+                Saved as Draft{' '}
+                {moment(new Date(data.updatedAt)).format('lll')}
+              </Typography>
+            )}
           </Grid>
           {type !== 'question' && method === 'new' ? (
             <Grid item sm={12}>
@@ -570,6 +571,7 @@ function Form(props) {
                         alignItems="flex-start"
                         spacing={2}
                         key={index}
+                        style={{ margin: '0' }}
                       >
                         <Grid item xs={12}>
                           <Divider variant="middle" />
@@ -633,7 +635,7 @@ function Form(props) {
               </Grid>
               <Grid item xs={12}>
                 <Button
-                  className={`${styles.addMedia}`}
+                  className="btn secondary padding-lr25"
                   variant="outlined"
                   onClick={() => addRelatedMedia()}
                   disabled={
@@ -702,7 +704,7 @@ function Form(props) {
             {method === 'new' ? (
               type !== 'analysis' ? (
                 <Button
-                  className={`${styles.addBtn}`}
+                  className="btn secondary submitBtn mr-30"
                   variant="outlined"
                   onClick={() => {
                     setStatus('draft')
@@ -719,7 +721,7 @@ function Form(props) {
             ) : null}
             {method === 'update' ? (
               <Button
-                className={`${styles.deleteBtn}`}
+                className="btn delete submitBtn mr-30"
                 variant="outlined"
                 onClick={() => {
                   setDeleteForm(true)
@@ -731,7 +733,7 @@ function Form(props) {
             ) : null}
             <Button
               type="submit"
-              className={`${styles.publishBtn}`}
+              className="btn primary submitBtn"
               variant="contained"
               onClick={() => {
                 setStatus('publish')

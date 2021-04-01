@@ -1,6 +1,5 @@
 import React from 'react'
 import { TextField, InputLabel } from '@material-ui/core'
-import styles from './style.module.scss'
 
 export default function Input(props) {
   const {
@@ -15,18 +14,16 @@ export default function Input(props) {
     ...propsList
   } = props
   return (
-    <div className={`${styles.inputControl}`}>
-      <InputLabel className={`${styles.label}`}>
+    <div className="inputWrapper">
+      <InputLabel className="label">
         {label}{' '}
-        {asterisk ? (
-          <span className={`${styles.required}`}>*</span>
-        ) : null}
+        {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
       <TextField
         size="small"
         type={type}
         onChange={onChange}
-        className={`${styles.input}`}
+        className="input"
         variant="outlined"
         value={value || ''}
         {...propsList}
