@@ -199,7 +199,11 @@ function Form(props) {
     }
 
     if (type === 'question' && status === 'draft' && back) {
-      url = history.push(`/contribution/${addedData.data.uuid}`)
+      url = history.push(
+        `/contribution/${
+          addedData ? addedData.data.uuid : data.uuid
+        }`
+      )
     }
 
     if (type === 'question' && status === 'publish') {
