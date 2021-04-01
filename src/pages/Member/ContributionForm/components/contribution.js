@@ -337,7 +337,7 @@ function Form(props) {
         type={capitalizeText(type)}
         header={
           back
-            ? `Draft Contribution`
+            ? `Save as Draft`
             : method === 'new'
             ? 'Publish Contribution'
             : 'Update Contribution'
@@ -401,6 +401,7 @@ function Form(props) {
         }}
         id={data ? data.id : null}
         deleteForm={deleteForm}
+        subContent="This will delete all child contributions attached to this question."
       />
       <form
         onSubmit={handleSubmit(submitForm)}
