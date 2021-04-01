@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-nested-ternary */
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
 import LeftSidebar from 'components/LeftSidebar'
@@ -15,7 +16,13 @@ import { useQuestions } from './hooks'
 
 const MemberDashboard = () => {
   const history = useHistory()
-  const { questions, isLoading, getQuestions } = useQuestions()
+  const {
+    questions,
+    isLoading,
+    getQuestions,
+    hasNextPage,
+    isFetchingNextPage
+  } = useQuestions()
   const [search, setSearch] = useState('')
 
   const handleKeyPress = e => {
@@ -31,9 +38,9 @@ const MemberDashboard = () => {
     }
   }
 
-  useEffect(() => {
-    getQuestions()
-  }, [getQuestions])
+  // useEffect(() => {
+  //   getQuestions()
+  // }, [getQuestions])
 
   return (
     <>
@@ -84,21 +91,40 @@ const MemberDashboard = () => {
                     Paper List
                   </Typography>
                 </div>
-                {(questions || []).map(data => (
-                  <div
-                    className={`${styles.content}`}
-                    onClick={() => {
-                      history.push(`/contribution/${data.uuid}`)
-                    }}
-                  >
-                    <Card
-                      data={data}
-                      form={false}
-                      hideDetails
-                      hideEdit
-                    />
-                  </div>
+                {questions.pages.map((group, i) => (
+                  <React.Fragment key={i}>
+                    {group.data.map(data => (
+                      <div
+                        className={`${styles.content}`}
+                        onClick={() => {
+                          history.push(
+                            `/contribution/${data.uuid}`
+                          )
+                        }}
+                      >
+                        <Card
+                          data={data}
+                          form={false}
+                          hideDetails
+                          hideEdit
+                        />
+                      </div>
+                    ))}
+                  </React.Fragment>
                 ))}
+                <div className={`${styles.loadMore}`}>
+                  <Button
+                    className={`${styles.loadMoreBtn}`}
+                    onClick={() => getQuestions()}
+                    disabled={!hasNextPage || isFetchingNextPage}
+                  >
+                    {isFetchingNextPage
+                      ? 'Loading more...'
+                      : hasNextPage
+                      ? 'Load More'
+                      : 'Nothing more to load'}
+                  </Button>
+                </div>
               </>
             ) : null}
           </>
