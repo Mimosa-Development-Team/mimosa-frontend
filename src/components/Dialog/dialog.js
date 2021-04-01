@@ -122,7 +122,7 @@ export default function ModalDialog({
             {submitSuccess
               ? method === 'new'
                 ? 'Your contribution has been successfully published'
-                : 'Your changes has been successfully saved'
+                : 'Changes have been published successfully'
               : content}
           </Typography>
         </div>

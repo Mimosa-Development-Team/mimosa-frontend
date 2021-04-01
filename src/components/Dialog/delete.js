@@ -1,7 +1,23 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react'
 // import { useHistory } from 'react-router-dom'
-import { Modal, Typography, Button } from '@material-ui/core'
+import {
+  Modal,
+  Typography,
+  Button,
+  makeStyles
+} from '@material-ui/core'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+
+const useStyles = makeStyles(() => ({
+  icon: {
+    fontSize: '93px',
+    color: 'green'
+  },
+  success: {
+    fontWeight: 'bold'
+  }
+}))
 
 export default function ModalDialog({
   header,
@@ -12,9 +28,10 @@ export default function ModalDialog({
   deleteForm,
   setDeleteForm,
   id,
-  url
+  url,
+  subContent
 }) {
-  // const history = useHistory()
+  const classes = useStyles()
 
   return (
     <Modal
@@ -25,8 +42,15 @@ export default function ModalDialog({
       disableBackdropClick
     >
       <div className="dialog centered">
-        <Typography variant="h2" className="dialogTitle delete">
-          {header}
+        <Typography variant="h1" align="center">
+          {deleteItem ? (
+            <div>
+              <CheckCircleOutlineIcon className={classes.icon} />
+              <p>Succcess</p>
+            </div>
+          ) : (
+            header
+          )}
         </Typography>
         <div className="dialogContent">
           <Typography
@@ -37,6 +61,13 @@ export default function ModalDialog({
             {deleteItem
               ? 'Your contribution was successfully deleted.'
               : null || content}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            id="simple-modal-description"
+            align="center"
+          >
+            {subContent && !deleteItem ? subContent : null}
           </Typography>
         </div>
         {deleteItem ? (
