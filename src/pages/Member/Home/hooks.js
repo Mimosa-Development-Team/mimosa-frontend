@@ -1,22 +1,30 @@
-import { useQuery } from 'react-query'
+import { useInfiniteQuery } from 'react-query'
 
 import { getQuestionsAPI } from './api'
 import { QUESTIONS_QUERY_KEY } from './constants'
 
-export const useQuestions = () => {
+export const useQuestions = (id = 1) => {
   const {
     data,
     isLoading,
     error,
-    refetch,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isSuccess
-  } = useQuery(QUESTIONS_QUERY_KEY, getQuestionsAPI, {
-    enabled: false
-  })
+  } = useInfiniteQuery(
+    [QUESTIONS_QUERY_KEY, { pageNum: id }],
+    getQuestionsAPI,
+    {
+      getNextPageParam: lastPage => lastPage.nextPage
+    }
+  )
 
   return {
-    getQuestions: refetch,
+    getQuestions: fetchNextPage,
     questions: data,
+    hasNextPage,
+    isFetchingNextPage,
     isLoading,
     isSuccess,
     error
