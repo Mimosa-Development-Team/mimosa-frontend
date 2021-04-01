@@ -2,7 +2,6 @@ import React from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { TextField, InputLabel } from '@material-ui/core'
 import { Controller } from 'react-hook-form'
-import styles from './style.module.scss'
 
 export default function ControlledAutocomplete({
   options = [],
@@ -14,12 +13,10 @@ export default function ControlledAutocomplete({
   ...propsList
 }) {
   return (
-    <div className={`${styles.multiSelectControl}`}>
-      <InputLabel className={`${styles.label}`}>
+    <div className="multiSelectWrapper">
+      <InputLabel className="label">
         {label}{' '}
-        {asterisk ? (
-          <span className={`${styles.required}`}>*</span>
-        ) : null}
+        {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
       <Controller
         render={({ onChange, ...props }) => (
@@ -33,7 +30,7 @@ export default function ControlledAutocomplete({
             }}
             renderInput={params => (
               <TextField
-                className={`${styles.input}`}
+                className="input"
                 {...params}
                 placeholder={label}
                 {...propsList}

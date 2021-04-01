@@ -6,7 +6,6 @@ import {
   InputLabel
 } from '@material-ui/core'
 import { Controller } from 'react-hook-form'
-import styles from './style.module.scss'
 
 export default function RadioControl(props) {
   const {
@@ -18,12 +17,10 @@ export default function RadioControl(props) {
     // ...propsList
   } = props
   return (
-    <div className={`${styles.radioControl}`}>
-      <InputLabel className={`${styles.label}`}>
+    <div className="radioWrapper">
+      <InputLabel className="label">
         {label}{' '}
-        {asterisk ? (
-          <span className={`${styles.required}`}>*</span>
-        ) : null}
+        {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
       <Controller
         name={name}
@@ -42,8 +39,8 @@ export default function RadioControl(props) {
               value="supports"
               className={`${
                 value === 'supports'
-                  ? styles.radioActive
-                  : styles.radio
+                  ? 'radio supports active'
+                  : 'radio'
               }`}
               control={
                 <Radio
@@ -58,8 +55,8 @@ export default function RadioControl(props) {
               value="refutes"
               className={`${
                 value === 'refutes'
-                  ? styles.radioActive
-                  : styles.radio
+                  ? 'radio refutes active'
+                  : 'radio'
               }`}
               control={
                 <Radio
@@ -74,8 +71,8 @@ export default function RadioControl(props) {
               value="unclear"
               className={`${
                 value === 'unclear'
-                  ? styles.radioActive
-                  : styles.radio
+                  ? 'radio unclear active'
+                  : 'radio'
               }`}
               control={
                 <Radio

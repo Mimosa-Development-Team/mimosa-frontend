@@ -7,27 +7,33 @@ import {
   makeStyles
 } from '@material-ui/core'
 import capitalizeText from 'utils/parsing/capitalize'
+import styles from './style.module.scss'
 
 const useStyles = makeStyles(() => ({
   question: {
-    color: '#F2BA32',
-    fontWeight: 'bold'
+    color: '#F2BA1D!important',
+    fontFamily: 'Roboto-Bold!important',
+    marginRight: '3px'
   },
   hypothesis: {
-    color: '#EC8A2A',
-    fontWeight: 'bold'
+    color: '#EC8A2A!important',
+    fontFamily: 'Roboto-Bold!important',
+    marginRight: '3px'
   },
   experiment: {
-    color: '#54B356',
-    fontWeight: 'bold'
+    color: '#54B356!important',
+    fontFamily: 'Roboto-Bold!important',
+    marginRight: '3px'
   },
   data: {
-    color: '#3576D6',
-    fontWeight: 'bold'
+    color: '#3576D6!important',
+    fontFamily: 'Roboto-Bold!important',
+    marginRight: '3px'
   },
   analysis: {
-    color: '#724586',
-    fontWeight: 'bold'
+    color: '#724586!important',
+    fontFamily: 'Roboto-Bold!important',
+    marginRight: '3px'
   }
 }))
 
@@ -43,30 +49,34 @@ const ContributionHeader = ({ data, type }) => {
         spacing={3}
       >
         <Grid item sm={12}>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography
+            className={`${styles.label}`}
+            variant="subtitle1"
+            gutterBottom
+          >
             This contribution will fall under{' '}
             {capitalizeText(data.category)}
           </Typography>
         </Grid>
         <Grid item sm={12}>
-          <Card variant="outlined">
+          <Card variant="outlined" className="inputCard">
             <CardContent>
-              <Typography variant="subtitle1">
+              <Typography className="inputContent">
                 <span
                   className={
                     classes[data.category.toLowerCase()]
                   }
                 >
-                  {capitalizeText(data.category)}
+                  {capitalizeText(data.category)}:
                 </span>
-                : {data.subject}
+                {data.subject}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item sm={12}>
           <Typography
-            variant="h2"
+            variant="h4"
             className={classes[type.toLowerCase()]}
           >
             {type}
