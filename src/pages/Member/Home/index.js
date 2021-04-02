@@ -59,7 +59,7 @@ const MemberDashboard = () => {
               className={`${styles.searchBox}`}
             />
             <Button
-              className={`${styles.questionBtn}`}
+              className="btn primary"
               size="large"
               variant="contained"
               onClick={() => {

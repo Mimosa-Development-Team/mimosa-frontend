@@ -11,7 +11,7 @@ const Content = ({ content, isExpanded }) => {
         lines={2}
         more="See more"
         less=""
-        className={`${styles.body}`}
+        className={`cardBody ${styles.body}`}
         anchorClass={`${styles.anchor}`}
         expanded={isExpanded}
       >

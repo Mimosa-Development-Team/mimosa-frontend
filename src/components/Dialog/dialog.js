@@ -120,9 +120,11 @@ export default function ModalDialog({
             color="success"
           >
             {submitSuccess
-              ? method === 'new'
+              ? method === 'new' && status === 'publish'
                 ? 'Your contribution has been successfully published'
-                : 'Your changes has been successfully saved'
+                : status === 'draft'
+                ? 'Your contribution has been saved as draft'
+                : 'Changes have been published successfully'
               : content}
           </Typography>
         </div>
