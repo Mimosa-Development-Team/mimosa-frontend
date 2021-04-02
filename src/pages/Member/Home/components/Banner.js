@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { useGlobalState } from 'store/state'
-import getRawData from 'utils/parsing/Proxy'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -10,15 +8,17 @@ import styles from '../style.module.scss'
 
 const Banner = () => {
   const [showBanner, setShowBanner] = useState(true)
-  const { showHomeBanner } = useGlobalState()
+  const showHomeBanner = localStorage.getItem('showHomeBanner')
+    ? JSON.parse(localStorage.getItem('showHomeBanner'))
+    : true
 
   const handleClick = () => {
     setShowBanner(false)
-    showHomeBanner.merge(false)
+    localStorage.setItem('showHomeBanner', false)
   }
   return (
     <>
-      {getRawData(showHomeBanner) && showBanner ? (
+      {showHomeBanner && showBanner ? (
         <Card className={`${styles.bannerDiv}`}>
           <CardContent className={`${styles.details}`}>
             <img
