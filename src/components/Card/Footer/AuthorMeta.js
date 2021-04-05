@@ -8,7 +8,6 @@ const AuthorMeta = ({ userColor, author }) => {
   return (
     // temp: adjust data to poster when data from api is available @k
     <div>
-      {console.log(author)}
       <Typography
         className={`${styles.meta} ${styles.author}`}
         variant="h5"
