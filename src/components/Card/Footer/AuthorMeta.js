@@ -4,15 +4,19 @@ import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import styles from './styles.module.scss'
 
-const AuthorMeta = ({ author }) => {
+const AuthorMeta = ({ userColor, author }) => {
   return (
     // temp: adjust data to poster when data from api is available @k
     <div>
+      {console.log(author)}
       <Typography
         className={`${styles.meta} ${styles.author}`}
         variant="h5"
       >
-        <Avatar className={`${styles.avatar}`}>
+        <Avatar
+          className={`${styles.avatar}`}
+          style={{ backgroundColor: userColor }}
+        >
           {author.charAt(0)}
         </Avatar>
         {author}

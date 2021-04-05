@@ -71,6 +71,7 @@ const Question = () => {
             <ContributionDetails
               authors={activeContribution.author}
               poster={activeContribution.postedBy}
+              posterColor={activeContribution.userColorPoster}
               datePosted={activeContribution.createdAt}
               dateModified={activeContribution.updatedAt}
             />
