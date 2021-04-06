@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
 import LeftSidebar from 'components/LeftSidebar'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import Typography from '@material-ui/core/Typography'
@@ -34,7 +35,7 @@ const HomeSearch = () => {
   }, [getResults, search])
 
   return (
-    <>
+    <PageWrapper>
       <LeftSidebar showNav links={ROUTES} />
       {isLoading ? (
         <div className="loaderWrapper">
@@ -98,7 +99,7 @@ const HomeSearch = () => {
           </>
         </PageContentWrapper>
       )}
-    </>
+    </PageWrapper>
   )
 }
 

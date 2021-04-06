@@ -1,0 +1,72 @@
+@import '~global/styles';
+
+.staticWrapper {
+  width: 100vw;
+  height: 100vh;
+  background: $offwhite;
+  padding: 40px;
+}
+
+.contentWrapper {
+  width: 100%;
+  height: 100%;
+  background: $secondary;
+  border-radius: 12px;
+  padding: 70px;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+
+  .logoWrapper {
+    margin-bottom: 95px;
+
+    .logo {
+      width: 230px;
+    }
+  }
+
+  .page404 {
+    margin-bottom: 40px;
+  }
+
+  .pageMaintenance {
+    margin-bottom: 35px;
+  }
+
+
+  .header {
+    font-family: 'Roboto-Bold';
+    font-size: 36px;
+    letter-spacing: 0.23px;
+    line-height: 36px;
+    margin-bottom: 25px;
+    color: $white;
+  }
+
+  .subheader {
+    color: $white;
+    font-family: 'Roboto';
+    font-size: 24px;
+    letter-spacing: 0.15px;
+    line-height: 36px;
+  }
+
+  .h1 {
+    color: $white;
+    font-family: 'Roboto';
+    margin-bottom: 65px;
+  }
+
+  .asterisk {
+    &.bl {
+      position: absolute;
+      left: -102px;
+      bottom: -65px;
+    }
+    &.tr {
+      position: absolute;
+      right: -102px;
+      top: -65px;
+    }
+  }
+}

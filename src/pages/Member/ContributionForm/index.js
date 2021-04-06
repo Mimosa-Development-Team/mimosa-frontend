@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
+import PageWrapper from 'components/PageWrapper'
 import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
 import Contribution from './components/contribution'
@@ -57,7 +58,7 @@ const ContributionForm = props => {
   ])
 
   return (
-    <>
+    <PageWrapper>
       <LeftSidebar />
       <PageContentWrapper>
         <Contribution
@@ -99,7 +100,7 @@ const ContributionForm = props => {
           }
         />
       </PageContentWrapper>
-    </>
+    </PageWrapper>
   )
 }
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
 import LeftSidebar from 'components/LeftSidebar'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import { Button } from '@material-ui/core'
@@ -43,7 +44,7 @@ const MemberDashboard = () => {
   // }, [getQuestions])
 
   return (
-    <>
+    <PageWrapper>
       <LeftSidebar showNav links={ROUTES} />
       {isLoading ? (
         <div className="loaderWrapper">
@@ -130,7 +131,7 @@ const MemberDashboard = () => {
           </>
         </PageContentWrapper>
       )}
-    </>
+    </PageWrapper>
   )
 }
 
