@@ -92,7 +92,10 @@ const CommentsOverview = ({ contributionId }) => {
             editing ? styles.active : ''
           }`}
         >
-          <Avatar className={`${styles.avatar}`}>
+          <Avatar
+            className={`${styles.avatar}`}
+            style={{ backgroundColor: '#ee4f31' }}
+          >
             {getRawData(user).user.firstName.charAt(0)}
           </Avatar>
           <form

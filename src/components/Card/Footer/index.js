@@ -35,7 +35,9 @@ const Footer = ({
   }
   return (
     <div className={`${styles.footer}`}>
-      {author && <AuthorMeta author={author} />}
+      {author && (
+        <AuthorMeta userColor={data.userColor} author={author} />
+      )}
       <DateMeta
         datePosted={datePosted}
         dateModified={dateModified}

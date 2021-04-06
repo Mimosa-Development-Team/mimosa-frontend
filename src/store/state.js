@@ -4,8 +4,7 @@ import { LocalForage } from 'utils/hookstate/LocalForage'
 
 const defaultGlobalState = createState({
   isLoggedIn: false,
-  user: {},
-  showHomeBanner: true
+  user: {}
 })
 
 export const useGlobalState = () => {

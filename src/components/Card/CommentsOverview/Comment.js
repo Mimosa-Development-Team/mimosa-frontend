@@ -9,7 +9,10 @@ const Comment = ({ data, hasActions, onEdit, onDelete }) => {
   return (
     <div className={`${styles.comment}`}>
       <div className={`${styles.contentWrapper}`}>
-        <Avatar className={`${styles.avatar}`}>
+        <Avatar
+          className={`${styles.avatar}`}
+          style={{ backgroundColor: data.mmUser.userColor }}
+        >
           {data.mmUser.fullName.charAt(0)}
         </Avatar>
         <div>

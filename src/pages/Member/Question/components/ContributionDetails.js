@@ -9,6 +9,7 @@ import styles from './styles.module.scss'
 const ContributionDetails = ({
   authors,
   poster,
+  posterColor,
   datePosted,
   dateModified
 }) => {
@@ -35,7 +36,10 @@ const ContributionDetails = ({
           <div
             className={`${styles.avatarName} ${styles.poster}`}
           >
-            <Avatar className={`${styles.avatar}`}>
+            <Avatar
+              className={`${styles.avatar}`}
+              style={{ backgroundColor: posterColor }}
+            >
               {poster.charAt(0)}
             </Avatar>
             {poster}
