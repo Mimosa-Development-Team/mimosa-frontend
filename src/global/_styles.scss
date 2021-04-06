@@ -84,6 +84,13 @@ $spacers: (
   &-20 {
     margin-bottom: 20px !important;
   }
+
+  &-15m {
+    @media screen and (max-width: 959px) {
+      margin-bottom: 15px !important;
+    }
+  }
+
 }
 
 .mr {

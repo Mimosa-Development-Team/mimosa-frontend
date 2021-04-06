@@ -3,6 +3,7 @@
 .wrapper {
   display: flex;
   background: $secondary;
+  align-items: flex-start;
 }
 
 .appMain {
@@ -12,4 +13,9 @@
   overflow: hidden;
   display: flex;
   width: 100vw;
+}
+
+.mobileMenuBtn {
+  margin-top: 15px !important;
+  font-size: 25px !important;
 }

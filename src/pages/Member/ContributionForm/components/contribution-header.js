@@ -48,7 +48,7 @@ const ContributionHeader = ({ data, type }) => {
         alignItems="flex-start"
         spacing={3}
       >
-        <Grid item sm={12}>
+        <Grid item xs={12} sm={12}>
           <Typography
             className={`${styles.label}`}
             variant="subtitle1"
@@ -58,7 +58,7 @@ const ContributionHeader = ({ data, type }) => {
             {capitalizeText(data.category)}
           </Typography>
         </Grid>
-        <Grid item sm={12}>
+        <Grid item xs={12} sm={12}>
           <Card variant="outlined" className="inputCard">
             <CardContent>
               <Typography className="inputContent">
@@ -74,7 +74,7 @@ const ContributionHeader = ({ data, type }) => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item sm={12}>
+        <Grid item xs={12} sm={12}>
           <Typography
             variant="h4"
             className={classes[type.toLowerCase()]}

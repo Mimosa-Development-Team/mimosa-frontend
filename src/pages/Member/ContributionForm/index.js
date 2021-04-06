@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
 import PageWrapper from 'components/PageWrapper'
-import LeftSidebar from 'components/LeftSidebar'
 import PageContentWrapper from 'components/PageContentWrapper'
 import Contribution from './components/contribution'
 import { useQuestionForm } from './hooks'
@@ -59,7 +58,6 @@ const ContributionForm = props => {
 
   return (
     <PageWrapper>
-      <LeftSidebar />
       <PageContentWrapper>
         <Contribution
           profile={getRawData(user).user}

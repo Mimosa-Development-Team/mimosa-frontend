@@ -64,3 +64,9 @@ button {
     }
   }
 }
+
+@media screen and (max-width: 959px) {
+  .footer {
+    flex-wrap: wrap;
+  }
+}

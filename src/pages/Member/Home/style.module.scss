@@ -67,3 +67,37 @@
 .loadMore {
   text-align: center;
 }
+
+
+@media screen and (max-width: 959px) {
+  .groupHeader {
+    display: block;
+    text-align: right;
+
+    .addBtn {
+      margin-top: 15px;
+    }
+  }
+
+  .homeBanner {
+    .bannerDiv {
+      padding: 20px;
+      .details {
+        display: block;
+        padding: 0;
+        position: relative;
+
+        .introImg {
+          margin-bottom: 20px;
+        }
+        .contents {
+          .closeIcon {
+            position: absolute;
+            right: -10px;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+}
