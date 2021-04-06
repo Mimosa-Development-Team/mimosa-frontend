@@ -22,6 +22,10 @@ div.drawerPaper {
   justify-content: space-between;
   height: 100%;
 
+  .logo {
+    cursor: pointer;
+  }
+
   .navLink {
     color: $white;
     display: block;
