@@ -1,0 +1,15 @@
+@import '~global/styles';
+
+.wrapper {
+  display: flex;
+  background: $secondary;
+}
+
+.appMain {
+  height: 98vh;
+  margin-top: 2vh;
+  background: $secondary;
+  overflow: hidden;
+  display: flex;
+  width: 100vw;
+}

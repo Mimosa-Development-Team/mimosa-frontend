@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Typography from '@material-ui/core/Typography'
 import LeftSidebar from 'components/LeftSidebar'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import RightSidebar from 'components/RightSidebar'
 import loader from 'assets/images/loader_loading.gif'
@@ -39,7 +40,7 @@ const Question = () => {
     }
   }, [contribution, getContribution])
   return (
-    <>
+    <PageWrapper>
       <LeftSidebar
         showNav
         links={ROUTES}
@@ -78,7 +79,7 @@ const Question = () => {
           </RightSidebar>
         </>
       )}
-    </>
+    </PageWrapper>
   )
 }
 
