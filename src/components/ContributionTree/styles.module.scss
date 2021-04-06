@@ -45,6 +45,19 @@
       &.analysis {
         background: $purple;
       }
+
+      &:last-child {
+        &.question,
+        &.hypothesis,
+        &.experiment,
+        &.data {
+          &::after {
+            content: '';
+            border-top: none;
+          }
+        }
+      }
+      
   
       &::after {
         content: '';
