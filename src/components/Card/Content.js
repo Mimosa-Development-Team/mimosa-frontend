@@ -4,11 +4,11 @@ import ShowMoreText from 'react-show-more-text'
 import parse from 'html-react-parser'
 import styles from './styles.module.scss'
 
-const Content = ({ content, isExpanded }) => {
+const Content = ({ content, isExpanded, linesToShow = 2 }) => {
   return (
     <div className={`${styles.bodyWrapper}`}>
       <ShowMoreText
-        lines={2}
+        lines={linesToShow}
         more="See more"
         less=""
         className={`cardBody ${styles.body}`}

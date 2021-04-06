@@ -89,7 +89,7 @@ const MemberDashboard = () => {
                     className={`${styles.title}`}
                     variant="h5"
                   >
-                    Paper List
+                    Contribution List
                   </Typography>
                 </div>
                 {questions.pages.map((group, i) => (
@@ -106,7 +106,7 @@ const MemberDashboard = () => {
                         <Card
                           data={data}
                           form={false}
-                          hideDetails
+                          linesToShow={5}
                           hideEdit
                         />
                       </div>

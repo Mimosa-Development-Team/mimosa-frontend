@@ -14,7 +14,7 @@ const Card = ({
   data,
   parentTitle,
   isExpanded,
-  hideDetails,
+  linesToShow,
   hideEdit
 }) => {
   const [showDetails, setShowDetails] = useState(false)
@@ -54,10 +54,11 @@ const Card = ({
                 deprecated={data.status === 'deprecated'}
                 title={data.subject}
               />
-              {hideDetails !== true && data.details && (
+              {data.details && (
                 <Content
                   content={data.details}
                   isExpanded={isExpanded}
+                  linesToShow={linesToShow}
                 />
               )}
               <Footer

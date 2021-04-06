@@ -308,7 +308,7 @@ function Form(props) {
       case 'hypothesis':
         return 'Hypothesis: What is your answer to this question?'
       case 'experiment':
-        return 'What is experiment testing?'
+        return 'What is this experiment testing?'
       case 'data':
         return 'Data'
       case 'analysis':
@@ -323,7 +323,7 @@ function Form(props) {
       case 'question':
         return 'Add some details about your research question'
       case 'hypothesis':
-        return 'Add some details to you reasoning'
+        return 'Add some details to your reasoning'
       case 'experiment':
         return 'Experimental Protocol: describe how to perform this experiment'
       case 'data':
