@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
-import LeftSidebar from 'components/LeftSidebar'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
@@ -44,8 +43,7 @@ const MemberDashboard = () => {
   // }, [getQuestions])
 
   return (
-    <PageWrapper>
-      <LeftSidebar showNav links={ROUTES} />
+    <PageWrapper showNav links={ROUTES}>
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />
@@ -60,7 +58,7 @@ const MemberDashboard = () => {
               className={`${styles.searchBox}`}
             />
             <Button
-              className="btn primary"
+              className={`btn primary ${styles.addBtn}`}
               size="large"
               variant="contained"
               onClick={() => {

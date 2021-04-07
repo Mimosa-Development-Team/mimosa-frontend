@@ -460,7 +460,7 @@ function Form(props) {
               </button>
             )}
           </Grid>
-          <Grid item sm={6}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h1" gutterBottom>
               {method === 'new' ? 'Add' : 'Edit'}{' '}
               {capitalizeText(type)}
@@ -704,7 +704,7 @@ function Form(props) {
             {method === 'new' ? (
               type !== 'analysis' ? (
                 <Button
-                  className="btn secondary submitBtn mr-30"
+                  className="btn secondary submitBtn mr-30 mb-15m"
                   variant="outlined"
                   onClick={() => {
                     setStatus('draft')
@@ -721,7 +721,7 @@ function Form(props) {
             ) : null}
             {method === 'update' ? (
               <Button
-                className="btn delete submitBtn mr-30"
+                className="btn delete submitBtn mr-30 mb-15m"
                 variant="outlined"
                 onClick={() => {
                   setDeleteForm(true)

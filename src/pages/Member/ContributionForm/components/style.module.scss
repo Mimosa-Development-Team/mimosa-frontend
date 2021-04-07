@@ -74,3 +74,21 @@
     margin-bottom: 50px;
   }
 }
+
+@media screen and (max-width: 959px) {
+  .form {
+    padding-right: 0;
+
+    .btnBack {
+      .backNav {
+        margin: 0;
+      }
+    }
+
+    .btnContainer {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+}
