@@ -7,6 +7,8 @@ import Media from 'components/Card/Footer/Media'
 import Comments from 'components/Card/Footer/Comments'
 import CardButton from 'components/CardButton'
 // import Bookmark from 'components/Card/Footer/Bookmark'
+import getRawData from 'utils/hookstate/getRawData'
+import { useGlobalState } from 'store/state'
 import styles from './styles.module.scss'
 
 const Footer = ({
@@ -18,6 +20,7 @@ const Footer = ({
   hideEdit
 }) => {
   const history = useHistory()
+  const { user } = useGlobalState()
 
   const getType = type => {
     switch (type) {
@@ -35,9 +38,7 @@ const Footer = ({
   }
   return (
     <div className={`${styles.footer}`}>
-      {author && (
-        <AuthorMeta userColor={data.userColor} author={author} />
-      )}
+      {author && <AuthorMeta author={author} />}
       <DateMeta
         datePosted={datePosted}
         dateModified={dateModified}
@@ -57,20 +58,23 @@ const Footer = ({
       )}
       {hideEdit !== true && data ? (
         <>
-          <CardButton
-            action="edit"
-            onClick={() => {
-              history.push(
-                `/contribution-form/${data.category}/update`,
-                {
-                  type: 'update',
-                  data,
-                  questionUuid: data.parentQuestionId
-                }
-              )
-            }}
-          />
+          {data.userId === getRawData(user).user.id ? (
+            <CardButton
+              action="edit"
+              onClick={() => {
+                history.push(
+                  `/contribution-form/${data.category}/update`,
+                  {
+                    type: 'update',
+                    data,
+                    questionUuid: data.parentQuestionId
+                  }
+                )
+              }}
+            />
+          ) : null}
           {(data.category !== 'analysis' &&
+            data.userId === getRawData(user).user.id &&
             data.children !== undefined &&
             data.children.length <= 0) ||
           data.category === 'data' ? (

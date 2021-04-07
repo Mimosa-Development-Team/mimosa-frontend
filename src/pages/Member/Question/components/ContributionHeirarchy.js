@@ -29,7 +29,11 @@ const ContributionHeirarchy = ({
               wrapper={children => (
                 <ul
                   className={`${
-                    styles[data.children[0].category]
+                    styles[
+                      data && data.children.length > 0
+                        ? data.children[0].category
+                        : null
+                    ]
                   } ${styles.childWrapper}`}
                 >
                   {children}
