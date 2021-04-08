@@ -19,7 +19,7 @@ const About = () => {
     <PageWrapper showNav links={ROUTES}>
       <PageContentWrapper>
         <Grid container spacing={4} className={styles.container}>
-          <Grid item xs={3} className={styles.summary}>
+          <Grid item xs={12} sm={3} className={styles.summary}>
             <Logo />
             <p>
               Mimosa is a platform for open collaboration in
@@ -42,7 +42,7 @@ const About = () => {
               </span>
             </p>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={12} sm={9}>
             <Typography variant="h1" className="mb-15">
               About Mimosa
             </Typography>
@@ -126,6 +126,7 @@ const About = () => {
                 collaborative format. Mimosa also tries to
                 address many of the{' '}
                 <Link
+                  className={`${styles.underlined}`}
                   target="_blank"
                   href="https://www.theguardian.com/higher-education-network/2018/may/21/scientists-access-journals-researcher-article"
                 >
@@ -134,6 +135,7 @@ const About = () => {
                 within the current format for sharing science,
                 born at a different time and for{' '}
                 <Link
+                  className={`${styles.underlined}`}
                   target="_blank"
                   href="https://www.theguardian.com/science/2017/jun/27/profitable-business-scientific-publishing-bad-for-science"
                 >
@@ -147,6 +149,7 @@ const About = () => {
                 information, used by all demographics. Wikipedia
                 has a famous rule:{' '}
                 <Link
+                  className={`${styles.underlined}`}
                   target="_blank"
                   href="https://en.wikipedia.org/wiki/Wikipedia:No_original_research"
                 >
@@ -178,30 +181,54 @@ const About = () => {
               Special Thanks
             </Typography>
 
-            <p>
+            <Typography>
               A. Masumori, N. Maruyama, E. A. O. Diallo, M.
               Morrison, K. Kashiwa, Method IT
-            </p>
+            </Typography>
 
             <Paper elevation={0} className={styles.contactPaper}>
-              <Typography variant="h1" className="mb-10">
-                Get in Touch with Us
+              <Typography
+                variant="h3"
+                className={`${styles.title}`}
+              >
+                Get in touch with us
               </Typography>
 
-              <p className="mb-10">
-                Sed ut perspiciatis unde omnis iste natus error
-                sit voluptatem accusantium.
-              </p>
+              <Typography className="mb-10">
+                Contact{' '}
+                <Link href="mailto:hello@openmimosa.org">
+                  hello@openmimosa.org
+                </Link>
+              </Typography>
 
-              <Link
-                href="https://github.com/Mimosa-Development-Team"
-                className="mb-15"
+              <Typography className="mb-5">
+                Contribute to Mimosa&apos;s open source code
+              </Typography>
+
+              <Typography className="mb-20">
+                <Link href="https://github.com/Mimosa-Development-Team">
+                  github.com/__mimosa__
+                </Link>
+              </Typography>
+
+              <Typography
+                variant="h3"
+                className={`${styles.title}`}
               >
-                github.com/Mimosa-Development-Team
-              </Link>
+                Read the blog
+              </Typography>
 
-              <Typography variant="h1" className="mb-15">
-                Follow Us
+              <Typography className="mb-20">
+                <Link href=" https://openmimosablog.wordpress.com/">
+                  https://openmimosablog.wordpress.com/
+                </Link>
+              </Typography>
+
+              <Typography
+                variant="h3"
+                className={`${styles.title}`}
+              >
+                Follow us
               </Typography>
 
               <img src={TwitterIcon} alt="Twitter" />
