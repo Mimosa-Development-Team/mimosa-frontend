@@ -17,16 +17,16 @@ import { useQuestions } from './hooks'
 
 const MemberDashboard = () => {
   const history = useHistory()
+  const [orderBy, setOrderBy] = useState('DESC')
   const {
     questions,
     isLoading,
     getQuestions,
     hasNextPage,
     isFetchingNextPage
-  } = useQuestions()
+  } = useQuestions(orderBy)
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState('Most Recent')
-  const [orderBy, setOrderBy] = useState('DESC')
 
   const handleKeyPress = e => {
     setSearch(e.target.value)

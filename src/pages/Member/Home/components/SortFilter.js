@@ -43,7 +43,10 @@ const SortFilter = ({ sortFilter, onClick, ...propsList }) => {
                   aria-label=""
                   className={`${styles.actionButton} mb-10`}
                   {...propsList}
-                  onClick={() => onClick('DESC')}
+                  onClick={() => {
+                    popupState.close()
+                    onClick('DESC')
+                  }}
                 >
                   Most Recent
                 </Button>
@@ -52,7 +55,10 @@ const SortFilter = ({ sortFilter, onClick, ...propsList }) => {
                   aria-label="oldest"
                   className={`${styles.actionButton}`}
                   {...propsList}
-                  onClick={() => onClick('ASC')}
+                  onClick={() => {
+                    popupState.close()
+                    onClick('ASC')
+                  }}
                 >
                   Oldest
                 </Button>
