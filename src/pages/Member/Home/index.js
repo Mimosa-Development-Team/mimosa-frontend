@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
 import PageWrapper from 'components/PageWrapper'
@@ -14,19 +14,22 @@ import { useGlobalState } from 'store/state'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
+import SortFilter from './components/SortFilter'
 import { useQuestions } from './hooks'
 
 const MemberDashboard = () => {
   const { user } = useGlobalState()
   const history = useHistory()
+  const [orderBy, setOrderBy] = useState('DESC')
   const {
     questions,
     isLoading,
     getQuestions,
     hasNextPage,
     isFetchingNextPage
-  } = useQuestions()
+  } = useQuestions(orderBy)
   const [search, setSearch] = useState('')
+  const [sort, setSort] = useState('Most Recent')
 
   const handleKeyPress = e => {
     setSearch(e.target.value)
@@ -41,9 +44,19 @@ const MemberDashboard = () => {
     }
   }
 
-  // useEffect(() => {
-  //   getQuestions()
-  // }, [getQuestions])
+  const handleSortClick = orderBy => {
+    if (orderBy === 'DESC') {
+      setSort('Most Recent')
+    }
+    if (orderBy === 'ASC') {
+      setSort('Oldest')
+    }
+    setOrderBy(orderBy)
+  }
+
+  useEffect(() => {
+    getQuestions(orderBy)
+  }, [getQuestions, orderBy])
 
   return (
     <PageWrapper showNav links={ROUTES}>
@@ -97,6 +110,18 @@ const MemberDashboard = () => {
                   >
                     Contribution List
                   </Typography>
+                  <div className={`${styles.sortWrapper}`}>
+                    <Typography
+                      className={`${styles.title}`}
+                      variant="h5"
+                    >
+                      Sort By:
+                    </Typography>
+                    <SortFilter
+                      sortFilter={sort}
+                      onClick={handleSortClick}
+                    />
+                  </div>
                 </div>
                 {questions.pages.map((group, i) => (
                   <React.Fragment key={i}>

@@ -3,7 +3,7 @@ import { useInfiniteQuery } from 'react-query'
 import { getQuestionsAPI } from './api'
 import { QUESTIONS_QUERY_KEY } from './constants'
 
-export const useQuestions = (id = 1) => {
+export const useQuestions = orderBy => {
   const {
     data,
     isLoading,
@@ -13,7 +13,7 @@ export const useQuestions = (id = 1) => {
     isFetchingNextPage,
     isSuccess
   } = useInfiniteQuery(
-    [QUESTIONS_QUERY_KEY, { pageNum: id }],
+    [QUESTIONS_QUERY_KEY, { pageNum: 1, orderBy }],
     getQuestionsAPI,
     {
       getNextPageParam: lastPage => lastPage.nextPage
