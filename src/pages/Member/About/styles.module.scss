@@ -15,10 +15,6 @@
     color: $primary;
     display: inline-block;
   }
-
-  h5 {
-    font-weight: 600;
-  }
 }
 
 .summary {
@@ -49,12 +45,29 @@
   padding-right: 70px;
   margin-bottom: 48px;
 
+  h4 {
+    font-family: 'Roboto-Bold';
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.1px;
+    line-height: 24px;
+  }
+
   p {
     font-size: 16px;
     line-height: 24px;
     
     &:not(:last-child) {
       margin-bottom: 30px;
+    }
+
+    strong {
+      font-weight: normal;
+      font-family: 'Roboto-Bold';
+    }
+
+    a.underlined {
+      text-decoration: underline;
     }
   }
 }
@@ -77,6 +90,15 @@
     @include pseudo-background;
     top: -78px;
     right: -135px;
+  }
+
+  h3.title {
+    color: $darkgray2;
+    font-family: 'Roboto-Bold';
+    font-size: 20px;
+    letter-spacing: 0.63px;
+    line-height: 24px;
+    margin-bottom: 10px;
   }
 }
 
