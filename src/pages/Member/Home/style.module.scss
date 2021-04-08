@@ -57,6 +57,8 @@
 .paperListHeader {
   margin-top: 2em;
   margin-bottom: 1.5em;
+  display: flex;
+  justify-content: space-between;
 }
 
 .content {
@@ -66,6 +68,72 @@
 
 .loadMore {
   text-align: center;
+}
+
+.sortWrapper {
+  display: flex;
+}
+
+.actionsWrapper {
+  margin-left: 10px;
+  .button {
+    color: $primary;
+    text-transform: uppercase;
+    padding: 0;
+    padding-bottom: 10px;
+    min-width: 100px;
+
+    &:hover,
+    &:focus {
+      background: transparent;
+    }
+
+    span {
+      font-family: 'Roboto-Medium';
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      line-height: 16px;
+    }
+  }
+
+  .popper {
+    padding: 15px;
+    background: $white;
+    border-radius: 8px;
+    box-shadow: 0 2px 30px 0 rgba(0,0,0,0.15);
+    position: relative;
+
+    &:after{
+      content:'';
+      position: absolute;
+      border: 10px solid transparent;
+      border-bottom: 10px solid $white;
+      top: -20px;
+      left: 40%;
+    }
+  }
+
+  button.actionButton {
+    background: transparent;
+    color: $darkgray1;
+    padding: 0;
+    display: block;
+
+    &:hover,
+    &:focus {
+      background: inherit;
+    }
+
+    span {
+      font-family: "Roboto";
+      font-size: 16px;
+      letter-spacing: 0.1px;
+      line-height: 16px;
+      text-transform: capitalize;
+      text-align: left;
+    }
+  }
 }
 
 
