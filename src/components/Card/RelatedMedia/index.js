@@ -197,14 +197,16 @@ const RelatedMedia = ({ contributionId }) => {
         {media && <Media media={media.media} />}
       </div>
       <div className={`${styles.buttonWrapper}`}>
-        <Button
-          className="btn dashed align-center"
-          size="large"
-          variant="contained"
-          onClick={() => setOpen(true)}
-        >
-          Add Related Media
-        </Button>
+        {getRawData(user).user.role !== 'admin' && (
+          <Button
+            className="btn dashed align-center"
+            size="large"
+            variant="contained"
+            onClick={() => setOpen(true)}
+          >
+            Add Related Media
+          </Button>
+        )}
       </div>
     </div>
   )

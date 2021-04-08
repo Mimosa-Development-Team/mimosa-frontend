@@ -5,7 +5,13 @@ import moment from 'moment'
 import Actions from './Actions'
 import styles from './styles.module.scss'
 
-const Comment = ({ data, hasActions, onEdit, onDelete }) => {
+const Comment = ({
+  data,
+  hasActions,
+  onEdit,
+  onDelete,
+  role
+}) => {
   return (
     <div className={`${styles.comment}`}>
       <div className={`${styles.contentWrapper}`}>
@@ -29,13 +35,14 @@ const Comment = ({ data, hasActions, onEdit, onDelete }) => {
           </Typography>
         </div>
       </div>
-      {hasActions && (
+      {role || hasActions ? (
         <Actions
+          role={role}
           data={data}
           onEdit={onEdit}
           onDelete={onDelete}
         />
-      )}
+      ) : null}
     </div>
   )
 }
