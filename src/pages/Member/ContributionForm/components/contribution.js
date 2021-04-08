@@ -731,17 +731,19 @@ function Form(props) {
                 DELETE
               </Button>
             ) : null}
-            <Button
-              type="submit"
-              className="btn primary submitBtn"
-              variant="contained"
-              onClick={() => {
-                setStatus('publish')
-                setBack(false)
-              }}
-            >
-              {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
-            </Button>
+            {profile.role !== 'admin' ? (
+              <Button
+                type="submit"
+                className="btn primary submitBtn"
+                variant="contained"
+                onClick={() => {
+                  setStatus('publish')
+                  setBack(false)
+                }}
+              >
+                {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
+              </Button>
+            ) : null}
           </Grid>
         </Grid>
       </form>

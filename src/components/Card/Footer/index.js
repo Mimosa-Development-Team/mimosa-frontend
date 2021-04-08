@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
@@ -58,7 +59,8 @@ const Footer = ({
       )}
       {hideEdit !== true && data ? (
         <>
-          {data.userId === getRawData(user).user.id ? (
+          {data.userId === getRawData(user).user.id ||
+          getRawData(user).user.role === 'admin' ? (
             <CardButton
               action="edit"
               onClick={() => {
@@ -73,26 +75,28 @@ const Footer = ({
               }}
             />
           ) : null}
-          {(data.category !== 'analysis' &&
-            data.userId === getRawData(user).user.id &&
-            data.children !== undefined &&
-            data.children.length <= 0) ||
-          data.category === 'data' ? (
-            <CardButton
-              action="contribute"
-              onClick={() => {
-                history.push(
-                  `/contribution-form/${getType(
-                    data.category
-                  )}/new`,
-                  {
-                    type: 'new',
-                    data,
-                    questionUuid: data.parentQuestionId
-                  }
-                )
-              }}
-            />
+          {getRawData(user).user.role !== 'admin' ? (
+            (data.category !== 'analysis' &&
+              data.userId === getRawData(user).user.id &&
+              data.children !== undefined &&
+              data.children.length <= 0) ||
+            data.category === 'data' ? (
+              <CardButton
+                action="contribute"
+                onClick={() => {
+                  history.push(
+                    `/contribution-form/${getType(
+                      data.category
+                    )}/new`,
+                    {
+                      type: 'new',
+                      data,
+                      questionUuid: data.parentQuestionId
+                    }
+                  )
+                }}
+              />
+            ) : null
           ) : null}
         </>
       ) : null}
