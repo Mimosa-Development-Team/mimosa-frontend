@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ReactComponent as Logo } from 'assets/images/logo.svg'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import ContributionTree from 'components/ContributionTree'
 import NavLink from './NavLink'
 import AccountDropdown from './AccountDropdown'
@@ -14,10 +14,16 @@ const MainNav = ({
   onTreeClick
 }) => {
   const location = useLocation()
+  const history = useHistory()
   return (
     <div className={`${styles.mainNav}`}>
       <div>
-        <Logo />
+        <Logo
+          className={`${styles.logo}`}
+          onClick={() => {
+            history.push(`/`)
+          }}
+        />
         {links
           .filter(link => link.location === 'top')
           .map(link => (

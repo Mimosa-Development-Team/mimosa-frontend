@@ -26,3 +26,11 @@
     }
   }
 }
+
+@media screen and (max-width: 959px) {
+  .root {
+    .chip {
+      margin-bottom: 5px;
+    }
+  }
+}

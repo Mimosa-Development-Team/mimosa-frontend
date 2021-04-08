@@ -62,6 +62,10 @@ $spacers: (
   &-lr25 {
     padding: 0 25px !important;
   }
+
+  &-lr65 {
+    padding: 0 65px !important;
+  }
 }
 
 .mt {
@@ -80,6 +84,13 @@ $spacers: (
   &-20 {
     margin-bottom: 20px !important;
   }
+
+  &-15m {
+    @media screen and (max-width: 959px) {
+      margin-bottom: 15px !important;
+    }
+  }
+
 }
 
 .mr {

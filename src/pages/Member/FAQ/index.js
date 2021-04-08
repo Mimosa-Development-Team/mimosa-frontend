@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import LeftSidebar from 'components/LeftSidebar'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import loader from 'assets/images/loader_loading.gif'
@@ -17,8 +17,7 @@ const MemberFAQ = () => {
   }, [getFaq])
 
   return (
-    <>
-      <LeftSidebar showNav links={ROUTES} />
+    <PageWrapper showNav links={ROUTES}>
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />
@@ -35,7 +34,7 @@ const MemberFAQ = () => {
           <VerticalTab data={faq} />
         </PageContentWrapper>
       )}
-    </>
+    </PageWrapper>
   )
 }
 

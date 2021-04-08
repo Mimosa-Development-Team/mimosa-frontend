@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from 'components/Card'
-import LeftSidebar from 'components/LeftSidebar'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import { Button } from '@material-ui/core'
@@ -46,8 +46,7 @@ const MemberDashboard = () => {
   // }, [getQuestions])
 
   return (
-    <>
-      <LeftSidebar showNav links={ROUTES} />
+    <PageWrapper showNav links={ROUTES}>
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />
@@ -96,7 +95,7 @@ const MemberDashboard = () => {
                     className={`${styles.title}`}
                     variant="h5"
                   >
-                    Paper List
+                    Contribution List
                   </Typography>
                 </div>
                 {questions.pages.map((group, i) => (
@@ -113,7 +112,7 @@ const MemberDashboard = () => {
                         <Card
                           data={data}
                           form={false}
-                          hideDetails
+                          linesToShow={5}
                           hideEdit
                         />
                       </div>
@@ -138,7 +137,7 @@ const MemberDashboard = () => {
           </>
         </PageContentWrapper>
       )}
-    </>
+    </PageWrapper>
   )
 }
 

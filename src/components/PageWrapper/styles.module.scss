@@ -1,0 +1,21 @@
+@import '~global/styles';
+
+.wrapper {
+  display: flex;
+  background: $secondary;
+  align-items: flex-start;
+}
+
+.appMain {
+  height: 98vh;
+  margin-top: 2vh;
+  background: $secondary;
+  overflow: hidden;
+  display: flex;
+  width: 100vw;
+}
+
+.mobileMenuBtn {
+  margin-top: 15px !important;
+  font-size: 25px !important;
+}

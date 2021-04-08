@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Typography from '@material-ui/core/Typography'
-import LeftSidebar from 'components/LeftSidebar'
+import Hidden from '@material-ui/core/Hidden'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import RightSidebar from 'components/RightSidebar'
 import loader from 'assets/images/loader_loading.gif'
@@ -39,14 +40,13 @@ const Question = () => {
     }
   }, [contribution, getContribution])
   return (
-    <>
-      <LeftSidebar
-        showNav
-        links={ROUTES}
-        contribution={contribution}
-        activeContribution={activeContribution}
-        onTreeClick={handleClick}
-      />
+    <PageWrapper
+      showNav
+      links={ROUTES}
+      contribution={contribution}
+      activeContribution={activeContribution}
+      onTreeClick={handleClick}
+    >
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />
@@ -67,18 +67,20 @@ const Question = () => {
               contributionRef={contributionRef}
             />
           </PageContentWrapper>
-          <RightSidebar>
-            <ContributionDetails
-              authors={activeContribution.author}
-              poster={activeContribution.postedBy}
-              posterColor={activeContribution.userColorPoster}
-              datePosted={activeContribution.createdAt}
-              dateModified={activeContribution.updatedAt}
-            />
-          </RightSidebar>
+          <Hidden smDown implementation="css">
+            <RightSidebar>
+              <ContributionDetails
+                authors={activeContribution.author}
+                poster={activeContribution.postedBy}
+                posterColor={activeContribution.userColorPoster}
+                datePosted={activeContribution.createdAt}
+                dateModified={activeContribution.updatedAt}
+              />
+            </RightSidebar>
+          </Hidden>
         </>
       )}
-    </>
+    </PageWrapper>
   )
 }
 

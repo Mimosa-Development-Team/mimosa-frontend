@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link'
 import { ReactComponent as Logo } from 'assets/images/login/logo-icon-only.svg'
 import TwitterIcon from 'assets/images/icons/twitter.png'
 
-import LeftSidebar from 'components/LeftSidebar'
+import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 
 import { ROUTES } from '../constants'
@@ -16,8 +16,7 @@ import styles from './styles.module.scss'
 
 const About = () => {
   return (
-    <>
-      <LeftSidebar showNav links={ROUTES} />
+    <PageWrapper showNav links={ROUTES}>
       <PageContentWrapper>
         <Grid container spacing={4} className={styles.container}>
           <Grid item xs={3} className={styles.summary}>
@@ -210,7 +209,7 @@ const About = () => {
           </Grid>
         </Grid>
       </PageContentWrapper>
-    </>
+    </PageWrapper>
   )
 }
 

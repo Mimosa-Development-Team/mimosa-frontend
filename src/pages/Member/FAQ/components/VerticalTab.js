@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Grid from '@material-ui/core/Grid'
+import Hidden from '@material-ui/core/Hidden'
 import Typography from '@material-ui/core/Typography'
 import styles from './styles.module.scss'
 import TabPanel from './TabPanel'
@@ -50,15 +51,17 @@ const VerticalTab = ({ data }) => {
   return (
     <div className={`${styles.tabsWrapper}`}>
       <Grid container spacing={3}>
-        <Grid item xs={3} />
-        <Grid item xs={9}>
+        <Hidden smDown implementation="css">
+          <Grid item xs={12} sm={3} />
+        </Hidden>
+        <Grid item xs={12} sm={9}>
           <Typography variant="h5">
             Frequently Asked Questions
           </Typography>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Tabs
             orientation="vertical"
             value={value}
@@ -83,7 +86,7 @@ const VerticalTab = ({ data }) => {
             ))}
           </Tabs>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={9}>
           {(data || []).map((data, key1) => {
             return (
               <Questions

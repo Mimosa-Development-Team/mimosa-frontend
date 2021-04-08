@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Drawer from '@material-ui/core/Drawer'
+import Hidden from '@material-ui/core/Hidden'
 import MainNav from './MainNav'
 import styles from './styles.module.scss'
 
@@ -9,26 +10,55 @@ const LeftSidebar = ({
   links,
   contribution,
   activeContribution,
-  onTreeClick
+  onTreeClick,
+  mobileOpen,
+  handleDrawerToggle
 }) => {
   return (
-    <Drawer
-      className={`${styles.drawer}`}
-      variant="permanent"
-      anchor="left"
-      classes={{
-        paper: `${styles.drawerPaper}`
-      }}
-    >
-      {showNav && (
-        <MainNav
-          links={links}
-          contribution={contribution}
-          activeContribution={activeContribution}
-          onTreeClick={onTreeClick}
-        />
-      )}
-    </Drawer>
+    <>
+      <Hidden mdUp implementation="css">
+        <Drawer
+          variant="temporary"
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          classes={{
+            paper: `${styles.drawerPaper}`
+          }}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
+          {showNav && (
+            <MainNav
+              links={links}
+              contribution={contribution}
+              activeContribution={activeContribution}
+              onTreeClick={onTreeClick}
+            />
+          )}
+        </Drawer>
+      </Hidden>
+      <Hidden smDown implementation="css">
+        <Drawer
+          className={`${styles.drawer}`}
+          variant="permanent"
+          anchor="left"
+          classes={{
+            paper: `${styles.drawerPaper}`
+          }}
+        >
+          {showNav && (
+            <MainNav
+              links={links}
+              contribution={contribution}
+              activeContribution={activeContribution}
+              onTreeClick={onTreeClick}
+            />
+          )}
+        </Drawer>
+      </Hidden>
+    </>
   )
 }
 
