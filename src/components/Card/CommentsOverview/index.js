@@ -106,6 +106,7 @@ const CommentsOverview = ({ contributionId }) => {
               className={`${styles.input}`}
               name="comment"
               control={control}
+              disabled={getRawData(user).user.role === 'admin'}
               placeholder="Write a comment..."
               addedComment={addedComment}
               addLoadingComment={addLoadingComment}
@@ -135,6 +136,7 @@ const CommentsOverview = ({ contributionId }) => {
               data={data}
               onDelete={handleDelete}
               onEdit={handleEdit}
+              role={getRawData(user).user.role === 'admin'}
               hasActions={
                 getRawData(user).user.orcidId ===
                 data.mmUser.orcidId

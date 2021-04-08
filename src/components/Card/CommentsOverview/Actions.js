@@ -13,7 +13,13 @@ import EditIcon from 'assets/images/icons/edit.png'
 import DeleteIcon from 'assets/images/icons/delete.svg'
 import styles from './styles.module.scss'
 
-const Actions = ({ data, onEdit, onDelete, ...propsList }) => {
+const Actions = ({
+  data,
+  onEdit,
+  onDelete,
+  role,
+  ...propsList
+}) => {
   const popupState = usePopupState({
     variant: 'popper',
     popupId: 'actionsPopper'
@@ -40,16 +46,18 @@ const Actions = ({ data, onEdit, onDelete, ...propsList }) => {
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={0}>
               <>
-                <IconButton
-                  disableRipple="true"
-                  aria-label="edit"
-                  className={`${styles.actionButton} mb-10`}
-                  {...propsList}
-                  onClick={() => onEdit(data)}
-                >
-                  <img src={EditIcon} alt="" />
-                  Edit
-                </IconButton>
+                {!role ? (
+                  <IconButton
+                    disableRipple="true"
+                    aria-label="edit"
+                    className={`${styles.actionButton} mb-10`}
+                    {...propsList}
+                    onClick={() => onEdit(data)}
+                  >
+                    <img src={EditIcon} alt="" />
+                    Edit
+                  </IconButton>
+                ) : null}
                 <IconButton
                   disableRipple="true"
                   aria-label="delete"
