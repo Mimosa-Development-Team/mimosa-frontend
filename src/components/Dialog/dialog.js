@@ -147,7 +147,15 @@ export default function ModalDialog({
               <Button
                 className="btn outline mr-30 mt-30"
                 variant="outlined"
-                onClick={() => setModal(!modal)}
+                onClick={() => {
+                  if (method === 'new' && status === 'draft') {
+                    url()
+                  } else if (method === 'new') {
+                    setModal(false)
+                  } else {
+                    url()
+                  }
+                }}
               >
                 CANCEL
               </Button>

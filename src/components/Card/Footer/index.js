@@ -75,28 +75,26 @@ const Footer = ({
               }}
             />
           ) : null}
-          {getRawData(user).user.role !== 'admin' ? (
-            (data.category !== 'analysis' &&
-              data.userId === getRawData(user).user.id &&
-              data.children !== undefined &&
-              data.children.length <= 0) ||
-            data.category === 'data' ? (
-              <CardButton
-                action="contribute"
-                onClick={() => {
-                  history.push(
-                    `/contribution-form/${getType(
-                      data.category
-                    )}/new`,
-                    {
-                      type: 'new',
-                      data,
-                      questionUuid: data.parentQuestionId
-                    }
-                  )
-                }}
-              />
-            ) : null
+          {(data.category !== 'analysis' &&
+            data.userId === getRawData(user).user.id &&
+            data.children !== undefined &&
+            data.children.length <= 0) ||
+          data.category === 'data' ? (
+            <CardButton
+              action="contribute"
+              onClick={() => {
+                history.push(
+                  `/contribution-form/${getType(
+                    data.category
+                  )}/new`,
+                  {
+                    type: 'new',
+                    data,
+                    questionUuid: data.parentQuestionId
+                  }
+                )
+              }}
+            />
           ) : null}
         </>
       ) : null}

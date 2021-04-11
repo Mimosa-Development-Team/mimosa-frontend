@@ -731,7 +731,14 @@ function Form(props) {
                 DELETE
               </Button>
             ) : null}
-            {profile.role !== 'admin' ? (
+            {(profile.role === 'admin' &&
+              data &&
+              data.userId === profile.id) ||
+            (profile.role !== 'admin' &&
+              data &&
+              data.userId === profile.id) ||
+            (data && data.userId === profile.id) ||
+            method === 'new' ? (
               <Button
                 type="submit"
                 className="btn primary submitBtn"
