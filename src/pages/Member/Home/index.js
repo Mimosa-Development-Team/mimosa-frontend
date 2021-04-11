@@ -9,8 +9,6 @@ import { Button } from '@material-ui/core'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
-import getRawData from 'utils/hookstate/getRawData'
-import { useGlobalState } from 'store/state'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
@@ -18,7 +16,6 @@ import SortFilter from './components/SortFilter'
 import { useQuestions } from './hooks'
 
 const MemberDashboard = () => {
-  const { user } = useGlobalState()
   const history = useHistory()
   const [orderBy, setOrderBy] = useState('DESC')
   const {
@@ -73,23 +70,18 @@ const MemberDashboard = () => {
               // search={search}
               className={`${styles.searchBox}`}
             />
-            {getRawData(user).user.role !== 'admin' ? (
-              <Button
-                className="btn primary"
-                size="large"
-                variant="contained"
-                onClick={() => {
-                  history.push(
-                    '/contribution-form/question/new',
-                    {
-                      type: 'new'
-                    }
-                  )
-                }}
-              >
-                <AddBoxIcon /> NEW QUESTION
-              </Button>
-            ) : null}
+            <Button
+              className="btn primary"
+              size="large"
+              variant="contained"
+              onClick={() => {
+                history.push('/contribution-form/question/new', {
+                  type: 'new'
+                })
+              }}
+            >
+              <AddBoxIcon /> NEW QUESTION
+            </Button>
           </div>
           <>
             <div className={`${styles.homeBanner}`}>
