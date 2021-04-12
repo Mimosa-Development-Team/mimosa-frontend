@@ -8,7 +8,9 @@ const Author = ({ author }) => {
       {author.id && (
         <Avatar
           className={`${styles.avatar}`}
-          style={{ backgroundColor: '#ee4f31' }}
+          style={{
+            backgroundColor: author.userColor || '#ee4f31'
+          }}
         >
           {author.name.charAt(0)}
         </Avatar>

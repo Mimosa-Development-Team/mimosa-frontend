@@ -18,7 +18,8 @@ const Footer = ({
   datePosted,
   dateModified,
   onMetaClick,
-  hideEdit
+  hideEdit,
+  userColor
 }) => {
   const history = useHistory()
   const { user } = useGlobalState()
@@ -39,7 +40,9 @@ const Footer = ({
   }
   return (
     <div className={`${styles.footer}`}>
-      {author && <AuthorMeta author={author} />}
+      {author && (
+        <AuthorMeta author={author} userColor={userColor} />
+      )}
       <DateMeta
         datePosted={datePosted}
         dateModified={dateModified}
