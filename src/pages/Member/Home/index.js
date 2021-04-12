@@ -21,6 +21,7 @@ const MemberDashboard = () => {
   const {
     questions,
     isLoading,
+    refetch,
     getQuestions,
     hasNextPage,
     isFetchingNextPage
@@ -52,8 +53,8 @@ const MemberDashboard = () => {
   }
 
   useEffect(() => {
-    getQuestions(orderBy)
-  }, [getQuestions, orderBy])
+    refetch()
+  }, [refetch])
 
   return (
     <PageWrapper showNav links={ROUTES}>

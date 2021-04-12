@@ -11,7 +11,8 @@ export const useQuestions = orderBy => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isSuccess
+    isSuccess,
+    refetch
   } = useInfiniteQuery(
     [QUESTIONS_QUERY_KEY, { pageNum: 1, orderBy }],
     getQuestionsAPI,
@@ -27,6 +28,7 @@ export const useQuestions = orderBy => {
     isFetchingNextPage,
     isLoading,
     isSuccess,
-    error
+    error,
+    refetch
   }
 }
