@@ -118,7 +118,8 @@ function Form(props) {
           : [
               {
                 id: profile.id,
-                name: `${profile.firstName} ${profile.lastName}`
+                name: `${profile.firstName} ${profile.lastName}`,
+                userColor: profile.userColor
               }
             ],
       userId: profile.id,
