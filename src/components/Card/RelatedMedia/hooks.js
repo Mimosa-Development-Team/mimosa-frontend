@@ -22,7 +22,8 @@ export const useMedia = id => {
     isLoading: addMediaLoading,
     error: addMediaError,
     isSuccess: addIsSuccess,
-    mutate: addData
+    mutate: addData,
+    reset
   } = useMutation(postRelatedMedia, {
     onSuccess: () => {
       refetch()
@@ -41,6 +42,7 @@ export const useMedia = id => {
     addMediaLoading,
     addMediaError,
     addIsSuccess,
-    addData
+    addData,
+    reset
   }
 }

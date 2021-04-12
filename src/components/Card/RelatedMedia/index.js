@@ -66,7 +66,8 @@ const RelatedMedia = ({ contributionId }) => {
     media,
     addedData,
     addMediaLoading,
-    addData
+    addData,
+    reset
   } = useMedia(contributionId)
 
   const Schema = yup.object().shape({
@@ -162,7 +163,10 @@ const RelatedMedia = ({ contributionId }) => {
                   <Grid item sm={12}>
                     <Button
                       variant="outlined"
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        reset()
+                        setOpen(false)
+                      }}
                       className={classes.buttonClose}
                     >
                       CLOSE
