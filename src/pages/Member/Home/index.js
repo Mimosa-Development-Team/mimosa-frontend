@@ -48,6 +48,13 @@ const MemberDashboard = () => {
     setShowResults(false)
   }
 
+  const handleSubmit = () => {
+    if (search) {
+      getResults(search)
+      setShowResults(true)
+    }
+  }
+
   const handleSortClick = orderBy => {
     if (orderBy === 'DESC') {
       setSort('Most Recent')
@@ -78,6 +85,7 @@ const MemberDashboard = () => {
             <SearchField
               inputChange={handleKeyPress}
               inputClear={handleCancel}
+              inputSubmit={handleSubmit}
               search={search}
               className={`${styles.searchBox}`}
             />

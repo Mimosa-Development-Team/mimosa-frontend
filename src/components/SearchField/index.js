@@ -20,7 +20,14 @@ const SearchField = ({
         ${styles.searchField}
         ${variant === 'large' ? styles.large : ''}`}
     >
-      <form className={`${styles.form}`} onReset={inputClear}>
+      <form
+        className={`${styles.form}`}
+        onReset={inputClear}
+        onSubmit={e => {
+          e.preventDefault()
+          inputSubmit()
+        }}
+      >
         <InputBase
           className={`${styles.input}`}
           placeholder="Search for keywords, authors, tags, presentation date"
