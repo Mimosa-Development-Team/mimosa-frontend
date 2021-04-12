@@ -39,7 +39,11 @@ const AccountDropdown = () => {
           >
             <Avatar
               className={`${styles.avatar}`}
-              style={{ backgroundColor: '#ee4f31' }}
+              style={{
+                backgroundColor: `${
+                  getRawData(user).user.userColor
+                }`
+              }}
             >
               {getRawData(user).user.firstName.charAt(0)}
             </Avatar>
