@@ -32,7 +32,8 @@ function a11yProps(index) {
 const QuestionDetails = ({
   contributionId,
   activeTab,
-  handleTabChange
+  handleTabChange,
+  userId
 }) => {
   return (
     <div className={`${styles.questionDetails}`}>
@@ -68,10 +69,16 @@ const QuestionDetails = ({
         />
       </Tabs>
       <TabPanel value={activeTab} index={0}>
-        <RelatedMedia contributionId={contributionId} />
+        <RelatedMedia
+          userId={userId}
+          contributionId={contributionId}
+        />
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
-        <CommentsOverview contributionId={contributionId} />
+        <CommentsOverview
+          userId={userId}
+          contributionId={contributionId}
+        />
       </TabPanel>
     </div>
   )

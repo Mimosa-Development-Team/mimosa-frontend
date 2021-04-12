@@ -74,6 +74,7 @@ const Card = ({
             </div>
             {showDetails && (
               <QuestionDetails
+                userId={data.userId}
                 contributionId={data.id}
                 activeTab={activeTab}
                 handleTabChange={handleChange}

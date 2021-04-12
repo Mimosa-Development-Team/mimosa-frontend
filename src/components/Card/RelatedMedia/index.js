@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const RelatedMedia = ({ contributionId }) => {
+const RelatedMedia = ({ contributionId, userId }) => {
   const { user } = useGlobalState()
 
   const {
@@ -201,7 +201,7 @@ const RelatedMedia = ({ contributionId }) => {
         {media && <Media media={media.media} />}
       </div>
       <div className={`${styles.buttonWrapper}`}>
-        {getRawData(user).user.role !== 'admin' && (
+        {getRawData(user).user.id === userId ? (
           <Button
             className="btn dashed align-center"
             size="large"
@@ -210,7 +210,7 @@ const RelatedMedia = ({ contributionId }) => {
           >
             Add Related Media
           </Button>
-        )}
+        ) : null}
       </div>
     </div>
   )
