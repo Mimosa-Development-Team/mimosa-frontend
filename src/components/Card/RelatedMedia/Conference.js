@@ -8,7 +8,12 @@ import styles from './styles.module.scss'
 const Conference = ({ conference }) => {
   return (
     <>
-      {(conference || []).map((data, i) => {
+      {(conference &&
+      conference.length > 0 &&
+      conference[0].conferenceName !== ''
+        ? conference
+        : [] || []
+      ).map((data, i) => {
         return i === 0 ? (
           <div className={`${styles.conference}`}>
             <Typography variant="h4">
