@@ -2,7 +2,6 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import Dashboard from './Home'
-import HomeSearch from './HomeSearch'
 import About from './About'
 import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
@@ -17,7 +16,6 @@ const Member = () => {
         <Switch>
           <Route exact path="/" component={Dashboard} />
           <Route path="/contribution/:id" component={Question} />
-          <Route path="/search=:term" component={HomeSearch} />
           <Route
             path="/contribution-form/:type/:method"
             component={ContributionForm}

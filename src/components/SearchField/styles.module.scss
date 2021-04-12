@@ -1,5 +1,11 @@
 @import '~global/styles';
 
+.form {
+  width: 100%;
+  margin: 0;
+  display: flex;
+}
+
 div.searchField {
   padding: 0 25px;
   display: flex;

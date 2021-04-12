@@ -8,3 +8,12 @@ export const getQuestionsAPI = data => {
     `api/v1/contribution/questions?page=${pageNum}&limit=10&orderBy=${orderBy}`
   )
 }
+
+export const getResultsAPI = query => {
+  if (query.queryKey[1].search) {
+    return getRequest(
+      `/api/v1/contribution/search?data=${query.queryKey[1].search}`
+    )
+  }
+  return null
+}
