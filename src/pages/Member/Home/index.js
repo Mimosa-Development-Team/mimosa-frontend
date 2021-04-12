@@ -12,8 +12,9 @@ import loader from 'assets/images/loader_loading.gif'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
+import SearchResults from './components/SearchResults'
 import SortFilter from './components/SortFilter'
-import { useQuestions } from './hooks'
+import { useQuestions, useResults } from './hooks'
 
 const MemberDashboard = () => {
   const history = useHistory()
@@ -27,19 +28,24 @@ const MemberDashboard = () => {
     isFetchingNextPage
   } = useQuestions(orderBy)
   const [search, setSearch] = useState('')
+  const [showResults, setShowResults] = useState(false)
+  const { results, getResults } = useResults(search)
   const [sort, setSort] = useState('Most Recent')
 
   const handleKeyPress = e => {
     setSearch(e.target.value)
-    if (e.key === 'Enter' && e.target.value) {
-      history.push(`/search=${e.target.value}`)
+    if (e.target.value.length > 3) {
+      getResults(search)
+      setShowResults(true)
+    }
+    if (e.target.value === '') {
+      setShowResults(false)
     }
   }
 
-  const handleClick = () => {
-    if (search) {
-      history.push(`/search=${search}`)
-    }
+  const handleCancel = () => {
+    setSearch('')
+    setShowResults(false)
   }
 
   const handleSortClick = orderBy => {
@@ -56,6 +62,10 @@ const MemberDashboard = () => {
     refetch()
   }, [refetch])
 
+  useEffect(() => {
+    getResults(search)
+  }, [getResults, search])
+
   return (
     <PageWrapper showNav links={ROUTES}>
       {isLoading ? (
@@ -67,8 +77,8 @@ const MemberDashboard = () => {
           <div className={`${styles.groupHeader}`}>
             <SearchField
               inputChange={handleKeyPress}
-              inputSubmit={handleClick}
-              // search={search}
+              inputClear={handleCancel}
+              search={search}
               className={`${styles.searchBox}`}
             />
             <Button
@@ -84,75 +94,81 @@ const MemberDashboard = () => {
               <AddBoxIcon /> NEW QUESTION
             </Button>
           </div>
-          <>
-            <div className={`${styles.homeBanner}`}>
-              <Typography
-                className={`${styles.title}`}
-                variant="h1"
-              >
-                Home
-              </Typography>
-              <Banner />
-            </div>
-            {questions ? (
-              <>
-                <div className={`${styles.paperListHeader}`}>
-                  <Typography
-                    className={`${styles.title}`}
-                    variant="h5"
-                  >
-                    Contribution List
-                  </Typography>
-                  <div className={`${styles.sortWrapper}`}>
+          {showResults ? (
+            <SearchResults searchTerm={search} data={results} />
+          ) : (
+            <>
+              <div className={`${styles.homeBanner}`}>
+                <Typography
+                  className={`${styles.title}`}
+                  variant="h1"
+                >
+                  Home
+                </Typography>
+                <Banner />
+              </div>
+              {questions ? (
+                <>
+                  <div className={`${styles.paperListHeader}`}>
                     <Typography
                       className={`${styles.title}`}
                       variant="h5"
                     >
-                      Sort By:
+                      Contribution List
                     </Typography>
-                    <SortFilter
-                      sortFilter={sort}
-                      onClick={handleSortClick}
-                    />
-                  </div>
-                </div>
-                {questions.pages.map((group, i) => (
-                  <React.Fragment key={i}>
-                    {group.data.map(data => (
-                      <div
-                        className={`${styles.content}`}
-                        onClick={() => {
-                          history.push(
-                            `/contribution/${data.uuid}`
-                          )
-                        }}
+                    <div className={`${styles.sortWrapper}`}>
+                      <Typography
+                        className={`${styles.title}`}
+                        variant="h5"
                       >
-                        <Card
-                          data={data}
-                          form={false}
-                          linesToShow={5}
-                          hideEdit
-                        />
-                      </div>
-                    ))}
-                  </React.Fragment>
-                ))}
-                <div className={`${styles.loadMore}`}>
-                  <Button
-                    className={`${styles.loadMoreBtn}`}
-                    onClick={() => getQuestions()}
-                    disabled={!hasNextPage || isFetchingNextPage}
-                  >
-                    {isFetchingNextPage
-                      ? 'Loading more...'
-                      : hasNextPage
-                      ? 'Load More'
-                      : 'Nothing more to load'}
-                  </Button>
-                </div>
-              </>
-            ) : null}
-          </>
+                        Sort By:
+                      </Typography>
+                      <SortFilter
+                        sortFilter={sort}
+                        onClick={handleSortClick}
+                      />
+                    </div>
+                  </div>
+                  {questions.pages.map((group, i) => (
+                    <React.Fragment key={i}>
+                      {group.data.map(data => (
+                        <div
+                          className={`${styles.content}`}
+                          onClick={() => {
+                            history.push(
+                              `/contribution/${data.uuid}`
+                            )
+                          }}
+                        >
+                          <Card
+                            data={data}
+                            form={false}
+                            linesToShow={5}
+                            hideEdit
+                          />
+                        </div>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                  <div className={`${styles.loadMore}`}>
+                    <Button
+                      className={`${styles.loadMoreBtn}`}
+                      onClick={() => getQuestions()}
+                      disabled={
+                        !hasNextPage || isFetchingNextPage
+                      }
+                    >
+                      {isFetchingNextPage
+                        ? 'Loading more...'
+                        : hasNextPage
+                        ? 'Load More'
+                        : 'Nothing more to load'}
+                    </Button>
+                  </div>
+                </>
+              ) : null}
+            </>
+          )}
         </PageContentWrapper>
       )}
     </PageWrapper>

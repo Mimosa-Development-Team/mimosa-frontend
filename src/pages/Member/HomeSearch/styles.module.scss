@@ -32,23 +32,3 @@
   color: $primary;
 }
 
-.noResults {
-  margin-top: 50px;
-  border: 1px solid $lightgray;
-  border-radius: 8px;
-  background-color: $white;
-  padding: 80px;
-  text-align: center;
-
-  .title {
-    max-width: 400px;
-    color: #121B3C;
-    font-family: 'Roboto-Bold';
-    font-size: 30px;
-    letter-spacing: 0.19px;
-    line-height: 36px;
-    text-align: center;
-    margin: 0 auto;
-    margin-top: 64px;
-  }
-}

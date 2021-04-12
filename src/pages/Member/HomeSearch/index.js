@@ -4,9 +4,9 @@ import Card from 'components/Card'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
+import NoResultsFound from 'components/NoResultsFound'
 import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
-import NoResultsIcon from 'assets/images/no-results.svg'
 import { ROUTES } from '../constants'
 import styles from './styles.module.scss'
 import { useResults } from './hooks'
@@ -82,17 +82,7 @@ const HomeSearch = () => {
                 ))}
               </>
             ) : (
-              <div className={`${styles.noResults}`}>
-                <img src={NoResultsIcon} alt="No Results" />
-                <Typography
-                  variant="h1"
-                  className={`${styles.title}`}
-                >
-                  Sorry we couldn`t find any matches for {'“'}
-                  {search}
-                  {'“'}
-                </Typography>
-              </div>
+              <NoResultsFound term={search} />
             )}
           </>
         </PageContentWrapper>

@@ -1,20 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
+import NoResultsFound from 'components/NoResultsFound'
 import loader from 'assets/images/loader_loading.gif'
 import { ROUTES } from '../constants'
 import VerticalTab from './components/VerticalTab'
-import { useFaq } from './hooks'
+import SearchResults from './components/SearchResults'
+import { useFaq, useFaqResults } from './hooks'
 
 const MemberFAQ = () => {
   const { faq, isLoading, getFaq } = useFaq()
+  const [searchFaq, setSearchFaq] = useState('')
+  const [showResults, setShowResults] = useState(false)
+  const { faqResults, getFaqResults } = useFaqResults(searchFaq)
+
+  const handleKeyPress = e => {
+    setSearchFaq(e.target.value)
+    if (e.target.value.length > 3) {
+      getFaqResults(searchFaq)
+      setShowResults(true)
+    }
+    if (e.target.value === '') {
+      setShowResults(false)
+    }
+  }
+
+  const handleCancel = () => {
+    setSearchFaq('')
+    setShowResults(false)
+  }
 
   useEffect(() => {
     getFaq()
   }, [getFaq])
+
+  useEffect(() => {
+    getFaqResults(searchFaq)
+  }, [getFaqResults, searchFaq])
 
   return (
     <PageWrapper showNav links={ROUTES}>
@@ -28,10 +53,28 @@ const MemberFAQ = () => {
             FAQ/Help
           </Typography>
           <div className="mt-10 align-center">
-            <SearchField variant="large" />
+            <SearchField
+              variant="large"
+              inputChange={handleKeyPress}
+              inputClear={handleCancel}
+              search={searchFaq}
+            />
           </div>
           <Divider />
-          <VerticalTab data={faq} />
+          {showResults ? (
+            <>
+              {faqResults ? (
+                <SearchResults
+                  searchTerm={searchFaq}
+                  data={faqResults}
+                />
+              ) : (
+                <NoResultsFound term={searchFaq} />
+              )}
+            </>
+          ) : (
+            <VerticalTab data={faq} />
+          )}
         </PageContentWrapper>
       )}
     </PageWrapper>

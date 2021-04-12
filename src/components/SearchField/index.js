@@ -10,9 +10,9 @@ import styles from './styles.module.scss'
 const SearchField = ({
   variant,
   inputChange,
-  search,
   inputSubmit,
-  inputClear
+  inputClear,
+  search
 }) => {
   return (
     <Paper
@@ -20,30 +20,32 @@ const SearchField = ({
         ${styles.searchField}
         ${variant === 'large' ? styles.large : ''}`}
     >
-      <InputBase
-        className={`${styles.input}`}
-        placeholder="Search for keywords, authors, tags, presentation date"
-        inputProps={{ 'aria-label': 'search' }}
-        onKeyPress={e => inputChange(e)}
-        defaultValue={search}
-      />
-      {search ? (
-        <IconButton
-          className={`${styles.iconButton}`}
-          aria-label="close"
-          onClick={inputClear}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : (
-        <IconButton
-          className={`${styles.iconButton}`}
-          aria-label="search"
-          onClick={inputSubmit}
-        >
-          <SearchIcon />
-        </IconButton>
-      )}
+      <form className={`${styles.form}`} onReset={inputClear}>
+        <InputBase
+          className={`${styles.input}`}
+          placeholder="Search for keywords, authors, tags, presentation date"
+          inputProps={{ 'aria-label': 'search' }}
+          onKeyUp={e => inputChange(e)}
+        />
+        {search ? (
+          <IconButton
+            className={`${styles.iconButton}`}
+            aria-label="close"
+            // onClick={inputClear}
+            type="reset"
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className={`${styles.iconButton}`}
+            aria-label="search"
+            onClick={inputSubmit}
+          >
+            <SearchIcon />
+          </IconButton>
+        )}
+      </form>
     </Paper>
   )
 }

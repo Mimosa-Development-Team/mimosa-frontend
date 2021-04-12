@@ -1,7 +1,10 @@
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery, useQuery } from 'react-query'
 
-import { getQuestionsAPI } from './api'
-import { QUESTIONS_QUERY_KEY } from './constants'
+import { getQuestionsAPI, getResultsAPI } from './api'
+import {
+  QUESTIONS_QUERY_KEY,
+  RESULTS_QUERY_KEY
+} from './constants'
 
 export const useQuestions = orderBy => {
   const {
@@ -30,5 +33,25 @@ export const useQuestions = orderBy => {
     isSuccess,
     error,
     refetch
+  }
+}
+
+export const useResults = search => {
+  const {
+    data,
+    isLoading,
+    error,
+    refetch,
+    isSuccess
+  } = useQuery([RESULTS_QUERY_KEY, { search }], getResultsAPI, {
+    enabled: false
+  })
+
+  return {
+    getResults: refetch,
+    results: data,
+    isLoading,
+    isSuccess,
+    error
   }
 }
