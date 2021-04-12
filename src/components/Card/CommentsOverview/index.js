@@ -9,7 +9,7 @@ import Comment from './Comment'
 import { useComments } from './hooks'
 import styles from './styles.module.scss'
 
-const CommentsOverview = ({ contributionId }) => {
+const CommentsOverview = ({ contributionId, userId }) => {
   const { user } = useGlobalState()
 
   const {
@@ -106,6 +106,7 @@ const CommentsOverview = ({ contributionId }) => {
               className={`${styles.input}`}
               name="comment"
               control={control}
+              disabled={getRawData(user).user.id !== userId}
               placeholder="Write a comment..."
               addedComment={addedComment}
               addLoadingComment={addLoadingComment}
@@ -135,6 +136,7 @@ const CommentsOverview = ({ contributionId }) => {
               data={data}
               onDelete={handleDelete}
               onEdit={handleEdit}
+              raw={getRawData(user).user}
               hasActions={
                 getRawData(user).user.orcidId ===
                 data.mmUser.orcidId

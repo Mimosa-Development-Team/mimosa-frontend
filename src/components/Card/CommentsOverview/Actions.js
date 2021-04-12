@@ -18,6 +18,7 @@ const Actions = ({
   onEdit,
   onDelete,
   role,
+  raw,
   ...propsList
 }) => {
   const popupState = usePopupState({
@@ -46,7 +47,7 @@ const Actions = ({
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={0}>
               <>
-                {!role ? (
+                {raw.orcidId === data.mmUser.orcidId ? (
                   <IconButton
                     disableRipple="true"
                     aria-label="edit"
@@ -58,16 +59,19 @@ const Actions = ({
                     Edit
                   </IconButton>
                 ) : null}
-                <IconButton
-                  disableRipple="true"
-                  aria-label="delete"
-                  className={`${styles.actionButton}`}
-                  {...propsList}
-                  onClick={() => onDelete(data)}
-                >
-                  <img src={DeleteIcon} alt="" />
-                  Delete
-                </IconButton>
+                {raw.role === 'admin' ||
+                raw.orcidId === data.mmUser.orcidId ? (
+                  <IconButton
+                    disableRipple="true"
+                    aria-label="delete"
+                    className={`${styles.actionButton}`}
+                    {...propsList}
+                    onClick={() => onDelete(data)}
+                  >
+                    <img src={DeleteIcon} alt="" />
+                    Delete
+                  </IconButton>
+                ) : null}
               </>
             </Fade>
           )}

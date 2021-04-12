@@ -10,7 +10,8 @@ const Comment = ({
   hasActions,
   onEdit,
   onDelete,
-  role
+  role,
+  raw
 }) => {
   return (
     <div className={`${styles.comment}`}>
@@ -35,8 +36,9 @@ const Comment = ({
           </Typography>
         </div>
       </div>
-      {role || hasActions ? (
+      {raw.role === 'admin' || hasActions ? (
         <Actions
+          raw={raw}
           role={role}
           data={data}
           onEdit={onEdit}
