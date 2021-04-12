@@ -33,6 +33,13 @@ const MemberFAQ = () => {
     setShowResults(false)
   }
 
+  const handleSubmit = () => {
+    if (searchFaq) {
+      getFaqResults(searchFaq)
+      setShowResults(true)
+    }
+  }
+
   useEffect(() => {
     getFaq()
   }, [getFaq])
@@ -55,6 +62,7 @@ const MemberFAQ = () => {
           <div className="mt-10 align-center">
             <SearchField
               variant="large"
+              inputSubmit={handleSubmit}
               inputChange={handleKeyPress}
               inputClear={handleCancel}
               search={searchFaq}
