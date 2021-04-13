@@ -9,7 +9,7 @@ import Comment from './Comment'
 import { useComments } from './hooks'
 import styles from './styles.module.scss'
 
-const CommentsOverview = ({ contributionId, userId }) => {
+const CommentsOverview = ({ contributionId }) => {
   const { user } = useGlobalState()
 
   const {
@@ -94,7 +94,9 @@ const CommentsOverview = ({ contributionId, userId }) => {
         >
           <Avatar
             className={`${styles.avatar}`}
-            style={{ backgroundColor: '#ee4f31' }}
+            style={{
+              backgroundColor: getRawData(user).user.userColor
+            }}
           >
             {getRawData(user).user.firstName.charAt(0)}
           </Avatar>
@@ -106,7 +108,6 @@ const CommentsOverview = ({ contributionId, userId }) => {
               className={`${styles.input}`}
               name="comment"
               control={control}
-              disabled={getRawData(user).user.id !== userId}
               placeholder="Write a comment..."
               addedComment={addedComment}
               addLoadingComment={addLoadingComment}
