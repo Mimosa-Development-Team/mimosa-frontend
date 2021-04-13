@@ -29,6 +29,7 @@ export default function RadioControl(props) {
         defaultValue="supports"
         render={({ onChange, value }) => (
           <RadioGroup
+            className="ml-15"
             aria-label="hypothesisStatus"
             onChange={onChange}
             value={value || ''}

@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import Link from '@material-ui/core/Link'
 
 import { ReactComponent as Logo } from 'assets/images/login/logo-icon-only.svg'
+import ElifeLogo from 'assets/images/elife-logo.svg'
 import TwitterIcon from 'assets/images/icons/twitter.png'
 
 import PageWrapper from 'components/PageWrapper'
@@ -168,13 +169,18 @@ const About = () => {
               </p>
             </Paper>
 
-            <Typography variant="h5" className="mb-20">
-              Our Partners and Accreditation
+            <Typography variant="h5" className="mb-10">
+              Media and Honors
             </Typography>
 
-            <div className={styles.partnerLogo}>
-              eLife
-              <span>eLife Innovation Leaders 2020</span>
+            <div className={styles.mediaSection}>
+              <div className={styles.partnerLogo}>
+                <img src={ElifeLogo} alt="elife" />
+                <span>
+                  eLife Innovation Leaders 2020 Participant
+                </span>
+              </div>
+              <div className={styles.iclr}>ICLR 2021</div>
             </div>
 
             <Typography variant="h5" className="mb-10">
