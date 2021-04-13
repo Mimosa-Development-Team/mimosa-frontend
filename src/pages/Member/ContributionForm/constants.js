@@ -5,3 +5,5 @@ export const CONTRIBUTION_PUT_QUERY_KEY = 'contribution/put'
 export const CONTRIBUTION_DELETE_QUERY_KEY =
   'contribution/delete'
 export const RELATEDMEDIA_GET_QUERY_KEY = 'relatedmedia/get'
+export const RELATEDMEDIA_DELETE_QUERY_KEY =
+  'relatedmedia/delete'
