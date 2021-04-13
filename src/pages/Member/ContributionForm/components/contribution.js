@@ -44,34 +44,43 @@ function Form(props) {
     relatedMediaData,
     deleteContribution,
     deleteIsLoadingContribution,
+    deleteRelatedMediaMutate,
     // deleteErrorContribution,
+    resetMediaDelete,
+    deletedRelatedMedia,
+    deleteIsLoadingRelatedMedia,
     deleteMutate
   } = props
 
   const [status, setStatus] = useState('publish')
   const [relatedMediaList, setRelatedMediaList] = useState([])
   const [deleteForm, setDeleteForm] = useState(false)
+  const [deleteMedia, setDeleteMedia] = useState(false)
   const [openForm, setOpenForm] = useState(false)
   const [formData, setFormData] = useState(null)
-
-  useEffect(() => {
-    setRelatedMediaList(
-      relatedMediaData || [
-        {
-          conferenceName: '',
-          presentationDate: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          link: ''
-        }
-      ]
-    )
-  }, [relatedMediaData])
+  const [conferenceId, setConferenceId] = useState(null)
+  const [deleteMediaId, setDeleteMediaId] = useState(null)
+  const [indexArr, setIndex] = useState(null)
 
   const questionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field'),
-    author: yup.array().min(1, 'Must be selected').required()
+    author: yup.array().min(1, 'Must be selected').required(),
+    presentationDetails: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    }),
+    startTime: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    }),
+    endTime: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    }),
+    link: yup.string().when('title', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
+    })
   })
 
   const contributionSchema = yup.object().shape({
@@ -124,11 +133,62 @@ function Form(props) {
             ],
       userId: profile.id,
       status: 'publish',
+      conferenceId: null,
       version: '1.0.0',
       parentId: null,
       parentUuid: null
     }
   })
+
+  useEffect(() => {
+    if (relatedMediaData) {
+      for (let i = 0; i < relatedMediaData.length; i++) {
+        if (relatedMediaData[i].conferenceName) {
+          setValue(
+            'conferenceName',
+            relatedMediaData[i].conferenceName
+          )
+          setValue(
+            'endTime',
+            moment(relatedMediaData[i].endTime, 'HH:mm').format(
+              'HH:mm'
+            )
+          )
+          setValue(
+            'presentationDetails',
+            moment(
+              relatedMediaData[i].presentationDetails
+            ).format('YYYY-MM-DD')
+          )
+          setConferenceId(relatedMediaData[i].id)
+          setValue(
+            'startTime',
+            moment(
+              relatedMediaData[i].startTime,
+              'HH:mm'
+            ).format('HH:mm')
+          )
+        } else if (relatedMediaData[i].link) {
+          setRelatedMediaList(oldArray => [
+            ...oldArray,
+            relatedMediaData[i]
+          ])
+        }
+      }
+    }
+    if (method === 'new') {
+      setRelatedMediaList([
+        {
+          conferenceName: '',
+          presentationDetails: '',
+          startTime: '',
+          endTime: '',
+          title: '',
+          link: ''
+        }
+      ])
+    }
+  }, [relatedMediaData, setValue, method])
 
   const submitForm = val => {
     const formFields = {
@@ -151,14 +211,35 @@ function Form(props) {
           ? data.parentQuestionId
           : questionUuid || 0,
       hypothesisStatus: val.hypothesisStatus,
-      relatedMedia: []
+      relatedMedia: [],
+      conferenceDetails: null
     }
 
     if (
       val.conferenceName &&
-      val.presentationDate &&
+      val.presentationDetails &&
       val.startTime &&
-      val.endTime
+      val.endTime &&
+      method === 'new'
+    ) {
+      formFields.conferenceDetails = {
+        conferenceName: val.conferenceName,
+        conferenceDateDetails: {
+          presentationDetails: val.presentationDetails,
+          startTime: val.startTime,
+          endTime: val.endTime
+        },
+        mediaDetails: null,
+        userId: profile.id
+      }
+    }
+
+    if (
+      val.conferenceName &&
+      val.presentationDetails &&
+      val.startTime &&
+      val.endTime &&
+      method === 'update'
     ) {
       formFields.relatedMedia.push({
         conferenceName: val.conferenceName,
@@ -167,6 +248,7 @@ function Form(props) {
           startTime: val.startTime,
           endTime: val.endTime
         },
+        id: conferenceId,
         mediaDetails: null,
         userId: profile.id
       })
@@ -281,7 +363,7 @@ function Form(props) {
       ...prevArry,
       {
         conferenceName: '',
-        presentationDate: '',
+        presentationDetails: '',
         startTime: '',
         endTime: '',
         title: getValues('title'),
@@ -406,7 +488,24 @@ function Form(props) {
         }}
         id={data ? data.id : null}
         deleteForm={deleteForm}
+        setDeleteForm={setDeleteForm}
         subContent="This will delete all child contributions attached to this question."
+      />
+      <ModalDelete
+        header="Delete Related Media"
+        content="Are you sure you want to delete this Related Media?"
+        deleteItem={deletedRelatedMedia}
+        deleteIsLoadingContribution={deleteIsLoadingRelatedMedia}
+        deleteMutate={deleteRelatedMediaMutate}
+        url={() => {
+          resetMediaDelete()
+          setRelatedMediaList(list =>
+            list.filter((value, i) => i !== indexArr)
+          )
+        }}
+        id={deleteMediaId}
+        setDeleteForm={setDeleteMedia}
+        deleteForm={deleteMedia}
       />
       <form
         onSubmit={handleSubmit(submitForm)}
@@ -529,12 +628,13 @@ function Form(props) {
               <Grid item sm={2}>
                 <Controls.Input
                   type="date"
-                  name="presentationDate"
+                  name="presentationDetails"
                   label="Presentation Date"
                   control={control}
-                  {...(errors.presentationDate && {
+                  {...(errors.presentationDetails && {
                     error: true,
-                    helperText: errors.presentationDate.message
+                    helperText:
+                      errors.presentationDetails.message
                   })}
                 />
               </Grid>
@@ -582,12 +682,19 @@ function Form(props) {
                             <Typography
                               className={`${styles.typography}`}
                               align="right"
+                              style={{ cursor: 'pointer' }}
                               onClick={() => {
-                                setRelatedMediaList(list =>
-                                  list.filter(
-                                    (value, i) => i !== index
+                                if (x.id) {
+                                  setDeleteMediaId(x.id)
+                                  setDeleteMedia(true)
+                                  setIndex(index)
+                                } else {
+                                  setRelatedMediaList(list =>
+                                    list.filter(
+                                      (value, i) => i !== index
+                                    )
                                   )
-                                )
+                                }
                               }}
                             >
                               <img
@@ -609,6 +716,7 @@ function Form(props) {
                                 e.target.value
                               )
                             }}
+                            name="title"
                             value={x.title}
                           />
                         </Grid>
@@ -690,9 +798,9 @@ function Form(props) {
                 label="What is the verdict of your analysis?"
                 asterisk
                 control={control}
-                {...(errors.presentationDate && {
+                {...(errors.hypothesisStatus && {
                   error: true,
-                  helperText: errors.presentationDate.message
+                  helperText: errors.hypothesisStatus.message
                 })}
               />
             </Grid>

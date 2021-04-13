@@ -29,3 +29,7 @@ export const getRelatedMediaAPI = data => {
 export const deleteContributionAPI = id => {
   return deleteRequest(`/api/v1/contribution/${id}`)
 }
+
+export const deleteRelatedMediaAPI = id => {
+  return deleteRequest(`/api/v1/related-media/${id}`)
+}

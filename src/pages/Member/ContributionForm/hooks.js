@@ -6,7 +6,8 @@ import {
   postContributionAPI,
   putContributionAPI,
   getRelatedMediaAPI,
-  deleteContributionAPI
+  deleteContributionAPI,
+  deleteRelatedMediaAPI
 } from './api'
 import {
   USER_QUERY_KEY,
@@ -14,7 +15,8 @@ import {
   CONTRIBUTION_POST_QUERY_KEY,
   CONTRIBUTION_PUT_QUERY_KEY,
   RELATEDMEDIA_GET_QUERY_KEY,
-  CONTRIBUTION_DELETE_QUERY_KEY
+  CONTRIBUTION_DELETE_QUERY_KEY,
+  RELATEDMEDIA_DELETE_QUERY_KEY
 } from './constants'
 
 export const useQuestionForm = id => {
@@ -73,6 +75,21 @@ export const useQuestionForm = id => {
   })
 
   const {
+    data: deletedRelatedMedia,
+    isLoading: deleteIsLoadingRelatedMedia,
+    error: deleteErrorRelatedMedia,
+    mutate: deleteRelatedMediaMutate,
+    isSuccess: deleteIsSuccessRelatedMedia,
+    reset: resetMediaDelete
+  } = useMutation(deleteRelatedMediaAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        RELATEDMEDIA_DELETE_QUERY_KEY
+      )
+    }
+  })
+
+  const {
     data: updatedContribution,
     isLoading: updateIsLoadingContribution,
     error: updateErrorContribution,
@@ -81,6 +98,7 @@ export const useQuestionForm = id => {
     reset: resetUpdate
   } = useMutation(putContributionAPI, {
     onSuccess: () => {
+      relatedMediaFetch()
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
     }
   })
@@ -113,6 +131,13 @@ export const useQuestionForm = id => {
     deleteIsLoadingContribution,
     deleteErrorContribution,
     deleteMutate,
-    deleteIsSuccessContribution
+    deleteIsSuccessContribution,
+
+    deletedRelatedMedia,
+    deleteIsLoadingRelatedMedia,
+    deleteErrorRelatedMedia,
+    deleteRelatedMediaMutate,
+    resetMediaDelete,
+    deleteIsSuccessRelatedMedia
   }
 }

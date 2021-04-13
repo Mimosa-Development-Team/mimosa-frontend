@@ -76,7 +76,12 @@ export default function ModalDialog({
             className="btn outline"
             disabled={deleteIsLoadingItem}
             onClick={() => {
-              return url ? url() : setDeleteForm(!deleteForm)
+              if (url) {
+                url()
+                setDeleteForm(!deleteForm)
+              } else {
+                setDeleteForm(!deleteForm)
+              }
             }}
           >
             CLOSE
