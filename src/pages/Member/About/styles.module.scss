@@ -102,19 +102,34 @@
   }
 }
 
-.partnerLogo {
-  color: $secondary;
-  font-size: 53px;
-  font-weight: 600;
-  letter-spacing: 3.24px;
-  line-height: 1;
-  margin-bottom: 43px;
+.mediaSection {
+  background: transparent;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 25px;
 
-  span {
-    display: block;
-    font-size: 14px;
-    letter-spacing: -0.11px;
-    line-height: 14px;
+  .partnerLogo {
+    background: transparent;
+  
+    span {
+      display: block;
+      color: #666B6E;
+      font-size: 12px;
+      letter-spacing: -0.1px;
+      line-height: 14px;
+    }
+  }
+
+  .iclr {
+    color: #666B6E;
+    font-family: 'Roboto-Bold';
+    font-size: 36px;
+    letter-spacing: -0.29px;
+    line-height: 104px;
+    margin-left: 35px;
+    padding-bottom: 10px;
   }
 }
+
 

@@ -6,6 +6,7 @@ import About from './About'
 import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
 import Question from './Question'
+import PageMaintenance from './Static/PageMaintenance'
 import Page404 from './Static/Page404'
 import './index.scss'
 
@@ -26,6 +27,10 @@ const Member = () => {
           />
           <Route path="/about" component={About} />
           <Route path="/faq" component={FAQ} />
+          <Route
+            path="/maintenance"
+            component={PageMaintenance}
+          />
           <Route component={Page404} />
         </Switch>
       </div>
