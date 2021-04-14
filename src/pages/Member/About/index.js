@@ -6,8 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import Link from '@material-ui/core/Link'
 
 import { ReactComponent as Logo } from 'assets/images/login/logo-icon-only.svg'
-import ElifeLogo from 'assets/images/elife-logo.svg'
-import TwitterIcon from 'assets/images/icons/twitter.png'
+import ElifeLogo from 'assets/images/elife.svg'
 
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
@@ -229,15 +228,6 @@ const About = () => {
                   https://openmimosablog.wordpress.com/
                 </Link>
               </Typography>
-
-              <Typography
-                variant="h3"
-                className={`${styles.title}`}
-              >
-                Follow us
-              </Typography>
-
-              <img src={TwitterIcon} alt="Twitter" />
             </Paper>
           </Grid>
         </Grid>

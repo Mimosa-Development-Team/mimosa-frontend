@@ -1,22 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { Backdrop, Button } from '@material-ui/core'
-import LogoIcon from 'assets/images/login/logo-icon-only.svg'
+import { Backdrop, Button, Typography } from '@material-ui/core'
+
+import Slider from 'react-slick'
+
 import Logo from 'assets/images/logo.svg'
-import ContentImage from 'assets/images/login/slide1.png'
-import LeftSlide from 'assets/images/login/left-slider.png'
-import RightSlide from 'assets/images/login/right-slider.png'
-import OrcidLogo from 'assets/images/login/orcid-icon.png'
+import Asterisk from 'assets/images/asterisk.svg'
+import OrcidLogo from 'assets/images/login/orcid.png'
+import SliderOne from 'assets/images/login/slider-1.png'
+import SliderTwo from 'assets/images/login/slider-2.png'
+import SliderThree from 'assets/images/login/slider-3.svg'
+
 import dotenv from 'global/environment'
 import loader from 'assets/images/loader.gif'
 import jwtDecode from 'jwt-decode'
 import { useUser } from './hooks'
+
 import styles from './styles.module.scss'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const Login = () => {
   const { addToDo, isLoading } = useUser()
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState(null)
   const [data, setData] = useState(null)
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  }
 
   useEffect(() => {
     if (window.location.hash) {
@@ -51,55 +66,94 @@ const Login = () => {
           <img src={loader} />
         </Backdrop>
       ) : null}
-      <div className={`${styles.lgContainer}`}>
-        <div className={`${styles.left}`}>
-          <div className={`${styles.leftContainer}`}>
-            <div className={`${styles.leftContent}`}>
-              <div className={`${styles.mainLogo}`}>
-                <img src={Logo} />
-              </div>
-              <div className={`${styles.leftText}`}>
-                <h2>Survey the state of your field.</h2>
-                <h2>Share you research as you go.</h2>
-                <h2>Get fast feedback.</h2>
-                <h2>Find like-minded collaborators.</h2>
-              </div>
-              <div className={`${styles.contentImage}`}>
-                <img src={ContentImage} />
-              </div>
-              <div className={`${styles.slider}`}>
-                <div className={`${styles.sliderDots}`}>
-                  <a className={`${styles.sliderIndicator}`} />
-                  <a className={`${styles.slideDot}`} />
-                  <a className={`${styles.slideDot}`} />
-                  <a className={`${styles.slideDot}`} />
-                </div>
-              </div>
-              <div className={`${styles.pagination}`}>
+      <div className={`${styles.loginWrapper}`}>
+        <div className={`${styles.contentWrapper}`}>
+          <div className={`${styles.left}`}>
+            <img
+              className="mb-40"
+              src={Logo}
+              alt="mimosa logo"
+            />
+            <Slider {...settings}>
+              <div>
+                <Typography
+                  variant="h2"
+                  className={`${styles.header}`}
+                >
+                  Survey the state of your field.
+                </Typography>
+                <Typography
+                  variant="h2"
+                  className={`${styles.header}`}
+                >
+                  Find open questions, keep up with the most
+                  debated hypotheses, and read on the accepted
+                  consensus.
+                </Typography>
                 <img
-                  className={`${styles.slideLeft}`}
-                  src={LeftSlide}
-                />
-                <img
-                  className={`${styles.slideRight}`}
-                  src={RightSlide}
+                  className="mt-65"
+                  src={SliderOne}
+                  alt="slide 1"
                 />
               </div>
-            </div>
+              <div>
+                <Typography
+                  variant="h2"
+                  className={`${styles.header}`}
+                >
+                  Share your research as you go. Whether you only
+                  have a research idea, or a full blown
+                  experimental analysis.
+                </Typography>
+                <img
+                  className="mt-65"
+                  src={SliderTwo}
+                  alt="slide 2"
+                />
+              </div>
+              <div>
+                <Typography
+                  variant="h2"
+                  className={`${styles.header}`}
+                >
+                  Get feedback step by step
+                </Typography>
+                <Typography
+                  variant="h2"
+                  className={`${styles.header}`}
+                >
+                  ... and help others refine their ideas.
+                </Typography>
+                <img
+                  className="mt-65"
+                  src={SliderThree}
+                  alt="slide 3"
+                />
+              </div>
+            </Slider>
+            <img
+              className={`${styles.leftAsterisk}`}
+              src={Asterisk}
+              alt="asterisk"
+            />
           </div>
-        </div>
-        <div className={`${styles.right}`}>
-          <div className={`${styles.rightContent}`}>
-            <h2 component="h1" variant="h5">
+          <div className={`${styles.right}`}>
+            <Typography
+              variant="h2"
+              className={`${styles.header}`}
+            >
               Welcome back
-            </h2>
-            <p>Loremn ipsum dolor sit amet , consectetur</p>
-            <p>adipiscing elit, sed do eiusmod tempor.</p>
+            </Typography>
+            <Typography className={`${styles.subheader}`}>
+              Welcome back! You need to log in to publish
+              comments and contributions
+            </Typography>
             <Button
               type="submit"
               disabled={isLoading}
               variant="contained"
               size="large"
+              className={`${styles.loginBtn}`}
               onClick={() => {
                 return token
                   ? submitLogin()
@@ -113,10 +167,12 @@ const Login = () => {
                 ? `Continue as ${data.given_name} ${data.family_name}`
                 : 'Log in with ORCID'}
             </Button>
+            <img
+              className={`${styles.midAsterisk}`}
+              src={Asterisk}
+              alt="asterisk"
+            />
           </div>
-        </div>
-        <div className={`${styles.logo}`}>
-          <img src={LogoIcon} />
         </div>
       </div>
     </>
