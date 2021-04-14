@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="455px" height="364px" viewBox="0 0 455 364" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>383E9747-D3BE-4518-8C90-F50724204800</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="455" height="178" rx="8"></rect>
+        <rect id="path-3" x="46" y="250" width="408" height="52" rx="8"></rect>
+        <rect id="path-5" x="46" y="312" width="408" height="52" rx="8"></rect>
+        <rect id="path-7" x="46" y="188" width="408" height="52" rx="8"></rect>
+    </defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="log-in-3" transform="translate(-137.000000, -343.000000)">
+            <g id="Group" transform="translate(137.000000, 343.000000)">
+                <g id="slider3">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask-Copy-6" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Mask-Copy-8" fill="#FFFFFF" opacity="0.5" xlink:href="#path-3"></use>
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <use id="Mask-Copy-9" fill="#FFFFFF" opacity="0.5" xlink:href="#path-5"></use>
+                    <mask id="mask-8" fill="white">
+                        <use xlink:href="#path-7"></use>
+                    </mask>
+                    <use id="Mask-Copy-10" fill="#FFFFFF" opacity="0.5" xlink:href="#path-7"></use>
+                    <rect id="Rectangle-Copy" fill="#B2B4BD" opacity="0.50149891" x="75" y="31" width="112" height="14" rx="3"></rect>
+                    <rect id="Rectangle-Copy-6" fill="#C3C6CE" opacity="0.50149891" x="104" y="207" width="112" height="14" rx="3"></rect>
+                    <rect id="Rectangle-Copy-7" fill="#C3C6CE" opacity="0.50149891" x="104" y="271" width="112" height="14" rx="3"></rect>
+                    <rect id="Rectangle-Copy-8" fill="#C3C6CE" opacity="0.50149891" x="104" y="331" width="112" height="14" rx="3"></rect>
+                    <rect id="Rectangle-Copy-5" fill="#B2B4BD" opacity="0.50149891" x="75" y="128" width="112" height="14" rx="3"></rect>
+                    <rect id="Rectangle-Copy-2" fill="#B2B4BD" opacity="0.50149891" x="75" y="67" width="349" height="14" rx="3"></rect>
+                    <rect id="Rectangle-Copy-4" fill="#B2B4BD" opacity="0.50149891" x="75" y="92" width="235" height="14" rx="3"></rect>
+                    <circle id="Oval" fill="#B2B4BD" opacity="0.502975109" cx="40" cy="40" r="20"></circle>
+                    <circle id="Oval-Copy-3" fill="#FFFFFF" opacity="0.502975109" cx="75" cy="214" r="16"></circle>
+                    <circle id="Oval-Copy-4" fill="#FFFFFF" opacity="0.502975109" cx="75" cy="276" r="16"></circle>
+                    <circle id="Oval-Copy-5" fill="#FFFFFF" opacity="0.502975109" cx="75" cy="338" r="16"></circle>
+                    <polyline id="Path-Copy-5" stroke="#FFFFFF" stroke-width="3" opacity="0.497488839" points="34 178 34.3 338 46 338"></polyline>
+                </g>
+                <line x1="46" y1="214" x2="34" y2="214" id="Path-3" stroke="#888C9D" stroke-width="3"></line>
+                <line x1="46" y1="278" x2="34" y2="278" id="Path-3-Copy" stroke="#888C9D" stroke-width="3"></line>
+            </g>
+        </g>
+    </g>
+</svg>

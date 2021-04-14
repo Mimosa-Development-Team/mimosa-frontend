@@ -18,6 +18,7 @@ $blue: #557ce0; // use in media links
 $darkblue: #0a122d;
 $darkorange: #ef5f20;
 $red: #e50e56; //use in refute hypothesis
+$lightgreen: #a6d120;
 // use in contribution heirarchy - in order QHED-AAA
 $yellow: #f2ba1d;
 $orange: #ec8a21;
@@ -78,6 +79,9 @@ $spacers: (
   &-10 {
     margin-top: 10px;
   }
+  &-65 {
+    margin-top: 65px;
+  }
 }
 
 .mb {
@@ -89,6 +93,12 @@ $spacers: (
   }
   &-20 {
     margin-bottom: 20px !important;
+  }
+  &-40 {
+    margin-bottom: 40px !important;
+  }
+  &-65 {
+    margin-bottom: 65px !important;
   }
 
   &-15m {
@@ -572,4 +582,63 @@ div.dialog {
 .search-term {
   color: $primary;
   font-family: 'Roboto-Medium';
+}
+
+// slick 
+ul.slick-dots {
+  text-align: left;
+  bottom: -80px;
+
+  li {
+    height: 8px;
+    width: 8px;
+    opacity: 0.5;
+    background-color: $white;
+    border-radius: 50%;
+
+    &.slick-active {
+      background-color: $primary;
+      opacity: 1;
+    }
+  }
+}
+
+button.slick-arrow.slick-prev {
+  right: 70px;
+  bottom: -100px;
+  top: unset;
+  left: unset;
+  width: 30px;
+  height: 30px;
+  z-index: 999;
+
+  &::before {
+    background-image: url('../assets/images/login/left-slider.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    content: '';
+    display: block;
+  }
+}
+
+button.slick-arrow.slick-next {
+  right: 35px;
+  bottom: -100px;
+  top: unset;
+  left: unset;
+  width: 30px;
+  height: 30px;
+  z-index: 999;
+
+  &::before {
+    background-image: url('../assets/images/login/right-slider.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    content: '';
+    display: block;
+  }
 }

@@ -37,8 +37,7 @@ const Banner = () => {
                 variant="h2"
                 className={`${styles.leadTitle}`}
               >
-                Welcome back! You need to log in to publish
-                comments and contributions
+                Welcome to mimosa! Let’s get you started.
               </Typography>
               <Typography className={`${styles.leadContent}`}>
                 Browse by keywords, authors, or conferences using

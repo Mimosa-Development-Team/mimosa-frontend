@@ -1,96 +1,108 @@
 @import '~global/styles';
 
-.lgContainer {
+.loginWrapper {
   display: flex;
-  min-height: 99vh;
-  max-height: 99vh;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  background: #eff3f7;
+
+  .contentWrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+  }
 
   .left {
-    width: 50vw;
+    border-radius: 12px;
+    background: $secondary;
+    width: 50%;
+    padding: 87px 120px;
+    position: relative;
+    overflow: hidden;
 
-    .leftContainer {
-      height: 100%;
-      padding: 20px;
-      background-color: $secondary;
-      border-radius: 4vh;
-      background-clip: content-box, padding-box;
+    .leftAsterisk {
+      height: 220px;
+      width: 217px;
+      position: absolute;
+      bottom: -80px;
+      left: -103px;
+    }
 
-      .halfLogo {
-        // position: relative;
-        left: 0;
-        position: relative;
-        // margin-top: 20vh;
-
-        img {
-          position: absolute;
-          bottom: 0;
-          width: 10vh;
-        }
-      }
-
-      .leftContent {
-        margin-left: 10vw;
-        margin-right: 10vw;
-        margin-top: 5vw;
-
-        .leftText {
-          margin-top: 5vh;
-          color: white;
-        }
-
-        .contentImage {
-          margin-top: 5vh;
-        }
-
-        .pagination {
-          margin-top: 5vh;
-          float: right;
-
-          .slideRight {
-            margin-left: 4px;
-          }
-        }
-      }
+    .header {
+      font-family: 'Roboto-Medium';
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.15px;
+      line-height: 36px;
+      color: $white;
     }
   }
 
   .right {
-    width: 50vw;
+    width: 50%;
+    padding: 300px 180px;
+    position: relative;
 
-    .rightContent {
-      position: relative;
-      top: 30vh;
-      width: 70%;
-      margin: auto;
+    .midAsterisk {
+      height: 100px;
+      width: 98px;
+      position: absolute;
+      top: 50px;
+      left: -48px;
+    }
 
-      .loader {
-        width: 100%;
-        margin-left: 30%;
+    .header {
+      margin-bottom: 9px;
+      font-family: 'Roboto-Medium';
+      font-size: 24px;
+      letter-spacing: 0.75px;
+      line-height: 28px;
+    }
+
+    .subheader {
+      margin-bottom: 34px;
+      color: #8A8A8A;
+      font-family: 'Roboto';
+      font-size: 16px;
+      letter-spacing: 0.1px;
+      line-height: 19px;
+      font-weight: normal !important;
+    }
+
+    .loginBtn {
+      box-shadow: none;
+      background: $lightgreen;
+      color: $white;
+      border-radius: 12px;
+      text-transform: none;
+      height: 45px;
+      width: 198px;
+
+      span {
+        font-family: 'SFNS Display Regular';
+        font-size: 15px;
+        letter-spacing: 0.1px;
+        line-height: 16px;
+      }
+
+      img {
+        width: 22px;
+        margin-right: 7px;
       }
     }
-
-    p {
-      color: #a8a9aa;
-      margin-top: 1vh;
-    }
-
-    button {
-      margin-top: 3vh;
-      background-color: #afd731;
-      color: white;
-      border-color: transparent;
-      font-weight: bold;
-      border-radius: 5px;
-    }
   }
+}
 
-  .logo {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 15%;
-    left: 49%;
-    margin-top: -50px;
-    margin-left: -50px;
+@media screen and (max-width: 959px) {
+  .loginWrapper {
+    .left {
+      display: none;
+    }
+    .right {
+      width: 100%;
+      padding: 180px 40px;
+    }
   }
 }
