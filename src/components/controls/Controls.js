@@ -4,6 +4,7 @@ import Button from './Button'
 import MultiSelect from './MultiSelect'
 import Quill from './Quill'
 import CustomInput from './CustomInput'
+import CustomArrayInput from './CustomArrayInput'
 import RadioControl from './Radio'
 
 const Controls = {
@@ -13,6 +14,7 @@ const Controls = {
   Button,
   MultiSelect,
   CustomInput,
+  CustomArrayInput,
   RadioControl
 }
 

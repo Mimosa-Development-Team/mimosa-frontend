@@ -2,12 +2,17 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
-import { useForm, useFieldArray } from 'react-hook-form'
+import {
+  useForm,
+  useFieldArray,
+  Controller
+} from 'react-hook-form'
 import moment from 'moment'
 import {
   Button,
   Divider,
   Grid,
+  // TextField,
   Typography
 } from '@material-ui/core'
 import BackIcon from 'assets/images/icons/back.svg'
@@ -199,7 +204,7 @@ function Form(props) {
       tags: val.tags ? val.tags : [],
       author: val.author ? val.author : [],
       userId: profile.id,
-      status: method === 'update' ? 'deprecated' : status,
+      status,
       version: '1.0.0',
       parentId:
         method === 'new'
@@ -257,8 +262,16 @@ function Form(props) {
 
     if (val.relatedmedia) {
       for (let i = 0; i < val.relatedmedia.length; i++) {
-        if (val.relatedmedia[i].title) {
+        if (
+          val.relatedmedia[i].title &&
+          parseInt(val.relatedmedia[i].id, 10)
+        ) {
           formFields.relatedMedia.push(val.relatedmedia[i])
+        } else {
+          formFields.relatedMedia.push({
+            title: val.relatedmedia[i].title,
+            link: val.relatedmedia[i].link
+          })
         }
       }
     }
@@ -406,7 +419,7 @@ function Form(props) {
         modal={openForm}
         setModal={setOpenForm}
         data={formData}
-        onReset={() => reset()}
+        onReset={reset}
         reset={method === 'new' ? resetAdd : resetUpdate}
         submitError={
           method === 'new'
@@ -464,7 +477,28 @@ function Form(props) {
           alignItems="flex-start"
           spacing={2}
         >
-          <Grid item sm={12}>
+          <Grid item xs={12} sm={6}>
+            {/* {formState.isDirty && formState.isValid && method ? (
+              <button
+                onClick={() => {
+                  setStatus('draft')
+                }}
+                type="submit"
+                className={`${styles.btnBack}`}
+              >
+                <div className={`${styles.backNav}`}>
+                  <Typography
+                    className={`${styles.back}`}
+                    variant="h4"
+                  >
+                    <span className={`${styles.icon}`}>
+                      <img src={BackIcon} alt="back" />
+                    </span>
+                    Back
+                  </Typography>
+                </div>
+              </button>
+            ) : ( */}
             <div
               onClick={() => {
                 if (
@@ -494,6 +528,7 @@ function Form(props) {
                 </Typography>
               </div>
             </div>
+            {/* )} */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h1" gutterBottom>
@@ -597,69 +632,69 @@ function Form(props) {
                   })}
                 />
               </Grid>
-              {fields.map(({ id, title, link }, index) => {
+              {fields.map((item, index) => {
                 return (
-                  <Grid
-                    key={id}
-                    container
-                    direction="row"
-                    justify="flex-start"
-                    style={{ padding: '.9em' }}
-                    alignItems="flex-start"
-                    spacing={2}
-                  >
-                    <div className={`${styles.list}`}>
-                      <Typography
-                        className={`${styles.typography}`}
-                        align="right"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                          remove(index)
-                        }}
-                      >
-                        <img
-                          src={DeleteIcon}
-                          className={`${styles.deleteIcon}`}
-                        />{' '}
-                        Remove Media
-                      </Typography>
-                    </div>
-                    <Grid item sm={12}>
-                      <Controls.Input
-                        type="text"
-                        name={`relatedmedia[${index}].id`}
-                        defaultValue={id}
-                        control={control}
-                        style={{ display: 'none' }}
-                        {...(errors.id && {
-                          error: true,
-                          helperText: errors.id.message
-                        })}
-                      />
+                  <div key={item.id} style={{ width: '100%' }}>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="flex-start"
+                      style={{ padding: '.9em' }}
+                      alignItems="flex-start"
+                      spacing={2}
+                    >
+                      <div className={`${styles.list}`}>
+                        <Typography
+                          className={`${styles.typography}`}
+                          align="right"
+                          style={{
+                            cursor: 'pointer',
+                            float: 'right'
+                          }}
+                          onClick={() => {
+                            remove(index)
+                          }}
+                        >
+                          <img
+                            src={DeleteIcon}
+                            className={`${styles.deleteIcon}`}
+                          />
+                          Remove Media
+                        </Typography>
+                      </div>
+                      <Grid item sm={12}>
+                        <Controller
+                          as={
+                            <Controls.CustomArrayInput
+                              style={{ display: 'none' }}
+                            />
+                          }
+                          name={`relatedmedia[${index}].id`}
+                          control={control}
+                          defaultValue={item.id} // make sure to set up defaultValue
+                        />
+                      </Grid>
+                      <Grid item sm={12}>
+                        <Controller
+                          as={<Controls.CustomArrayInput />}
+                          label="Media Title"
+                          name={`relatedmedia[${index}].title`}
+                          control={control}
+                          defaultValue={item.title} // make sure to set up defaultValue
+                        />
+                      </Grid>
+                      <Grid item sm={12}>
+                        <Controller
+                          type="url"
+                          label="Media Link"
+                          as={<Controls.CustomArrayInput />}
+                          name={`relatedmedia[${index}].link`}
+                          control={control}
+                          defaultValue={item.link} // make sure to set up defaultValue
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item sm={12}>
-                      <Controls.Input
-                        type="text"
-                        name={`relatedmedia[${index}].title`}
-                        label="Media Title"
-                        defaultValue={title}
-                        control={control}
-                        {...(errors.title && {
-                          error: true,
-                          helperText: errors.title.message
-                        })}
-                      />
-                    </Grid>
-                    <Grid item sm={12}>
-                      <Controls.Input
-                        type="url"
-                        name={`relatedmedia[${index}].link`}
-                        label="Media Link"
-                        defaultValue={link}
-                        control={control}
-                      />
-                    </Grid>
-                  </Grid>
+                  </div>
                 )
               })}
               <Grid item xs={12}>
@@ -671,7 +706,6 @@ function Form(props) {
                   variant="outlined"
                   onClick={() => {
                     append({
-                      id: `id${fields.length + 1}`,
                       title: '',
                       link: ''
                     })
