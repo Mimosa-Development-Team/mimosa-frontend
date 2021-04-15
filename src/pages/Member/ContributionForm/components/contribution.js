@@ -62,9 +62,9 @@ function Form(props) {
   const [deleteMedia, setDeleteMedia] = useState(false)
   const [openForm, setOpenForm] = useState(false)
   const [formData, setFormData] = useState(null)
-
   const [conferenceId, setConferenceId] = useState(null)
-  // const [deleteMediaId, setDeleteMediaId] = useState(null)
+  const [deleteMediaId, setDeleteMediaId] = useState(null)
+  const [mediaIndex, setMediaIndex] = useState(null)
 
   const questionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field'),
@@ -264,7 +264,7 @@ function Form(props) {
       for (let i = 0; i < val.relatedmedia.length; i++) {
         if (
           val.relatedmedia[i].title &&
-          parseInt(val.relatedmedia[i].id, 10)
+          val.relatedmedia[i].id.length < 9
         ) {
           formFields.relatedMedia.push(val.relatedmedia[i])
         } else {
@@ -460,9 +460,10 @@ function Form(props) {
         deleteIsLoadingContribution={deleteIsLoadingRelatedMedia}
         deleteMutate={deleteRelatedMediaMutate}
         url={() => {
+          remove(mediaIndex)
           resetMediaDelete()
         }}
-        // id={deleteMediaId}
+        id={deleteMediaId}
         setDeleteForm={setDeleteMedia}
         deleteForm={deleteMedia}
       />
@@ -652,7 +653,13 @@ function Form(props) {
                             float: 'right'
                           }}
                           onClick={() => {
-                            remove(index)
+                            if (item.id.length !== 36) {
+                              setDeleteMedia(true)
+                              setDeleteMediaId(item.id)
+                              setMediaIndex(index)
+                            } else {
+                              remove(index)
+                            }
                           }}
                         >
                           <img
