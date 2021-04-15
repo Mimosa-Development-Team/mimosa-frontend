@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import moment from 'moment'
 import {
   Button,
@@ -53,14 +53,13 @@ function Form(props) {
   } = props
 
   const [status, setStatus] = useState('publish')
-  const [relatedMediaList, setRelatedMediaList] = useState([])
   const [deleteForm, setDeleteForm] = useState(false)
   const [deleteMedia, setDeleteMedia] = useState(false)
   const [openForm, setOpenForm] = useState(false)
   const [formData, setFormData] = useState(null)
+
   const [conferenceId, setConferenceId] = useState(null)
-  const [deleteMediaId, setDeleteMediaId] = useState(null)
-  const [indexArr, setIndex] = useState(null)
+  // const [deleteMediaId, setDeleteMediaId] = useState(null)
 
   const questionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field'),
@@ -77,34 +76,39 @@ function Form(props) {
       is: value => !!value,
       then: yup.string().required('* Mandatory Field')
     }),
-    link: yup.string().when('title', {
-      is: value => !!value,
+    hypothesisStatus: yup.string().when(type, {
+      is: 'analysis',
       then: yup.string().required('* Mandatory Field')
-    })
+    }),
+    relatedmedia: yup.array().of(
+      yup.object().shape({
+        link: yup.string().when('title', {
+          is: true,
+          then: yup.string().required('* Mandatory Field')
+        })
+      })
+    )
   })
 
   const contributionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field')
   })
 
-  // const analysisSchema = yup.object().shape({
-  //   subject: yup.string().required('* Mandatory Field'),
-  //   hypothesisStatus: yup.string().required('* Mandatory Field')
-  // })
-
   const {
     handleSubmit,
     errors,
     control,
-    getValues,
-    setValue,
     reset,
-    formState
+    setValue,
+    getValues
+    // formState
   } = useForm({
+    mode: 'all',
     resolver: yupResolver(
       type === 'question' ? questionSchema : contributionSchema
     ),
     defaultValues: {
+      relatedmedia: [{ title: '', link: '' }],
       category:
         data && data.category && method === 'update'
           ? data.category
@@ -133,15 +137,22 @@ function Form(props) {
             ],
       userId: profile.id,
       status: 'publish',
-      conferenceId: null,
+      conferenceId: conferenceId || null,
       version: '1.0.0',
       parentId: null,
       parentUuid: null
     }
   })
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'relatedmedia',
+    defaultValue: {}
+  })
+
   useEffect(() => {
     if (relatedMediaData) {
+      const media = []
       for (let i = 0; i < relatedMediaData.length; i++) {
         if (relatedMediaData[i].conferenceName) {
           setValue(
@@ -169,26 +180,16 @@ function Form(props) {
             ).format('HH:mm')
           )
         } else if (relatedMediaData[i].link) {
-          setRelatedMediaList(oldArray => [
-            ...oldArray,
-            relatedMediaData[i]
-          ])
+          media.push({
+            id: relatedMediaData[i].id,
+            link: relatedMediaData[i].link,
+            title: relatedMediaData[i].title
+          })
         }
       }
+      reset({ ...getValues(), relatedmedia: media })
     }
-    if (method === 'new') {
-      setRelatedMediaList([
-        {
-          conferenceName: '',
-          presentationDetails: '',
-          startTime: '',
-          endTime: '',
-          title: '',
-          link: ''
-        }
-      ])
-    }
-  }, [relatedMediaData, setValue, method])
+  }, [relatedMediaData, setValue, reset, getValues])
 
   const submitForm = val => {
     const formFields = {
@@ -222,7 +223,7 @@ function Form(props) {
       val.endTime &&
       method === 'new'
     ) {
-      formFields.conferenceDetails = {
+      formFields.relatedMedia.push({
         conferenceName: val.conferenceName,
         conferenceDateDetails: {
           presentationDetails: val.presentationDetails,
@@ -231,7 +232,7 @@ function Form(props) {
         },
         mediaDetails: null,
         userId: profile.id
-      }
+      })
     }
 
     if (
@@ -254,9 +255,11 @@ function Form(props) {
       })
     }
 
-    for (let i = 0; i < relatedMediaList.length; i++) {
-      if (relatedMediaList[i].title) {
-        formFields.relatedMedia.push(relatedMediaList[i])
+    if (val.relatedmedia) {
+      for (let i = 0; i < val.relatedmedia.length; i++) {
+        if (val.relatedmedia[i].title) {
+          formFields.relatedMedia.push(val.relatedmedia[i])
+        }
       }
     }
 
@@ -264,124 +267,74 @@ function Form(props) {
       formFields.id = data.id
     }
 
+    // if (method === 'ulo') {
     setFormData(formFields)
     setOpenForm(true)
+    // }
   }
-
-  const [back, setBack] = useState(false)
 
   const getUrl = () => {
     let url = ''
 
-    if (type === 'question' && status === 'draft' && !back) {
-      url = history.push('/contribution-form/hypothesis/new', {
-        type: 'new',
-        data: addedData.data,
-        questionUuid: addedData.data.uuid
-      })
-    }
-
-    if (type === 'question' && status === 'draft' && back) {
-      url = history.push(
-        `/contribution/${
-          addedData ? addedData.data.uuid : data.uuid
-        }`
-      )
-    }
-
-    if (type === 'question' && status === 'publish') {
-      url = history.push('/')
-    }
-
-    if (type === 'hypothesis' && status === 'draft' && !back) {
-      url = history.push('/contribution-form/experiment/new', {
-        type: 'new',
-        data: addedData.data,
-        questionUuid
-      })
-    }
-
-    if (type === 'hypothesis' && status === 'draft' && back) {
-      url = history.push(`/contribution/${questionUuid}`)
-    }
-
-    if (type === 'hypothesis' && status === 'publish') {
-      url = history.push(`/contribution/${questionUuid}`)
-    }
-
-    if (type === 'experiment' && status === 'draft' && !back) {
-      url = history.push('/contribution-form/data/new', {
-        type: 'new',
-        data: addedData.data,
-        questionUuid
-      })
-    }
-
-    if (type === 'experiment' && status === 'draft' && back) {
-      url = history.push(`/contribution/${questionUuid}`)
-    }
-
-    if (type === 'experiment' && status === 'publish') {
-      url = history.push(`/contribution/${questionUuid}`)
-    }
-
-    if (type === 'data' && status === 'draft' && !back) {
-      url = history.push('/contribution-form/analysis/new', {
-        type: 'new',
-        data: addedData.data,
-        questionUuid
-      })
-    }
-
-    if (type === 'data' && status === 'draft' && back) {
-      url = history.push(`/contribution/${questionUuid}`, {
-        type: 'new',
-        data: addedData.data,
-        questionUuid
-      })
-    }
-
-    if (type === 'data' && status === 'publish') {
-      url = history.push(`/contribution/${questionUuid}`)
-    }
-
-    if (type === 'analysis') {
-      url = history.push(`/contribution/${questionUuid}`)
-    }
-
-    if (method === 'update' && type === 'question') {
-      url = history.push(
-        `/contribution/${data.parentQuestionId}`
-      )
+    if (status === 'draft') {
+      switch (type) {
+        case 'question':
+          url = history.push(
+            '/contribution-form/hypothesis/new',
+            {
+              type: 'new',
+              data: addedData.data,
+              questionUuid: addedData.data.uuid
+            }
+          )
+          break
+        case 'hypothesis':
+          url = history.push(
+            '/contribution-form/experiment/new',
+            {
+              type: 'new',
+              data: addedData.data,
+              questionUuid
+            }
+          )
+          break
+        case 'experiment':
+          url = history.push('/contribution-form/data/new', {
+            type: 'new',
+            data: addedData.data,
+            questionUuid
+          })
+          break
+        case 'data':
+          url = history.push('/contribution-form/analysis/new', {
+            type: 'new',
+            data: addedData.data,
+            questionUuid
+          })
+          break
+        default:
+          url = history.goBack()
+      }
+    } else if (status === 'publish') {
+      switch (type) {
+        case 'question':
+          url = history.push(`/`)
+          break
+        case 'hypothesis':
+          url = history.push(`/contribution/${questionUuid}`)
+          break
+        case 'experiment':
+          url = history.push(`/contribution/${questionUuid}`)
+          break
+        case 'data':
+          url = history.push(`/contribution/${questionUuid}`)
+          break
+        default:
+          url = history.push(`/contribution/${questionUuid}`)
+      }
     }
 
     return url
-  }
-
-  const addRelatedMedia = () => {
-    setRelatedMediaList(prevArry => [
-      ...prevArry,
-      {
-        conferenceName: '',
-        presentationDetails: '',
-        startTime: '',
-        endTime: '',
-        title: getValues('title'),
-        link: getValues('link')
-      }
-    ])
-    setValue('title', '')
-    setValue('link', '')
-  }
-
-  const updateFieldChanged = (name, index, value) => {
-    const newArr = relatedMediaList.map((item, i) => {
-      if (index === i) {
-        return { ...item, [name]: value }
-      }
-      return item
-    })
-    setRelatedMediaList(newArr)
   }
 
   const getSubjectLabel = val => {
@@ -393,9 +346,9 @@ function Form(props) {
       case 'experiment':
         return 'What is this experiment testing?'
       case 'data':
-        return 'Data'
+        return 'What is this dataset about?'
       case 'analysis':
-        return 'Data'
+        return 'In one sentence, what is the conclusion fo your analysis? '
       default:
         return null
     }
@@ -410,9 +363,9 @@ function Form(props) {
       case 'experiment':
         return 'Experimental Protocol: describe how to perform this experiment'
       case 'data':
-        return 'Data'
+        return 'Describe your data'
       case 'analysis':
-        return 'Data'
+        return 'Add some details to your reasoning'
       default:
         return null
     }
@@ -423,18 +376,12 @@ function Form(props) {
       <ModalDialog
         type={capitalizeText(type)}
         header={
-          back
-            ? `Save as Draft`
-            : method === 'new'
+          method === 'new'
             ? 'Publish Contribution'
             : 'Update Contribution'
         }
         content={
-          back
-            ? `Your ${capitalizeText(
-                type
-              )} will be saved as draft. Do you want to proceed?`
-            : method === 'new'
+          method === 'new'
             ? `Are you sure you want to ${status} this ${capitalizeText(
                 type
               )}?`
@@ -483,7 +430,9 @@ function Form(props) {
           return type === 'question'
             ? history.push('/')
             : history.push(
-                `/contribution/${data.parentQuestionId}`
+                `/contribution/${
+                  data.parentQuestionId || questionUuid
+                }`
               )
         }}
         id={data ? data.id : null}
@@ -499,11 +448,8 @@ function Form(props) {
         deleteMutate={deleteRelatedMediaMutate}
         url={() => {
           resetMediaDelete()
-          setRelatedMediaList(list =>
-            list.filter((value, i) => i !== indexArr)
-          )
         }}
-        id={deleteMediaId}
+        // id={deleteMediaId}
         setDeleteForm={setDeleteMedia}
         deleteForm={deleteMedia}
       />
@@ -519,46 +465,35 @@ function Form(props) {
           spacing={2}
         >
           <Grid item sm={12}>
-            {formState.isDirty ? (
-              <button
-                onClick={() => {
-                  setStatus('draft')
-                  setBack(true)
-                }}
-                // type="submit"
-                className={`${styles.btnBack}`}
-              >
-                <div className={`${styles.backNav}`}>
-                  <Typography
-                    className={`${styles.back}`}
-                    variant="h4"
-                  >
-                    <span className={`${styles.icon}`}>
-                      <img src={BackIcon} alt="back" />
-                    </span>
-                    Back
-                  </Typography>
-                </div>
-              </button>
-            ) : (
-              <button
-                onClick={() => getUrl()}
-                // type="submit"
-                className={`${styles.btnBack}`}
-              >
-                <div className={`${styles.backNav}`}>
-                  <Typography
-                    className={`${styles.back}`}
-                    variant="h4"
-                  >
-                    <span className={`${styles.icon}`}>
-                      <img src={BackIcon} alt="back" />
-                    </span>
-                    Back
-                  </Typography>
-                </div>
-              </button>
-            )}
+            <div
+              onClick={() => {
+                if (
+                  (data && data.parentQuestionId) ||
+                  questionUuid
+                ) {
+                  history.push(
+                    `/contribution/${
+                      data.parentQuestionId || questionUuid
+                    }`
+                  )
+                } else {
+                  history.goBack()
+                }
+              }}
+              className={`${styles.btnBack}`}
+            >
+              <div className={`${styles.backNav}`}>
+                <Typography
+                  className={`${styles.back}`}
+                  variant="h4"
+                >
+                  <span className={`${styles.icon}`}>
+                    <img src={BackIcon} alt="back" />
+                  </span>
+                  Back
+                </Typography>
+              </div>
+            </div>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h1" gutterBottom>
@@ -662,83 +597,71 @@ function Form(props) {
                   })}
                 />
               </Grid>
-              {relatedMediaList && relatedMediaList.length > 0
-                ? relatedMediaList.map((x, index) => {
-                    return (
-                      <Grid
-                        container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="flex-start"
-                        spacing={2}
-                        key={index}
-                        style={{ margin: '0' }}
+              {fields.map(({ id, title, link }, index) => {
+                return (
+                  <Grid
+                    key={id}
+                    container
+                    direction="row"
+                    justify="flex-start"
+                    style={{ padding: '.9em' }}
+                    alignItems="flex-start"
+                    spacing={2}
+                  >
+                    <div className={`${styles.list}`}>
+                      <Typography
+                        className={`${styles.typography}`}
+                        align="right"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          remove(index)
+                        }}
                       >
-                        <Grid item xs={12}>
-                          <Divider variant="middle" />
-                        </Grid>
-                        {index > 0 ? (
-                          <div className={`${styles.list}`}>
-                            <Typography
-                              className={`${styles.typography}`}
-                              align="right"
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => {
-                                if (x.id) {
-                                  setDeleteMediaId(x.id)
-                                  setDeleteMedia(true)
-                                  setIndex(index)
-                                } else {
-                                  setRelatedMediaList(list =>
-                                    list.filter(
-                                      (value, i) => i !== index
-                                    )
-                                  )
-                                }
-                              }}
-                            >
-                              <img
-                                src={DeleteIcon}
-                                className={`${styles.deleteIcon}`}
-                              />{' '}
-                              Remove Media
-                            </Typography>
-                          </div>
-                        ) : null}
-                        <Grid item sm={12}>
-                          <Controls.CustomInput
-                            type="text"
-                            label="Media Title"
-                            onChange={e => {
-                              updateFieldChanged(
-                                'title',
-                                index,
-                                e.target.value
-                              )
-                            }}
-                            name="title"
-                            value={x.title}
-                          />
-                        </Grid>
-                        <Grid item sm={12}>
-                          <Controls.CustomInput
-                            type="text"
-                            name="link"
-                            label="Media Link"
-                            onChange={e => {
-                              updateFieldChanged(
-                                'link',
-                                index,
-                                e.target.value
-                              )
-                            }}
-                            value={x.link}
-                          />
-                        </Grid>
-                      </Grid>
-                    )
-                  })
-                : null}
+                        <img
+                          src={DeleteIcon}
+                          className={`${styles.deleteIcon}`}
+                        />{' '}
+                        Remove Media
+                      </Typography>
+                    </div>
+                    <Grid item sm={12}>
+                      <Controls.Input
+                        type="text"
+                        name={`relatedmedia[${index}].id`}
+                        defaultValue={id}
+                        control={control}
+                        style={{ display: 'none' }}
+                        {...(errors.id && {
+                          error: true,
+                          helperText: errors.id.message
+                        })}
+                      />
+                    </Grid>
+                    <Grid item sm={12}>
+                      <Controls.Input
+                        type="text"
+                        name={`relatedmedia[${index}].title`}
+                        label="Media Title"
+                        defaultValue={title}
+                        control={control}
+                        {...(errors.title && {
+                          error: true,
+                          helperText: errors.title.message
+                        })}
+                      />
+                    </Grid>
+                    <Grid item sm={12}>
+                      <Controls.Input
+                        type="url"
+                        name={`relatedmedia[${index}].link`}
+                        label="Media Link"
+                        defaultValue={link}
+                        control={control}
+                      />
+                    </Grid>
+                  </Grid>
+                )
+              })}
               <Grid item xs={12}>
                 <Divider variant="middle" />
               </Grid>
@@ -746,13 +669,13 @@ function Form(props) {
                 <Button
                   className="btn secondary padding-lr25"
                   variant="outlined"
-                  onClick={() => addRelatedMedia()}
-                  disabled={
-                    relatedMediaList.length &&
-                    !relatedMediaList[
-                      relatedMediaList.length - 1
-                    ].title
-                  }
+                  onClick={() => {
+                    append({
+                      id: `id${fields.length + 1}`,
+                      title: '',
+                      link: ''
+                    })
+                  }}
                 >
                   ADD MEDIA
                 </Button>
@@ -817,7 +740,6 @@ function Form(props) {
                   variant="outlined"
                   onClick={() => {
                     setStatus('draft')
-                    setBack(false)
                   }}
                   type="submit"
                 >
@@ -834,7 +756,6 @@ function Form(props) {
                 variant="outlined"
                 onClick={() => {
                   setDeleteForm(true)
-                  setBack(false)
                 }}
               >
                 DELETE
@@ -854,7 +775,6 @@ function Form(props) {
                 variant="contained"
                 onClick={() => {
                   setStatus('publish')
-                  setBack(false)
                 }}
               >
                 {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
