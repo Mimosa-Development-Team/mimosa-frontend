@@ -29,6 +29,10 @@ button.cardButton {
     margin-left: 7px;
   }
 
+  &.delete {
+    color: #E84441;
+  }
+
   &.contribute {
     position: absolute;
     right: 0;

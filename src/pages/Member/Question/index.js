@@ -53,7 +53,7 @@ const Question = () => {
         </div>
       ) : (
         <>
-          <PageContentWrapper backNav>
+          <PageContentWrapper backNav home>
             <Typography
               className={`${styles.title}`}
               variant="h1"
@@ -61,6 +61,7 @@ const Question = () => {
               Question
             </Typography>
             <ContributionHeirarchy
+              getContribution={getContribution}
               contribution={contribution}
               activeContribution={activeContribution}
               onCardClick={handleClick}

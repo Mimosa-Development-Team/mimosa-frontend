@@ -76,7 +76,6 @@ export default function ModalDialog({
 }) {
   const submitForm = () => {
     submit(data)
-    onReset()
   }
 
   function getModalStyle() {

@@ -1,0 +1,108 @@
+@import '~global/styles';
+
+.loginWrapper {
+  display: flex;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  background: #eff3f7;
+
+  .contentWrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+  }
+
+  .left {
+    border-radius: 12px;
+    background: $secondary;
+    width: 50%;
+    padding: 87px 120px;
+    position: relative;
+    overflow: hidden;
+
+    .leftAsterisk {
+      height: 220px;
+      width: 217px;
+      position: absolute;
+      bottom: -80px;
+      left: -103px;
+    }
+
+    .header {
+      font-family: 'Roboto-Medium';
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.15px;
+      line-height: 36px;
+      color: $white;
+    }
+  }
+
+  .right {
+    width: 50%;
+    padding: 300px 180px;
+    position: relative;
+
+    .midAsterisk {
+      height: 100px;
+      width: 98px;
+      position: absolute;
+      top: 50px;
+      left: -48px;
+    }
+
+    .header {
+      margin-bottom: 9px;
+      font-family: 'Roboto-Medium';
+      font-size: 24px;
+      letter-spacing: 0.75px;
+      line-height: 28px;
+    }
+
+    .subheader {
+      margin-bottom: 34px;
+      color: #8A8A8A;
+      font-family: 'Roboto';
+      font-size: 16px;
+      letter-spacing: 0.1px;
+      line-height: 19px;
+      font-weight: normal !important;
+    }
+
+    .loginBtn {
+      box-shadow: none;
+      background: $lightgreen;
+      color: $white;
+      border-radius: 12px;
+      text-transform: none;
+      height: 45px;
+      width: 198px;
+
+      span {
+        font-family: 'SFNS Display Regular';
+        font-size: 15px;
+        letter-spacing: 0.1px;
+        line-height: 16px;
+      }
+
+      img {
+        width: 22px;
+        margin-right: 7px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .loginWrapper {
+    .left {
+      display: none;
+    }
+    .right {
+      width: 100%;
+      padding: 180px 40px;
+    }
+  }
+}

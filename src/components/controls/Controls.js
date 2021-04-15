@@ -4,6 +4,7 @@ import Button from './Button'
 import MultiSelect from './MultiSelect'
 import Quill from './Quill'
 import CustomInput from './CustomInput'
+import CustomArrayInput from './CustomArrayInput'
 import RadioControl from './Radio'
 import Textarea from './Textarea'
 
@@ -15,7 +16,8 @@ const Controls = {
   MultiSelect,
   CustomInput,
   RadioControl,
-  Textarea
+  Textarea,
+  CustomArrayInput
 }
 
 export default Controls
