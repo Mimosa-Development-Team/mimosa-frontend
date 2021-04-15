@@ -32,6 +32,15 @@
     }
   }
 
+  .submitBtn,
+  .clearBtn {
+    height: 35px;
+    margin-top: 10px;
+    float: right;
+    padding: 0 25px;
+    margin-left: 15px;
+  }
+
   p.editMeta {
     color: $lightgray2;
     font-size: 14px;
@@ -127,5 +136,24 @@
       margin-right: 7px;
       width: 15px;
     }
+  }
+}
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(178,180,189,0.5);
+  box-shadow: none;
+  font-size: 16px;
+  letter-spacing: 0.1px;
+  line-height: 19px;
+  border-radius: 8px;
+  background: $white;
+  padding: 12px 17px;
+  height: 90px !important;
+
+  &:focus,
+  &:hover {
+    outline-width: 0;
+    outline: none;
   }
 }

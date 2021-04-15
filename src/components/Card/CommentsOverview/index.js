@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Button } from '@material-ui/core'
 import Controls from 'components/controls/Controls'
 import ModalDelete from 'components/Dialog/delete'
 import { useForm } from 'react-hook-form'
@@ -20,11 +20,13 @@ const CommentsOverview = ({ contributionId }) => {
     addLoadingComment,
     addErrorComment,
     updateComment,
+    resetCommentUpdate,
     // updateErrorComment,
     deleteComment,
     deleteIsLoadingComment,
     // deleteErrorComment,
-    deleteMutate
+    deleteMutate,
+    resetCommentDelete
     // deleteIsSuccessComment,
   } = useComments(contributionId)
 
@@ -53,8 +55,18 @@ const CommentsOverview = ({ contributionId }) => {
     if (editing) {
       formFields.id = activeComment
       updateComment(formFields)
+      setEditing(false)
+      resetCommentUpdate()
     } else {
       addComment(formFields)
+    }
+    reset({ comment: '' })
+  }
+
+  const handleReset = () => {
+    if (editing) {
+      setEditing(false)
+      // resetCommentUpdate()
     }
     reset({ comment: '' })
   }
@@ -85,6 +97,9 @@ const CommentsOverview = ({ contributionId }) => {
         id={activeComment}
         deleteForm={deleteForm}
         setDeleteForm={setDeleteForm}
+        url={() => {
+          resetCommentDelete()
+        }}
       />
       <div className={`${styles.commentsWrapper}`}>
         <div
@@ -104,7 +119,7 @@ const CommentsOverview = ({ contributionId }) => {
             className={`${styles.form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Controls.Input
+            <Controls.Textarea
               className={`${styles.input}`}
               name="comment"
               control={control}
@@ -113,6 +128,18 @@ const CommentsOverview = ({ contributionId }) => {
               addLoadingComment={addLoadingComment}
               addErrorComment={addErrorComment}
             />
+            <Button
+              type="submit"
+              className={`${styles.submitBtn} btn primary`}
+            >
+              {editing ? 'UPDATE' : 'ADD'}
+            </Button>
+            <Button
+              onClick={() => handleReset()}
+              className={`${styles.clearBtn} btn secondary`}
+            >
+              CANCEL
+            </Button>
             {/* {editing && (
               <Typography className={`${styles.editMeta}`}>
                 Escape to

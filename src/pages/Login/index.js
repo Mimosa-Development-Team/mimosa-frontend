@@ -91,7 +91,7 @@ const Login = () => {
                   consensus.
                 </Typography>
                 <img
-                  className="mt-65"
+                  className={`${styles.sliderImg}`}
                   src={SliderOne}
                   alt="slide 1"
                 />
@@ -106,7 +106,7 @@ const Login = () => {
                   experimental analysis.
                 </Typography>
                 <img
-                  className="mt-65"
+                  className={`${styles.sliderImg}`}
                   src={SliderTwo}
                   alt="slide 2"
                 />
@@ -125,7 +125,7 @@ const Login = () => {
                   ... and help others refine their ideas.
                 </Typography>
                 <img
-                  className="mt-65"
+                  className={`${styles.sliderImg}`}
                   src={SliderThree}
                   alt="slide 3"
                 />
