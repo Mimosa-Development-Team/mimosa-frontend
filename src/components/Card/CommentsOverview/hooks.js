@@ -42,7 +42,8 @@ export const useComments = id => {
     isLoading: updateIsLoadingComment,
     error: updateErrorComment,
     mutate: updateMutate,
-    isSuccess: updateIsSuccessComment
+    isSuccess: updateIsSuccessComment,
+    reset: resetCommentUpdate
   } = useMutation(putCommentAPI, {
     onSuccess: () => {
       refetch()
@@ -55,7 +56,8 @@ export const useComments = id => {
     isLoading: deleteIsLoadingComment,
     error: deleteErrorComment,
     mutate: deleteMutate,
-    isSuccess: deleteIsSuccessComment
+    isSuccess: deleteIsSuccessComment,
+    reset: resetCommentDelete
   } = useMutation(deleteCommentAPI, {
     onSuccess: () => {
       refetch()
@@ -79,12 +81,14 @@ export const useComments = id => {
     updatedComment,
     updateIsLoadingComment,
     updateErrorComment,
+    resetCommentUpdate,
     updateIsSuccessComment,
 
     deleteComment,
     deleteIsLoadingComment,
     deleteErrorComment,
     deleteMutate,
+    resetCommentDelete,
     deleteIsSuccessComment
   }
 }

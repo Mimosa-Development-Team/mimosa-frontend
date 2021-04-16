@@ -48,14 +48,14 @@ const Media = ({ media }) => {
                   {data.mediaDetails.title}
                 </Typography>
                 <Typography className={`${styles.meta}`}>
-                  MP4
+                  {/* MP4
                   <span className={`${styles.metaDivider}`}>
                     |
                   </span>
                   English
                   <span className={`${styles.metaDivider}`}>
                     |
-                  </span>
+                  </span> */}
                   By {data.userFullName}
                 </Typography>
                 <Link className={`${styles.link}`}>
@@ -68,32 +68,6 @@ const Media = ({ media }) => {
             </li>
           )
         })}
-        {/* {JSON.stringify(EXTENSIONS)} */}
-        {/* <li>
-          <div className={`${styles.mediaIcon}`}>
-            <span>
-              <img src={icons.pdf} alt="PDF" />
-            </span>
-          </div>
-          <div>
-            <Typography className={`${styles.title}`}>
-              PDF Title
-            </Typography>
-            <Typography className={`${styles.meta}`}>
-              PDF
-              <span className={`${styles.metaDivider}`}>|</span>
-              English
-              <span className={`${styles.metaDivider}`}>|</span>
-              By Lorem Ipsum
-            </Typography>
-            <Link className={`${styles.link}`}>
-              <span className={`${styles.icon}`}>
-                <img src={LinkIcon} alt="" />
-              </span>
-              https://www.youtube.com/results?search_query=algorithm
-            </Link>
-          </div>
-        </li> */}
       </ul>
     </div>
   )
