@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import {
   Modal,
   Typography,
@@ -29,9 +29,11 @@ export default function ModalDialog({
   setDeleteForm,
   id,
   url,
-  subContent
+  subContent,
+  category
 }) {
   const classes = useStyles()
+  const history = useHistory()
 
   return (
     <Modal
@@ -76,7 +78,9 @@ export default function ModalDialog({
             className="btn outline"
             disabled={deleteIsLoadingItem}
             onClick={() => {
-              if (url) {
+              if (category === 'question') {
+                history.push('/')
+              } else if (url && category !== 'question') {
                 url()
                 setDeleteForm(!deleteForm)
               } else {

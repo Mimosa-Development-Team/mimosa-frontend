@@ -69,10 +69,6 @@ function Form(props) {
   const questionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field'),
     author: yup.array().min(1, 'Must be selected').required(),
-    presentationDetails: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
     startTime: yup.string().when('conferenceName', {
       is: value => !!value,
       then: yup.string().required('* Mandatory Field')
@@ -263,11 +259,15 @@ function Form(props) {
     if (val.relatedmedia) {
       for (let i = 0; i < val.relatedmedia.length; i++) {
         if (
-          val.relatedmedia[i].title &&
+          (val.relatedmedia[i].link ||
+            val.relatedmedia[i].title) &&
           val.relatedmedia[i].id.length < 9
         ) {
           formFields.relatedMedia.push(val.relatedmedia[i])
-        } else {
+        } else if (
+          val.relatedmedia[i].link ||
+          val.relatedmedia[i].title
+        ) {
           formFields.relatedMedia.push({
             title: val.relatedmedia[i].title,
             link: val.relatedmedia[i].link
@@ -478,7 +478,7 @@ function Form(props) {
           alignItems="flex-start"
           spacing={2}
         >
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             {/* {formState.isDirty && formState.isValid && method ? (
               <button
                 onClick={() => {

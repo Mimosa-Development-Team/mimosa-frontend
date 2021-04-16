@@ -15,7 +15,8 @@ const Card = ({
   parentTitle,
   isExpanded,
   linesToShow,
-  hideEdit
+  hideEdit,
+  getContribution
 }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -62,6 +63,7 @@ const Card = ({
                 />
               )}
               <Footer
+                getContribution={getContribution}
                 data={data}
                 userColor={data.userColor}
                 author={treeView ? null : data.postedBy}
