@@ -224,7 +224,6 @@ function Form(props) {
       val.endTime &&
       method === 'new'
     ) {
-      console.log('CONFERENCE', val)
       formFields.relatedMedia.push({
         conferenceName: val.conferenceName,
         conferenceDateDetails: {
@@ -259,7 +258,6 @@ function Form(props) {
 
     if (val.relatedmedia) {
       for (let i = 0; i < val.relatedmedia.length; i++) {
-        console.log('RELATED', val)
         if (
           (val.relatedmedia[i].link ||
             val.relatedmedia[i].title) &&
