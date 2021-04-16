@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 const ContributionHeirarchy = ({
   contribution,
   activeContribution,
+  getContribution,
   onCardClick,
   contributionRef
 }) => {
@@ -15,12 +16,15 @@ const ContributionHeirarchy = ({
     children
   }) => (condition ? wrapper(children) : children)
 
-  const CategoryWrapper = ({ data }) => {
+  const CategoryWrapper = ({ data, getContribution }) => {
     return (
       <>
         {data ? (
           <>
-            <CardWrapper data={data} />{' '}
+            <CardWrapper
+              getContribution={getContribution}
+              data={data}
+            />{' '}
             <ConditionalWrapper
               condition={
                 data.children.length > 1 ||
@@ -49,7 +53,7 @@ const ContributionHeirarchy = ({
       </>
     )
   }
-  const CardWrapper = ({ data }) => {
+  const CardWrapper = ({ data, getContribution }) => {
     return (
       <li
         className={`${styles[data.category]} ${
@@ -62,6 +66,7 @@ const ContributionHeirarchy = ({
         onClick={() => onCardClick(data)}
       >
         <Card
+          getContribution={getContribution}
           data={data}
           treeView
           isExpanded={data === activeContribution}
@@ -74,7 +79,10 @@ const ContributionHeirarchy = ({
   return (
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>
-        <CategoryWrapper data={contribution} />
+        <CategoryWrapper
+          getContribution={getContribution}
+          data={contribution}
+        />
       </ul>
     </div>
   )

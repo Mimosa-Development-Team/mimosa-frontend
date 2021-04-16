@@ -12,6 +12,7 @@ import ModalDelete from 'components/Dialog/delete'
 import getRawData from 'utils/hookstate/getRawData'
 import { useGlobalState } from 'store/state'
 import capitalizeText from 'utils/parsing/capitalize'
+import { useContribution } from '../../../pages/Member/Question/hooks'
 import styles from './styles.module.scss'
 import { useQuestionForm } from './hooks'
 
@@ -31,6 +32,8 @@ const Footer = ({
     deleteIsLoadingContribution,
     deleteMutate
   } = useQuestionForm()
+
+  const { getContribution } = useContribution()
 
   const [modal, setModal] = useState(false)
 
@@ -63,11 +66,8 @@ const Footer = ({
         deleteItem={deleteContribution}
         deleteIsLoadingContribution={deleteIsLoadingContribution}
         deleteMutate={deleteMutate}
-        url={() => {
-          return data && data.category === 'question'
-            ? history.push('/')
-            : window.location.reload()
-        }}
+        url={() => getContribution()}
+        category={data.category}
         id={data ? data.id : null}
         deleteForm={modal}
         setDeleteForm={setModal}

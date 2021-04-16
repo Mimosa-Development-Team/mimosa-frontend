@@ -16,7 +16,7 @@ const modules = {
       { indent: '-1' },
       { indent: '+1' }
     ],
-    ['link', 'image', 'video'],
+    ['link', 'image'],
     ['clean']
   ],
   clipboard: {
@@ -37,8 +37,7 @@ const formats = [
   'bullet',
   'indent',
   'link',
-  'image',
-  'video'
+  'image'
 ]
 
 export default function Input(props) {
