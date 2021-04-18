@@ -11,7 +11,7 @@ div.paper {
   padding: 30px;
 }
 
-// Parent Title 
+// Parent Title
 .parentTitleWrapper {
   margin-bottom: 10px;
 
@@ -21,7 +21,13 @@ div.paper {
   }
 }
 
-// Header 
+.draft {
+  padding-bottom: 10px;
+  color: darkgrey;
+  font-weight: bold;
+}
+
+// Header
 .type {
   font-family: 'Roboto-Medium';
   text-transform: capitalize;

@@ -50,6 +50,7 @@ const Card = ({
             <div className={`${styles.contentWrapper}`}>
               <Header
                 type={data.category}
+                draft={data.draft}
                 questionTags={data.tags}
                 analysisTag={data.hypothesisStatus}
                 deprecated={data.status === 'deprecated'}
