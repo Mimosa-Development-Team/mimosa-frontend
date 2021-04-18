@@ -9,7 +9,8 @@ const Header = ({
   title,
   questionTags,
   analysisTag,
-  deprecated
+  deprecated,
+  draft
 }) => {
   return (
     <div>
@@ -19,6 +20,16 @@ const Header = ({
         analysisTag={analysisTag}
         deprecated={deprecated}
       />
+      {draft && draft.subject && (
+        <div>
+          <Typography
+            variant="subtitle2"
+            className={`${styles.draft}`}
+          >
+            D: {draft.subject}
+          </Typography>
+        </div>
+      )}
       <Typography variant="h2">
         <span className={`${styles.type} ${type}`}>
           {type}:{' '}
