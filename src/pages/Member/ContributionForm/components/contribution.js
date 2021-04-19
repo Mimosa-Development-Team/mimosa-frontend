@@ -686,7 +686,7 @@ function Form(props) {
                         variant="h1"
                         gutterBottom
                       >
-                        Related Media
+                        Add Related Media
                       </Typography>
                       <Grid item sm={12}>
                         <Controller
