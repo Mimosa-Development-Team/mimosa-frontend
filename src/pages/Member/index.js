@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
+import PageMaintenance from '../Static/PageMaintenance'
+import PageTermsConditions from '../Static/PageTermsConditions'
+import Page404 from '../Static/Page404'
 import Dashboard from './Home'
 import About from './About'
 import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
 import Question from './Question'
-import PageMaintenance from './Static/PageMaintenance'
-import PageTermsConditions from './Static/PageTermsConditions'
-import Page404 from './Static/Page404'
 import './index.scss'
 
 const Member = () => {
