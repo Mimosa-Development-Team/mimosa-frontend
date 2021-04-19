@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-// import ShowMoreText from 'react-show-more-text'
-// import LinesEllipsis from 'react-lines-ellipsis'
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
 import parse from 'html-react-parser'
 import styles from './styles.module.scss'
@@ -14,7 +12,7 @@ const Content = ({ content, isExpanded, linesToShow = 2 }) => {
         <div className="cardBody">{parse(content)}</div>
       ) : (
         <div
-          className="cardBody"
+          className="cardBody preview"
           onClick={() => setExpanded(true)}
         >
           <HTMLEllipsis
