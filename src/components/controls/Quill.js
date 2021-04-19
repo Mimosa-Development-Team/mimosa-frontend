@@ -1,8 +1,11 @@
 import React from 'react'
 import { Controller } from 'react-hook-form'
 import { InputLabel } from '@material-ui/core'
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from 'react-quill'
+import ImageResize from 'quill-image-resize-module-react'
 import 'react-quill/dist/quill.snow.css'
+
+Quill.register('modules/imageResize', ImageResize)
 
 const modules = {
   toolbar: [
@@ -21,6 +24,10 @@ const modules = {
   ],
   clipboard: {
     matchVisual: false
+  },
+  imageResize: {
+    parchment: Quill.import('parchment'),
+    modules: ['Resize', 'DisplaySize']
   }
 }
 
@@ -66,6 +73,7 @@ export default function Input(props) {
             onChange={description => onChange(description)}
             value={value || ''}
             {...propsList}
+            preserveWhitespace
           />
         )}
       />

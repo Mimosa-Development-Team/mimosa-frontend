@@ -191,6 +191,20 @@ hr.MuiDivider-root {
   img {
     max-width: 100%;
   }
+  p {
+    font-family: 'Roboto';
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 24px;
+  }
+
+  span.showMore {
+    font-family: 'Roboto';
+    font-size: 14px;
+    letter-spacing: 0.09px;
+    line-height: 16px;
+    color: $primary;
+  }
 }
 
 // Accordion
