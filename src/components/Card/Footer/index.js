@@ -76,6 +76,7 @@ const Footer = ({
       <DateMeta
         datePosted={datePosted}
         dateModified={dateModified}
+        data={data}
       />
       {data && data.category === 'question' && (
         <>

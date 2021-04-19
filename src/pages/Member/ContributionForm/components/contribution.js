@@ -25,6 +25,8 @@ import capitalizeText from 'utils/parsing/capitalize'
 import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
 
+const regexUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
 function Form(props) {
   const history = useHistory()
   const {
@@ -61,35 +63,35 @@ function Form(props) {
   const [deleteForm, setDeleteForm] = useState(false)
   const [deleteMedia, setDeleteMedia] = useState(false)
   const [openForm, setOpenForm] = useState(false)
+  const [back, setBack] = useState(false)
   const [formData, setFormData] = useState(null)
   const [conferenceId, setConferenceId] = useState(null)
   const [deleteMediaId, setDeleteMediaId] = useState(null)
   const [mediaIndex, setMediaIndex] = useState(null)
 
-  const questionSchema = yup.object().shape({
-    subject: yup.string().required('* Mandatory Field'),
-    author: yup.array().min(1, 'Must be selected').required(),
-    startTime: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    endTime: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    hypothesisStatus: yup.string().when(type, {
-      is: 'analysis',
-      then: yup.string().required('* Mandatory Field')
-    }),
-    relatedmedia: yup.array().of(
-      yup.object().shape({
-        link: yup.string().when('title', {
-          is: true,
-          then: yup.string().required('* Mandatory Field')
-        })
+  const questionSchema = yup.object().shape(
+    {
+      subject: yup.string().required('* Mandatory Field'),
+      author: yup.array().min(1, 'Must be selected').required(),
+      startTime: yup.string().when('conferenceName', {
+        is: value => !!value,
+        then: yup.string().required('* Mandatory Field')
+      }),
+      conferenceName: yup.string().when('startTime', {
+        is: value => !!value,
+        then: yup.string().required('* Mandatory Field')
+      }),
+      endTime: yup.string().when('conferenceName', {
+        is: value => !!value,
+        then: yup.string().required('* Mandatory Field')
+      }),
+      hypothesisStatus: yup.string().when(type, {
+        is: 'analysis',
+        then: yup.string().required('* Mandatory Field')
       })
-    )
-  })
+    },
+    ['conferenceName', 'startTime']
+  )
 
   const contributionSchema = yup.object().shape({
     subject: yup.string().required('* Mandatory Field')
@@ -101,10 +103,12 @@ function Form(props) {
     control,
     reset,
     setValue,
-    getValues
-    // formState
+    getValues,
+    // trigger
+    formState
   } = useForm({
     mode: 'all',
+    reValidateMode: 'onChange',
     resolver: yupResolver(
       type === 'question' ? questionSchema : contributionSchema
     ),
@@ -112,23 +116,33 @@ function Form(props) {
       relatedmedia: [{ title: '', link: '' }],
       category:
         data && data.category && method === 'update'
-          ? data.category
+          ? data.draft && data.draft.id
+            ? data.draft.category
+            : data.category
           : '',
       subject:
         data && data.subject && method === 'update'
-          ? data.subject
+          ? data.draft && data.draft.id
+            ? data.draft.subject
+            : data.subject
           : '',
       details:
         data && data.details && method === 'update'
-          ? data.details
+          ? data.draft && data.draft.id
+            ? data.draft.details
+            : data.details
           : '',
       tags:
         data && data.tags && method === 'update'
-          ? data.tags
+          ? data.draft && data.draft.id
+            ? data.draft.tags
+            : data.tags
           : [],
       author:
         data && data.author && method === 'update'
-          ? data.author
+          ? data.draft && data.draft.id
+            ? data.draft.author
+            : data.author
           : [
               {
                 id: profile.id,
@@ -256,12 +270,18 @@ function Form(props) {
       })
     }
 
+    if (status === 'draft') {
+      if (data && data.draft && data.draft.id) {
+        formFields.contributionId = data.draft.contributionId
+      }
+    }
+
     if (val.relatedmedia) {
       for (let i = 0; i < val.relatedmedia.length; i++) {
         if (
           (val.relatedmedia[i].link ||
             val.relatedmedia[i].title) &&
-          val.relatedmedia[i].id.length < 9
+          !regexUuid.test(val.relatedmedia[i].id)
         ) {
           formFields.relatedMedia.push(val.relatedmedia[i])
         } else if (
@@ -279,11 +299,8 @@ function Form(props) {
     if (data) {
       formFields.id = data.id
     }
-
-    // if (method === 'ulo') {
     setFormData(formFields)
     setOpenForm(true)
-    // }
   }
 
   const getUrl = () => {
@@ -344,6 +361,14 @@ function Form(props) {
           break
         default:
           url = history.push(`/contribution/${questionUuid}`)
+      }
+    } else if (back) {
+      if (data || addedData) {
+        url = history.push(
+          `/contribution/${questionUuid || addedData.data.uuid}`
+        )
+      } else {
+        url = history.push('/')
       }
     }
 
@@ -479,10 +504,11 @@ function Form(props) {
           spacing={2}
         >
           <Grid item xs={12} sm={12}>
-            {/* {formState.isDirty && formState.isValid && method ? (
+            {formState.isDirty ? (
               <button
                 onClick={() => {
                   setStatus('draft')
+                  setBack(true)
                 }}
                 type="submit"
                 className={`${styles.btnBack}`}
@@ -499,37 +525,37 @@ function Form(props) {
                   </Typography>
                 </div>
               </button>
-            ) : ( */}
-            <div
-              onClick={() => {
-                if (
-                  (data && data.parentQuestionId) ||
-                  questionUuid
-                ) {
-                  history.push(
-                    `/contribution/${
-                      data.parentQuestionId || questionUuid
-                    }`
-                  )
-                } else {
-                  history.goBack()
-                }
-              }}
-              className={`${styles.btnBack}`}
-            >
-              <div className={`${styles.backNav}`}>
-                <Typography
-                  className={`${styles.back}`}
-                  variant="h4"
-                >
-                  <span className={`${styles.icon}`}>
-                    <img src={BackIcon} alt="back" />
-                  </span>
-                  Back
-                </Typography>
+            ) : (
+              <div
+                onClick={() => {
+                  if (
+                    (data && data.parentQuestionId) ||
+                    questionUuid
+                  ) {
+                    history.push(
+                      `/contribution/${
+                        data.parentQuestionId || questionUuid
+                      }`
+                    )
+                  } else {
+                    history.goBack()
+                  }
+                }}
+                className={`${styles.btnBack}`}
+              >
+                <div className={`${styles.backNav}`}>
+                  <Typography
+                    className={`${styles.back}`}
+                    variant="h4"
+                  >
+                    <span className={`${styles.icon}`}>
+                      <img src={BackIcon} alt="back" />
+                    </span>
+                    Back
+                  </Typography>
+                </div>
               </div>
-            </div>
-            {/* )} */}
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h1" gutterBottom>
@@ -653,7 +679,7 @@ function Form(props) {
                             float: 'right'
                           }}
                           onClick={() => {
-                            if (item.id.length !== 36) {
+                            if (!regexUuid.test(item.id)) {
                               setDeleteMedia(true)
                               setDeleteMediaId(item.id)
                               setMediaIndex(index)
@@ -687,6 +713,10 @@ function Form(props) {
                           label="Media Title"
                           name={`relatedmedia[${index}].title`}
                           control={control}
+                          {...(errors.endTime && {
+                            error: true,
+                            helperText: errors.endTime.message
+                          })}
                           defaultValue={item.title} // make sure to set up defaultValue
                         />
                       </Grid>
@@ -697,6 +727,10 @@ function Form(props) {
                           as={<Controls.CustomArrayInput />}
                           name={`relatedmedia[${index}].link`}
                           control={control}
+                          {...(errors.endTime && {
+                            error: true,
+                            helperText: errors.endTime.message
+                          })}
                           defaultValue={item.link} // make sure to set up defaultValue
                         />
                       </Grid>
@@ -814,6 +848,7 @@ function Form(props) {
                 type="submit"
                 className="btn primary submitBtn"
                 variant="contained"
+                // disabled={}
                 onClick={() => {
                   setStatus('publish')
                 }}

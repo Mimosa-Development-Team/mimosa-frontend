@@ -30,7 +30,7 @@ const SearchField = ({
       >
         <InputBase
           className={`${styles.input}`}
-          placeholder="Search for keywords, authors, tags, presentation date"
+          placeholder="Search for keywords, authors, tags"
           inputProps={{ 'aria-label': 'search' }}
           onKeyUp={e => inputChange(e)}
         />
