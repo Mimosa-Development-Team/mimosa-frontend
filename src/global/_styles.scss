@@ -73,6 +73,9 @@ $spacers: (
   &-15 {
     margin-left: 15px;
   }
+  &-10 {
+    margin-left: 10px !important;
+  }
 }
 
 .mt {
@@ -306,6 +309,7 @@ hr.MuiDivider-root {
       border-top-right-radius: 8px;
     }
     .ql-container.ql-snow {
+      min-height: 200px;
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
     }

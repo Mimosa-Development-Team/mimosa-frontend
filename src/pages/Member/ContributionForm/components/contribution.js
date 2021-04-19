@@ -581,7 +581,7 @@ function Form(props) {
             <>
               <Grid item sm={12}>
                 <Typography variant="h1" gutterBottom>
-                  Related Media
+                  Upcoming Conference
                 </Typography>
               </Grid>
               <Grid item sm={12}>
@@ -681,6 +681,13 @@ function Form(props) {
                           defaultValue={item.id} // make sure to set up defaultValue
                         />
                       </Grid>
+                      <Typography
+                        className="ml-10"
+                        variant="h1"
+                        gutterBottom
+                      >
+                        Related Media
+                      </Typography>
                       <Grid item sm={12}>
                         <Controller
                           as={<Controls.CustomArrayInput />}
