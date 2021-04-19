@@ -99,6 +99,19 @@
         margin-right: 7px;
       }
     }
+
+    .linkWrapper {
+      margin-top: 250px;
+
+      .link {
+        color: $primary;
+        font-size: 16px;
+        letter-spacing: 0.1px;
+        line-height: 19px;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
   }
 }
 

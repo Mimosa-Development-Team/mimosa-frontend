@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Backdrop, Button, Typography } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
+import {
+  Backdrop,
+  Button,
+  Typography,
+  Link
+} from '@material-ui/core'
 
 import Slider from 'react-slick'
 
@@ -20,6 +26,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 const Login = () => {
+  const history = useHistory()
   const { addToDo, isLoading } = useUser()
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState(null)
@@ -91,7 +98,7 @@ const Login = () => {
                   consensus.
                 </Typography>
                 <img
-                  className="mt-65"
+                  className={`${styles.sliderImg}`}
                   src={SliderOne}
                   alt="slide 1"
                 />
@@ -106,7 +113,7 @@ const Login = () => {
                   experimental analysis.
                 </Typography>
                 <img
-                  className="mt-65"
+                  className={`${styles.sliderImg}`}
                   src={SliderTwo}
                   alt="slide 2"
                 />
@@ -125,7 +132,7 @@ const Login = () => {
                   ... and help others refine their ideas.
                 </Typography>
                 <img
-                  className="mt-65"
+                  className={`${styles.sliderImg}`}
                   src={SliderThree}
                   alt="slide 3"
                 />
@@ -167,6 +174,16 @@ const Login = () => {
                 ? `Continue as ${data.given_name} ${data.family_name}`
                 : 'Log in with ORCID'}
             </Button>
+            <div className={`${styles.linkWrapper}`}>
+              <Link
+                className={`${styles.link}`}
+                onClick={() => {
+                  history.push(`/terms-and-conditions`)
+                }}
+              >
+                Terms and Conditions
+              </Link>
+            </div>
             <img
               className={`${styles.midAsterisk}`}
               src={Asterisk}

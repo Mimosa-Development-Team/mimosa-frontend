@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useGlobalState } from 'store/state'
+import getRawData from 'utils/parsing/Proxy'
 import Card from 'components/Card'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
@@ -17,6 +19,7 @@ import SortFilter from './components/SortFilter'
 import { useQuestions, useResults } from './hooks'
 
 const MemberDashboard = () => {
+  const { user } = useGlobalState()
   const history = useHistory()
   const [orderBy, setOrderBy] = useState('DESC')
   const {
@@ -26,7 +29,7 @@ const MemberDashboard = () => {
     getQuestions,
     hasNextPage,
     isFetchingNextPage
-  } = useQuestions(orderBy)
+  } = useQuestions(orderBy, getRawData(user).user.id)
   const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
   const { results, getResults } = useResults(search)
@@ -139,6 +142,23 @@ const MemberDashboard = () => {
                   </div>
                   {questions.pages.map((group, i) => (
                     <React.Fragment key={i}>
+                      {group.draftQuestions.map(data => (
+                        <div
+                          className={`${styles.content}`}
+                          onClick={() => {
+                            history.push(
+                              `/contribution/${data.uuid}`
+                            )
+                          }}
+                        >
+                          <Card
+                            data={data}
+                            form={false}
+                            linesToShow={5}
+                            hideEdit
+                          />
+                        </div>
+                      ))}
                       {group.data.map(data => (
                         <div
                           className={`${styles.content}`}
