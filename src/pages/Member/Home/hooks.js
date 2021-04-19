@@ -6,7 +6,7 @@ import {
   RESULTS_QUERY_KEY
 } from './constants'
 
-export const useQuestions = orderBy => {
+export const useQuestions = (orderBy, userId) => {
   const {
     data,
     isLoading,
@@ -17,7 +17,7 @@ export const useQuestions = orderBy => {
     isSuccess,
     refetch
   } = useInfiniteQuery(
-    [QUESTIONS_QUERY_KEY, { pageNum: 1, orderBy }],
+    [QUESTIONS_QUERY_KEY, { pageNum: 1, orderBy, userId }],
     getQuestionsAPI,
     {
       getNextPageParam: lastPage => lastPage.nextPage
