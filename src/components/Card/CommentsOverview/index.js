@@ -47,20 +47,22 @@ const CommentsOverview = ({ contributionId }) => {
   })
 
   const onSubmit = data => {
-    const formFields = {
-      comment: data.comment,
-      contributionId,
-      userId: getRawData(user).user.id
+    if (data.comment) {
+      const formFields = {
+        comment: data.comment,
+        contributionId,
+        userId: getRawData(user).user.id
+      }
+      if (editing) {
+        formFields.id = activeComment
+        updateComment(formFields)
+        setEditing(false)
+        resetCommentUpdate()
+      } else {
+        addComment(formFields)
+      }
+      reset({ comment: '' })
     }
-    if (editing) {
-      formFields.id = activeComment
-      updateComment(formFields)
-      setEditing(false)
-      resetCommentUpdate()
-    } else {
-      addComment(formFields)
-    }
-    reset({ comment: '' })
   }
 
   const handleReset = () => {
