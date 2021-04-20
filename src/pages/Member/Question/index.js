@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useLocation } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
 import PageWrapper from 'components/PageWrapper'
@@ -33,12 +34,19 @@ const Question = () => {
     setActiveContribution(contribution)
   }
 
+  const location = useLocation()
+
   useEffect(() => {
     getContribution()
     if (contribution) {
       setActiveContribution(contribution)
     }
   }, [contribution, getContribution])
+
+  useEffect(() => {
+    if (location.state)
+      setActiveContribution(location.state.state)
+  }, [location])
   return (
     <PageWrapper
       showNav

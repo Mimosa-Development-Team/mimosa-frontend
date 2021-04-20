@@ -28,7 +28,10 @@ const SearchResults = ({ data, searchTerm }) => {
             <div
               className={`${styles.content}`}
               onClick={() => {
-                history.push(`/contribution/${data.uuid}`)
+                history.push(
+                  `/contribution/${data.parentQuestionId}`,
+                  { state: data }
+                )
               }}
             >
               <Card
