@@ -101,7 +101,8 @@
     }
 
     .linkWrapper {
-      margin-top: 250px;
+      position: absolute;
+      bottom: 15%;
 
       .link {
         color: $primary;

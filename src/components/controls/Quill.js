@@ -27,7 +27,8 @@ const modules = {
   },
   imageResize: {
     parchment: Quill.import('parchment'),
-    modules: ['Resize', 'DisplaySize']
+    modules: ['Resize', 'DisplaySize'],
+    displaySize: true
   }
 }
 
@@ -44,7 +45,10 @@ const formats = [
   'bullet',
   'indent',
   'link',
-  'image'
+  'image',
+  'script',
+  'width',
+  'height'
 ]
 
 export default function Input(props) {
