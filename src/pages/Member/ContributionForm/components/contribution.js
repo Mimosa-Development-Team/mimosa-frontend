@@ -314,7 +314,7 @@ function Form(props) {
   const getUrl = () => {
     let url = ''
 
-    if (status === 'draft' && !back && !add) {
+    if (status === 'draft' && !back && add) {
       switch (type) {
         case 'question':
           url = history.push(
@@ -353,7 +353,7 @@ function Form(props) {
         default:
           url = history.goBack()
       }
-    } else if (status === 'draft' && !back && add) {
+    } else if (status === 'draft' && !back && !add) {
       setOpenForm(!openForm)
       setAdd(false)
     } else if (status === 'publish') {
@@ -523,6 +523,7 @@ function Form(props) {
         >
           <Grid item xs={12} sm={12}>
             {(data &&
+              data.children &&
               data.children.length <= 0 &&
               formState.isDirty) ||
             (method === 'new' && formState.isDirty) ? (
