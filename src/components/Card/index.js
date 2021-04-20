@@ -49,16 +49,36 @@ const Card = ({
               )}
             <div className={`${styles.contentWrapper}`}>
               <Header
-                type={data.category}
+                type={
+                  data.draft
+                    ? data.draft.category
+                    : data.category
+                }
                 draft={data.draft}
-                questionTags={data.tags}
-                analysisTag={data.hypothesisStatus}
-                deprecated={data.status === 'deprecated'}
-                title={data.subject}
+                questionTags={
+                  data.draft ? data.draft.tags : data.tags
+                }
+                analysisTag={
+                  data.draft
+                    ? data.draft.hypothesisStatus
+                    : data.hypothesisStatus
+                }
+                deprecated={
+                  data.draft
+                    ? data.draft.status === 'deprecated'
+                    : data.status === 'deprecated'
+                }
+                title={
+                  data.draft ? data.draft.subject : data.subject
+                }
               />
               {data.details && (
                 <Content
-                  content={data.details}
+                  content={
+                    data.draft
+                      ? data.draft.details
+                      : data.details
+                  }
                   isExpanded={isExpanded}
                   linesToShow={linesToShow}
                 />

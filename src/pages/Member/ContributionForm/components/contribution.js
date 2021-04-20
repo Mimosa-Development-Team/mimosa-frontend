@@ -64,6 +64,7 @@ function Form(props) {
   const [deleteMedia, setDeleteMedia] = useState(false)
   const [openForm, setOpenForm] = useState(false)
   const [back, setBack] = useState(false)
+  const [add, setAdd] = useState(false)
   const [formData, setFormData] = useState(null)
   const [conferenceId, setConferenceId] = useState(null)
   const [deleteMediaId, setDeleteMediaId] = useState(null)
@@ -226,9 +227,14 @@ function Form(props) {
         data && data.parentQuestionId
           ? data.parentQuestionId
           : questionUuid || 0,
+      parentQuestionUuid:
+        data && data.parentQuestionId
+          ? data.parentQuestionId
+          : questionUuid || 0,
       hypothesisStatus: val.hypothesisStatus,
       relatedMedia: [],
-      conferenceDetails: null
+      conferenceDetails: null,
+      method
     }
 
     if (
@@ -299,14 +305,16 @@ function Form(props) {
     if (data) {
       formFields.id = data.id
     }
+    // if (method === 'low') {
     setFormData(formFields)
     setOpenForm(true)
+    // }
   }
 
   const getUrl = () => {
     let url = ''
 
-    if (status === 'draft') {
+    if (status === 'draft' && !back && !add) {
       switch (type) {
         case 'question':
           url = history.push(
@@ -345,6 +353,9 @@ function Form(props) {
         default:
           url = history.goBack()
       }
+    } else if (status === 'draft' && !back && add) {
+      setOpenForm(!openForm)
+      setAdd(false)
     } else if (status === 'publish') {
       switch (type) {
         case 'question':
@@ -414,12 +425,19 @@ function Form(props) {
       <ModalDialog
         type={capitalizeText(type)}
         header={
-          method === 'new'
+          method === 'new' && !back
             ? 'Publish Contribution'
+            : back
+            ? 'Draft Contribution'
             : 'Update Contribution'
         }
+        add={add}
         content={
           method === 'new'
+            ? `Are you sure you want to ${status} this ${capitalizeText(
+                type
+              )}?`
+            : back
             ? `Are you sure you want to ${status} this ${capitalizeText(
                 type
               )}?`
@@ -504,7 +522,10 @@ function Form(props) {
           spacing={2}
         >
           <Grid item xs={12} sm={12}>
-            {formState.isDirty ? (
+            {(data &&
+              data.children.length <= 0 &&
+              formState.isDirty) ||
+            (method === 'new' && formState.isDirty) ? (
               <button
                 onClick={() => {
                   setStatus('draft')
@@ -822,6 +843,7 @@ function Form(props) {
                   variant="outlined"
                   onClick={() => {
                     setStatus('draft')
+                    setAdd(true)
                   }}
                   type="submit"
                 >

@@ -8,11 +8,15 @@ const DateMeta = ({ data }) => {
   return (
     <div className={`${styles.metaWrapper}`}>
       <Typography className={`${styles.meta}`} variant="h5">
-        {data && data.draft && data.draft.updatedAt ? (
+        {(data && data.draft && data.draft.updatedAt) ||
+        data.status === 'draft' ? (
           <>
             <i>Draft - </i>
             {moment(
-              data.draft.updatedAt || data.draft.createdAt
+              data.updatedAt ||
+                data.createdAt ||
+                data.draft.updatedAt ||
+                data.draft.createdAt
             ).format('MMM. D, YYYY')}
           </>
         ) : (
