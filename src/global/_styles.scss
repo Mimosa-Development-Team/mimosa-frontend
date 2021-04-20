@@ -214,6 +214,11 @@ hr.MuiDivider-root {
     line-height: 24px;
   }
 
+  sub,
+  sup {
+    font-size: 12px;
+  }
+
   span.showMore {
     font-family: 'Roboto';
     font-size: 14px;
@@ -236,6 +241,11 @@ hr.MuiDivider-root {
     letter-spacing: 0.1px;
     line-height: 24px;
     font-weight: normal;
+  }
+
+  sub,
+  sup {
+    font-size: 12px;
   }
 }
 
@@ -304,6 +314,10 @@ hr.MuiDivider-root {
   .quill.input {
     background: $white;
     border-radius: 8px;
+    font-family: 'Roboto';
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
     .ql-toolbar.ql-snow {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
@@ -637,7 +651,7 @@ div.dialog {
 // slick 
 ul.slick-dots {
   text-align: left;
-  bottom: -80px;
+  bottom: -11%;
 
   li {
     height: 8px;
@@ -655,7 +669,7 @@ ul.slick-dots {
 
 button.slick-arrow.slick-prev {
   right: 35px;
-  bottom: -100px;
+  bottom: -14%;
   top: unset;
   left: unset;
   width: 30px;
@@ -675,7 +689,7 @@ button.slick-arrow.slick-prev {
 
 button.slick-arrow.slick-next {
   right: 0px;
-  bottom: -100px;
+  bottom: -14%;
   top: unset;
   left: unset;
   width: 30px;
