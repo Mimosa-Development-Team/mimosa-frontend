@@ -168,7 +168,8 @@ export default function ModalDialog({
                   onReset()
                 }}
               >
-                {method === 'new' && status === 'draft'
+                {(method === 'new' && status === 'draft') ||
+                (method === 'update' && status === 'draft')
                   ? 'SAVE AS DRAFT'
                   : method === 'new'
                   ? 'PUBLISH'

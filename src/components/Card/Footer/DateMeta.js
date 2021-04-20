@@ -4,13 +4,25 @@ import Typography from '@material-ui/core/Typography'
 import moment from 'moment'
 import styles from './styles.module.scss'
 
-const DateMeta = ({ datePosted, dateModified }) => {
+const DateMeta = ({ data }) => {
   return (
     <div className={`${styles.metaWrapper}`}>
       <Typography className={`${styles.meta}`} variant="h5">
-        {dateModified ? 'Last modified ' : ''}
-        {moment(dateModified || datePosted).format(
-          'MMM. D, YYYY'
+        {(data && data.draft && data.draft.updatedAt) ||
+        data.status === 'draft' ? (
+          <>
+            <i>Draft - </i>
+            {moment(
+              data.updatedAt ||
+                data.createdAt ||
+                data.draft.updatedAt ||
+                data.draft.createdAt
+            ).format('MMM. D, YYYY')}
+          </>
+        ) : (
+          moment(data.updatedAt || data.createdAt).format(
+            'MMM. D, YYYY'
+          )
         )}
       </Typography>
     </div>
@@ -18,8 +30,8 @@ const DateMeta = ({ datePosted, dateModified }) => {
 }
 
 DateMeta.propTypes = {
-  datePosted: PropTypes.string.isRequired,
-  dateModified: PropTypes.string
+  data: PropTypes.string.isRequired
+  // dateModified: PropTypes.string
 }
 
 export default DateMeta

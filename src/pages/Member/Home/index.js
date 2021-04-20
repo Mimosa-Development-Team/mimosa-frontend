@@ -147,7 +147,12 @@ const MemberDashboard = () => {
                           className={`${styles.content}`}
                           onClick={() => {
                             history.push(
-                              `/contribution/${data.uuid}`
+                              `/contribution/${
+                                data.status === 'draft' &&
+                                data.category !== 'question'
+                                  ? data.parentQuestionUuid
+                                  : data.uuid
+                              }`
                             )
                           }}
                         >
