@@ -47,7 +47,7 @@ const CommentsOverview = ({ contributionId }) => {
   })
 
   const onSubmit = data => {
-    if (data.comment) {
+    if (data.comment.replace(/\s/g, '').length > 0) {
       const formFields = {
         comment: data.comment,
         contributionId,
