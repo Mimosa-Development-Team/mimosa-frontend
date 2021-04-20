@@ -65,7 +65,6 @@ const ContributionForm = props => {
   return (
     <PageWrapper>
       <PageContentWrapper>
-        {console.log(location.state.data)}
         <Contribution
           profile={getRawData(user).user}
           tagsData={tagsData}
