@@ -20,7 +20,9 @@ const ContributionTree = ({
           <>
             <li
               className={`${styles[data.category]} ${
-                data === activeContribution ? styles.active : ''
+                data.uuid === activeContribution.uuid
+                  ? styles.active
+                  : ''
               }`}
               onClick={() => onTreeClick(data)}
             >

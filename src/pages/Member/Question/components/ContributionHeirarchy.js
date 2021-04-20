@@ -58,10 +58,16 @@ const ContributionHeirarchy = ({
       <li
         className={`${styles[data.category]} ${
           styles.contribution
-        } ${data === activeContribution ? styles.active : ''}`}
+        } ${
+          data.uuid === activeContribution.uuid
+            ? styles.active
+            : ''
+        }`}
         key={data.id}
         ref={
-          data === activeContribution ? contributionRef : null
+          data.uuid === activeContribution.uuid
+            ? contributionRef
+            : null
         }
         onClick={() => onCardClick(data)}
       >
