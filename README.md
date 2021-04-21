@@ -4,7 +4,8 @@
 
 1. Run **`yarn install`** (yarn is required on your local machine)
 2. Create a **`.env`** file in the project’s root and fill in the variables from **`.env-example`**
-3. Run **`yarn start`** (this will start your project in dev environment)
+3. If `react-scripts` is not yet install. Run **`npm install react-scripts --save`**
+4. Run **`yarn start`** (this will start your project in dev environment)
 
 #### Production
 
