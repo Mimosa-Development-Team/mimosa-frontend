@@ -86,7 +86,9 @@ const Card = ({
               <Footer
                 getContribution={getContribution}
                 data={data}
-                userColor={data.userColor}
+                userColor={
+                  data.userColor || data.userColorPoster
+                }
                 author={treeView ? null : data.postedBy}
                 datePosted={data.createdAt}
                 dateModified={data.updatedAt}
