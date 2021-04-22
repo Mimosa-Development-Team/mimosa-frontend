@@ -1,0 +1,82 @@
+@import '~global/styles';
+
+.dashboardWrapper {
+  background: $white;
+  border: 1px solid $lightgray;
+  border-radius: 8px;
+  padding: 24px 42px;
+  display: flex;
+  justify-content: space-between;
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    .avatar {
+      width: 105px;
+      height: 105px;
+      span {
+        font-family: 'Roboto-Bold';
+        font-size: 60px;
+        letter-spacing: 0.38px;
+        line-height: 71px;
+        text-align: center;
+        position: relative;
+        top: 2px;
+      }
+    }
+    .userName {
+      margin-left: 30px;
+      font-family: 'Roboto-Medium';
+      font-size: 22px;
+      letter-spacing: 0.14px;
+      line-height: 25px;
+    }
+  }
+
+  .contributionInfo {
+    border-radius: 10px;
+    background: $offwhite;
+    padding: 15px 25px;
+    width: 25%;
+
+    ul {
+      padding: 0;
+      list-style-type: none;
+      li {
+        font-size: 16px;
+        letter-spacing: 0.1px;
+        line-height: 19px;
+        color: $lightgray2;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        span {
+          border-radius: 4px;
+          background-color: #D7E1E8;
+          padding: 1px 10px;
+          color: #404040;
+        }
+      }
+    }
+  }
+}
+
+.paperListHeader {
+  margin-top: 40px;
+  margin-bottom: 1.5em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  margin-top: .5em;
+  cursor: pointer;
+}
+
+.loadMore {
+  text-align: center;
+}
+
+.sortWrapper {
+  display: flex;
+}

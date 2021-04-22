@@ -6,13 +6,13 @@ export const ROUTES = [
     location: 'top',
     icon: 'home'
   },
-  // {
-  //   id: 2,
-  //   title: 'My Contributions',
-  //   to: '/my-contributions',
-  //   location: 'top',
-  //   icon: 'contributions'
-  // },
+  {
+    id: 2,
+    title: 'My Contributions',
+    to: '/my-contributions',
+    location: 'top',
+    icon: 'contributions'
+  },
   // {
   //   id: 3,
   //   title: 'Bookmarks',

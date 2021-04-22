@@ -5,6 +5,7 @@ import PageMaintenance from '../Static/PageMaintenance'
 import PageTermsConditions from '../Static/PageTermsConditions'
 import Page404 from '../Static/Page404'
 import Dashboard from './Home'
+import UserContributions from './UserContributions'
 import About from './About'
 import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
@@ -24,7 +25,7 @@ const Member = () => {
           />
           <Route
             path="/my-contributions"
-            component={Dashboard}
+            component={UserContributions}
           />
           <Route path="/about" component={About} />
           <Route path="/faq" component={FAQ} />

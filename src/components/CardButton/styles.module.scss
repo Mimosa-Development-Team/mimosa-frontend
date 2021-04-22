@@ -31,6 +31,12 @@ button.cardButton {
 
   &.delete {
     color: #E84441;
+
+    img {
+      width: 13px;
+      top: -1px;
+      position: relative;
+    }
   }
 
   &.contribute {
