@@ -60,7 +60,7 @@ const UserContributions = () => {
           <Typography className="mb-20" variant="h1">
             My Contributions
           </Typography>
-          {questions.pages[0] && (
+          {questions.pages[0] ? (
             <Dashboard
               question={
                 questions.pages[0].userDetails[0].questionCtr
@@ -76,7 +76,7 @@ const UserContributions = () => {
                 questions.pages[0].userDetails[0].analysisCtr
               }
             />
-          )}
+          ) : null}
           <>
             {questions ? (
               <>
