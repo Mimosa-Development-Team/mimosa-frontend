@@ -11,11 +11,11 @@ import { Button } from '@material-ui/core'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
+import SortFilter from 'components/SortFilter'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
 import SearchResults from './components/SearchResults'
-import SortFilter from './components/SortFilter'
 import { useQuestions, useResults } from './hooks'
 
 const MemberDashboard = () => {

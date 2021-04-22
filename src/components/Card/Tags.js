@@ -12,7 +12,7 @@ const Tags = ({
 }) => {
   return (
     <div>
-      {type === 'question' && questionTags && (
+      {type === 'question' && questionTags.length > 0 && (
         <QuestionTags data={questionTags} />
       )}
       {type !== 'question' && deprecated && <DeprecatedTag />}

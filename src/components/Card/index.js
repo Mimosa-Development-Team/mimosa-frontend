@@ -39,15 +39,15 @@ const Card = ({
       {data ? (
         <ClickAwayListener onClickAway={handleClickAway}>
           <Paper elevation={0} className={`${styles.paper}`}>
-            {!treeView &&
-              data.category !== 'question' &&
-              parentTitle && (
-                <ParentTitle
-                  type={data.category}
-                  title={parentTitle}
-                />
-              )}
             <div className={`${styles.contentWrapper}`}>
+              {!treeView &&
+                data.category !== 'question' &&
+                parentTitle && (
+                  <ParentTitle
+                    type={data.category}
+                    title={parentTitle}
+                  />
+                )}
               <Header
                 type={
                   data.draft
