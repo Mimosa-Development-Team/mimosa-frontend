@@ -111,6 +111,19 @@
     margin-top: 15px;
     margin-bottom: 8px;
     color: $white;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
+  }
+
+  .metaSubtitle {
+    font-family: 'Roboto';
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
+    color: $white;
   }
 
   .avatarName {
@@ -127,6 +140,12 @@
     &.author {
       color: $white;
       .avatar {
+        height: 45px;
+        width: 45px;
+        font-size: 22px;
+        font-family: 'Roboto-Bold';
+        letter-spacing: 0.14px;
+        line-height: 25px;
         margin-right: 23px;
         background: nth($avatar-colors, random(length($avatar-colors)));
       }
@@ -143,6 +162,11 @@
       font-family: 'Roboto-Medium';
       color: rgba(255, 255, 255, 0.5);
       .avatar {
+        width: 26px;
+        height: 26px;
+        font-size: 16px;
+        font-family: 'Roboto-Bold';
+        letter-spacing: 0.1px;
         margin-right: 10px;
         background: nth($avatar-colors, random(length($avatar-colors)));
       }

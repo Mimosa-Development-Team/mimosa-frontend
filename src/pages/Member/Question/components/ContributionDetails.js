@@ -30,7 +30,7 @@ const ContributionDetails = ({
       )}
       {poster && (
         <div>
-          <Typography className={`${styles.metaTitle}`}>
+          <Typography className={`${styles.metaSubtitle}`}>
             Posted by:
           </Typography>
           <div
@@ -47,20 +47,20 @@ const ContributionDetails = ({
         </div>
       )}
       <div>
-        <Typography className={`${styles.metaTitle}`}>
+        <Typography className={`${styles.metaSubtitle}`}>
           Date Posted:
         </Typography>
         <Typography className={`${styles.date}`}>
-          {moment(datePosted).format('MMM. D, YYYY')}
+          {moment(datePosted).format('MMM. D, YYYY h:mm A')}
         </Typography>
       </div>
       {dateModified && (
         <div>
-          <Typography className={`${styles.metaTitle}`}>
+          <Typography className={`${styles.metaSubtitle}`}>
             Date Modified:
           </Typography>
           <Typography className={`${styles.date}`}>
-            {moment(dateModified).format('MMM. D, YYYY')}
+            {moment(dateModified).format('MMM. D, YYYY h:mm A')}
           </Typography>
         </div>
       )}
