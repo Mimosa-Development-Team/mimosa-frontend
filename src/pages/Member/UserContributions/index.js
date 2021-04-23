@@ -60,7 +60,7 @@ const UserContributions = () => {
           <Typography className="mb-20" variant="h1">
             My Contributions
           </Typography>
-          {questions.pages[0] ? (
+          {questions ? (
             <Dashboard
               question={
                 questions.pages[0].userDetails[0].questionCtr
@@ -86,6 +86,7 @@ const UserContributions = () => {
                     variant="h5"
                   >
                     Contribution List
+                    {` (${questions.pages[0].userDetails[0].totalContributions})`}
                   </Typography>
                   <div className={`${styles.sortWrapper}`}>
                     <Typography
@@ -108,7 +109,10 @@ const UserContributions = () => {
                         className={`${styles.content}`}
                         onClick={() => {
                           history.push(
-                            `/contribution/${data.parentQuestionId}`,
+                            `/contribution/${
+                              data.parentQuestionUuid ||
+                              data.uuid
+                            }`,
                             { state: data }
                           )
                         }}
