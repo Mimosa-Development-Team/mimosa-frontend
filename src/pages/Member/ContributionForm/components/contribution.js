@@ -661,7 +661,7 @@ function Form(props) {
                 <Controls.Input
                   type="time"
                   name="startTime"
-                  label="Start Time"
+                  label="Start Time GMT"
                   control={control}
                   {...(errors.startTime && {
                     error: true,
@@ -673,7 +673,7 @@ function Form(props) {
                 <Controls.Input
                   type="time"
                   name="endTime"
-                  label="End Time"
+                  label="End Time GMT"
                   control={control}
                   {...(errors.endTime && {
                     error: true,
