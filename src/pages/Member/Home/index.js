@@ -12,6 +12,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox'
 import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
 import SortFilter from 'components/SortFilter'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
@@ -27,8 +28,7 @@ const MemberDashboard = () => {
     isLoading,
     refetch,
     getQuestions,
-    hasNextPage,
-    isFetchingNextPage
+    hasNextPage
   } = useQuestions(orderBy, getRawData(user).user.id)
   const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
@@ -68,6 +68,12 @@ const MemberDashboard = () => {
     setOrderBy(orderBy)
   }
 
+  const dataLength = questions
+    ? questions.pages.reduce((counter, page) => {
+        return counter + page.data.length
+      }, 0)
+    : ''
+
   useEffect(() => {
     refetch()
   }, [refetch])
@@ -84,124 +90,129 @@ const MemberDashboard = () => {
         </div>
       ) : (
         <PageContentWrapper>
-          <div className={`${styles.groupHeader}`}>
-            <SearchField
-              inputChange={handleKeyPress}
-              inputClear={handleCancel}
-              inputSubmit={handleSubmit}
-              search={search}
-              className={`${styles.searchBox}`}
-            />
-            <Button
-              className="btn primary"
-              size="large"
-              variant="contained"
-              onClick={() => {
-                history.push('/contribution-form/question/new', {
-                  type: 'new'
-                })
-              }}
-            >
-              <AddBoxIcon /> NEW QUESTION
-            </Button>
-          </div>
-          {showResults ? (
-            <SearchResults searchTerm={search} data={results} />
-          ) : (
-            <>
-              <div className={`${styles.homeBanner}`}>
-                <Typography
-                  className={`${styles.title}`}
-                  variant="h1"
-                >
-                  Home
-                </Typography>
-                <Banner />
+          <InfiniteScroll
+            dataLength={dataLength}
+            next={getQuestions}
+            hasMore={hasNextPage}
+            loader={
+              <div className={`${styles.loadingLabel}`}>
+                Loading...
               </div>
-              {questions ? (
-                <>
-                  <div className={`${styles.paperListHeader}`}>
-                    <Typography
-                      className={`${styles.title}`}
-                      variant="h5"
-                    >
-                      Contribution List
-                    </Typography>
-                    <div className={`${styles.sortWrapper}`}>
+            }
+            scrollableTarget="scrollableList"
+          >
+            <div className={`${styles.groupHeader}`}>
+              <SearchField
+                inputChange={handleKeyPress}
+                inputClear={handleCancel}
+                inputSubmit={handleSubmit}
+                search={search}
+                className={`${styles.searchBox}`}
+              />
+              <Button
+                className="btn primary"
+                size="large"
+                variant="contained"
+                onClick={() => {
+                  history.push(
+                    '/contribution-form/question/new',
+                    {
+                      type: 'new'
+                    }
+                  )
+                }}
+              >
+                <AddBoxIcon /> NEW QUESTION
+              </Button>
+            </div>
+            {showResults ? (
+              <SearchResults
+                searchTerm={search}
+                data={results}
+              />
+            ) : (
+              <>
+                <div className={`${styles.homeBanner}`}>
+                  <Typography
+                    className={`${styles.title}`}
+                    variant="h1"
+                  >
+                    Home
+                  </Typography>
+                  <Banner />
+                </div>
+                {questions ? (
+                  <>
+                    <div className={`${styles.paperListHeader}`}>
                       <Typography
                         className={`${styles.title}`}
                         variant="h5"
                       >
-                        Sort By:
+                        Contribution List
                       </Typography>
-                      <SortFilter
-                        sortFilter={sort}
-                        onClick={handleSortClick}
-                      />
+                      <div className={`${styles.sortWrapper}`}>
+                        <Typography
+                          className={`${styles.title}`}
+                          variant="h5"
+                        >
+                          Sort By:
+                        </Typography>
+                        <SortFilter
+                          sortFilter={sort}
+                          onClick={handleSortClick}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {questions.pages.map((group, i) => (
-                    <React.Fragment key={i}>
-                      {group.draftQuestions.map(data => (
-                        <div
-                          className={`${styles.content}`}
-                          onClick={() => {
-                            history.push(
-                              `/contribution/${
-                                data.status === 'draft' &&
-                                data.category !== 'question'
-                                  ? data.parentQuestionUuid
-                                  : data.uuid
-                              }`
-                            )
-                          }}
-                        >
-                          <Card
-                            data={data}
-                            form={false}
-                            linesToShow={5}
-                            hideEdit
-                          />
-                        </div>
+                    <div id="test">
+                      {questions.pages.map((group, i) => (
+                        <React.Fragment key={i}>
+                          {group.draftQuestions.map(data => (
+                            <div
+                              className={`${styles.content}`}
+                              onClick={() => {
+                                history.push(
+                                  `/contribution/${
+                                    data.status === 'draft' &&
+                                    data.category !== 'question'
+                                      ? data.parentQuestionUuid
+                                      : data.uuid
+                                  }`
+                                )
+                              }}
+                            >
+                              <Card
+                                data={data}
+                                form={false}
+                                linesToShow={5}
+                                hideEdit
+                              />
+                            </div>
+                          ))}
+                          {group.data.map(data => (
+                            <div
+                              className={`${styles.content}`}
+                              onClick={() => {
+                                history.push(
+                                  `/contribution/${data.uuid}`
+                                )
+                              }}
+                            >
+                              <Card
+                                data={data}
+                                form={false}
+                                linesToShow={5}
+                                hideEdit
+                              />
+                            </div>
+                          ))}
+                        </React.Fragment>
                       ))}
-                      {group.data.map(data => (
-                        <div
-                          className={`${styles.content}`}
-                          onClick={() => {
-                            history.push(
-                              `/contribution/${data.uuid}`
-                            )
-                          }}
-                        >
-                          <Card
-                            data={data}
-                            form={false}
-                            linesToShow={5}
-                            hideEdit
-                          />
-                        </div>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                  <div className={`${styles.loadMore}`}>
-                    <Button
-                      className={`${styles.loadMoreBtn}`}
-                      onClick={() => getQuestions()}
-                      disabled={
-                        !hasNextPage || isFetchingNextPage
-                      }
-                    >
-                      {isFetchingNextPage
-                        ? 'Loading more...'
-                        : hasNextPage
-                        ? 'Load More'
-                        : 'Nothing more to load'}
-                    </Button>
-                  </div>
-                </>
-              ) : null}
-            </>
-          )}
+                    </div>
+                  </>
+                ) : null}
+              </>
+            )}
+          </InfiniteScroll>
         </PageContentWrapper>
       )}
     </PageWrapper>

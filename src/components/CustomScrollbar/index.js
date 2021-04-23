@@ -14,6 +14,7 @@ const renderView = ({ style, ...props }) => {
       className="box"
       style={{ ...style, ...viewStyle }}
       {...props}
+      id="scrollableList"
     />
   )
 }
