@@ -5,7 +5,7 @@
 1. Run **`yarn install`** (yarn is required on your local machine)
 2. Create a **`.env`** file in the project’s root and fill in the variables from **`.env-example`**
     ```
-    **`RECOMMENDED: `** https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2606
+    RECOMMENDED: https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2606
     If you want to use sandbox account instead of live orcid account.
       1.) Open https://sandbox.orcid.org/
       2.) Follow the instruction in orcid sandbox and use https://www.mailinator.com/ to verify your email.
