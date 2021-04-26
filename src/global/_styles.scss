@@ -707,3 +707,15 @@ button.slick-arrow.slick-next {
     display: block;
   }
 }
+
+@media screen and (max-height: 768px) {
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    bottom: -8%;
+  }
+
+  ul.slick-dots {
+    text-align: left;
+    bottom: -7%;
+  }
+}

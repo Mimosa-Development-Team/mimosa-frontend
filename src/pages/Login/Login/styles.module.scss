@@ -116,6 +116,16 @@
   }
 }
 
+@media screen and (max-height: 768px) {
+  .loginWrapper {
+    .left {
+      .sliderImg {
+        margin-top: 15px;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 959px) {
   .loginWrapper {
     .left {
