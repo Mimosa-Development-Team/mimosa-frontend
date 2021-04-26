@@ -1,9 +1,9 @@
 import { useInfiniteQuery } from 'react-query'
 
-import { getQuestionsAPI } from './api'
-import { QUESTIONS_QUERY_KEY } from './constants'
+import { getUserQuestionsAPI } from './api'
+import { USER_CONTRIB_QUERY_KEY } from './constants'
 
-export const useQuestions = (orderBy, userId) => {
+export const useUserContributions = (orderBy, userId) => {
   const {
     data,
     isLoading,
@@ -14,16 +14,16 @@ export const useQuestions = (orderBy, userId) => {
     isSuccess,
     refetch
   } = useInfiniteQuery(
-    [QUESTIONS_QUERY_KEY, { pageNum: 1, orderBy, userId }],
-    getQuestionsAPI,
+    [USER_CONTRIB_QUERY_KEY, { pageNum: 1, orderBy, userId }],
+    getUserQuestionsAPI,
     {
       getNextPageParam: lastPage => lastPage.nextPage
     }
   )
 
   return {
-    getQuestions: fetchNextPage,
-    questions: data,
+    getUserContributions: fetchNextPage,
+    userContributions: data,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
