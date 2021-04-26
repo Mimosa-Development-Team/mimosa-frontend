@@ -12,7 +12,7 @@
           Note: Only mailinator email is working in sandbox registration.
     ```
 3. Copy your ORCID Authentication url and past in  **`.env`** **`REACT_APP_ORCID`**
-      ex. REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=
+      ```ex. REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=```
 4. If there's and error on`react-scripts` is not yet install. Run **`npm install react-scripts --save`**
 5. Run **`yarn start`** (this will start your project in dev environment)
 
