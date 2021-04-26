@@ -4,11 +4,13 @@
 
 1. Run **`yarn install`** (yarn is required on your local machine)
 2. Create a **`.env`** file in the project’s root and fill in the variables from **`.env-example`**
+    ```
     **`RECOMMENDED: `** https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2606
-    If you want to use sandbox account instead of live orcid account. 
+    If you want to use sandbox account instead of live orcid account.
       1.) Open https://sandbox.orcid.org/
       2.) Follow the instruction in orcid sandbox and use https://www.mailinator.com/ to verify your email.
           Note: Only mailinator email is working in sandbox registration.
+    ```
 3. Copy your ORCID Authentication url and past in  **`.env`** **`REACT_APP_ORCID`**
       ex. REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-YB0Q0XIMHL5MYS0B&response_type=token&scope=openid&redirect_uri=
 4. If there's and error on`react-scripts` is not yet install. Run **`npm install react-scripts --save`**
