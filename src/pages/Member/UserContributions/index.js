@@ -62,19 +62,11 @@ const UserContributions = () => {
           </Typography>
           {questions ? (
             <Dashboard
-              question={
-                questions.pages[0].userDetails[0].questionCtr
-              }
-              hypothesis={
-                questions.pages[0].userDetails[0].hypothesisCtr
-              }
-              experiment={
-                questions.pages[0].userDetails[0].experimentCtr
-              }
-              data={questions.pages[0].userDetails[0].dataCtr}
-              analysis={
-                questions.pages[0].userDetails[0].analysisCtr
-              }
+              question={questions.pages[0].questionCtr}
+              hypothesis={questions.pages[0].hypothesisCtr}
+              experiment={questions.pages[0].experimentCtr}
+              data={questions.pages[0].dataCtr}
+              analysis={questions.pages[0].analysisCtr}
             />
           ) : null}
           <>
@@ -86,7 +78,7 @@ const UserContributions = () => {
                     variant="h5"
                   >
                     Contribution List
-                    {` (${questions.pages[0].userDetails[0].totalContributions})`}
+                    {` (${questions.pages[0].totalContributions})`}
                   </Typography>
                   <div className={`${styles.sortWrapper}`}>
                     <Typography
@@ -101,9 +93,9 @@ const UserContributions = () => {
                     />
                   </div>
                 </div>
-                {/* <pre>{JSON.stringify(questions.pages)}</pre> */}
                 {questions.pages.map((group, i) => (
                   <React.Fragment key={i}>
+                    {/* {JSON.stringify(group.contributions)} */}
                     {group.contributions.map(data => (
                       <div
                         className={`${styles.content}`}
