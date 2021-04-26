@@ -1,1 +1,1 @@
-export const QUESTIONS_QUERY_KEY = 'questions/get'
+export const USER_CONTRIB_QUERY_KEY = 'userContributions/get'

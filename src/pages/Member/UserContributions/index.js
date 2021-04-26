@@ -19,20 +19,20 @@ import Dashboard from './components/Dashboard'
 
 import styles from './styles.module.scss'
 
-import { useQuestions } from './hooks'
+import { useUserContributions } from './hooks'
 
 const UserContributions = () => {
   const { user } = useGlobalState()
   const history = useHistory()
   const [orderBy, setOrderBy] = useState('DESC')
   const {
-    questions,
+    userContributions,
     isLoading,
     refetch,
-    getQuestions,
+    getUserContributions,
     hasNextPage,
     isFetchingNextPage
-  } = useQuestions(orderBy, getRawData(user).user.id)
+  } = useUserContributions(orderBy, getRawData(user).user.id)
 
   const [sort, setSort] = useState('Most Recent')
 
@@ -60,17 +60,21 @@ const UserContributions = () => {
           <Typography className="mb-20" variant="h1">
             My Contributions
           </Typography>
-          {questions ? (
+          {userContributions ? (
             <Dashboard
-              question={questions.pages[0].questionCtr}
-              hypothesis={questions.pages[0].hypothesisCtr}
-              experiment={questions.pages[0].experimentCtr}
-              data={questions.pages[0].dataCtr}
-              analysis={questions.pages[0].analysisCtr}
+              question={userContributions.pages[0].questionCtr}
+              hypothesis={
+                userContributions.pages[0].hypothesisCtr
+              }
+              experiment={
+                userContributions.pages[0].experimentCtr
+              }
+              data={userContributions.pages[0].dataCtr}
+              analysis={userContributions.pages[0].analysisCtr}
             />
           ) : null}
           <>
-            {questions ? (
+            {userContributions ? (
               <>
                 <div className={`${styles.paperListHeader}`}>
                   <Typography
@@ -78,7 +82,7 @@ const UserContributions = () => {
                     variant="h5"
                   >
                     Contribution List
-                    {` (${questions.pages[0].totalContributions})`}
+                    {` (${userContributions.pages[0].totalContributions})`}
                   </Typography>
                   <div className={`${styles.sortWrapper}`}>
                     <Typography
@@ -93,7 +97,7 @@ const UserContributions = () => {
                     />
                   </div>
                 </div>
-                {questions.pages.map((group, i) => (
+                {userContributions.pages.map((group, i) => (
                   <React.Fragment key={i}>
                     {/* {JSON.stringify(group.contributions)} */}
                     {(group.contributions || []).map(data => (
@@ -122,7 +126,7 @@ const UserContributions = () => {
                 <div className={`${styles.loadMore}`}>
                   <Button
                     className={`${styles.loadMoreBtn}`}
-                    onClick={() => getQuestions()}
+                    onClick={() => getUserContributions()}
                     disabled={!hasNextPage || isFetchingNextPage}
                   >
                     {isFetchingNextPage
