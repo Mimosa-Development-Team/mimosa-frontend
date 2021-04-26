@@ -96,7 +96,7 @@ const UserContributions = () => {
                 {questions.pages.map((group, i) => (
                   <React.Fragment key={i}>
                     {/* {JSON.stringify(group.contributions)} */}
-                    {group.contributions.map(data => (
+                    {(group.contributions || []).map(data => (
                       <div
                         className={`${styles.content}`}
                         onClick={() => {
