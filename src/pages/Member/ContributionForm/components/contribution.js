@@ -359,7 +359,7 @@ function Form(props) {
     } else if (status === 'publish') {
       switch (type) {
         case 'question':
-          url = history.push(`/`)
+          url = history.goBack()
           break
         case 'hypothesis':
           url = history.push(`/contribution/${questionUuid}`)
