@@ -121,7 +121,7 @@ const UserContributions = () => {
                           className={`${styles.content}`}
                           onClick={() => {
                             history.push(
-                              `/contribution/${data.parentQuestionuuid}`,
+                              `/contribution/${data.parentQuestionUuid}`,
                               { state: data }
                             )
                           }}

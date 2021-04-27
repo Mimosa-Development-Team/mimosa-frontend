@@ -69,10 +69,6 @@ const Question = () => {
             >
               Question
             </Typography>
-            {console.log(
-              'activeContribution',
-              activeContribution
-            )}
             <ContributionHeirarchy
               getContribution={getContribution}
               contribution={contribution}
