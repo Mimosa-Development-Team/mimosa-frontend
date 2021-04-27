@@ -61,7 +61,7 @@ const Question = () => {
         </div>
       ) : (
         <>
-          <PageContentWrapper backNav home>
+          <PageContentWrapper backNav>
             <Typography
               className={`${styles.title}`}
               variant="h1"
