@@ -34,13 +34,7 @@ const CommentsOverview = ({ contributionId }) => {
   const [activeComment, setActiveComment] = useState(null)
   const [editing, setEditing] = useState(false)
 
-  const {
-    handleSubmit,
-    control,
-    setValue,
-    reset
-    // register
-  } = useForm({
+  const { handleSubmit, setValue, reset, register } = useForm({
     defaultValues: {
       comment: ''
     }
@@ -124,7 +118,7 @@ const CommentsOverview = ({ contributionId }) => {
             <Controls.Textarea
               className={`${styles.input}`}
               name="comment"
-              control={control}
+              register={register({})}
               placeholder="Write a comment..."
               addedComment={addedComment}
               addLoadingComment={addLoadingComment}

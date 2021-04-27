@@ -5,7 +5,6 @@ import {
   Radio,
   InputLabel
 } from '@material-ui/core'
-import { Controller } from 'react-hook-form'
 
 export default function RadioControl(props) {
   const {
@@ -13,8 +12,9 @@ export default function RadioControl(props) {
     control,
     // type,
     label,
-    asterisk
-    // ...propsList
+    asterisk,
+    value,
+    ...propsList
   } = props
   return (
     <div className="radioWrapper">
@@ -22,71 +22,62 @@ export default function RadioControl(props) {
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
-      <Controller
-        name={name}
-        control={control}
-        label={label}
-        defaultValue="supports"
-        render={({ onChange, value }) => (
-          <RadioGroup
-            className="ml-15"
-            aria-label="hypothesisStatus"
-            onChange={onChange}
-            value={value || ''}
-            error
-            row
-          >
-            <FormControlLabel
-              value="supports"
-              className={`${
-                value === 'supports'
-                  ? 'radio supports active'
-                  : 'radio'
-              }`}
-              control={
-                <Radio
-                  style={{
-                    display: 'none'
-                  }}
-                />
-              }
-              label="SUPPORTS HYPOTHESIS"
+      <RadioGroup
+        className="ml-15"
+        aria-label="hypothesisStatus"
+        {...propsList}
+        error
+        row
+      >
+        <FormControlLabel
+          value="supports"
+          className={`${
+            value === 'supports'
+              ? 'radio supports active'
+              : 'radio'
+          }`}
+          control={
+            <Radio
+              style={{
+                display: 'none'
+              }}
             />
-            <FormControlLabel
-              value="refutes"
-              className={`${
-                value === 'refutes'
-                  ? 'radio refutes active'
-                  : 'radio'
-              }`}
-              control={
-                <Radio
-                  style={{
-                    display: 'none'
-                  }}
-                />
-              }
-              label="REFUTES HYPOTHESIS"
+          }
+          label="SUPPORTS HYPOTHESIS"
+        />
+        <FormControlLabel
+          value="refutes"
+          className={`${
+            value === 'refutes'
+              ? 'radio refutes active'
+              : 'radio'
+          }`}
+          control={
+            <Radio
+              style={{
+                display: 'none'
+              }}
             />
-            <FormControlLabel
-              value="unclear"
-              className={`${
-                value === 'unclear'
-                  ? 'radio unclear active'
-                  : 'radio'
-              }`}
-              control={
-                <Radio
-                  style={{
-                    display: 'none'
-                  }}
-                />
-              }
-              label="UNCLEAR"
+          }
+          label="REFUTES HYPOTHESIS"
+        />
+        <FormControlLabel
+          value="unclear"
+          className={`${
+            value === 'unclear'
+              ? 'radio unclear active'
+              : 'radio'
+          }`}
+          control={
+            <Radio
+              style={{
+                display: 'none'
+              }}
             />
-          </RadioGroup>
-        )}
-      />
+          }
+          label="UNCLEAR"
+        />
+      </RadioGroup>
     </div>
   )
 }

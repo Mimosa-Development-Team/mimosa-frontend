@@ -75,7 +75,7 @@ const RelatedMedia = ({ contributionId, userId }) => {
     link: yup.string().required('* Mandatory Field')
   })
 
-  const { handleSubmit, errors, control } = useForm({
+  const { handleSubmit, errors, register } = useForm({
     resolver: yupResolver(Schema),
     defaultValues: {
       title: '',
@@ -140,7 +140,7 @@ const RelatedMedia = ({ contributionId, userId }) => {
                     type="text"
                     name="title"
                     label="Media Title"
-                    control={control}
+                    register={register({})}
                     {...(errors.title && {
                       error: true,
                       helperText: errors.title.message
@@ -152,7 +152,7 @@ const RelatedMedia = ({ contributionId, userId }) => {
                     type="text"
                     name="link"
                     label="Media Link"
-                    control={control}
+                    register={register({})}
                     {...(errors.link && {
                       error: true,
                       helperText: errors.link.message
