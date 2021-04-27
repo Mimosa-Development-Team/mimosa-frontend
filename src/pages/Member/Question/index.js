@@ -37,16 +37,17 @@ const Question = () => {
   const location = useLocation()
 
   useEffect(() => {
+    if (location.state)
+      setActiveContribution(location.state.state)
+  }, [location])
+
+  useEffect(() => {
     getContribution()
-    if (contribution) {
+    if (contribution && location.state === undefined) {
       setActiveContribution(contribution)
     }
   }, [contribution, getContribution])
 
-  useEffect(() => {
-    if (location.state)
-      setActiveContribution(location.state.state)
-  }, [location])
   return (
     <PageWrapper
       showNav
@@ -68,6 +69,10 @@ const Question = () => {
             >
               Question
             </Typography>
+            {console.log(
+              'activeContribution',
+              activeContribution
+            )}
             <ContributionHeirarchy
               getContribution={getContribution}
               contribution={contribution}
