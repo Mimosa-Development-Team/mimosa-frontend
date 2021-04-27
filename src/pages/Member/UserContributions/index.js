@@ -134,6 +134,7 @@ const UserContributions = () => {
                             form={false}
                             linesToShow={5}
                             parentTitle={data.parentTitle}
+                            hideEdit
                           />
                         </div>
                       ))}

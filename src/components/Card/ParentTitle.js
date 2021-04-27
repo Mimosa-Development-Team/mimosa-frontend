@@ -7,7 +7,7 @@ function getParentType(type) {
   switch (type) {
     case 'hypothesis':
       return 'Q'
-    case 'expirement':
+    case 'experiment':
       return 'H'
     case 'data':
       return 'E'
