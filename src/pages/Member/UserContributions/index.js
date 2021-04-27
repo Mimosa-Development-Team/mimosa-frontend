@@ -121,10 +121,7 @@ const UserContributions = () => {
                           className={`${styles.content}`}
                           onClick={() => {
                             history.push(
-                              `/contribution/${
-                                data.parentQuestionUuid ||
-                                data.uuid
-                              }`,
+                              `/contribution/${data.parentQuestionUuid}`,
                               { state: data }
                             )
                           }}
@@ -134,6 +131,7 @@ const UserContributions = () => {
                             form={false}
                             linesToShow={5}
                             parentTitle={data.parentTitle}
+                            hideEdit
                           />
                         </div>
                       ))}
