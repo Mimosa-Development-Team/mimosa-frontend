@@ -526,7 +526,8 @@ function ContributionForm({
           version: '1.0.0',
           parentId: null,
           parentUuid: null,
-          relatedmedia: rMedia
+          relatedmedia: rMedia,
+          hypothesisStatus: 'supports'
         }}
         defaultValue={{
           author: [
@@ -887,6 +888,22 @@ function ContributionForm({
                   </Grid>
                 </>
               )}
+              {type === 'analysis' ? (
+                <Grid item sm={12}>
+                  <Controls.RadioControl
+                    name="hypothesisStatus"
+                    label="What is the verdict of your analysis?"
+                    asterisk
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.hypothesisStatus}
+                    {...(errors.hypothesisStatus && {
+                      error: true,
+                      helperText: errors.hypothesisStatus.message
+                    })}
+                  />
+                </Grid>
+              ) : null}
               <Grid
                 item
                 className={`${styles.btnContainer}`}
