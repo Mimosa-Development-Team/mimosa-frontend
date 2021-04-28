@@ -83,6 +83,7 @@ export const useQuestionForm = id => {
     reset: resetMediaDelete
   } = useMutation(deleteRelatedMediaAPI, {
     onSuccess: () => {
+      relatedMediaFetch()
       queryClient.invalidateQueries(
         RELATEDMEDIA_DELETE_QUERY_KEY
       )

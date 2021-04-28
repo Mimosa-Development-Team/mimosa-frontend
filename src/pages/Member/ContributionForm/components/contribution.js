@@ -75,7 +75,11 @@ function ContributionForm({
   addedData,
   deleteContribution,
   deleteIsLoadingContribution,
-  deleteMutate
+  deleteMutate,
+  deletedRelatedMedia,
+  deleteIsLoadingRelatedMedia,
+  deleteRelatedMediaMutate,
+  resetMediaDelete
 }) {
   const history = useHistory()
   const formikRef = useRef()
@@ -95,6 +99,9 @@ function ContributionForm({
   const [deleteForm, setDeleteForm] = useState(false)
   const [back, setBack] = useState(false)
   const [add, setAdd] = useState(false)
+  const [deleteMediaId, setDeleteMediaId] = useState(null)
+  const [deleteMedia, setDeleteMedia] = useState(false)
+  const [mediaIndex, setMediaIndex] = useState(null)
 
   useEffect(() => {
     if (relatedMediaData) {
@@ -466,20 +473,20 @@ function ContributionForm({
         setDeleteForm={setDeleteForm}
         subContent="This will delete all child contributions attached to this question."
       />
-      {/* <ModalDelete
+      <ModalDelete
         header="Delete Related Media"
         content="Are you sure you want to delete this Related Media?"
         deleteItem={deletedRelatedMedia}
         deleteIsLoadingContribution={deleteIsLoadingRelatedMedia}
         deleteMutate={deleteRelatedMediaMutate}
         url={() => {
-          remove(mediaIndex)
+          console.log(mediaIndex)
           resetMediaDelete()
         }}
         id={deleteMediaId}
         setDeleteForm={setDeleteMedia}
         deleteForm={deleteMedia}
-      /> */}
+      />
       <Formik
         innerRef={formikRef}
         enableReinitialize
@@ -750,9 +757,17 @@ function ContributionForm({
                                         color: '#e84441'
                                       }}
                                       onClick={() => {
-                                        arrayHelpers.remove(
-                                          index
-                                        )
+                                        if (value.id) {
+                                          setDeleteMedia(true)
+                                          setDeleteMediaId(
+                                            value.id
+                                          )
+                                          setMediaIndex(index)
+                                        } else {
+                                          arrayHelpers.remove(
+                                            index
+                                          )
+                                        }
                                       }}
                                     >
                                       <img
