@@ -101,7 +101,6 @@ function ContributionForm({
   const [add, setAdd] = useState(false)
   const [deleteMediaId, setDeleteMediaId] = useState(null)
   const [deleteMedia, setDeleteMedia] = useState(false)
-  const [mediaIndex, setMediaIndex] = useState(null)
 
   useEffect(() => {
     if (relatedMediaData) {
@@ -480,7 +479,6 @@ function ContributionForm({
         deleteIsLoadingContribution={deleteIsLoadingRelatedMedia}
         deleteMutate={deleteRelatedMediaMutate}
         url={() => {
-          console.log(mediaIndex)
           resetMediaDelete()
         }}
         id={deleteMediaId}
@@ -762,7 +760,6 @@ function ContributionForm({
                                           setDeleteMediaId(
                                             value.id
                                           )
-                                          setMediaIndex(index)
                                         } else {
                                           arrayHelpers.remove(
                                             index
