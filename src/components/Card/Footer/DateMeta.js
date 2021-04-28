@@ -9,21 +9,16 @@ const DateMeta = ({ data }) => {
     <div className={`${styles.metaWrapper}`}>
       <Typography className={`${styles.meta}`} variant="h5">
         {(data && data.draft && data.draft.updatedAt) ||
-        data.status === 'draft' ? (
-          <>
-            <i>Draft - </i>
-            {moment(
+        data.status === 'draft'
+          ? moment(
               data.updatedAt ||
                 data.createdAt ||
                 data.draft.updatedAt ||
                 data.draft.createdAt
-            ).format('MMM. D, YYYY')}
-          </>
-        ) : (
-          moment(data.updatedAt || data.createdAt).format(
-            'MMM. D, YYYY'
-          )
-        )}
+            ).format('MMM. D, YYYY')
+          : moment(data.updatedAt || data.createdAt).format(
+              'MMM. D, YYYY'
+            )}
       </Typography>
     </div>
   )

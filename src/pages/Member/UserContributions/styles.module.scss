@@ -80,3 +80,36 @@
 .sortWrapper {
   display: flex;
 }
+
+@media screen and (max-width: 959px) {
+  .dashboardWrapper {
+    display: block;
+
+    .userInfo {
+      margin-bottom: 15px;
+      .avatar {
+        width: 45px;
+        height: 45px;
+
+        span {
+          font-family: 'Roboto-Bold';
+          font-size: 30px;
+          letter-spacing: 0.38px;
+          line-height: 20px;
+          text-align: center;
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
+
+    .contributionInfo {
+      width: 100%;
+    }
+  }
+}
+
+.loadingLabel {
+  text-align: center;
+  font-size: 16px;
+}

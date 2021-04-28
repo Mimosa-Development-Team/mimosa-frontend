@@ -15,16 +15,33 @@ const ContributionForm = props => {
   const {
     getTags,
     getUser,
-    getRelatedMedia,
-
-    relatedMediaData,
     tagsData,
     userData,
-
     addContribution,
     updateContribution,
+    addLoadingContribution,
+    addedContribution,
+    addErrorContribution,
+    updatedContribution,
+    updateIsLoadingContribution,
+    updateErrorContribution,
+    addIsSuccessContribution,
+    updateIsSuccessContribution,
+    relatedMediaData,
+    deleteContribution,
+    deleteIsLoadingContribution,
+    deleteErrorContribution,
     deleteMutate,
-    deleteRelatedMediaMutate
+    deleteIsSuccessContribution,
+    getRelatedMedia,
+    resetAdd,
+    resetUpdate,
+    deletedRelatedMedia,
+    deleteIsLoadingRelatedMedia,
+    deleteErrorRelatedMedia,
+    deleteRelatedMediaMutate,
+    resetMediaDelete,
+    deleteIsSuccessRelatedMedia
   } = useQuestionForm(id)
 
   useEffect(() => {
@@ -52,16 +69,49 @@ const ContributionForm = props => {
           profile={getRawData(user).user}
           tagsData={tagsData}
           relatedMediaData={relatedMediaData}
+          addedData={addedContribution}
+          updatedData={updatedContribution}
           questionUuid={location.state.questionUuid}
           userData={userData}
           type={match.params.type}
           method={match.params.method}
           data={location.state.data ? location.state.data : null}
+          addedContribution={addedContribution}
+          addErrorContribution={addErrorContribution}
+          updatedContribution={updatedContribution}
+          updateIsLoadingContribution={
+            updateIsLoadingContribution
+          }
+          deletedRelatedMedia={deletedRelatedMedia}
+          deleteIsLoadingRelatedMedia={
+            deleteIsLoadingRelatedMedia
+          }
+          resetMediaDelete={resetMediaDelete}
+          deleteErrorRelatedMedia={deleteErrorRelatedMedia}
           deleteRelatedMediaMutate={deleteRelatedMediaMutate}
+          deleteIsSuccessRelatedMedia={
+            deleteIsSuccessRelatedMedia
+          }
+          updateErrorContribution={updateErrorContribution}
+          addLoadingContribution={addLoadingContribution}
+          addIsSuccessContribution={addIsSuccessContribution}
+          updateIsSuccessContribution={
+            updateIsSuccessContribution
+          }
           addContribution={addContribution}
           updateContribution={updateContribution}
           getRelatedMedia={getRelatedMedia}
+          resetAdd={resetAdd}
+          resetUpdate={resetUpdate}
+          deleteContribution={deleteContribution}
+          deleteIsLoadingContribution={
+            deleteIsLoadingContribution
+          }
+          deleteErrorContribution={deleteErrorContribution}
           deleteMutate={deleteMutate}
+          deleteIsSuccessContribution={
+            deleteIsSuccessContribution
+          }
         />
       </PageContentWrapper>
     </PageWrapper>

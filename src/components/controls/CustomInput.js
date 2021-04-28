@@ -1,7 +1,8 @@
 import React from 'react'
 import { TextField, InputLabel } from '@material-ui/core'
+import { Controller } from 'react-hook-form'
 
-export default function Input(props) {
+export default function CustomInput(props) {
   const {
     name,
     control,
@@ -9,8 +10,6 @@ export default function Input(props) {
     label,
     asterisk,
     errors,
-    value,
-    onChange,
     ...propsList
   } = props
   return (
@@ -19,14 +18,21 @@ export default function Input(props) {
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
-      <TextField
-        size="small"
-        type={type}
-        onChange={onChange}
-        className="input"
-        variant="outlined"
-        value={value || ''}
-        {...propsList}
+      <Controller
+        name={name}
+        control={control}
+        label={label}
+        render={({ onChange, value }) => (
+          <TextField
+            size="small"
+            type={type}
+            className="input"
+            onChange={onChange}
+            variant="outlined"
+            value={value || ''}
+            {...propsList}
+          />
+        )}
       />
     </div>
   )

@@ -87,7 +87,8 @@
     "global-require": 0,
     "no-param-reassign": "off",
     "no-restricted-syntax": "off",
-    "guard-for-in": "off"
+    "guard-for-in": "off",
+    "react-hooks/exhaustive-deps": 0
   },
   "globals": {
     "window": true,

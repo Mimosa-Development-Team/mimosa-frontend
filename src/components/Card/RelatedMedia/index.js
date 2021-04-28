@@ -72,10 +72,16 @@ const RelatedMedia = ({ contributionId, userId }) => {
 
   const Schema = yup.object().shape({
     title: yup.string().required('* Mandatory Field'),
-    link: yup.string().required('* Mandatory Field')
+    link: yup
+      .string()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        'Enter correct url!'
+      )
+      .required('* Mandatory')
   })
 
-  const { handleSubmit, errors, register } = useForm({
+  const { handleSubmit, errors, control } = useForm({
     resolver: yupResolver(Schema),
     defaultValues: {
       title: '',
@@ -136,11 +142,11 @@ const RelatedMedia = ({ contributionId, userId }) => {
                 spacing={2}
               >
                 <Grid item sm={12}>
-                  <Controls.Input
+                  <Controls.CustomInput
                     type="text"
                     name="title"
                     label="Media Title"
-                    register={register({})}
+                    control={control}
                     {...(errors.title && {
                       error: true,
                       helperText: errors.title.message
@@ -148,11 +154,11 @@ const RelatedMedia = ({ contributionId, userId }) => {
                   />
                 </Grid>
                 <Grid item sm={12}>
-                  <Controls.Input
+                  <Controls.CustomInput
                     type="text"
                     name="link"
                     label="Media Link"
-                    register={register({})}
+                    control={control}
                     {...(errors.link && {
                       error: true,
                       helperText: errors.link.message

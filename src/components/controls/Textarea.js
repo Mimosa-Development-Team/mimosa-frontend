@@ -1,5 +1,6 @@
 import React from 'react'
 import { TextareaAutosize, InputLabel } from '@material-ui/core'
+import { Controller } from 'react-hook-form'
 
 export default function Input(props) {
   const {
@@ -9,7 +10,6 @@ export default function Input(props) {
     label,
     asterisk,
     errors,
-    register,
     ...propsList
   } = props
   return (
@@ -18,14 +18,22 @@ export default function Input(props) {
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
-      <TextareaAutosize
-        size="small"
-        type={type}
-        className="textarea"
-        ref={register}
-        variant="outlined"
-        rowsMin={3}
-        {...propsList}
+      <Controller
+        name={name}
+        control={control}
+        label={label}
+        render={({ onChange, value }) => (
+          <TextareaAutosize
+            size="small"
+            type={type}
+            className="textarea"
+            onChange={onChange}
+            variant="outlined"
+            value={value || ''}
+            rowsMin={3}
+            {...propsList}
+          />
+        )}
       />
     </div>
   )

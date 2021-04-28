@@ -318,6 +318,7 @@ hr.MuiDivider-root {
     font-size: 16px;
     letter-spacing: 0.1px;
     line-height: 19px;
+    overflow: hidden;
     .ql-toolbar.ql-snow {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
@@ -704,5 +705,17 @@ button.slick-arrow.slick-next {
     height: 30px;
     content: '';
     display: block;
+  }
+}
+
+@media screen and (max-height: 768px) {
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    bottom: -8%;
+  }
+
+  ul.slick-dots {
+    text-align: left;
+    bottom: -7%;
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ReactComponent as Logo } from 'assets/images/logo.svg'
+import Logo from 'assets/images/logo.png'
 import { useHistory, useLocation } from 'react-router-dom'
 import ContributionTree from 'components/ContributionTree'
 import NavLink from './NavLink'
@@ -18,8 +18,9 @@ const MainNav = ({
   return (
     <div className={`${styles.mainNav}`}>
       <div>
-        <Logo
+        <img
           className={`${styles.logo}`}
+          src={Logo}
           onClick={() => {
             history.push(`/`)
           }}

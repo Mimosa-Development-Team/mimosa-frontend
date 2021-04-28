@@ -6,7 +6,7 @@ import CustomScrollbar from 'components/CustomScrollbar'
 import BackIcon from 'assets/images/icons/back.svg'
 import styles from './styles.module.scss'
 
-const PageContentWrapper = ({ children, backNav, home }) => {
+const PageContentWrapper = ({ children, backNav }) => {
   const history = useHistory()
 
   return (
@@ -14,11 +14,7 @@ const PageContentWrapper = ({ children, backNav, home }) => {
       {backNav && (
         <div
           onClick={() => {
-            if (home) {
-              history.push('/')
-            } else {
-              history.goBack()
-            }
+            history.goBack()
           }}
           className={`${styles.backNav}`}
         >

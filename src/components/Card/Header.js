@@ -1,16 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
+
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
+
 import Tags from './Tags'
 import styles from './styles.module.scss'
 
 const Header = ({
+  treeView,
   type,
   title,
   questionTags,
   analysisTag,
-  deprecated
+  deprecated,
+  data
 }) => {
+  const fullTitle = `<h2 class=${styles.title}><span class='${styles.type} ${type}'>${type}: </span>${title}</h2>`
   return (
     <div>
       <Tags
@@ -19,12 +25,24 @@ const Header = ({
         analysisTag={analysisTag}
         deprecated={deprecated}
       />
-      <Typography variant="h2">
-        <span className={`${styles.type} ${type}`}>
-          {type}:{' '}
-        </span>
-        {title}
-      </Typography>
+      {data.status === 'draft' || data.draft ? (
+        <i className={`${styles.draft}`}>Draft</i>
+      ) : null}
+      {treeView ? (
+        <Typography variant="h2">
+          <span className={`${styles.type} ${type}`}>
+            {type}:{' '}
+          </span>
+          {title}
+        </Typography>
+      ) : (
+        <HTMLEllipsis
+          unsafeHTML={fullTitle}
+          maxLine="5"
+          ellipsisHTML="..."
+          basedOn="letters"
+        />
+      )}
     </div>
   )
 }

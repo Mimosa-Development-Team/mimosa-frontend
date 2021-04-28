@@ -79,7 +79,7 @@ export default function ModalDialog({
             disabled={deleteIsLoadingItem}
             onClick={() => {
               if (category === 'question') {
-                history.push('/')
+                history.goBack()
               } else if (url && category !== 'question') {
                 url()
                 setDeleteForm(!deleteForm)

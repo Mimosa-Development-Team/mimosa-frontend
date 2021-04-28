@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-else-return */
 /* eslint-disable no-unused-expressions */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Controls from 'components/controls/Controls'
 import { useHistory } from 'react-router-dom'
 import { Formik, FieldArray, Form } from 'formik'
@@ -12,6 +12,8 @@ import {
   Divider
 } from '@material-ui/core'
 import * as yup from 'yup'
+import ModalDialog from 'components/Dialog/dialog'
+import ModalDelete from 'components/Dialog/delete'
 import moment from 'moment'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
@@ -58,21 +60,45 @@ function ContributionForm({
   data,
   method,
   type,
-  relatedMediaData
+  relatedMediaData,
+  addContribution,
+  updateContribution,
+  questionUuid,
+  addLoadingContribution,
+  updateIsLoadingContribution,
+  addIsSuccessContribution,
+  updateIsSuccessContribution,
+  resetUpdate,
+  resetAdd,
+  addErrorContribution,
+  updateErrorContribution,
+  addedData,
+  deleteContribution,
+  deleteIsLoadingContribution,
+  deleteMutate
 }) {
   const history = useHistory()
+  const formikRef = useRef()
 
   const [conference, setConference] = useState({
     conferenceName: '',
     presentationDetails: '',
     startTime: '',
-    endTime: ''
+    endTime: '',
+    id: ''
   })
 
-  const [rMedia, setRmedia] = useState([])
+  const [rMedia, setRmedia] = useState([{ title: '', link: '' }])
+  const [openForm, setOpenForm] = useState(false)
+  const [openDraft, setOpenDraft] = useState(false)
+  const [formData, setFormData] = useState(false)
+  const [deleteForm, setDeleteForm] = useState(false)
+  const [back, setBack] = useState(false)
+  const [add, setAdd] = useState(false)
 
   useEffect(() => {
     if (relatedMediaData) {
+      setRmedia([])
       for (let i = 0; i < relatedMediaData.length; i++) {
         if (relatedMediaData[i].conferenceName) {
           setConference({
@@ -87,7 +113,8 @@ function ContributionForm({
             endTime: moment(
               relatedMediaData[i].endTime,
               'HH:mm'
-            ).format('HH:mm')
+            ).format('HH:mm'),
+            id: relatedMediaData[i].id
           })
         } else if (relatedMediaData[i].link) {
           setRmedia(oldArray => [
@@ -103,36 +130,403 @@ function ContributionForm({
     }
   }, [relatedMediaData])
 
+  const getSubjectLabel = val => {
+    switch (val) {
+      case 'question':
+        return 'In one sentence, what is your research question?'
+      case 'hypothesis':
+        return 'Hypothesis: What is your answer to this question?'
+      case 'experiment':
+        return 'What is this experiment testing?'
+      case 'data':
+        return 'What is this dataset about?'
+      case 'analysis':
+        return 'In one sentence, what is the conclusion fo your analysis? '
+      default:
+        return null
+    }
+  }
+
+  const getDetailsLabel = val => {
+    switch (val) {
+      case 'question':
+        return 'Add some details about your research question'
+      case 'hypothesis':
+        return 'Add some details to your reasoning'
+      case 'experiment':
+        return 'Experimental Protocol: describe how to perform this experiment'
+      case 'data':
+        return 'Describe your data'
+      case 'analysis':
+        return 'Add some details to your reasoning'
+      default:
+        return null
+    }
+  }
+
+  const getUrl = status => {
+    let url = ''
+    if (status === 'draft' && !back && add) {
+      switch (type) {
+        case 'question':
+          url = addedData
+            ? history.push('/contribution-form/hypothesis/new', {
+                type: 'new',
+                data: addedData.data,
+                questionUuid: addedData.data.uuid
+              })
+            : history.push(
+                (addedData &&
+                  `/contribution/${addedData.data.uuid}`) ||
+                  (questionUuid &&
+                    `/contribution/${questionUuid}`) ||
+                  '/'
+              )
+          break
+        case 'hypothesis':
+          url = addedData
+            ? history.push('/contribution-form/experiment/new', {
+                type: 'new',
+                data: addedData.data,
+                questionUuid
+              })
+            : history.push(
+                (addedData &&
+                  `/contribution/${addedData.data.uuid}`) ||
+                  (questionUuid &&
+                    `/contribution/${questionUuid}`) ||
+                  '/'
+              )
+          break
+        case 'experiment':
+          url = addedData
+            ? history.push('/contribution-form/data/new', {
+                type: 'new',
+                data: addedData.data,
+                questionUuid
+              })
+            : history.push(
+                (addedData &&
+                  `/contribution/${addedData.data.uuid}`) ||
+                  (questionUuid &&
+                    `/contribution/${questionUuid}`) ||
+                  '/'
+              )
+          break
+        case 'data':
+          url = addedData
+            ? history.push('/contribution-form/analysis/new', {
+                type: 'new',
+                data: addedData.data,
+                questionUuid
+              })
+            : history.push(
+                (addedData &&
+                  `/contribution/${addedData.data.uuid}`) ||
+                  (questionUuid &&
+                    `/contribution/${questionUuid}`) ||
+                  '/'
+              )
+          break
+        default:
+          url = history.goBack()
+      }
+    } else if (status === 'draft' && !back && !add) {
+      setOpenForm(!openForm)
+      setAdd(false)
+    } else if (status === 'publish') {
+      switch (type) {
+        case 'question':
+          url = history.goBack()
+          break
+        case 'hypothesis':
+          url = history.push(`/contribution/${questionUuid}`)
+          break
+        case 'experiment':
+          url = history.push(`/contribution/${questionUuid}`)
+          break
+        case 'data':
+          url = history.push(`/contribution/${questionUuid}`)
+          break
+        default:
+          url = history.push(`/contribution/${questionUuid}`)
+      }
+    } else if (back) {
+      if (data || addedData) {
+        url = history.push(
+          `/contribution/${questionUuid || addedData.data.uuid}`
+        )
+      } else {
+        url = history.push('/')
+      }
+    }
+
+    return url
+  }
+
+  const submitForm = (val, stat) => {
+    const formFields = {
+      category: type,
+      subject: val.subject,
+      details: val.details,
+      tags: val.tags ? val.tags : [],
+      author: val.author ? val.author : [],
+      userId: profile.id,
+      status: stat,
+      version: '1.0.0',
+      parentId:
+        method === 'new'
+          ? data && data.id
+            ? data.id
+            : 0
+          : data.parentId,
+      parentUuid:
+        data && data.parentQuestionUuid
+          ? data.parentQuestionUuid
+          : questionUuid || 0,
+      parentQuestionUuid:
+        data && data.parentQuestionUuid
+          ? data.parentQuestionUuid
+          : questionUuid || 0,
+      hypothesisStatus: val.hypothesisStatus,
+      relatedMedia: [],
+      conferenceDetails: null,
+      method
+    }
+
+    if (
+      val.conferenceName &&
+      val.presentationDetails &&
+      val.startTime &&
+      val.endTime &&
+      method === 'new'
+    ) {
+      formFields.relatedMedia.push({
+        conferenceName: val.conferenceName,
+        conferenceDateDetails: {
+          presentationDetails: val.presentationDetails,
+          startTime: val.startTime,
+          endTime: val.endTime
+        },
+        mediaDetails: null,
+        userId: profile.id
+      })
+    }
+
+    if (
+      val.conferenceName &&
+      val.presentationDetails &&
+      val.startTime &&
+      val.endTime &&
+      method === 'update'
+    ) {
+      formFields.relatedMedia.push({
+        conferenceName: val.conferenceName,
+        conferenceDateDetails: {
+          presentationDetails: val.presentationDetails,
+          startTime: val.startTime,
+          endTime: val.endTime
+        },
+        id: conference ? conference.id : null,
+        mediaDetails: null,
+        userId: profile.id
+      })
+    }
+
+    if (val.status === 'draft') {
+      if (data && data.draft && data.draft.id) {
+        formFields.contributionId = data.draft.contributionId
+      }
+    }
+
+    if (val.relatedmedia) {
+      for (let i = 0; i < val.relatedmedia.length; i++) {
+        formFields.relatedMedia.push(val.relatedmedia[i])
+      }
+    }
+
+    if (data) {
+      formFields.id = data.id
+    }
+
+    // if (method === 'low') {
+    setFormData(formFields)
+    if (formFields.status === 'draft') {
+      setOpenDraft(true)
+    } else {
+      setOpenForm(true)
+    }
+
+    // }
+  }
+
   return (
     <>
+      <ModalDialog
+        type={capitalizeText(type)}
+        header={
+          method === 'new'
+            ? 'Publish Contribution'
+            : 'Update Contribution'
+        }
+        content={
+          method === 'new'
+            ? `Are you sure you want to ${
+                formData.status
+              } this ${capitalizeText(type)}?`
+            : `Do you want to publish changes to this ${capitalizeText(
+                type
+              )}?`
+        }
+        method={method}
+        submitLoading={
+          method === 'new'
+            ? addLoadingContribution
+            : updateIsLoadingContribution
+        }
+        submitSuccess={
+          method === 'new'
+            ? addIsSuccessContribution
+            : updateIsSuccessContribution
+        }
+        submit={
+          method === 'new' ? addContribution : updateContribution
+        }
+        modal={openForm}
+        setModal={setOpenForm}
+        data={formData}
+        reset={method === 'new' ? resetAdd : resetUpdate}
+        submitError={
+          method === 'new'
+            ? addErrorContribution
+            : updateErrorContribution
+        }
+        url={() => {
+          getUrl(formData.status)
+        }}
+        status={formData.status}
+      />
+      <ModalDialog
+        type={capitalizeText(type)}
+        header="Draft Contribution"
+        content={`Are you sure you want to ${
+          formData.status
+        } this ${capitalizeText(type)}?`}
+        method={method}
+        submitLoading={
+          method === 'new'
+            ? addLoadingContribution
+            : updateIsLoadingContribution
+        }
+        submitSuccess={
+          method === 'new'
+            ? addIsSuccessContribution
+            : updateIsSuccessContribution
+        }
+        submit={
+          method === 'new' ? addContribution : updateContribution
+        }
+        modal={openDraft}
+        setModal={setOpenDraft}
+        data={formData}
+        reset={method === 'new' ? resetAdd : resetUpdate}
+        submitError={
+          method === 'new'
+            ? addErrorContribution
+            : updateErrorContribution
+        }
+        url={() => {
+          getUrl(formData.status)
+          formikRef.current.setFieldValue('subject', '')
+          formikRef.current.setFieldValue('details', '')
+        }}
+        status={formData.status}
+      />
+      <ModalDelete
+        header={`Delete a ${
+          data ? capitalizeText(data.category) : ''
+        }`}
+        content={`Are you sure you want to delete this ${
+          data ? capitalizeText(data.category) : ''
+        }`}
+        deleteItem={deleteContribution}
+        deleteIsLoadingContribution={deleteIsLoadingContribution}
+        deleteMutate={deleteMutate}
+        url={() => {
+          return type === 'question'
+            ? history.push('/')
+            : history.push(
+                `/contribution/${
+                  data.parentQuestionId || questionUuid
+                }`
+              )
+        }}
+        id={data ? data.id : null}
+        deleteForm={deleteForm}
+        setDeleteForm={setDeleteForm}
+        subContent="This will delete all child contributions attached to this question."
+      />
+      {/* <ModalDelete
+        header="Delete Related Media"
+        content="Are you sure you want to delete this Related Media?"
+        deleteItem={deletedRelatedMedia}
+        deleteIsLoadingContribution={deleteIsLoadingRelatedMedia}
+        deleteMutate={deleteRelatedMediaMutate}
+        url={() => {
+          remove(mediaIndex)
+          resetMediaDelete()
+        }}
+        id={deleteMediaId}
+        setDeleteForm={setDeleteMedia}
+        deleteForm={deleteMedia}
+      /> */}
       <Formik
+        innerRef={formikRef}
         enableReinitialize
         initialValues={{
-          category: data && data.category ? data.category : type,
-          subject: data && data.subject ? data.subject : '',
-          description:
-            data && data.description ? data.description : '',
-          conferenceName: conference.conferenceName
-            ? conference.conferenceName
-            : '',
-          presentationDetails: conference.presentationDetails
-            ? conference.presentationDetails
-            : '',
-          startTime: conference.startTime
-            ? conference.startTime
-            : '',
-          endTime: conference.endTime ? conference.endTime : '',
-          relatedmedia: rMedia.length > 0 || [
-            { title: '', link: '' }
-          ],
-          tags: [],
-          author: [
-            {
-              id: profile.id,
-              name: `${profile.firstName} ${profile.lastName}`,
-              userColor: profile.userColor
-            }
-          ]
+          category:
+            data && data.category && method === 'update'
+              ? data.draft && data.draft.id
+                ? data.draft.category
+                : data.category
+              : '',
+          subject:
+            data && data.subject && method === 'update'
+              ? data.draft && data.draft.id
+                ? data.draft.subject
+                : data.subject
+              : '',
+          details:
+            data && data.details && method === 'update'
+              ? data.draft && data.draft.id
+                ? data.draft.details
+                : data.details
+              : '',
+          tags:
+            data && data.tags && method === 'update'
+              ? data.draft && data.draft.id
+                ? data.draft.tags
+                : data.tags
+              : [],
+          author:
+            data && data.author && method === 'update'
+              ? data.draft && data.draft.id
+                ? data.draft.author
+                : data.author
+              : [
+                  {
+                    id: profile.id,
+                    name: `${profile.firstName} ${profile.lastName}`,
+                    userColor: profile.userColor
+                  }
+                ],
+          userId: profile.id,
+          status: 'publish',
+          conferenceId: (conference && conference.id) || null,
+          version: '1.0.0',
+          parentId: null,
+          parentUuid: null,
+          relatedmedia: rMedia
         }}
         defaultValue={{
           author: [
@@ -145,11 +539,7 @@ function ContributionForm({
         }}
         validationSchema={schema}
         onSubmit={(values, { setSubmitting }) => {
-          if (method === 'new') {
-            console.log('NEW', values)
-          } else {
-            console.log('UPDATE', values)
-          }
+          submitForm(values, values.status)
           setTimeout(() => {
             setSubmitting(false)
           }, 400)
@@ -161,7 +551,8 @@ function ContributionForm({
           handleChange,
           handleBlur,
           handleSubmit,
-          setFieldValue
+          setFieldValue,
+          dirty
         }) => (
           <Form
             onSubmit={handleSubmit}
@@ -181,7 +572,16 @@ function ContributionForm({
                       className={`${styles.back}`}
                       variant="h4"
                       onClick={() => {
-                        history.push('/')
+                        if (dirty) {
+                          setBack(true)
+                          submitForm(values, 'draft')
+                        } else {
+                          questionUuid
+                            ? history.push(
+                                `/contribution/${questionUuid}`
+                              )
+                            : history.push('/')
+                        }
                       }}
                     >
                       <span className={`${styles.icon}`}>
@@ -222,7 +622,7 @@ function ContributionForm({
               <Grid item sm={12}>
                 <Controls.Input
                   type="text"
-                  label="Subject"
+                  label={getSubjectLabel(type)}
                   name="subject"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -236,10 +636,10 @@ function ContributionForm({
               </Grid>
               <Grid item xs={12}>
                 <Controls.Quill
-                  label="Quill"
-                  name="description"
-                  onChange={handleChange}
-                  value={values.description}
+                  label={getDetailsLabel(type)}
+                  name="details"
+                  onChange={v => setFieldValue('details', v)}
+                  value={values.details}
                 />
               </Grid>
               {type === 'question' && (
@@ -324,85 +724,92 @@ function ContributionForm({
                       name="relatedmedia"
                       render={arrayHelpers => (
                         <div>
-                          {values.relatedmedia.map(
-                            (friend, index) => (
-                              <Grid
-                                key={index}
-                                container
-                                direction="row"
-                                justify="flex-start"
-                                style={{ padding: '.9em' }}
-                                alignItems="flex-start"
-                                spacing={2}
-                              >
-                                <div
-                                  className={`${styles.list}`}
-                                  style={{ width: '100%' }}
+                          {values.relatedmedia.length > 0 &&
+                            values.relatedmedia.map(
+                              (value, index) => (
+                                <Grid
+                                  key={index}
+                                  container
+                                  direction="row"
+                                  justify="flex-start"
+                                  style={{ padding: '.9em' }}
+                                  alignItems="flex-start"
+                                  spacing={2}
                                 >
-                                  <Typography
-                                    className={`${styles.typography}`}
-                                    align="right"
-                                    style={{
-                                      cursor: 'pointer',
-                                      float: 'right',
-                                      color: '#e84441'
-                                    }}
-                                    onClick={() => {
-                                      arrayHelpers.remove(index)
-                                    }}
+                                  <div
+                                    className={`${styles.list}`}
+                                    style={{ width: '100%' }}
                                   >
-                                    <img
-                                      src={DeleteIcon}
-                                      className={`${styles.deleteIcon}`}
-                                    />{' '}
-                                    Remove Media
-                                  </Typography>
-                                </div>
-                                <Grid item sm={12}>
-                                  <Controls.Input
-                                    name={`relatedmedia[${index}].title`}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    label="Media Title"
-                                    {...(errors &&
-                                      errors.relatedmedia &&
-                                      errors.relatedmedia[
-                                        index
-                                      ] &&
-                                      errors.relatedmedia[index]
-                                        .title && {
-                                        error: true,
-                                        helperText:
-                                          errors.relatedmedia[
-                                            index
-                                          ].title
-                                      })}
-                                  />
+                                    <Typography
+                                      className={`${styles.typography}`}
+                                      align="right"
+                                      style={{
+                                        cursor: 'pointer',
+                                        float: 'right',
+                                        color: '#e84441'
+                                      }}
+                                      onClick={() => {
+                                        arrayHelpers.remove(
+                                          index
+                                        )
+                                      }}
+                                    >
+                                      <img
+                                        src={DeleteIcon}
+                                        className={`${styles.deleteIcon}`}
+                                      />{' '}
+                                      Remove Media
+                                    </Typography>
+                                  </div>
+                                  <Grid item sm={12}>
+                                    <Controls.Input
+                                      name={`relatedmedia[${index}].title`}
+                                      onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      label="Media Title"
+                                      value={value.title}
+                                      {...(errors &&
+                                        errors.relatedmedia &&
+                                        errors.relatedmedia[
+                                          index
+                                        ] &&
+                                        errors.relatedmedia[
+                                          index
+                                        ].title && {
+                                          error: true,
+                                          helperText:
+                                            errors.relatedmedia[
+                                              index
+                                            ].title
+                                        })}
+                                    />
+                                  </Grid>
+                                  <Grid item sm={12}>
+                                    <Controls.Input
+                                      name={`relatedmedia.${index}.link`}
+                                      onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      label="Media Link"
+                                      value={value.link}
+                                      {...(errors &&
+                                        errors.relatedmedia &&
+                                        errors.relatedmedia[
+                                          index
+                                        ] &&
+                                        errors.relatedmedia[
+                                          index
+                                        ].link && {
+                                          error: true,
+                                          helperText:
+                                            errors.relatedmedia[
+                                              index
+                                            ].link
+                                        })}
+                                    />
+                                  </Grid>
                                 </Grid>
-                                <Grid item sm={12}>
-                                  <Controls.Input
-                                    name={`relatedmedia.${index}.link`}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    label="Media Link"
-                                    {...(errors &&
-                                      errors.relatedmedia &&
-                                      errors.relatedmedia[
-                                        index
-                                      ] &&
-                                      errors.relatedmedia[index]
-                                        .link && {
-                                        error: true,
-                                        helperText:
-                                          errors.relatedmedia[
-                                            index
-                                          ].link
-                                      })}
-                                  />
-                                </Grid>
-                              </Grid>
-                            )
-                          )}
+                              )
+                            )}
                           <Grid
                             container
                             direction="row"
@@ -457,7 +864,7 @@ function ContributionForm({
                       onChange={(e, options) => {
                         const arr = options.map(val => {
                           const obj = {}
-                          if (val.name) {
+                          if (values.name) {
                             return val
                           }
                           obj.name = val
@@ -490,6 +897,10 @@ function ContributionForm({
                     <Button
                       className="btn secondary submitBtn mr-30 mb-15m"
                       variant="outlined"
+                      onClick={() => {
+                        setFieldValue('status', 'draft')
+                        setAdd(true)
+                      }}
                       type="submit"
                     >
                       ADD{' '}
@@ -504,6 +915,9 @@ function ContributionForm({
                   <Button
                     className="btn delete submitBtn mr-30 mb-15m"
                     variant="outlined"
+                    onClick={() => {
+                      setDeleteForm(true)
+                    }}
                   >
                     DELETE
                   </Button>
@@ -520,6 +934,10 @@ function ContributionForm({
                     type="submit"
                     className="btn primary submitBtn"
                     variant="contained"
+                    // disabled={}
+                    onClick={() => {
+                      setFieldValue('status', 'publish')
+                    }}
                   >
                     {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
                   </Button>
