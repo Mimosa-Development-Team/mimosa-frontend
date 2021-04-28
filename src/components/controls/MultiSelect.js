@@ -1,7 +1,6 @@
 import React from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { TextField, InputLabel } from '@material-ui/core'
-import { Controller } from 'react-hook-form'
 
 export default function ControlledAutocomplete({
   options = [],
@@ -10,6 +9,7 @@ export default function ControlledAutocomplete({
   defaultValue,
   asterisk,
   name,
+  onChange,
   ...propsList
 }) {
   return (
@@ -18,62 +18,25 @@ export default function ControlledAutocomplete({
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
-      <Controller
-        render={({ onChange, ...props }) => (
-          <Autocomplete
-            freeSolo
-            multiple
-            size="small"
-            options={options}
-            getOptionLabel={option => {
-              return option.name ? option.name : option
-            }}
-            renderInput={params => (
-              <TextField
-                className="input"
-                {...params}
-                placeholder={label}
-                {...propsList}
-                margin="normal"
-                variant="outlined"
-              />
-            )}
-            onChange={(e, values) => {
-              if (
-                typeof values === 'object' &&
-                values !== null
-              ) {
-                onChange(values)
-              } else {
-                onChange({ name: values })
-              }
-
-              onChange(
-                values.map(val => {
-                  let obj = {}
-                  if (options.some(field => field.name)) {
-                    if (
-                      typeof val === 'object' &&
-                      val !== null
-                    ) {
-                      obj = val
-                    } else {
-                      obj.name = val
-                    }
-                  } else {
-                    return val
-                  }
-                  return obj
-                })
-              )
-            }}
-            {...props}
+      <Autocomplete
+        freeSolo
+        multiple
+        size="small"
+        options={options}
+        getOptionLabel={option => {
+          return option.name ? option.name : option
+        }}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        renderInput={params => (
+          <TextField
+            {...propsList}
+            {...params}
+            className="input"
+            margin="normal"
+            variant="outlined"
           />
         )}
-        onChange={([, data]) => data}
-        defaultValue={defaultValue}
-        name={name}
-        control={control}
       />
     </div>
   )

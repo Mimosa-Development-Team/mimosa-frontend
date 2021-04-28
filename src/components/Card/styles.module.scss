@@ -10,6 +10,11 @@ div.paper {
 .contentWrapper {
   padding: 30px;
 
+  .draft {
+    color: #E84441;
+    font-size: 18px;
+  }
+
   .title {
     color: $darkgray2;
     font-family: 'Roboto';

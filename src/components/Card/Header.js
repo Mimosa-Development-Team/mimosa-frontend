@@ -13,7 +13,8 @@ const Header = ({
   title,
   questionTags,
   analysisTag,
-  deprecated
+  deprecated,
+  data
 }) => {
   const fullTitle = `<h2 class=${styles.title}><span class='${styles.type} ${type}'>${type}: </span>${title}</h2>`
   return (
@@ -24,6 +25,9 @@ const Header = ({
         analysisTag={analysisTag}
         deprecated={deprecated}
       />
+      {data.status === 'draft' || data.draft ? (
+        <i className={`${styles.draft}`}>Draft</i>
+      ) : null}
       {treeView ? (
         <Typography variant="h2">
           <span className={`${styles.type} ${type}`}>

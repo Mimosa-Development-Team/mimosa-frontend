@@ -49,6 +49,7 @@ const Card = ({
                   />
                 )}
               <Header
+                data={data}
                 treeView={treeView}
                 type={
                   data.draft

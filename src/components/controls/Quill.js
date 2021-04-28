@@ -1,5 +1,4 @@
 import React from 'react'
-import { Controller } from 'react-hook-form'
 import { InputLabel } from '@material-ui/core'
 import ReactQuill, { Quill } from 'react-quill'
 import ImageResize from 'quill-image-resize-module-react'
@@ -52,38 +51,20 @@ const formats = [
 ]
 
 export default function Input(props) {
-  const {
-    name,
-    control,
-    label,
-    asterisk,
-    errors,
-    ...propsList
-  } = props
+  const { name, control, label, asterisk, ...propsList } = props
   return (
     <div className="inputWrapper">
       <InputLabel className="label">
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
-      <Controller
-        control={control}
-        name={name}
-        render={({ onChange, value }) => (
-          <ReactQuill
-            className="input"
-            modules={modules}
-            formats={formats}
-            onChange={description => onChange(description)}
-            value={value || ''}
-            {...propsList}
-            preserveWhitespace
-          />
-        )}
+      <ReactQuill
+        className="input"
+        modules={modules}
+        formats={formats}
+        {...propsList}
+        preserveWhitespace
       />
-      <p className="error">
-        {errors[name] ? errors[name].message : null}
-      </p>
     </div>
   )
 }

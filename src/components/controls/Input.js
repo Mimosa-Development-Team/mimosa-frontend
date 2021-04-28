@@ -1,38 +1,20 @@
 import React from 'react'
 import { TextField, InputLabel } from '@material-ui/core'
-import { Controller } from 'react-hook-form'
 
 export default function Input(props) {
-  const {
-    name,
-    control,
-    type,
-    label,
-    asterisk,
-    errors,
-    ...propsList
-  } = props
+  const { label, asterisk, register, ...rest } = props
   return (
     <div className="inputWrapper">
       <InputLabel className="label">
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>
-      <Controller
-        name={name}
-        control={control}
-        label={label}
-        render={({ onChange, value }) => (
-          <TextField
-            size="small"
-            type={type}
-            className="input"
-            onChange={onChange}
-            variant="outlined"
-            value={value || ''}
-            {...propsList}
-          />
-        )}
+      <TextField
+        size="small"
+        className="input"
+        variant="outlined"
+        ref={register}
+        {...rest}
       />
     </div>
   )

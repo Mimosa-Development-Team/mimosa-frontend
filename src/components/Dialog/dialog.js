@@ -68,7 +68,6 @@ export default function ModalDialog({
   modal,
   setModal,
   data,
-  onReset,
   status,
   reset,
   submit,
@@ -135,7 +134,6 @@ export default function ModalDialog({
               onClick={() => {
                 setModal(!modal)
                 url()
-                onReset()
                 reset()
               }}
             >
@@ -148,6 +146,7 @@ export default function ModalDialog({
                 variant="outlined"
                 onClick={() => {
                   if (method === 'new' && status === 'draft') {
+                    console.log('here')
                     url()
                   } else if (method === 'new') {
                     setModal(false)
@@ -165,7 +164,6 @@ export default function ModalDialog({
                 disabled={submitLoading}
                 onClick={() => {
                   submitForm()
-                  onReset()
                 }}
               >
                 {(method === 'new' && status === 'draft') ||
