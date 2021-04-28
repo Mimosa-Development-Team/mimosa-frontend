@@ -146,7 +146,6 @@ export default function ModalDialog({
                 variant="outlined"
                 onClick={() => {
                   if (method === 'new' && status === 'draft') {
-                    console.log('here')
                     url()
                   } else if (method === 'new') {
                     setModal(false)
