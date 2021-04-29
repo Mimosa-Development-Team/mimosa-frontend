@@ -15,6 +15,7 @@ import * as yup from 'yup'
 import ModalDialog from 'components/Dialog/dialog'
 import ModalDelete from 'components/Dialog/delete'
 import moment from 'moment'
+import { ConnectedFocusError } from 'focus-formik-error'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
 import DeleteIcon from 'assets/images/icons/delete.svg'
@@ -24,13 +25,25 @@ import styles from './style.module.scss'
 const schema = yup.object().shape(
   {
     relatedmedia: yup.array().of(
-      yup.object().shape({
-        title: yup.string().when('link', {
-          is: value => !!value,
-          then: yup.string().required('* Mandatory Field')
-        })
-      }),
-      ['title', 'link']
+      yup.object().shape(
+        {
+          title: yup.string().when('link', {
+            is: value => !!value,
+            then: yup.string().required('* Mandatory Field')
+          }),
+          link: yup.string().when('title', {
+            is: value => !!value,
+            then: yup
+              .string()
+              .matches(
+                /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+                'Enter correct url!'
+              )
+              .required('* Mandatory')
+          })
+        },
+        ['title', 'link']
+      )
     ), // these constraints are shown if and only if inner constraints are satisfied
     subject: yup.string().required('* Mandatory Field'),
     author: yup
@@ -563,6 +576,7 @@ function ContributionForm({
             onSubmit={handleSubmit}
             className={`${styles.form}`}
           >
+            <ConnectedFocusError />
             <Grid
               container
               direction="row"
