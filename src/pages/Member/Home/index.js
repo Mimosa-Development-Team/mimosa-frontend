@@ -176,7 +176,10 @@ const MemberDashboard = () => {
                                     data.category !== 'question'
                                       ? data.parentQuestionUuid
                                       : data.uuid
-                                  }`
+                                  }`,
+                                  {
+                                    from: 'home'
+                                  }
                                 )
                               }}
                             >
@@ -193,7 +196,10 @@ const MemberDashboard = () => {
                               className={`${styles.content}`}
                               onClick={() => {
                                 history.push(
-                                  `/contribution/${data.uuid}`
+                                  `/contribution/${data.uuid}`,
+                                  {
+                                    from: 'home'
+                                  }
                                 )
                               }}
                             >
