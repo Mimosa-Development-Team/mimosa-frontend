@@ -536,11 +536,10 @@ function ContributionForm({
         }}
         defaultValue={{
           author: [
-            {
-              id: profile.id,
-              name: `${profile.firstName} ${profile.lastName}`,
-              userColor: profile.userColor
-            }
+            userData &&
+              userData.map(x => {
+                return x.id === profile.id
+              })
           ]
         }}
         validationSchema={schema}

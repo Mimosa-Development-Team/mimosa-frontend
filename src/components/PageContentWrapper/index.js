@@ -14,7 +14,7 @@ const PageContentWrapper = ({ children, backNav }) => {
       {backNav && (
         <div
           onClick={() => {
-            history.goBack()
+            history.push('/')
           }}
           className={`${styles.backNav}`}
         >
