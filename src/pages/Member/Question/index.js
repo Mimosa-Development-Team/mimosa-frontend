@@ -20,6 +20,7 @@ const Question = () => {
   } = useContribution()
 
   const [activeContribution, setActiveContribution] = useState(0)
+  const [from, setFrom] = useState('home')
 
   const contributionRef = useCallback(node => {
     if (node !== null) {
@@ -35,9 +36,11 @@ const Question = () => {
   }
 
   const location = useLocation()
-
   useEffect(() => {
-    if (location.state)
+    if (location.state && location.state.from) {
+      setFrom(location.state.from)
+    }
+    if (location.state && location.state.state)
       setActiveContribution(location.state.state)
   }, [location])
 
@@ -62,7 +65,7 @@ const Question = () => {
         </div>
       ) : (
         <>
-          <PageContentWrapper backNav>
+          <PageContentWrapper backNav from={from}>
             <Typography
               className={`${styles.title}`}
               variant="h1"
