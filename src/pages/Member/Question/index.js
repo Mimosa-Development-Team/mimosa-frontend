@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useGlobalState } from 'store/state'
+import getRawData from 'utils/parsing/Proxy'
 import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
 import PageWrapper from 'components/PageWrapper'
@@ -13,11 +15,12 @@ import { useContribution } from './hooks'
 import styles from './styles.module.scss'
 
 const Question = () => {
+  const { user } = useGlobalState()
   const {
     contribution,
     isLoading,
     getContribution
-  } = useContribution()
+  } = useContribution(getRawData(user).user.id)
 
   const [activeContribution, setActiveContribution] = useState(0)
   const [from, setFrom] = useState('home')
