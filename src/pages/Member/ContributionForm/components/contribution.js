@@ -905,8 +905,12 @@ function ContributionForm({
                     name="hypothesisStatus"
                     label="What is the verdict of your analysis?"
                     asterisk
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    onChange={e => {
+                      setFieldValue(
+                        'hypothesisStatus',
+                        e.target.value
+                      )
+                    }}
                     value={values.hypothesisStatus}
                     {...(errors.hypothesisStatus && {
                       error: true,
