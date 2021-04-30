@@ -118,6 +118,7 @@ function ContributionForm({
   useEffect(() => {
     if (relatedMediaData) {
       setRmedia([])
+
       for (let i = 0; i < relatedMediaData.length; i++) {
         if (relatedMediaData[i].conferenceName) {
           setConference({
@@ -550,7 +551,13 @@ function ContributionForm({
           parentId: null,
           parentUuid: null,
           relatedmedia: rMedia,
-          hypothesisStatus: 'supports'
+          hypothesisStatus: 'supports',
+          conferenceName:
+            (conference && conference.conferenceName) || '',
+          presentationDetails:
+            (conference && conference.presentationDetails) || '',
+          startTime: (conference && conference.startTime) || '',
+          endTime: (conference && conference.endTime) || ''
         }}
         defaultValue={{
           author: [
