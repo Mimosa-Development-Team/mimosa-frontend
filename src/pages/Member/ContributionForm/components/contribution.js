@@ -15,7 +15,7 @@ import * as yup from 'yup'
 import ModalDialog from 'components/Dialog/dialog'
 import ModalDelete from 'components/Dialog/delete'
 import moment from 'moment'
-import FormikErrorFocus from 'formik-error-focus'
+import { ConnectedFocusError } from 'focus-formik-error'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
 import DeleteIcon from 'assets/images/icons/delete.svg'
@@ -576,6 +576,7 @@ function ContributionForm({
             onSubmit={handleSubmit}
             className={`${styles.form}`}
           >
+            <ConnectedFocusError />
             <Grid
               container
               direction="row"
@@ -989,14 +990,6 @@ function ContributionForm({
                 ) : null}
               </Grid>
             </Grid>
-            <FormikErrorFocus
-              // See scroll-to-element for configuration options: https://www.npmjs.com/package/scroll-to-element
-              offset={0}
-              align="top"
-              focusDelay={200}
-              ease="linear"
-              duration={1000}
-            />
           </Form>
         )}
       </Formik>
