@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Chip from '@material-ui/core/Chip'
@@ -26,13 +27,26 @@ const AnalysisTag = ({ variant }) => {
       />
     )
   }
+  if (variant === 'unclear') {
+    tagLabel = 'UNCLEAR'
+    tagIcon = (
+      <ArrowDropDownIcon
+        fontSize="small"
+        style={{ color: 'orange' }}
+      />
+    )
+  }
   return (
     <Chip
       variant="outlined"
       label={tagLabel}
       icon={tagIcon}
       className={`${styles.chip} ${
-        variant === 'supports' ? styles.support : styles.refute
+        variant === 'supports'
+          ? styles.support
+          : variant === 'refutes'
+          ? styles.refute
+          : styles.unclear
       }`}
     />
   )
