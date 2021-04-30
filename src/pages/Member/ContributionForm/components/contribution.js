@@ -358,9 +358,14 @@ function ContributionForm({
       }
     }
 
-    if (val.relatedmedia) {
-      for (let i = 0; i < val.relatedmedia.length; i++) {
-        formFields.relatedMedia.push(val.relatedmedia[i])
+    if (val.relatedmedia.length > 0) {
+      for (let z = 0; z < val.relatedmedia.length; z++) {
+        if (
+          val.relatedmedia[z].title &&
+          val.relatedmedia[z].link
+        ) {
+          formFields.relatedMedia.push(val.relatedmedia[z])
+        }
       }
     }
 
