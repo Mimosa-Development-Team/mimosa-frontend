@@ -30,7 +30,8 @@ export default function ModalDialog({
   id,
   url,
   subContent,
-  category
+  category,
+  heirarchy
 }) {
   const classes = useStyles()
   const history = useHistory()
@@ -78,9 +79,18 @@ export default function ModalDialog({
             className="btn outline"
             disabled={deleteIsLoadingItem}
             onClick={() => {
-              if (category === 'question') {
+              if (heirarchy && category === 'question') {
+                history.push('/')
+              } else if (heirarchy && category !== 'question') {
+                url()
+                setDeleteForm(!deleteForm)
+              } else if (category === 'question' && !heirarchy) {
                 history.goBack()
-              } else if (url && category !== 'question') {
+              } else if (
+                url &&
+                category !== 'question' &&
+                !heirarchy
+              ) {
                 url()
                 setDeleteForm(!deleteForm)
               } else {

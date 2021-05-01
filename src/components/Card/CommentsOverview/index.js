@@ -100,6 +100,7 @@ const CommentsOverview = ({ contributionId }) => {
         deleteForm={deleteForm}
         setDeleteForm={setDeleteForm}
         url={() => {
+          setDeleteForm(!deleteForm)
           resetCommentDelete()
         }}
       />
