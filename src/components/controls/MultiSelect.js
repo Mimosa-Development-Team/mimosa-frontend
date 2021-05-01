@@ -6,6 +6,7 @@ export default function ControlledAutocomplete({
   options = [],
   label,
   control,
+  value,
   defaultValue,
   asterisk,
   name,
@@ -26,6 +27,7 @@ export default function ControlledAutocomplete({
         getOptionLabel={option => {
           return option.name ? option.name : option
         }}
+        value={value}
         defaultValue={defaultValue}
         onChange={onChange}
         renderInput={params => (

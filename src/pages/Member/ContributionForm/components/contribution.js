@@ -898,17 +898,29 @@ function ContributionForm({
                   </Grid>
                   <Grid item xs={12}>
                     <Controls.MultiSelect
-                      onChange={(e, options) => {
-                        const arr = options.map(val => {
-                          const obj = {}
-                          if (values.name) {
-                            return val
+                      onChange={async (e, options) => {
+                        const arr = []
+                        for (
+                          let i = 0;
+                          i < options.length;
+                          i++
+                        ) {
+                          if (options[i].name) {
+                            arr.push(options[i])
+                          } else {
+                            arr.push({ name: options[i] })
                           }
-                          obj.name = val
-
-                          return obj
-                        })
-                        setFieldValue('author', arr)
+                        }
+                        const filterArr = await arr.filter(
+                          (v, i, a) =>
+                            a.findIndex(
+                              t =>
+                                (t.name === v.name &&
+                                  t.id === v.id) ||
+                                (t.name === v.name && !t.id)
+                            ) === i
+                        )
+                        await setFieldValue('author', filterArr)
                       }}
                       name="author"
                       asterisk
@@ -920,6 +932,7 @@ function ContributionForm({
                         helperText: errors.author.message
                       })}
                       defaultValue={values.author}
+                      value={values.author}
                     />
                   </Grid>
                 </>
