@@ -77,7 +77,7 @@ const Card = ({
               {data.details && (
                 <Content
                   content={
-                    data.draft
+                    data && data.draft
                       ? data.draft.details
                       : data.details
                   }

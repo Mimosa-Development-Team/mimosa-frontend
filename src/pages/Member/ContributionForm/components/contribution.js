@@ -334,11 +334,12 @@ function ContributionForm({
     }
 
     if (
-      val.conferenceName &&
-      val.presentationDetails &&
-      val.startTime &&
-      val.endTime &&
-      method === 'update'
+      (val.conferenceName &&
+        val.presentationDetails &&
+        val.startTime &&
+        val.endTime &&
+        method === 'update') ||
+      conference.id
     ) {
       formFields.relatedMedia.push({
         conferenceName: val.conferenceName,
@@ -362,8 +363,9 @@ function ContributionForm({
     if (val.relatedmedia.length > 0) {
       for (let z = 0; z < val.relatedmedia.length; z++) {
         if (
-          val.relatedmedia[z].title &&
-          val.relatedmedia[z].link
+          (val.relatedmedia[z].title &&
+            val.relatedmedia[z].link) ||
+          val.relatedmedia[z].id
         ) {
           formFields.relatedMedia.push(val.relatedmedia[z])
         }
@@ -898,17 +900,29 @@ function ContributionForm({
                   </Grid>
                   <Grid item xs={12}>
                     <Controls.MultiSelect
-                      onChange={(e, options) => {
-                        const arr = options.map(val => {
-                          const obj = {}
-                          if (values.name) {
-                            return val
+                      onChange={async (e, options) => {
+                        const arr = []
+                        for (
+                          let i = 0;
+                          i < options.length;
+                          i++
+                        ) {
+                          if (options[i].name) {
+                            arr.push(options[i])
+                          } else {
+                            arr.push({ name: options[i] })
                           }
-                          obj.name = val
-
-                          return obj
-                        })
-                        setFieldValue('author', arr)
+                        }
+                        const filterArr = await arr.filter(
+                          (v, i, a) =>
+                            a.findIndex(
+                              t =>
+                                (t.name === v.name &&
+                                  t.id === v.id) ||
+                                (t.name === v.name && !t.id)
+                            ) === i
+                        )
+                        await setFieldValue('author', filterArr)
                       }}
                       name="author"
                       asterisk
@@ -920,6 +934,7 @@ function ContributionForm({
                         helperText: errors.author.message
                       })}
                       defaultValue={values.author}
+                      value={values.author}
                     />
                   </Grid>
                 </>
