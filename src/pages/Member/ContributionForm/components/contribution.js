@@ -570,11 +570,12 @@ function ContributionForm({
           ]
         }}
         validationSchema={schema}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           submitForm(values, values.status)
           setTimeout(() => {
             setSubmitting(false)
           }, 400)
+          resetForm()
         }}
       >
         {({
@@ -598,31 +599,62 @@ function ContributionForm({
               spacing={2}
             >
               <Grid item xs={12} sm={12}>
-                <div className={`${styles.btnBack}`}>
-                  <div className={`${styles.backNav}`}>
-                    <Typography
-                      className={`${styles.back}`}
-                      variant="h4"
-                      onClick={() => {
-                        if (dirty) {
-                          setBack(true)
-                          submitForm(values, 'draft')
-                        } else {
-                          questionUuid
-                            ? history.push(
-                                `/contribution/${questionUuid}`
-                              )
-                            : history.push('/')
-                        }
-                      }}
-                    >
-                      <span className={`${styles.icon}`}>
-                        <img src={BackIcon} alt="back" />
-                      </span>{' '}
-                      Back
-                    </Typography>
+                {(data &&
+                  data.children &&
+                  data.children.length <= 0 &&
+                  dirty) ||
+                (method === 'new' && dirty) ? (
+                  <button
+                    onClick={() => {
+                      setFieldValue('status', 'draft')
+                      setBack(true)
+                    }}
+                    type="submit"
+                    className={`${styles.btnBack}`}
+                  >
+                    <div className={`${styles.backNav}`}>
+                      <Typography
+                        className={`${styles.back}`}
+                        variant="h4"
+                      >
+                        <span className={`${styles.icon}`}>
+                          <img src={BackIcon} alt="back" />
+                        </span>
+                        Back
+                      </Typography>
+                    </div>
+                  </button>
+                ) : (
+                  <div
+                    onClick={() => {
+                      if (
+                        (data && data.parentQuestionId) ||
+                        questionUuid
+                      ) {
+                        history.push(
+                          `/contribution/${
+                            data.parentQuestionId || questionUuid
+                          }`
+                        )
+                      } else {
+                        history.goBack()
+                      }
+                    }}
+                    className={`${styles.btnBack}`}
+                  >
+                    <div className={`${styles.backNav}`}>
+                      <Typography
+                        className={`${styles.back}`}
+                        variant="h4"
+                      >
+                        <span className={`${styles.icon}`}>
+                          <img src={BackIcon} alt="back" />
+                        </span>
+                        Back
+                      </Typography>
+                    </div>
                   </div>
-                </div>
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="h1" gutterBottom>

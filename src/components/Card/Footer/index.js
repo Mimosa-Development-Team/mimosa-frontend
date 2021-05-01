@@ -33,7 +33,9 @@ const Footer = ({
     deleteMutate
   } = useQuestionForm()
 
-  const { getContribution } = useContribution()
+  const { getContribution } = useContribution(
+    getRawData(user).user.id
+  )
 
   const [modal, setModal] = useState(false)
 
@@ -68,6 +70,7 @@ const Footer = ({
         deleteMutate={deleteMutate}
         url={() => getContribution()}
         category={data.category}
+        heirarchy
         id={data ? data.id : null}
         deleteForm={modal}
         setDeleteForm={setModal}
