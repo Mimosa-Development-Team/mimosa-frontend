@@ -585,7 +585,7 @@ function ContributionForm({
           handleBlur,
           handleSubmit,
           setFieldValue,
-          dirty
+          isValid
         }) => (
           <Form
             onSubmit={handleSubmit}
@@ -602,8 +602,8 @@ function ContributionForm({
                 {(data &&
                   data.children &&
                   data.children.length <= 0 &&
-                  dirty) ||
-                (method === 'new' && dirty) ? (
+                  isValid) ||
+                (method === 'new' && isValid) ? (
                   <button
                     onClick={() => {
                       setFieldValue('status', 'draft')
