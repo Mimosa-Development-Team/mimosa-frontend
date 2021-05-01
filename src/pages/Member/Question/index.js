@@ -86,15 +86,27 @@ const Question = () => {
           <Hidden smDown implementation="css">
             <RightSidebar>
               <ContributionDetails
-                authors={activeContribution.author}
+                authors={
+                  activeContribution.draft
+                    ? activeContribution.draft.author
+                    : activeContribution.author
+                }
                 poster={activeContribution.postedBy}
                 posterColor={
                   activeContribution.userColorPoster
                     ? activeContribution.userColorPoster
                     : activeContribution.userColor
                 }
-                datePosted={activeContribution.createdAt}
-                dateModified={activeContribution.updatedAt}
+                datePosted={
+                  activeContribution.draft
+                    ? activeContribution.draft.createdAt
+                    : activeContribution.createdAt
+                }
+                dateModified={
+                  activeContribution.draft
+                    ? activeContribution.draft.dateModified
+                    : activeContribution.dateModified
+                }
               />
             </RightSidebar>
           </Hidden>
