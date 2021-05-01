@@ -334,11 +334,12 @@ function ContributionForm({
     }
 
     if (
-      val.conferenceName &&
-      val.presentationDetails &&
-      val.startTime &&
-      val.endTime &&
-      method === 'update'
+      (val.conferenceName &&
+        val.presentationDetails &&
+        val.startTime &&
+        val.endTime &&
+        method === 'update') ||
+      conference.id
     ) {
       formFields.relatedMedia.push({
         conferenceName: val.conferenceName,
@@ -362,8 +363,9 @@ function ContributionForm({
     if (val.relatedmedia.length > 0) {
       for (let z = 0; z < val.relatedmedia.length; z++) {
         if (
-          val.relatedmedia[z].title &&
-          val.relatedmedia[z].link
+          (val.relatedmedia[z].title &&
+            val.relatedmedia[z].link) ||
+          val.relatedmedia[z].id
         ) {
           formFields.relatedMedia.push(val.relatedmedia[z])
         }
