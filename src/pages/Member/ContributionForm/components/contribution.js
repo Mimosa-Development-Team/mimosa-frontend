@@ -746,7 +746,7 @@ function ContributionForm({
                   <Grid item sm={2}>
                     <Controls.Input
                       type="time"
-                      label="Start Time"
+                      label="Start Time GMT"
                       name="startTime"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -761,7 +761,7 @@ function ContributionForm({
                   <Grid item sm={2}>
                     <Controls.Input
                       type="time"
-                      label="End Time"
+                      label="End Time GMT"
                       name="endTime"
                       onChange={handleChange}
                       onBlur={handleBlur}
