@@ -3,7 +3,7 @@
 ### Setup Project Dependencies
 
 1. Clone or Download `git@github.com:Mimosa-Development-Team/mimosa-frontend.git`
-2. Open terminal and change direct to `mimosa-frontend` folder
+2. Open terminal and change directory to `mimosa-frontend` folder
 3. Run **`yarn install`** (yarn is required on your local machine)
 4. If there's and error on`react-scripts is not yet install`. Run **`npm install react-scripts --save`**
 
