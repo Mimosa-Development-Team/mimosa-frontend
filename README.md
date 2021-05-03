@@ -1,16 +1,52 @@
 ## React Boilerplate
 
+<<<<<<< HEAD
+### Requirements
+
+1. Node   - Download and install Node.js in https://nodejs.org/en/download
+2. Yarn   - Run `sudo npm install --global yarn` (for: Linux and macOS)
+          - Open CMD and Run as Administrator (Windows OS). Run `npm install --global yarn`
+3. Git    - https://git-scm.com/downloads. For macOS you might need to install homebrew and follow the steps on the link in your terminal.
+
+### Setup Project Dependencies
+
+1. Open Terminal and clone `git clone https://github.com/Mimosa-Development-Team/mimosa-frontend.git && cd mimosa-frontend`
+2. Run **`yarn install`**
+3. If there's an error on`react-scripts is not yet install`. Run **`yarn add react-scripts`**
+=======
 ### Setup Project Dependencies
 
 1. Clone or Download `git@github.com:Mimosa-Development-Team/mimosa-frontend.git`
 2. Open terminal and change directory to `mimosa-frontend` folder
 3. Run **`yarn install`** (yarn is required on your local machine)
 4. If there's and error on`react-scripts is not yet install`. Run **`npm install react-scripts --save`**
+>>>>>>> f07d1493dcb1288d4dc1d8d1fb636f0445d1ad44
 
 ### Orcid Configuration
 
 ** SANDBOX **
 
+<<<<<<< HEAD
+1. Register or signin to `https://sandbox.orcid.org/signin`. You can use any email with @mailinator.com. ex: `testmimosa@mailinator.com`
+![alt text](./files/orcid-sandbox-registration.png)
+2. Verify your registered email in `https://www.mailinator.com/v4/public/inboxes.jsp?to=18646713693`
+    Note: search your registered email in mailinator site under Public Inboxes. If result not found, click resend email verification in your sandbox account.
+![alt text](./files/mailinator-verify.png)
+3. Open your sandbox account and select Developer tools under your Profile Menu.
+4. Click on `Register for the free ORCID public API` button, check consent and continue to fill up the forms.
+![alt text](./files/register-pa.png)
+5. Put http://localhost:3000 on `Redirect URIs` field. You can add multiple URIs.
+![alt text](./files/forms.png)
+6. Click the save file icon.
+7. Open again the Developer tools under your Profile Menu and select the public API you created.
+![alt text](./files/developer-tools.png)
+8. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the Authorize Request url ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
+9. Open and edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save. Example below:
+```
+REACT_APP_BACKEND_URL=http://localhost:9000
+REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000
+```
+=======
 1. Register or signin to `https://sandbox.orcid.org/signin`
 2. Verify your registered email in `https://www.mailinator.com/v4/public/inboxes.jsp?to=18646713693`
     Note: search your registered email in mailinator site under Public Inboxes. If result not found, click resend email verification in your sandbox account.
@@ -21,10 +57,30 @@
 7. Open again the Developer tools under your Profile Menu and select the public API you created.
 8. Copy the Authorize Request url ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-XXDL0AE20JM95JAO&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
 9. Open edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save
+>>>>>>> f07d1493dcb1288d4dc1d8d1fb636f0445d1ad44
 
 
 ** PRODUCTION **
 
+<<<<<<< HEAD
+1. Register or signin to `https://orcid.org/signin`. 
+![alt text](./files/orcid-sandbox-registration.png)
+2. Verify your registered email.
+3. Open your account and select Developer tools under your Profile Menu.
+4. Click on `Register for the free ORCID public API` button, check consent and continue to fill up the forms.
+![alt text](./files/register-pa.png)
+5. Put http://localhost:3000 on `Redirect URIs` field. You can add multiple URIs.
+![alt text](./files/forms.png)
+6. Click the save file icon.
+7. Open again the Developer tools under your Profile Menu and select the public API you created.
+![alt text](./files/developer-tools.png)
+8. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the Authorize Request url ex: `https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
+9. Open and edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save. Example below:
+```
+REACT_APP_BACKEND_URL={your_app_url}
+REACT_APP_ORCID=https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://test-mimosa.com
+```
+=======
 1. Register or signin to `https://orcid.org/`
 2. Verify your registered email.
 3. Open your orcid account and select Developer tools under your Profile Menu.
@@ -34,6 +90,7 @@
 7. Open again the Developer tools under your Profile Menu and select the public API you created.
 8. Copy the Authorize Request url ex: `https://orcid.org/oauth/authorize?client_id=APP-XXDL0AE20JM95JAO&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
 9. Open edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save
+>>>>>>> f07d1493dcb1288d4dc1d8d1fb636f0445d1ad44
 
 Note: for additional reference, you may refer to Orcid's documentation here: https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2719
 
