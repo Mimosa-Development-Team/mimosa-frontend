@@ -46,16 +46,16 @@ REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-8Q07DBUY
 3. Open your account and select Developer tools under your Profile Menu.
 4. Click on `Register for the free ORCID public API` button, check consent and continue to fill up the forms.<br />
 ![alt text](./files/register-pa.png)
-5. Put http://localhost:3000 on `Redirect URIs` field. You can add multiple URIs.<br />
+5. Put your Domain Name ex: `https://openmimosa.org` on `Redirect URIs` field. You can add multiple URIs.<br />
 ![alt text](./files/forms.png)
 6. Click the save file icon.
 7. Open again the Developer tools under your Profile Menu and select the public API you created.<br />
 ![alt text](./files/developer-tools.png)
-8. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the Authorize Request url ex: `https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
+8. Select your Domain Name on Redirect URIs selection. Copy the Authorize Request url ex: `https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=https://openmimosa.org`
 9. Open and edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save. Example below:
 ```
 REACT_APP_BACKEND_URL=http://openmimosa.org
-REACT_APP_ORCID=https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://test-mimosa.com
+REACT_APP_ORCID=https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=https://openmimosa.org
 ```
 
 Note: for additional reference, you may refer to Orcid's documentation here: https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2719
