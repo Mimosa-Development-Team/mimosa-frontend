@@ -570,12 +570,11 @@ function ContributionForm({
           ]
         }}
         validationSchema={schema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting }) => {
           submitForm(values, values.status)
           setTimeout(() => {
             setSubmitting(false)
           }, 400)
-          resetForm()
         }}
       >
         {({
