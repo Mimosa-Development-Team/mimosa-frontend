@@ -62,7 +62,7 @@ Note: for additional reference, you may refer to Orcid's documentation here: htt
 
 ### Run/Start Project
 
-1. Run **`yarn start`** to start a local build of the project.
+1. Run **`yarn start`** on terminal inside your project folder to start a local build of the project.
 
 #### Production
 
