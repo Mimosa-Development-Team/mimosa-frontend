@@ -40,9 +40,9 @@ REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-8Q07DBUY
 
 ** PRODUCTION **
 
-1. Register or signin to `https://orcid.org/signin`. <br />
+1. Register or signin to `https://orcid.org/signin`. You have to use a valid email for verification. <br />
 ![alt text](./files/orcid-sandbox-registration.png)
-2. Verify your registered email.
+2. Verify to your registered email.
 3. Open your account and select Developer tools under your Profile Menu.
 4. Click on `Register for the free ORCID public API` button, check consent and continue to fill up the forms.<br />
 ![alt text](./files/register-pa.png)
