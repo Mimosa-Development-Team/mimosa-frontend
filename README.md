@@ -6,7 +6,7 @@
 1. Node   - Download and install Node.js in https://nodejs.org/en/download
 2. Yarn   - (Linux and macOS) Run `sudo npm install --global yarn` <br />
           - (Windows OS) Open CMD and Run as Administrator. Run `npm install --global yarn`
-3. Git    - Downnload and install Git in https://git-scm.com/downloads. For macOS you might need to install homebrew and follow the steps on the link in your terminal.
+3. Git    - Download and install Git in https://git-scm.com/downloads. For macOS you might need to install homebrew and follow the steps on the link in your terminal.
 
 ### Setup Project Dependencies
 
