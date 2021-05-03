@@ -35,6 +35,8 @@
 8. Copy the Authorize Request url ex: `https://orcid.org/oauth/authorize?client_id=APP-XXDL0AE20JM95JAO&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
 9. Open edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save
 
+Note: for additional reference, you may refer to Orcid's documentation here: https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2719
+
 ### Run/Start Project
 
 1. Run **`yarn start`** to start a local build of the project.
