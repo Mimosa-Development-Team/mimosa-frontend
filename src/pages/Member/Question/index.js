@@ -49,7 +49,7 @@ const Question = () => {
 
   useEffect(() => {
     getContribution()
-    if (contribution && location.state === undefined) {
+    if (contribution && location.state.state === undefined) {
       setActiveContribution(contribution)
     }
   }, [contribution, getContribution])
