@@ -1,5 +1,7 @@
-## React Boilerplate
+## MIMOSA FRONTEND
 
+### NOTE:
+Setup and run backend first before running frontend application. 
 
 ### Requirements
 
