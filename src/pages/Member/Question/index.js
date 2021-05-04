@@ -49,7 +49,7 @@ const Question = () => {
 
   useEffect(() => {
     getContribution()
-    if (contribution && location.state === undefined) {
+    if (contribution && location.state.state === undefined) {
       setActiveContribution(contribution)
     }
   }, [contribution, getContribution])
@@ -75,6 +75,7 @@ const Question = () => {
             >
               Question
             </Typography>
+            {console.log(activeContribution)}
             <ContributionHeirarchy
               getContribution={getContribution}
               contribution={contribution}
