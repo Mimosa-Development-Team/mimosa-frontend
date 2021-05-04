@@ -19,51 +19,53 @@
 
 ** SANDBOX **
 
-1. Register or signin to `https://sandbox.orcid.org/signin`. You can use any email with @mailinator.com. ex: `testmimosa@mailinator.com`
+1. Register or signin to `https://sandbox.orcid.org/signin`. <br />You can use any email with @mailinator.com. ex: `john.doe@mailinator.com`<br />
 ![alt text](./files/orcid-sandbox-registration.png)
 2. Verify your registered email in `https://www.mailinator.com/v4/public/inboxes.jsp?to=18646713693`
-    Note: search your registered email in mailinator site under Public Inboxes. If result not found, click resend email verification in your sandbox account.
+    Note: search your registered email in mailinator site under Public Inboxes. If result not found, click resend email verification in your sandbox account.<br />
 ![alt text](./files/mailinator-verify.png)
 3. Open your sandbox account and select Developer tools under your Profile Menu.
-4. Click on `Register for the free ORCID public API` button, check consent and continue to fill up the forms.
+4. Click on Register for the free ORCID public API button, check consent and continue to fill up the forms.<br />
 ![alt text](./files/register-pa.png)
-5. Put http://localhost:3000 on `Redirect URIs` field. You can add multiple URIs.
+5. Fill up the form with the name of your application, website URL, and Description of your application <br />
 ![alt text](./files/forms.png)
-6. Click the save file icon.
-7. Open again the Developer tools under your Profile Menu and select the public API you created.
+6. For redirect URIs field, input http://localhost:3000. You may also add multiple URIs if you want Orcid to have multiple authorize domain.
+7. Click the save file icon.
+8. Open again the Developer tools under your Profile Menu and select the public API you created.<br />
 ![alt text](./files/developer-tools.png)
-8. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the Authorize Request url ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
-9. Open and edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save. Example below:
+9. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
+10. Open and edit .env file in project directory and paste the OpenID/Implicit request url to `REACT_APP_ORCID=` and save. Example below:
 ```
 REACT_APP_BACKEND_URL=http://localhost:9000
-REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000
+REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=
 ```
 
 ** PRODUCTION **
 
-1. Register or signin to `https://orcid.org/signin`. 
+1. Register or signin to `https://orcid.org/signin`. You have to use a valid email for verification. <br />
 ![alt text](./files/orcid-sandbox-registration.png)
-2. Verify your registered email.
-3. Open your account and select Developer tools under your Profile Menu.
-4. Click on `Register for the free ORCID public API` button, check consent and continue to fill up the forms.
+2. Verify to your registered email.
+3. Open your sandbox account and select Developer tools under your Profile Menu.
+4. Click on Register for the free ORCID public API button, check consent and continue to fill up the forms.<br />
 ![alt text](./files/register-pa.png)
-5. Put http://localhost:3000 on `Redirect URIs` field. You can add multiple URIs.
+5. Fill up the form with the name of your application, website URL, and Description of your application <br />
 ![alt text](./files/forms.png)
-6. Click the save file icon.
-7. Open again the Developer tools under your Profile Menu and select the public API you created.
+6. For redirect URIs field, input `https://openmimosa.org`. You may also add multiple URIs if you want Orcid to have multiple authorize domain.
+7. Click the save file icon.
+8. Open again the Developer tools under your Profile Menu and select the public API you created.<br />
 ![alt text](./files/developer-tools.png)
-8. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the Authorize Request url ex: `https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000`
-9. Open and edit .env file in project directory and paste the Authorize Request url to `REACT_APP_ORCID=` and save. Example below:
+9. Select the URL you want to use on Redirect URIs selection. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
+10. Open and edit .env file in project directory and paste the OpenID/Implicit request url to `REACT_APP_ORCID=` and save. Example below:
 ```
-REACT_APP_BACKEND_URL={your_app_url}
-REACT_APP_ORCID=https://orcid.org/oauth/authorize?client_id=APP-8Q07DBUYRUB23UPV&response_type=code&scope=/authenticate&redirect_uri=http://test-mimosa.com
+REACT_APP_BACKEND_URL=http://openmimosa.org
+REACT_APP_ORCID=https://orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=
 ```
 
 Note: for additional reference, you may refer to Orcid's documentation here: https://info.orcid.org/documentation/api-tutorials/api-tutorial-get-and-authenticated-orcid-id/#easy-faq-2719
 
 ### Run/Start Project
 
-1. Run **`yarn start`** to start a local build of the project.
+1. Run **`yarn start`** on terminal inside your project folder to start a local build of the project.
 
 #### Production
 

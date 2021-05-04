@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from 'react-query'
 import { queryClient } from 'store/state'
 
+import { getCommentCountAPI } from '../Footer/api'
+import { COMMENT_GET_COUNT_QUERY_KEY } from '../Footer/constants'
+
 import {
   getCommentsAPI,
   postCommentAPI,
@@ -26,6 +29,20 @@ export const useComments = id => {
   })
 
   const {
+    data: commentCount,
+    isLoading: commentCountIsLoading,
+    error: commentCountError,
+    refetch: getCommentCount,
+    isSuccess: commentCountSuccess
+  } = useQuery(
+    [COMMENT_GET_COUNT_QUERY_KEY, { id }],
+    getCommentCountAPI,
+    {
+      enabled: false
+    }
+  )
+
+  const {
     data: addedComment,
     isLoading: addLoadingComment,
     error: addErrorComment,
@@ -33,6 +50,7 @@ export const useComments = id => {
   } = useMutation(postCommentAPI, {
     onSuccess: () => {
       refetch()
+      getCommentCount()
       queryClient.invalidateQueries(COMMENT_POST_QUERY_KEY)
     }
   })
@@ -61,6 +79,7 @@ export const useComments = id => {
   } = useMutation(deleteCommentAPI, {
     onSuccess: () => {
       refetch()
+      getCommentCount()
       queryClient.invalidateQueries(COMMENT_DELETE_QUERY_KEY)
     }
   })
@@ -71,6 +90,12 @@ export const useComments = id => {
     isLoading,
     isSuccess,
     error,
+
+    commentCount,
+    commentCountIsLoading,
+    commentCountError,
+    getCommentCount,
+    commentCountSuccess,
 
     addComment: postMutate,
     addedComment,
