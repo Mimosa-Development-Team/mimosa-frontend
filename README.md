@@ -36,7 +36,7 @@ Setup and run backend first before running frontend application.
 8. Open again the Developer tools under your Profile Menu and select the public API you created.<br />
 ![alt text](./files/developer-tools.png)
 9. If you'll use it on your local. Select the http://localhost:3000 on Redirect URIs selection. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
-10. Open and edit .env file in project directory and paste the OpenID/Implicit request url to `REACT_APP_ORCID=` and save. Example below:
+10. Open Project Folder. Copy and paste env.sample and rename the pasted file to .env. Copy OpenID/Implicit request url to `REACT_APP_ORCID=` and save. Example below:
 ```
 REACT_APP_BACKEND_URL=http://localhost:9000
 REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=
@@ -57,7 +57,7 @@ REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4
 8. Open again the Developer tools under your Profile Menu and select the public API you created.<br />
 ![alt text](./files/developer-tools.png)
 9. Select the URL you want to use on Redirect URIs selection. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
-10. Open and edit .env file in project directory and paste the OpenID/Implicit request url to `REACT_APP_ORCID=` and save. Example below:
+10. Open Project Folder. Copy and paste env.sample and rename the pasted file to .env. Copy OpenID/Implicit request url to `REACT_APP_ORCID=` and save. Example below:
 ```
 REACT_APP_BACKEND_URL=http://openmimosa.org
 REACT_APP_ORCID=https://orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=
