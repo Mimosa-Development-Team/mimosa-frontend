@@ -84,13 +84,13 @@ const Footer = ({
       {data && data.category === 'question' && (
         <>
           <Media
-            relatedMediaCount={data.relatedMediaCount}
+            contributionId={data.id}
             onMetaClick={onMetaClick}
             poster={data && data.parentQuestionId}
           />
           <Comments
-            commentCount={data.commentCount}
             onMetaClick={onMetaClick}
+            contributionId={data.id}
           />
         </>
       )}

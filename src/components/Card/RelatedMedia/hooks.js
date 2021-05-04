@@ -1,5 +1,7 @@
 import { useQuery, useMutation } from 'react-query'
 import { queryClient } from 'store/state'
+import { getRelatedMediaCountAPI } from '../Footer/api'
+import { RELATED_MEDIA_GET_COUNT_QUERY_KEY } from '../Footer/constants'
 import { getMediaAPI, postRelatedMedia } from './api'
 import {
   MEDIA_QUERY_KEY,
@@ -18,6 +20,20 @@ export const useMedia = id => {
   })
 
   const {
+    data: relatedMediaCount,
+    isLoading: relatedMediaCountIsLoading,
+    error: relatedMediaCountError,
+    refetch: getRelatedMediaCount,
+    isSuccess: relatedMediaCountSuccess
+  } = useQuery(
+    [RELATED_MEDIA_GET_COUNT_QUERY_KEY, { id }],
+    getRelatedMediaCountAPI,
+    {
+      enabled: false
+    }
+  )
+
+  const {
     data: addedData,
     isLoading: addMediaLoading,
     error: addMediaError,
@@ -27,6 +43,7 @@ export const useMedia = id => {
   } = useMutation(postRelatedMedia, {
     onSuccess: () => {
       refetch()
+      getRelatedMediaCount()
       queryClient.invalidateQueries(MEDIA_POST_QUERY_KEY)
     }
   })
@@ -37,6 +54,12 @@ export const useMedia = id => {
     isLoading,
     isSuccess,
     error,
+
+    relatedMediaCount,
+    relatedMediaCountIsLoading,
+    relatedMediaCountError,
+    getRelatedMediaCount,
+    relatedMediaCountSuccess,
 
     addedData,
     addMediaLoading,
