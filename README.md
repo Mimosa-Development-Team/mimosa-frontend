@@ -60,12 +60,8 @@ REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4
 ### Run/Start Project
 
 1. Go back to your terminal or CMD.
-2. 
+2. Make sure you are check-in `mimosa-frontend` project
 2. Run **`yarn start`** on terminal inside your project folder to start a local build of the project.
-
-#### Production
-
-1. Run **`yarn build`** to create a production build. The final output will be located in a **`/build`** folder.
 
 ---
 
