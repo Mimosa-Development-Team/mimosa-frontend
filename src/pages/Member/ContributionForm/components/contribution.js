@@ -200,7 +200,10 @@ function ContributionForm({
                   `/contribution/${addedData.data.uuid}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
-                  '/'
+                  '/',
+                {
+                  from: 'home'
+                }
               )
           break
         case 'hypothesis':
@@ -215,7 +218,10 @@ function ContributionForm({
                   `/contribution/${addedData.data.uuid}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
-                  '/'
+                  '/',
+                {
+                  from: 'home'
+                }
               )
           break
         case 'experiment':
@@ -230,7 +236,10 @@ function ContributionForm({
                   `/contribution/${addedData.data.uuid}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
-                  '/'
+                  '/',
+                {
+                  from: 'home'
+                }
               )
           break
         case 'data':
@@ -245,7 +254,10 @@ function ContributionForm({
                   `/contribution/${addedData.data.uuid}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
-                  '/'
+                  '/',
+                {
+                  from: 'home'
+                }
               )
           break
         default:
@@ -260,21 +272,32 @@ function ContributionForm({
           url = history.goBack()
           break
         case 'hypothesis':
-          url = history.push(`/contribution/${questionUuid}`)
+          url = history.push(`/contribution/${questionUuid}`, {
+            from: 'home'
+          })
           break
         case 'experiment':
-          url = history.push(`/contribution/${questionUuid}`)
+          url = history.push(`/contribution/${questionUuid}`, {
+            from: 'home'
+          })
           break
         case 'data':
-          url = history.push(`/contribution/${questionUuid}`)
+          url = history.push(`/contribution/${questionUuid}`, {
+            from: 'home'
+          })
           break
         default:
-          url = history.push(`/contribution/${questionUuid}`)
+          url = history.push(`/contribution/${questionUuid}`, {
+            from: 'home'
+          })
       }
     } else if (back) {
       if (data || addedData) {
         url = history.push(
-          `/contribution/${questionUuid || addedData.data.uuid}`
+          `/contribution/${questionUuid || addedData.data.uuid}`,
+          {
+            from: 'home'
+          }
         )
       } else {
         url = history.push('/')
@@ -335,7 +358,6 @@ function ContributionForm({
 
     if (
       (val.conferenceName &&
-        val.presentationDetails &&
         val.startTime &&
         val.endTime &&
         method === 'update') ||
@@ -344,7 +366,7 @@ function ContributionForm({
       formFields.relatedMedia.push({
         conferenceName: val.conferenceName,
         conferenceDateDetails: {
-          presentationDetails: val.presentationDetails,
+          presentationDetails: val.presentationDetails || '',
           startTime: val.startTime,
           endTime: val.endTime
         },
@@ -485,7 +507,10 @@ function ContributionForm({
             : history.push(
                 `/contribution/${
                   data.parentQuestionId || questionUuid
-                }`
+                }`,
+                {
+                  from: 'home'
+                }
               )
         }}
         id={data ? data.id : null}
@@ -633,7 +658,10 @@ function ContributionForm({
                         history.push(
                           `/contribution/${
                             data.parentQuestionId || questionUuid
-                          }`
+                          }`,
+                          {
+                            from: 'home'
+                          }
                         )
                       } else {
                         history.goBack()
