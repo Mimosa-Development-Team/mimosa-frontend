@@ -317,6 +317,7 @@ function ContributionForm({
       userId: profile.id,
       status: stat,
       version: '1.0.0',
+      uuid: data && data.uuid ? data.uuid : null,
       parentId:
         method === 'new'
           ? data && data.id
@@ -575,6 +576,7 @@ function ContributionForm({
           status: 'publish',
           conferenceId: (conference && conference.id) || null,
           version: '1.0.0',
+          uuid: null,
           parentId: null,
           parentUuid: null,
           relatedmedia: rMedia,
