@@ -101,15 +101,11 @@ const Question = () => {
                     ? activeContribution.userColorPoster
                     : activeContribution.userColor
                 }
-                datePosted={
-                  activeContribution.draft
-                    ? activeContribution.draft.createdAt
-                    : activeContribution.createdAt
-                }
+                datePosted={activeContribution.createdAt}
                 dateModified={
                   activeContribution.draft
-                    ? activeContribution.draft.dateModified
-                    : activeContribution.dateModified
+                    ? activeContribution.draft.updatedAt
+                    : activeContribution.updatedAt
                 }
               />
             </RightSidebar>
