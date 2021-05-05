@@ -89,7 +89,6 @@ const Question = () => {
           </PageContentWrapper>
           <Hidden smDown implementation="css">
             <RightSidebar>
-              {console.log(activeContribution)}
               <ContributionDetails
                 authors={
                   activeContribution.draft
