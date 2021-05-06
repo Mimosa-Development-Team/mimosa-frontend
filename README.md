@@ -31,7 +31,7 @@ git clone https://github.com/Mimosa-Development-Team/mimosa-frontend.git && cd m
 code .
 ```
 ![alt text](./files/fe-code.png)
-co
+
 3. Visual Studio Code will open automatically.
   - If Visual Studio Code didn't open.
     - Open Visual Studio Code
