@@ -42,6 +42,9 @@ code .
 5. On your Visual Studio Code. Click Terminal
 ![alt text](./files/fe-terminal.png)
 6. Run/Type `yarn install` on Visual Studio Code Terminal.
+  - **NOTE: **  For (WINDOWS).If you encounter error on `yarn install`. You need to allow external application
+    - Open powershell and Run as Administrator
+    - Type/Run Set-ExecutionPolicy Unrestricted 
 ![alt text](./files/fe-run-yarn.png)
 7. If there's an error on`react-scripts is not yet install`. Run **`yarn add react-scripts`** on your terminal.
 
