@@ -72,7 +72,7 @@ NPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
 11. Select `env.sample` on Files
 ![alt text](./files/fe-select-env.png)
 12. Remove url/link after `REACT_APP_ORCID=` and paste your copied OpenID/Implicit request from sandbox then save.
-13. Right click on `env.sample` and rename to `.env`
+13. Right click on `.env-example` and rename to `.env`
 
 ### Run/Start Project
 
