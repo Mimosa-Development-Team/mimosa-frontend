@@ -10,20 +10,31 @@ Setup and run backend first before running frontend application.
 - (LINUX or macOS) - Run sudo npm install --global yarn
 - (Windows OS) - Open CMD and Run as Administrator. Run npm install --global yarn
 3. Git - Download and install Git in https://git-scm.com/downloads. For macOS you might need to install homebrew and follow the steps on the link in your terminal.
+4. Visual Studio Code - Download and install in https://code.visualstudio.com/download
 
 
 ### Setup Project Dependencies
 
-1. Open Terminal and clone `git clone https://github.com/Mimosa-Development-Team/mimosa-frontend.git && cd mimosa-frontend`
-2. After Clone is success. Run **`yarn install`** on your terminal. 
-  - Make sure `mimosa-frontend` folder is open in your terminal
-    - Check if `mimosa-frontend` is visible on your terminal.
-    ![alt text](./files/fe-change-directory.png)    
-    - If `mimosa-frontend` is not visible. Open your Folder and find the `mimosa-frontend` folder.
-    - Type `cd` with space on your Terminal/CMD.
-    - Drag the folder in your Terminal/CMD and hit Enter in Terminal/CMD
-    ![alt text](./files/fe-drag.png)    
-3. If there's an error on`react-scripts is not yet install`. Run **`yarn add react-scripts`** on your terminal.
+1. Open Terminal and Run/Type
+```
+git clone https://github.com/Mimosa-Development-Team/mimosa-frontend.git && cd mimosa-frontend
+```
+2. After Clone is done. Type on terminal 
+```
+code .
+```
+3. Visual Studio Code will open automatically.
+  - If Visual Studio Code didn't open.
+    - Open Visual Studio Code
+    - Find your Project `mimosa-frontend` folder
+    ![alt text](./files/fe-drag-fd.png)
+    - Drag Project folder to Visual Studio Code
+    ![alt text](./files/fe-drag.png)
+4. On your Visual Studio Code. Click Terminal
+![alt text](./files/fe-terminal.png)
+5. Run/Type `yarn install` on Visual Studio Code Terminal.
+![alt text](./files/fe-run-yarn.png)
+5. If there's an error on`react-scripts is not yet install`. Run **`yarn add react-scripts`** on your terminal.
 
 ### Orcid Configuration
 
@@ -45,26 +56,19 @@ Setup and run backend first before running frontend application.
 ![alt text](./files/developer-tools.png)
 9. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JL
 NPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
-10. Open Project Folder and rename `env.sample` to `.env`
-11. Right Click on `.env` and edit the file with your file editor.
-12. Remove the `url` under `REACT_APP_ORCID=`
-13. Paste the OpenID/Implicit request that you copy on sandbox orcid after `REACT_APP_ORCID=` 
-
-Example 
-
-```
-REACT_APP_BACKEND_URL=http://localhost:9000
-REACT_APP_ORCID=https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=
-```
+10. Go back yo Visual Studio Code.
+11. Select `env.sample` on Files
+![alt text](./files/fe-select-env.png)
+12. Remove url/link after `REACT_APP_ORCID=` and paste your copied OpenID/Implicit request from sandbox then save.
+13. Right click on `env.sample` and rename to `.env`
 
 ### Run/Start Project
 
-1. Go back to your terminal or CMD.
-2. Make sure you are check-in `mimosa-frontend` project
-2. Run **`yarn start`** on terminal inside your project folder to start a local build of the project.
-
+1. On your Visual Studio Code Terminal. Run\Type 
+```
+yarn start
+```
 ---
-
 ### Folder Structure
 
 The project contains the following tree structure:
