@@ -71,7 +71,8 @@ export default function ModalDialog({
   status,
   reset,
   submit,
-  url
+  url,
+  subContent
 }) {
   const submitForm = () => {
     submit(data)
@@ -124,6 +125,8 @@ export default function ModalDialog({
                 ? 'Your contribution has been saved as draft'
                 : 'Changes have been published successfully'
               : content}
+            <br />
+            {subContent && !submitSuccess ? subContent : ''}
           </Typography>
         </div>
         <div style={{ marginTop: '30px', textAlign: 'center' }}>
@@ -167,10 +170,10 @@ export default function ModalDialog({
               >
                 {(method === 'new' && status === 'draft') ||
                 (method === 'update' && status === 'draft')
-                  ? 'SAVE AS DRAFT'
+                  ? 'Proceed'
                   : method === 'new'
-                  ? 'PUBLISH'
-                  : 'UPDATE'}
+                  ? 'Publish'
+                  : 'Update'}
               </Button>
             </>
           )}
