@@ -20,10 +20,10 @@ const Member = () => {
   const { user: proxyUser } = useGlobalState()
   const [hasSession, setHasSession] = useState(false)
   const [user, setUser] = useState(null)
+  const temp = getRawData(proxyUser)
 
   useEffect(() => {
-    const user = getRawData(proxyUser)
-    setHasSession(!isEmpty(user))
+    setHasSession(!isEmpty(temp))
     setUser(getRawData(proxyUser))
   }, [setHasSession, setUser, user, proxyUser])
 
