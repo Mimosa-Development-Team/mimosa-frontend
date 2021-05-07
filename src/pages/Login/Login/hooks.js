@@ -1,11 +1,12 @@
 import { useMutation } from 'react-query'
-
+import { useHistory } from 'react-router-dom'
 import { queryClient, useGlobalState } from 'store/state'
 
 import { postUserAPI } from './api'
 import { USER_LOGIN_KEY } from './constants'
 
 export const useUser = () => {
+  const history = useHistory()
   const {
     data: addedData,
     isLoading: addTodoLoading,
@@ -22,6 +23,7 @@ export const useUser = () => {
 
   if (isSuccess) {
     globalState.merge({ user: addedData, isLoggedIn: true })
+    history.push('/')
   }
 
   return {

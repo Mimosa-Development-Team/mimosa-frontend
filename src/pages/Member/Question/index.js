@@ -1,26 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
-import { useGlobalState } from 'store/state'
-import getRawData from 'utils/parsing/Proxy'
 import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import RightSidebar from 'components/RightSidebar'
 import loader from 'assets/images/loader_loading.gif'
-import { ROUTES } from '../constants'
+import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import ContributionHeirarchy from './components/ContributionHeirarchy'
 import ContributionDetails from './components/ContributionDetails'
 import { useContribution } from './hooks'
 import styles from './styles.module.scss'
 
-const Question = () => {
-  const { user } = useGlobalState()
+const Question = ({ user, hasSession }) => {
   const {
     contribution,
     isLoading,
     getContribution
-  } = useContribution(getRawData(user).user.id)
+  } = useContribution(hasSession ? user.user.id : null)
 
   const [activeContribution, setActiveContribution] = useState(0)
   const [from, setFrom] = useState('home')
@@ -61,10 +58,12 @@ const Question = () => {
   return (
     <PageWrapper
       showNav
-      links={ROUTES}
+      links={hasSession ? PRIVATE_ROUTES : ROUTES}
       contribution={contribution}
       activeContribution={activeContribution}
       onTreeClick={handleClick}
+      user={user}
+      hasSession={hasSession}
     >
       {isLoading ? (
         <div className="loaderWrapper">
@@ -85,11 +84,15 @@ const Question = () => {
               activeContribution={activeContribution}
               onCardClick={handleClick}
               contributionRef={contributionRef}
+              hasSession={hasSession}
+              user={user}
             />
           </PageContentWrapper>
           <Hidden smDown implementation="css">
             <RightSidebar>
               <ContributionDetails
+                hasSession={hasSession}
+                user={user}
                 authors={
                   activeContribution.draft
                     ? activeContribution.draft.author

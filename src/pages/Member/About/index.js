@@ -11,12 +11,17 @@ import ElifeLogo from 'assets/images/elife.svg'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 
-import { ROUTES } from '../constants'
+import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './styles.module.scss'
 
-const About = () => {
+const About = ({ user, hasSession }) => {
   return (
-    <PageWrapper showNav links={ROUTES}>
+    <PageWrapper
+      showNav
+      links={hasSession ? PRIVATE_ROUTES : ROUTES}
+      user={user}
+      hasSession={hasSession}
+    >
       <PageContentWrapper>
         <Grid container spacing={4} className={styles.container}>
           <Grid item xs={12} sm={3} className={styles.summary}>
@@ -212,7 +217,7 @@ const About = () => {
 
               <Typography className="mb-20">
                 <Link href="https://github.com/Mimosa-Development-Team">
-                  github.com/__mimosa__
+                  https://github.com/mimosa
                 </Link>
               </Typography>
 

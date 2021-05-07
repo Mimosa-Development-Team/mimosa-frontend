@@ -7,16 +7,16 @@ import PopupState, {
 import Paper from '@material-ui/core/Paper'
 import Fade from '@material-ui/core/Fade'
 import Avatar from '@material-ui/core/Avatar'
+import { useHistory } from 'react-router-dom'
 import ArrowIcon from 'assets/images/icons/arrow-down-white.png'
 import LogoutIcon from 'assets/images/icons/log-out.png'
-import { useGlobalState } from 'store/state'
-import getRawData from 'utils/parsing/Proxy'
+import GuestIcon from 'assets/images/guest.svg'
 import localForage from 'localforage'
+import capitalizeText from 'utils/parsing/capitalize'
 import styles from './styles.module.scss'
 
-const AccountDropdown = () => {
-  const { user } = useGlobalState()
-
+const AccountDropdown = ({ user, hasSession }) => {
+  const history = useHistory()
   const logout = () => {
     localForage
       .clear()
@@ -27,6 +27,7 @@ const AccountDropdown = () => {
         return err
       })
   }
+
   return (
     <PopupState variant="popper" popupId="account-popper">
       {popupState => (
@@ -37,17 +38,24 @@ const AccountDropdown = () => {
             className={`${styles.button}`}
             {...bindToggle(popupState)}
           >
-            <Avatar
-              className={`${styles.avatar}`}
-              style={{
-                backgroundColor: `${
-                  getRawData(user).user.userColor
-                }`
-              }}
-            >
-              {getRawData(user).user.firstName.charAt(0)}
-            </Avatar>
-            {getRawData(user).user.firstName}
+            {hasSession ? (
+              <Avatar
+                className={`${styles.avatar}`}
+                style={{
+                  backgroundColor: user.user.userColor
+                }}
+              >
+                {user.user.firstName.charAt(0)}
+              </Avatar>
+            ) : (
+              <img
+                src={GuestIcon}
+                className={`${styles.guest}`}
+              />
+            )}
+            {hasSession
+              ? capitalizeText(user.user.firstName)
+              : capitalizeText('guest')}
             <img
               alt="arrow down"
               src={ArrowIcon}
@@ -63,19 +71,35 @@ const AccountDropdown = () => {
           >
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={0}>
-                <Paper
-                  elevation={0}
-                  component="button"
-                  className={`${styles.popperButton}`}
-                  onClick={() => logout()}
-                >
-                  <img
-                    alt="logout"
-                    src={LogoutIcon}
-                    className={`${styles.icon}`}
-                  />
-                  Logout
-                </Paper>
+                {hasSession ? (
+                  <Paper
+                    elevation={0}
+                    component="button"
+                    className={`${styles.popperButton}`}
+                    onClick={() => logout()}
+                  >
+                    <img
+                      alt="logout"
+                      src={LogoutIcon}
+                      className={`${styles.icon}`}
+                    />
+                    Logout
+                  </Paper>
+                ) : (
+                  <Paper
+                    elevation={0}
+                    component="button"
+                    className={`${styles.popperButton}`}
+                    onClick={() => history.push('/login')}
+                  >
+                    <img
+                      alt="login"
+                      src={LogoutIcon}
+                      className={`${styles.icon}`}
+                    />
+                    Login
+                  </Paper>
+                )}
               </Fade>
             )}
           </Popper>

@@ -1,8 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useGlobalState } from 'store/state'
-import getRawData from 'utils/parsing/Proxy'
 
 import Typography from '@material-ui/core/Typography'
 
@@ -14,15 +12,14 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 
 import loader from 'assets/images/loader_loading.gif'
 
-import { ROUTES } from '../constants'
+import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import Dashboard from './components/Dashboard'
 
 import styles from './styles.module.scss'
 
 import { useUserContributions } from './hooks'
 
-const UserContributions = () => {
-  const { user } = useGlobalState()
+const UserContributions = ({ user, hasSession }) => {
   const history = useHistory()
   const [orderBy, setOrderBy] = useState('DESC')
   const {
@@ -31,7 +28,10 @@ const UserContributions = () => {
     refetch,
     getUserContributions,
     hasNextPage
-  } = useUserContributions(orderBy, getRawData(user).user.id)
+  } = useUserContributions(
+    orderBy,
+    hasSession ? user.user.id : null
+  )
 
   const [sort, setSort] = useState('Most Recent')
 
@@ -55,7 +55,12 @@ const UserContributions = () => {
     refetch()
   }, [refetch])
   return (
-    <PageWrapper showNav links={ROUTES}>
+    <PageWrapper
+      showNav
+      links={hasSession ? PRIVATE_ROUTES : ROUTES}
+      user={user}
+      hasSession={hasSession}
+    >
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />

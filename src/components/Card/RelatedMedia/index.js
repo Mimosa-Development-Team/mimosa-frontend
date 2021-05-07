@@ -6,9 +6,8 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core'
+import { isEmpty } from 'lodash'
 import { useForm } from 'react-hook-form'
-import getRawData from 'utils/parsing/Proxy'
-import { useGlobalState } from 'store/state'
 import Controls from 'components/controls/Controls'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -58,9 +57,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const RelatedMedia = ({ contributionId, userId }) => {
-  const { user } = useGlobalState()
-
+const RelatedMedia = ({
+  contributionId,
+  userId,
+  user,
+  hasSession
+}) => {
   const {
     getMedia,
     media,
@@ -116,7 +118,7 @@ const RelatedMedia = ({ contributionId, userId }) => {
         title: val.title,
         link: val.link
       },
-      userId: getRawData(user).user.id,
+      userId: hasSession ? user.user.id : null,
       contributionId
     }
     addData(formFields)
@@ -207,7 +209,9 @@ const RelatedMedia = ({ contributionId, userId }) => {
         {media && <Media media={media.media} />}
       </div>
       <div className={`${styles.buttonWrapper}`}>
-        {getRawData(user).user.id === userId ? (
+        {hasSession &&
+        !isEmpty(user) &&
+        user.user.id === userId ? (
           <Button
             className="btn dashed align-center"
             size="large"

@@ -1,7 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
+import { useGlobalState } from 'store/state'
+import getRawData from 'utils/parsing/Proxy'
 import AuthorMeta from 'components/Card/Footer/AuthorMeta'
 import DateMeta from 'components/Card/Footer/DateMeta'
 import Media from 'components/Card/Footer/Media'
@@ -9,8 +11,6 @@ import Comments from 'components/Card/Footer/Comments'
 import CardButton from 'components/CardButton'
 // import Bookmark from 'components/Card/Footer/Bookmark'
 import ModalDelete from 'components/Dialog/delete'
-import getRawData from 'utils/hookstate/getRawData'
-import { useGlobalState } from 'store/state'
 import capitalizeText from 'utils/parsing/capitalize'
 import { useContribution } from '../../../pages/Member/Question/hooks'
 import styles from './styles.module.scss'
@@ -26,7 +26,16 @@ const Footer = ({
   userColor
 }) => {
   const history = useHistory()
-  const { user } = useGlobalState()
+  const { user: proxyUser } = useGlobalState()
+  const [user, setuser] = useState(null)
+
+  useEffect(() => {
+    const getUser = getRawData(proxyUser)
+    if (getUser && getUser.user) {
+      setuser(getRawData(proxyUser).user)
+    }
+  }, [])
+
   const {
     deleteContribution,
     deleteIsLoadingContribution,
@@ -34,7 +43,7 @@ const Footer = ({
   } = useQuestionForm()
 
   const { getContribution } = useContribution(
-    getRawData(user).user.id
+    user ? user.id : null
   )
 
   const [modal, setModal] = useState(false)
@@ -87,6 +96,23 @@ const Footer = ({
             contributionId={data.id}
             onMetaClick={onMetaClick}
             poster={data && data.parentQuestionId}
+            // hasSession={hasSession}
+            // user={user}
+          />
+          <Comments
+            onMetaClick={onMetaClick}
+            contributionId={data.id}
+            // hasSession={hasSession}
+            // user={user}
+          />
+        </>
+      )}
+      {data && data.category === 'question' && (
+        <>
+          <Media
+            contributionId={data.id}
+            onMetaClick={onMetaClick}
+            poster={data && data.parentQuestionId}
           />
           <Comments
             onMetaClick={onMetaClick}
@@ -96,7 +122,7 @@ const Footer = ({
       )}
       {hideEdit !== true && data ? (
         <>
-          {data.userId === getRawData(user).user.id ? (
+          {user && data.userId === user.id ? (
             <CardButton
               action="edit"
               onClick={() => {
@@ -111,18 +137,19 @@ const Footer = ({
               }}
             />
           ) : null}
-          {getRawData(user).user.role === 'admin' ||
-          data.userId === getRawData(user).user.id ? (
+          {(user && user.role === 'admin') ||
+          (user && data.userId === user.id) ? (
             <CardButton
               action="delete"
               onClick={() => setModal(true)}
             />
           ) : null}
-          {(data.category !== 'analysis' &&
-            data.userId === getRawData(user).user.id &&
+          {(user &&
+            data.category !== 'analysis' &&
+            data.userId === user.id &&
             data.children !== undefined &&
             data.children.length <= 0) ||
-          data.category === 'data' ? (
+          (user && data.category === 'data') ? (
             <CardButton
               action="contribute"
               onClick={() => {

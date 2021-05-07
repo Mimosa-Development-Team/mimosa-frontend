@@ -1,0 +1,49 @@
+@import '~global/styles';
+
+.midAsterisk {
+  height: 100px;
+  width: 98px;
+  position: absolute;
+  top: 50px;
+  left: -48px;
+}
+
+.header {
+  margin-bottom: 9px;
+  font-family: 'Roboto-Medium';
+  font-size: 24px;
+  letter-spacing: 0.75px;
+  line-height: 28px;
+}
+
+.subheader {
+  margin-bottom: 34px;
+  color: #8a8a8a;
+  font-family: 'Roboto';
+  font-size: 16px;
+  letter-spacing: 0.1px;
+  line-height: 19px;
+  font-weight: normal !important;
+}
+
+.loginBtn {
+  box-shadow: none;
+  background: $lightgreen;
+  color: $white;
+  border-radius: 12px;
+  text-transform: none;
+  height: 45px;
+  width: 198px;
+
+  span {
+    font-family: 'SFNS Display Regular';
+    font-size: 15px;
+    letter-spacing: 0.1px;
+    line-height: 16px;
+  }
+
+  img {
+    width: 22px;
+    margin-right: 7px;
+  }
+}

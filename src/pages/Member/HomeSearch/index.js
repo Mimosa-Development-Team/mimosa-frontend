@@ -7,11 +7,11 @@ import SearchField from 'components/SearchField'
 import NoResultsFound from 'components/NoResultsFound'
 import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
-import { ROUTES } from '../constants'
+import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './styles.module.scss'
 import { useResults } from './hooks'
 
-const HomeSearch = () => {
+const HomeSearch = ({ user, hasSession }) => {
   const history = useHistory()
 
   const term = window.location.pathname.split('=').pop()
@@ -34,7 +34,12 @@ const HomeSearch = () => {
   }, [getResults, search])
 
   return (
-    <PageWrapper showNav links={ROUTES}>
+    <PageWrapper
+      showNav
+      links={hasSession ? PRIVATE_ROUTES : ROUTES}
+      user={user}
+      hasSession={hasSession}
+    >
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />
