@@ -101,16 +101,20 @@ export default function ModalDialog({
       disableBackdropClick
     >
       <div style={modalStyle} className={classes.paper}>
-        <Typography variant="h1" align="center">
-          {submitSuccess ? (
-            <div>
-              <CheckCircleOutlineIcon className={classes.icon} />
-              <p>Succcess</p>
-            </div>
-          ) : (
-            header
-          )}
-        </Typography>
+        {header || submitSuccess ? (
+          <Typography variant="h1" align="center">
+            {submitSuccess ? (
+              <div>
+                <CheckCircleOutlineIcon
+                  className={classes.icon}
+                />
+                <p>Success</p>
+              </div>
+            ) : (
+              header
+            )}
+          </Typography>
+        ) : null}
         <div className={classes.content}>
           <Typography
             variant="subtitle1"
