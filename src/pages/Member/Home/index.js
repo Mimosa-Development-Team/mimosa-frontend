@@ -183,13 +183,9 @@ const MemberDashboard = ({ user, hasSession }) => {
                               className={`${styles.content}`}
                               onClick={() => {
                                 history.push(
-                                  `/contribution/${
-                                    data.status === 'draft' &&
-                                    data.category !== 'question'
-                                      ? data.parentQuestionUuid
-                                      : data.uuid
-                                  }`,
+                                  `/contribution/${data.parentQuestionUuid}`,
                                   {
+                                    state: data,
                                     from: 'home'
                                   }
                                 )
@@ -212,6 +208,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                 history.push(
                                   `/contribution/${data.uuid}`,
                                   {
+                                    state: data,
                                     from: 'home'
                                   }
                                 )
