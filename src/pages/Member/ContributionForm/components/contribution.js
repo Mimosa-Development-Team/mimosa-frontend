@@ -63,6 +63,10 @@ const schema = yup.object().shape(
     endTime: yup.string().when('conferenceName', {
       is: value => !!value,
       then: yup.string().required('* Mandatory Field')
+    }),
+    presentationDetails: yup.string().when('conferenceName', {
+      is: value => !!value,
+      then: yup.string().required('* Mandatory Field')
     })
   },
   ['conferenceName', 'startTime']
@@ -460,11 +464,10 @@ function ContributionForm({
       />
       <ModalDialog
         type={capitalizeText(type)}
-        header="Draft Contribution"
-        content="Do you want to proceed?"
-        subContent={`This ${capitalizeText(
+        header=""
+        content={` Save this ${capitalizeText(
           type
-        )} will be saved as draft?`}
+        )} as Draft and proceed?`}
         method={method}
         submitLoading={
           method === 'new'
@@ -1081,7 +1084,6 @@ function ContributionForm({
               </Grid>
             </Grid>
             <FormikErrorFocus
-              // See scroll-to-element for configuration options: https://www.npmjs.com/package/scroll-to-element
               offset={0}
               align="top"
               focusDelay={200}

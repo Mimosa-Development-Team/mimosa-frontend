@@ -49,7 +49,7 @@ export default function ModalDialog({
           {deleteItem ? (
             <div>
               <CheckCircleOutlineIcon className={classes.icon} />
-              <p>Succcess</p>
+              <p>Success</p>
             </div>
           ) : (
             header
