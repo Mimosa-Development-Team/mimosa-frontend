@@ -183,7 +183,11 @@ const MemberDashboard = ({ user, hasSession }) => {
                               className={`${styles.content}`}
                               onClick={() => {
                                 history.push(
-                                  `/contribution/${data.parentQuestionUuid}`,
+                                  `/contribution/${
+                                    data.category === 'question'
+                                      ? data.uuid
+                                      : data.parentQuestionUuid
+                                  }`,
                                   {
                                     state: data,
                                     from: 'home'
