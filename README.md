@@ -26,24 +26,27 @@ Clone repository
 git clone https://github.com/Mimosa-Development-Team/mimosa-frontend.git && cd mimosa-frontend
 ```
 ![alt text](./files/fe-clone.png)
-2. After Clone is done. Type on terminal 
+3. After Clone is done. Type on terminal 
 ```
 code .
 ```
 ![alt text](./files/fe-code.png)
-co
-3. Visual Studio Code will open automatically.
+
+4. Visual Studio Code will open automatically.
   - If Visual Studio Code didn't open.
     - Open Visual Studio Code
     - Find your Project `mimosa-frontend` folder
     ![alt text](./files/fe-drag-fd.png)
     - Drag Project folder to Visual Studio Code
     ![alt text](./files/fe-drag.png)
-4. On your Visual Studio Code. Click Terminal
+5. On your Visual Studio Code. Click Terminal
 ![alt text](./files/fe-terminal.png)
-5. Run/Type `yarn install` on Visual Studio Code Terminal.
+6. Run/Type `yarn install` on Visual Studio Code Terminal.
+  - **NOTE: **  For (WINDOWS).If you encounter error on `yarn install`. You need to allow external application
+    - Open powershell and Run as Administrator
+    - Type/Run Set-ExecutionPolicy Unrestricted 
 ![alt text](./files/fe-run-yarn.png)
-5. If there's an error on`react-scripts is not yet install`. Run **`yarn add react-scripts`** on your terminal.
+7. If there's an error on`react-scripts is not yet install`. Run **`yarn add react-scripts`** on your terminal.
 
 ### Orcid Configuration
 
@@ -66,10 +69,10 @@ co
 9. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JL
 NPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
 10. Go back yo Visual Studio Code.
-11. Select `env.sample` on Files
+11. Select `env.example` on Files
 ![alt text](./files/fe-select-env.png)
 12. Remove url/link after `REACT_APP_ORCID=` and paste your copied OpenID/Implicit request from sandbox then save.
-13. Right click on `env.sample` and rename to `.env`
+13. Right click on `.env-example` and rename to `.env`
 
 ### Run/Start Project
 
