@@ -30,7 +30,7 @@ const MemberDashboard = ({ user, hasSession }) => {
     refetch,
     getQuestions,
     hasNextPage
-  } = useQuestions(orderBy, (user && user.user.id) || null)
+  } = useQuestions(orderBy, user ? user.user.id : null)
   const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
   const { results, getResults } = useResults(search)
