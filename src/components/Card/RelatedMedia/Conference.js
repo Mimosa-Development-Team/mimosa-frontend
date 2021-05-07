@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import moment from 'moment'
@@ -8,13 +9,12 @@ import styles from './styles.module.scss'
 const Conference = ({ conference }) => {
   return (
     <>
-      {(conference &&
-      conference.length > 0 &&
-      conference[0].conferenceName !== ''
+      {(conference && conference.length > 0
         ? conference
         : [] || []
-      ).map((data, i) => {
-        return i === 0 ? (
+      ).map(data => {
+        return Object.keys(data.conferenceDateDetails).length >
+          0 ? (
           <div className={`${styles.conference}`}>
             <Typography variant="h4">
               {data.conferenceName}
