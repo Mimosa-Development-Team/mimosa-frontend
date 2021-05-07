@@ -96,23 +96,6 @@ const Footer = ({
             contributionId={data.id}
             onMetaClick={onMetaClick}
             poster={data && data.parentQuestionId}
-            // hasSession={hasSession}
-            // user={user}
-          />
-          <Comments
-            onMetaClick={onMetaClick}
-            contributionId={data.id}
-            // hasSession={hasSession}
-            // user={user}
-          />
-        </>
-      )}
-      {data && data.category === 'question' && (
-        <>
-          <Media
-            contributionId={data.id}
-            onMetaClick={onMetaClick}
-            poster={data && data.parentQuestionId}
           />
           <Comments
             onMetaClick={onMetaClick}
