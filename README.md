@@ -69,7 +69,7 @@ code .
 9. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JL
 NPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
 10. Go back yo Visual Studio Code.
-11. Select `env.sample` on Files
+11. Select `env.example` on Files
 ![alt text](./files/fe-select-env.png)
 12. Remove url/link after `REACT_APP_ORCID=` and paste your copied OpenID/Implicit request from sandbox then save.
 13. Right click on `.env-example` and rename to `.env`
