@@ -459,7 +459,7 @@ function ContributionForm({
       <ModalDialog
         type={capitalizeText(type)}
         header="Draft Contribution"
-        content={`Do you want to proceed? \n\nAASD`}
+        content="Do you want to proceed?"
         subContent={`This ${capitalizeText(
           type
         )} will be saved as draft?`}
