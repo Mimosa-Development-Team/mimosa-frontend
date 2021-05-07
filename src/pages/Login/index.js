@@ -12,8 +12,7 @@ const Login = () => {
     <div className="wrapper">
       <div className="appMain">
         <Switch>
-          <Route exact path="/" component={LoginDashboard} />
-          {/* <Route exact path="/home" component={TEST} /> */}
+          <Route path="/" component={LoginDashboard} />
           <Route
             path="/maintenance"
             component={PageMaintenance}

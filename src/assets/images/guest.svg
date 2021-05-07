@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" height="45" viewBox="0 0 45 45">
+  <defs>
+    <polygon id="guest-a" points="0 0 45 0 45 45 0 45"/>
+    <polygon id="guest-c" points="0 45 45 45 45 0 0 0"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="guest-b" fill="#fff">
+      <use xlink:href="#guest-a"/>
+    </mask>
+    <path fill="#7B4A94" d="M44.9999,22.4999 C44.9999,34.9259 34.9269,44.9999 22.4999,44.9999 C10.0739,44.9999 -0.0001,34.9259 -0.0001,22.4999 C-0.0001,10.0739 10.0739,-0.0001 22.4999,-0.0001 C34.9269,-0.0001 44.9999,10.0739 44.9999,22.4999" mask="url(#guest-b)"/>
+    <mask id="guest-d" fill="#fff">
+      <use xlink:href="#guest-c"/>
+    </mask>
+    <polygon fill="#FFF" points="20.291 34.113 25.61 34.113 25.61 12.032 20.291 12.032" mask="url(#guest-d)"/>
+    <polygon fill="#FFF" points="12.061 26.39 31.136 15.345 33.74 19.856 14.665 30.901" mask="url(#guest-d)"/>
+    <polygon fill="#FFF" points="14.66 15.211 33.77 26.264 31.172 30.796 12.061 19.744" mask="url(#guest-d)"/>
+  </g>
+</svg>

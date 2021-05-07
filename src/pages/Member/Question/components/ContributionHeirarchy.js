@@ -8,7 +8,9 @@ const ContributionHeirarchy = ({
   activeContribution,
   getContribution,
   onCardClick,
-  contributionRef
+  contributionRef,
+  hasSession,
+  user
 }) => {
   const ConditionalWrapper = ({
     condition,
@@ -16,7 +18,14 @@ const ContributionHeirarchy = ({
     children
   }) => (condition ? wrapper(children) : children)
 
-  const CategoryWrapper = ({ data, getContribution }) => {
+  const CategoryWrapper = ({
+    data,
+    getContribution,
+    user,
+    hasSession
+  }) => {
+    const finalSession = hasSession
+    const finalUser = user
     return (
       <>
         {data ? (
@@ -24,6 +33,8 @@ const ContributionHeirarchy = ({
             <CardWrapper
               getContribution={getContribution}
               data={data}
+              hasSession={finalSession}
+              user={finalUser}
             />{' '}
             <ConditionalWrapper
               condition={
@@ -53,7 +64,12 @@ const ContributionHeirarchy = ({
       </>
     )
   }
-  const CardWrapper = ({ data, getContribution }) => {
+  const CardWrapper = ({
+    data,
+    getContribution,
+    user,
+    hasSession
+  }) => {
     return (
       <li
         className={`${styles[data.category]} ${
@@ -72,6 +88,8 @@ const ContributionHeirarchy = ({
         onClick={() => onCardClick(data)}
       >
         <Card
+          hasSession={hasSession}
+          user={user}
           getContribution={getContribution}
           data={data}
           treeView
@@ -86,6 +104,8 @@ const ContributionHeirarchy = ({
     <div className={`${styles.heirarchyWrapper}`}>
       <ul className={`${styles.heirarchyList}`}>
         <CategoryWrapper
+          user={user}
+          hasSession={hasSession}
           getContribution={getContribution}
           data={contribution}
         />

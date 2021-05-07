@@ -15,6 +15,8 @@ const Card = ({
   parentTitle,
   isExpanded,
   linesToShow,
+  user,
+  hasSession,
   hideEdit,
   getContribution
 }) => {
@@ -86,6 +88,8 @@ const Card = ({
                 />
               )}
               <Footer
+                user={user}
+                hasSession={hasSession}
                 getContribution={getContribution}
                 data={data}
                 userColor={
@@ -101,6 +105,8 @@ const Card = ({
             </div>
             {showDetails && (
               <QuestionDetails
+                hasSession={hasSession}
+                user={user}
                 userId={data.userId}
                 contributionId={data.id}
                 activeTab={activeTab}

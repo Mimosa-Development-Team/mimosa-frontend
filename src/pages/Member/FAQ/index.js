@@ -6,12 +6,12 @@ import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import NoResultsFound from 'components/NoResultsFound'
 import loader from 'assets/images/loader_loading.gif'
-import { ROUTES } from '../constants'
+import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import VerticalTab from './components/VerticalTab'
 import SearchResults from './components/SearchResults'
 import { useFaq, useFaqResults } from './hooks'
 
-const MemberFAQ = () => {
+const MemberFAQ = ({ user, hasSession }) => {
   const { faq, isLoading, getFaq } = useFaq()
   const [searchFaq, setSearchFaq] = useState('')
   const [showResults, setShowResults] = useState(false)
@@ -49,7 +49,12 @@ const MemberFAQ = () => {
   }, [getFaqResults, searchFaq])
 
   return (
-    <PageWrapper showNav links={ROUTES}>
+    <PageWrapper
+      showNav
+      links={hasSession ? PRIVATE_ROUTES : ROUTES}
+      user={user}
+      hasSession={hasSession}
+    >
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />

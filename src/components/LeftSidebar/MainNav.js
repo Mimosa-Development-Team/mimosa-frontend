@@ -11,7 +11,9 @@ const MainNav = ({
   links,
   contribution,
   activeContribution,
-  onTreeClick
+  onTreeClick,
+  user,
+  hasSession
 }) => {
   const location = useLocation()
   const history = useHistory()
@@ -56,7 +58,7 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
-        <AccountDropdown />
+        <AccountDropdown user={user} hasSession={hasSession} />
       </div>
     </div>
   )

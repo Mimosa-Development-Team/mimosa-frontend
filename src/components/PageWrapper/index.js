@@ -14,7 +14,9 @@ const PageWrapper = ({
   links,
   contribution,
   activeContribution,
-  onTreeClick
+  onTreeClick,
+  hasSession,
+  user
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -40,6 +42,8 @@ const PageWrapper = ({
         <LeftSidebar
           showNav={showNav}
           links={links}
+          hasSession={hasSession}
+          user={user}
           mobileOpen={mobileOpen}
           handleDrawerToggle={handleDrawerToggle}
           contribution={contribution}

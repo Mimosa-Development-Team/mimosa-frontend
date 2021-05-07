@@ -33,7 +33,9 @@ const QuestionDetails = ({
   contributionId,
   activeTab,
   handleTabChange,
-  userId
+  userId,
+  user,
+  hasSession
 }) => {
   return (
     <div className={`${styles.questionDetails}`}>
@@ -70,12 +72,16 @@ const QuestionDetails = ({
       </Tabs>
       <TabPanel value={activeTab} index={0}>
         <RelatedMedia
+          user={user}
+          hasSession={hasSession}
           userId={userId}
           contributionId={contributionId}
         />
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
         <CommentsOverview
+          user={user}
+          hasSession={hasSession}
           userId={userId}
           contributionId={contributionId}
         />

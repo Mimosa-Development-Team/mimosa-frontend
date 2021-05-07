@@ -12,7 +12,9 @@ const LeftSidebar = ({
   activeContribution,
   onTreeClick,
   mobileOpen,
-  handleDrawerToggle
+  handleDrawerToggle,
+  user,
+  hasSession
 }) => {
   return (
     <>
@@ -31,6 +33,8 @@ const LeftSidebar = ({
         >
           {showNav && (
             <MainNav
+              user={user}
+              hasSession={hasSession}
               links={links}
               contribution={contribution}
               activeContribution={activeContribution}
@@ -50,6 +54,8 @@ const LeftSidebar = ({
         >
           {showNav && (
             <MainNav
+              user={user}
+              hasSession={hasSession}
               links={links}
               contribution={contribution}
               activeContribution={activeContribution}

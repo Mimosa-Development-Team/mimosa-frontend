@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { isEmpty } from 'lodash'
 import { Avatar, Button } from '@material-ui/core'
 import Controls from 'components/controls/Controls'
 import ModalDelete from 'components/Dialog/delete'
+import LoginModal from 'components/Dialog/login'
+import GuestIcon from 'assets/images/guest.svg'
 import { useForm } from 'react-hook-form'
-import { useGlobalState } from 'store/state'
-import getRawData from 'utils/parsing/Proxy'
 import Comment from './Comment'
 import { useComments } from './hooks'
 import styles from './styles.module.scss'
 
-const CommentsOverview = ({ contributionId }) => {
-  const { user } = useGlobalState()
-
+const CommentsOverview = ({
+  contributionId,
+  user,
+  hasSession
+}) => {
   const {
     comments,
     getComments,
@@ -33,6 +36,7 @@ const CommentsOverview = ({ contributionId }) => {
   const [deleteForm, setDeleteForm] = useState(false)
   const [activeComment, setActiveComment] = useState(null)
   const [editing, setEditing] = useState(false)
+  const [modal, setModal] = useState(false)
 
   const {
     handleSubmit,
@@ -47,11 +51,14 @@ const CommentsOverview = ({ contributionId }) => {
   })
 
   const onSubmit = data => {
-    if (data.comment.replace(/\s/g, '').length > 0) {
+    if (
+      data.comment.replace(/\s/g, '').length > 0 &&
+      hasSession
+    ) {
       const formFields = {
         comment: data.comment,
         contributionId,
-        userId: getRawData(user).user.id
+        userId: user && user.user.id
       }
       if (editing) {
         formFields.id = activeComment
@@ -90,6 +97,7 @@ const CommentsOverview = ({ contributionId }) => {
 
   return (
     <>
+      <LoginModal modal={modal} setModal={setModal} />
       <ModalDelete
         header="Delete a Comment"
         content="Are you sure you want to delete this comment?"
@@ -110,14 +118,18 @@ const CommentsOverview = ({ contributionId }) => {
             editing ? styles.active : ''
           }`}
         >
-          <Avatar
-            className={`${styles.avatar}`}
-            style={{
-              backgroundColor: getRawData(user).user.userColor
-            }}
-          >
-            {getRawData(user).user.firstName.charAt(0)}
-          </Avatar>
+          {!isEmpty(user) ? (
+            <Avatar
+              className={`${styles.avatar}`}
+              style={{
+                backgroundColor: `${user.user.userColor}`
+              }}
+            >
+              {!isEmpty(user) && user.user.firstName.charAt(0)}
+            </Avatar>
+          ) : (
+            <img className={`${styles.guest}`} src={GuestIcon} />
+          )}
           <form
             className={`${styles.form}`}
             onSubmit={handleSubmit(onSubmit)}
@@ -126,6 +138,7 @@ const CommentsOverview = ({ contributionId }) => {
               className={`${styles.input}`}
               name="comment"
               control={control}
+              disabled={!hasSession}
               placeholder="Write a comment..."
               addedComment={addedComment}
               addLoadingComment={addLoadingComment}
@@ -134,6 +147,11 @@ const CommentsOverview = ({ contributionId }) => {
             <Button
               type="submit"
               className={`${styles.submitBtn} btn primary`}
+              onClick={() => {
+                if (!hasSession) {
+                  setModal(true)
+                }
+              }}
             >
               {editing ? 'UPDATE' : 'ADD'}
             </Button>
@@ -167,10 +185,10 @@ const CommentsOverview = ({ contributionId }) => {
               data={data}
               onDelete={handleDelete}
               onEdit={handleEdit}
-              raw={getRawData(user).user}
+              raw={!isEmpty(user) && user.user}
               hasActions={
-                getRawData(user).user.orcidId ===
-                data.mmUser.orcidId
+                !isEmpty(user) &&
+                user.user.orcidId === data.mmUser.orcidId
               }
             />
           )

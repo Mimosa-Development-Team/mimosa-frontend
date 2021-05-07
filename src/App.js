@@ -1,24 +1,16 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { QueryClientProvider } from 'react-query'
-import { isEmpty } from 'lodash'
-
-import getRawData from 'utils/hookstate/getRawData'
-
-import Login from 'pages/Login'
 import Member from 'pages/Member'
 
 import { Routes } from 'global/routes'
 
-import { queryClient, useGlobalState } from 'store/state'
+import { queryClient } from 'store/state'
 
 const App = () => {
-  const { user: proxyUser } = useGlobalState()
-  const user = getRawData(proxyUser)
-  const hasSession = !isEmpty(user)
-
-  const renderComponent = () =>
-    hasSession ? <Member /> : <Login />
+  const renderComponent = () => {
+    return <Member />
+  }
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>

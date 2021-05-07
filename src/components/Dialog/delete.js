@@ -70,7 +70,9 @@ export default function ModalDialog({
             id="simple-modal-description"
             align="center"
           >
-            {subContent && !deleteItem ? subContent : null}
+            {subContent && !deleteItem && category !== 'analysis'
+              ? subContent
+              : null}
           </Typography>
         </div>
         {deleteItem ? (

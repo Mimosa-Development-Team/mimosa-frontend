@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useGlobalState } from 'store/state'
-import getRawData from 'utils/parsing/Proxy'
+// import { useGlobalState } from 'store/state'
+// import getRawData from 'utils/parsing/Proxy'
 import Card from 'components/Card'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
@@ -13,14 +13,15 @@ import Typography from '@material-ui/core/Typography'
 import loader from 'assets/images/loader_loading.gif'
 import SortFilter from 'components/SortFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { ROUTES } from '../constants'
+import LoginModal from 'components/Dialog/login'
+import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
 import SearchResults from './components/SearchResults'
 import { useQuestions, useResults } from './hooks'
 
-const MemberDashboard = () => {
-  const { user } = useGlobalState()
+const MemberDashboard = ({ user, hasSession }) => {
+  // const { user } = useGlobalState()
   const history = useHistory()
   const [orderBy, setOrderBy] = useState('DESC')
   const {
@@ -29,11 +30,12 @@ const MemberDashboard = () => {
     refetch,
     getQuestions,
     hasNextPage
-  } = useQuestions(orderBy, getRawData(user).user.id)
+  } = useQuestions(orderBy, null)
   const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
   const { results, getResults } = useResults(search)
   const [sort, setSort] = useState('Most Recent')
+  const [modal, setModal] = useState(false)
 
   const handleKeyPress = e => {
     setSearch(e.target.value)
@@ -83,7 +85,13 @@ const MemberDashboard = () => {
   }, [getResults, search])
 
   return (
-    <PageWrapper showNav links={ROUTES}>
+    <PageWrapper
+      showNav
+      links={hasSession ? PRIVATE_ROUTES : ROUTES}
+      user={user}
+      hasSession={hasSession}
+    >
+      <LoginModal modal={modal} setModal={setModal} />
       {isLoading ? (
         <div className="loaderWrapper">
           <img src={loader} alt="Loading ..." />
@@ -114,12 +122,16 @@ const MemberDashboard = () => {
                 size="large"
                 variant="contained"
                 onClick={() => {
-                  history.push(
-                    '/contribution-form/question/new',
-                    {
-                      type: 'new'
-                    }
-                  )
+                  if (hasSession) {
+                    history.push(
+                      '/contribution-form/question/new',
+                      {
+                        type: 'new'
+                      }
+                    )
+                  } else {
+                    setModal(true)
+                  }
                 }}
               >
                 <AddBoxIcon /> NEW QUESTION
@@ -171,9 +183,13 @@ const MemberDashboard = () => {
                               className={`${styles.content}`}
                               onClick={() => {
                                 history.push(
-                                  `/contribution/${data.parentQuestionUuid}`,
+                                  `/contribution/${
+                                    data.status === 'draft' &&
+                                    data.category !== 'question'
+                                      ? data.parentQuestionUuid
+                                      : data.uuid
+                                  }`,
                                   {
-                                    state: data,
                                     from: 'home'
                                   }
                                 )
@@ -184,6 +200,8 @@ const MemberDashboard = () => {
                                 form={false}
                                 linesToShow={5}
                                 hideEdit
+                                user={user}
+                                hasSession={hasSession}
                               />
                             </div>
                           ))}
@@ -194,7 +212,6 @@ const MemberDashboard = () => {
                                 history.push(
                                   `/contribution/${data.uuid}`,
                                   {
-                                    state: data,
                                     from: 'home'
                                   }
                                 )
@@ -205,6 +222,8 @@ const MemberDashboard = () => {
                                 form={false}
                                 linesToShow={5}
                                 hideEdit
+                                user={user}
+                                hasSession={hasSession}
                               />
                             </div>
                           ))}

@@ -72,6 +72,10 @@ div.drawerPaper {
         background: nth($avatar-colors, random(length($avatar-colors)));
       }
 
+      .guest {
+        margin-right: 17px;
+      }
+
       .icon {
         position: absolute;
         right: 15px;

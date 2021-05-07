@@ -15,14 +15,23 @@ Setup and run backend first before running frontend application.
 
 ### Setup Project Dependencies
 
-1. Open Terminal and Run/Type
+Clone repository
+1. Open Terminal
+- (LINUX or macOS) 
+  - Open Terminal
+- (WINDOWS) 
+  - Open Command Prompt (CMD)
+2. Clone Repository. Type/Run command on your Terminal or CMD
 ```
 git clone https://github.com/Mimosa-Development-Team/mimosa-frontend.git && cd mimosa-frontend
 ```
+![alt text](./files/fe-clone.png)
 2. After Clone is done. Type on terminal 
 ```
 code .
 ```
+![alt text](./files/fe-code.png)
+co
 3. Visual Studio Code will open automatically.
   - If Visual Studio Code didn't open.
     - Open Visual Studio Code
