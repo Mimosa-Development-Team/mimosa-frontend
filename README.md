@@ -66,8 +66,7 @@ code .
 7. Click the save file icon.
 8. Open again the Developer tools under your Profile Menu and select the public API you created.<br />
 ![alt text](./files/developer-tools.png)
-9. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JL
-NPEZN4CGRFJS41&response_type=code&scope=/authenticate&redirect_uri=`
+9. Copy the OpenID/Implicit request url without including the url at the end. ex: `https://sandbox.orcid.org/oauth/authorize?client_id=APP-JLNPEZN4CGRFJS41&response_type=token&scope=openid&redirect_uri=`
 10. Go back yo Visual Studio Code.
 11. Select `env.example` on Files
 ![alt text](./files/fe-select-env.png)
