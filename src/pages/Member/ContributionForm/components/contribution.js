@@ -574,7 +574,9 @@ function ContributionForm({
               : [
                   {
                     id: profile.id,
-                    name: `${profile.firstName} ${profile.lastName}`,
+                    name: `${profile.firstName} ${
+                      profile.lastName ? profile.lastName : ''
+                    }`,
                     userColor: profile.userColor
                   }
                 ],
