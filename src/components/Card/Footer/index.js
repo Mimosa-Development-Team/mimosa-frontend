@@ -73,7 +73,7 @@ const Footer = ({
         }`}
         content={`Are you sure you want to delete this ${
           data ? capitalizeText(data.category) : ''
-        }`}
+        }?`}
         deleteItem={deleteContribution}
         deleteIsLoadingContribution={deleteIsLoadingContribution}
         deleteMutate={deleteMutate}

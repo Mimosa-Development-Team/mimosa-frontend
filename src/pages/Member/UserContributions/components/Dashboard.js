@@ -33,7 +33,9 @@ const Dashboard = ({
           variant="h2"
         >
           {getRawData(user).user.firstName}{' '}
-          {getRawData(user).user.lastName}
+          {getRawData(user).user.lastName
+            ? getRawData(user).user.lastName
+            : ''}
         </Typography>
       </div>
       <div className={`${styles.contributionInfo}`}>
