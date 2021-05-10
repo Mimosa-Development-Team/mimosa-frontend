@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import { CssBaseline } from '@material-ui/core'
+import jwtDecode from 'jwt-decode'
+import localForage from 'localforage'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
 import PageMaintenance from '../Static/PageMaintenance'
@@ -23,6 +25,19 @@ const Member = () => {
   const temp = getRawData(proxyUser)
 
   useEffect(() => {
+    if (!isEmpty(user)) {
+      if (jwtDecode(user.token).exp < Date.now() / 1000) {
+        localForage
+          .clear()
+          .then(() => {
+            window.location.replace('/')
+          })
+          .catch(err => {
+            return err
+          })
+      }
+    }
+
     setHasSession(!isEmpty(temp))
     setUser(getRawData(proxyUser))
   }, [setHasSession, setUser, user, proxyUser])
