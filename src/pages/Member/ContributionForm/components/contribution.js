@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-else-return */
 /* eslint-disable no-unused-expressions */
@@ -21,56 +23,6 @@ import capitalizeText from 'utils/parsing/capitalize'
 import DeleteIcon from 'assets/images/icons/delete.svg'
 import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
-
-const schema = yup.object().shape(
-  {
-    relatedmedia: yup.array().of(
-      yup.object().shape(
-        {
-          title: yup.string().when('link', {
-            is: value => !!value,
-            then: yup.string().required('* Mandatory Field')
-          }),
-          link: yup.string().when('title', {
-            is: value => !!value,
-            then: yup
-              .string()
-              .matches(
-                // eslint-disable-next-line no-useless-escape
-                // eslint-disable-next-line max-len
-                /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i,
-                'Enter correct url!'
-              )
-              .required('* Mandatory')
-          })
-        },
-        ['title', 'link']
-      )
-    ), // these constraints are shown if and only if inner constraints are satisfied
-    subject: yup.string().required('* Mandatory Field'),
-    author: yup
-      .array()
-      .min(1, '* Mandatory Field')
-      .required('* Mandatory Field'),
-    startTime: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    conferenceName: yup.string().when('startTime', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    endTime: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    }),
-    presentationDetails: yup.string().when('conferenceName', {
-      is: value => !!value,
-      then: yup.string().required('* Mandatory Field')
-    })
-  },
-  ['conferenceName', 'startTime']
-)
 
 function ContributionForm({
   tagsData,
@@ -109,6 +61,113 @@ function ContributionForm({
     startTime: '',
     endTime: '',
     id: ''
+  })
+
+  const schema = yup.object().shape({
+    relatedmedia: yup.array().of(
+      yup.object().shape(
+        {
+          title: yup.string().when('link', {
+            is: value => !!value,
+            then: yup.string().required('* Mandatory Field')
+          }),
+          link: yup.string().when('title', {
+            is: value => !!value,
+            then: yup
+              .string()
+              .matches(
+                // eslint-disable-next-line no-useless-escape
+                // eslint-disable-next-line max-len
+                /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i,
+                'Enter correct url!'
+              )
+              .required('* Mandatory')
+          })
+        },
+        ['title', 'link']
+      )
+    ), // these constraints are shown if and only if inner constraints are satisfied
+    subject: yup.string().required('* Mandatory Field'),
+    author: yup
+      .array()
+      .min(1, '* Mandatory Field')
+      .required('* Mandatory Field'),
+    conferenceName: yup
+      .string()
+      .test(
+        'conferenceName',
+        '** Mandatory Field',
+        function (value) {
+          const {
+            presentationDetails,
+            startTime,
+            endTime
+          } = this.parent
+          if (
+            !value &&
+            (presentationDetails || startTime || endTime)
+          ) {
+            return false
+          } else {
+            return true
+          }
+        }
+      ),
+    startTime: yup
+      .string()
+      .test('startTime', '** Mandatory Field', function (value) {
+        const {
+          presentationDetails,
+          conferenceName,
+          endTime
+        } = this.parent
+        if (
+          !value &&
+          (presentationDetails || conferenceName || endTime)
+        ) {
+          return false
+        } else {
+          return true
+        }
+      }),
+    endTime: yup
+      .string()
+      .test('endTime', '** Mandatory Field', function (value) {
+        const {
+          presentationDetails,
+          conferenceName,
+          startTime
+        } = this.parent
+        if (
+          !value &&
+          (presentationDetails || conferenceName || startTime)
+        ) {
+          return false
+        } else {
+          return true
+        }
+      }),
+    presentationDetails: yup
+      .string()
+      .test(
+        'presentationDetails',
+        '** Mandatory Field',
+        function (value) {
+          const {
+            entTime,
+            conferenceName,
+            startTime
+          } = this.parent
+          if (
+            !value &&
+            (entTime || conferenceName || startTime)
+          ) {
+            return false
+          } else {
+            return true
+          }
+        }
+      )
   })
 
   const [rMedia, setRmedia] = useState([{ title: '', link: '' }])
@@ -583,7 +642,7 @@ function ContributionForm({
               ? data.draft && data.draft.id
                 ? data.draft.author
                 : data.author
-              : profile.lastName
+              : profile && profile.lastName
               ? [
                   {
                     id: profile.id,
@@ -595,12 +654,12 @@ function ContributionForm({
                 ]
               : [
                   {
-                    id: profile.id,
-                    name: `${profile.firstName}`,
-                    userColor: profile.userColor
+                    id: profile && profile.id,
+                    name: `${profile && profile.firstName}`,
+                    userColor: profile && profile.userColor
                   }
                 ],
-          userId: profile.id,
+          userId: profile && profile.id,
           status: 'publish',
           conferenceId: (conference && conference.id) || null,
           version: '1.0.0',
@@ -1083,10 +1142,12 @@ function ContributionForm({
                     DELETE
                   </Button>
                 ) : null}
-                {(profile.role === 'admin' &&
+                {(profile &&
+                  profile.role === 'admin' &&
                   data &&
                   data.userId === profile.id) ||
-                (profile.role !== 'admin' &&
+                (profile &&
+                  profile.role !== 'admin' &&
                   data &&
                   data.userId === profile.id) ||
                 (data && data.userId === profile.id) ||
