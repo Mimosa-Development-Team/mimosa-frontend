@@ -571,12 +571,20 @@ function ContributionForm({
               ? data.draft && data.draft.id
                 ? data.draft.author
                 : data.author
-              : [
+              : profile.lastName
+              ? [
                   {
                     id: profile.id,
                     name: `${profile.firstName} ${
                       profile.lastName ? profile.lastName : ''
                     }`,
+                    userColor: profile.userColor
+                  }
+                ]
+              : [
+                  {
+                    id: profile.id,
+                    name: `${profile.firstName}`,
                     userColor: profile.userColor
                   }
                 ],
