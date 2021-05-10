@@ -313,6 +313,18 @@ function ContributionForm({
     return url
   }
 
+  const scrollToErrors = errors => {
+    const errorKeys = Object.keys(errors)
+    if (errorKeys.length > 0) {
+      //if else statement on relatedmedia because it is an array
+      errorKeys[0] === 'relatedmedia'
+        ? document
+            .getElementsByName('relatedmedia[0].title')[0]
+            .focus()
+        : document.getElementsByName(errorKeys[0])[0].focus()
+    }
+  }
+
   const submitForm = (val, stat) => {
     const formFields = {
       category: type,
@@ -1086,6 +1098,7 @@ function ContributionForm({
                     // disabled={}
                     onClick={() => {
                       setFieldValue('status', 'publish')
+                      scrollToErrors(errors)
                     }}
                   >
                     {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
