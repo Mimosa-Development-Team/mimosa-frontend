@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React, { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { isEmpty } from 'lodash'
@@ -23,14 +24,18 @@ const Member = () => {
   const [hasSession, setHasSession] = useState(false)
   const [user, setUser] = useState(null)
   const temp = getRawData(proxyUser)
+  const { token } = getRawData(proxyUser)
 
   useEffect(() => {
-    if (!isEmpty(user)) {
-      if (jwtDecode(user.token).exp < Date.now() / 1000) {
+    if (token) {
+      if (
+        parseInt(jwtDecode(token).exp) <
+        parseInt(Date.now() / 1000)
+      ) {
         localForage
           .clear()
           .then(() => {
-            window.location.replace('/')
+            window.location.reload()
           })
           .catch(err => {
             return err
