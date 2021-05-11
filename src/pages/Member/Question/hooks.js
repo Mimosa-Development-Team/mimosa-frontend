@@ -9,7 +9,8 @@ export const useContribution = userId => {
     isLoading,
     error,
     refetch,
-    isSuccess
+    isSuccess,
+    remove
   } = useQuery(
     [CONTRIB_QUERY_KEY, { userId }],
     getContributionAPI,
@@ -21,6 +22,7 @@ export const useContribution = userId => {
   return {
     getContribution: refetch,
     contribution: data,
+    remove,
     isLoading,
     isSuccess,
     error
