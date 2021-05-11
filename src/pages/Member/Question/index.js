@@ -16,6 +16,7 @@ const Question = ({ user, hasSession }) => {
   const {
     contribution,
     isLoading,
+    remove,
     getContribution
   } = useContribution(hasSession ? user.user.id : null)
 
@@ -36,24 +37,19 @@ const Question = ({ user, hasSession }) => {
   }
 
   const location = useLocation()
+
   useEffect(() => {
     if (location.state && location.state.from) {
       setFrom(location.state.from)
     }
-    if (location.state && location.state.state)
+    if (location.state && location.state.state) {
       setActiveContribution(location.state.state)
-  }, [location])
-
-  useEffect(() => {
+    }
     getContribution()
-    // if (
-    //   contribution &&
-    //   location.state === undefined &&
-    //   location.state.state === undefined
-    // ) {
-    //   setActiveContribution(contribution)
-    // }
-  }, [contribution, getContribution])
+    return () => {
+      remove()
+    }
+  }, [getContribution, location, remove])
 
   return (
     <PageWrapper
