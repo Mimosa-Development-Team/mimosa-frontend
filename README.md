@@ -1,3 +1,15 @@
+## Introduction
+
+Mimosa is a publishing platform for open collaboration. Its core principles are as-you-go micro publishing, open science, open source and open feedback.
+Mimosa is currently in *alpha version*, but the ideal finished product would look like this design prototype: https://projects.invisionapp.com/share/J7ZKYYBPGEB#/screens/436978924_home
+This repository and its twin (backend: https://github.com/Mimosa-Development-Team/mimosa-backend) allow you to run the current version of Mimosa locally, so that you can host your own, or contribute by developing additiona functions.
+
+Follow the Mimosa blog and learn more here: https://openmimosablog.wordpress.com/
+
+<img src="https://openmimosablog.files.wordpress.com/2021/03/homepage-1.png" width="400" alt="Mimosa home screen">
+<img src="https://openmimosablog.files.wordpress.com/2021/05/74-contribution-hypothesis.png" width="400" alt="Mimosa hypothesis screen">
+
+
 ## MIMOSA FRONTEND
 
 ### NOTE:
