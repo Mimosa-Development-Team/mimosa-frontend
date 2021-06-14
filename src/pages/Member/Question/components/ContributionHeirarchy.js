@@ -39,7 +39,9 @@ const ContributionHeirarchy = ({
             <ConditionalWrapper
               condition={
                 data.children.length > 1 ||
-                data.category === 'data'
+                data.category === 'data' ||
+                data.category === 'experiment' ||
+                data.category === 'hypothesis'
               }
               wrapper={children => (
                 <ul
