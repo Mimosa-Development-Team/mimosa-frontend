@@ -339,7 +339,7 @@ function ContributionForm({
         case 'hypothesis':
           url = history.push(
             `/contribution/${questionUuid}?list=${
-              data ? data.id : addedData.data.id
+              addedData ? addedData.data.id : data.id
             }`,
             {
               from: 'home'
@@ -349,7 +349,7 @@ function ContributionForm({
         case 'experiment':
           url = history.push(
             `/contribution/${questionUuid}?list=${
-              data ? data.id : addedData.data.id
+              addedData ? addedData.data.id : data.id
             }`,
             {
               from: 'home'
@@ -359,7 +359,7 @@ function ContributionForm({
         case 'data':
           url = history.push(
             `/contribution/${questionUuid}?list=${
-              data ? data.id : addedData.data.id
+              addedData ? addedData.data.id : data.id
             }`,
             {
               from: 'home'
@@ -369,7 +369,7 @@ function ContributionForm({
         default:
           url = history.push(
             `/contribution/${questionUuid}?list=${
-              data ? data.id : addedData.data.id
+              addedData ? addedData.data.id : data.id
             }`,
             {
               from: 'home'
