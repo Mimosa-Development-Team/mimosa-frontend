@@ -1184,9 +1184,7 @@ function ContributionForm({
                       scrollToErrors(errors)
                     }}
                   >
-                    {method === 'new'
-                      ? 'PUBLISH NOW'
-                      : 'PUBLISH'}
+                    PUBLISH NOW
                   </Button>
                 ) : null}
               </Grid>
