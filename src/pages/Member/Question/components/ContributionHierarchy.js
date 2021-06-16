@@ -57,8 +57,10 @@ const ContributionHierarchy = ({
                 </ul>
               )}
             >
-              {(data.children || []).map(data => {
-                return <CategoryWrapper data={data} />
+              {(data.children || []).map((data, index) => {
+                return (
+                  <CategoryWrapper key={index} data={data} />
+                )
               })}
             </ConditionalWrapper>
           </>

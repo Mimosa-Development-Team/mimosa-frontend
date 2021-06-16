@@ -16,9 +16,9 @@ function a11yProps(index) {
 }
 
 const Questions = ({ value, questions, qkey }) => {
-  return questions.map(data1 => {
+  return questions.map((data1, index) => {
     return (
-      <TabPanel value={value} index={qkey}>
+      <TabPanel value={value} index={qkey} key={index}>
         <Accordion
           title={data1.question}
           content={data1.fullDetails}
@@ -68,13 +68,14 @@ const VerticalTab = ({ data }) => {
             onChange={handleChange}
             aria-label="FAQ Topics"
             className={`${styles.tabs}`}
-            disableRipple
+            disableripple="true"
             classes={{
               indicator: `${styles.tabIndicator}`
             }}
           >
             {(data || []).map((data, key) => (
               <Tab
+                key={key}
                 className={`${styles.tab}`}
                 label={<Topic topic={data} />}
                 {...a11yProps({ key })}
@@ -93,6 +94,7 @@ const VerticalTab = ({ data }) => {
                 value={value}
                 questions={data.questions}
                 qkey={key1}
+                key={key1}
               />
             )
           })}
