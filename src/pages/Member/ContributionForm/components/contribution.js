@@ -381,7 +381,7 @@ function ContributionForm({
         url = history.push(
           `/contribution/${
             questionUuid || addedData.data.uuid
-          }?list=${addedData.data.id}`,
+          }?list=${data ? data.id : addedData.data.id}`,
           {
             from: 'home'
           }
