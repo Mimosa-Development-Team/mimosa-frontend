@@ -262,7 +262,7 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
                   '/',
@@ -280,7 +280,7 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
                   '/',
@@ -298,7 +298,7 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
                   '/',
@@ -316,7 +316,7 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
                     `/contribution/${questionUuid}`) ||
                   '/',
@@ -337,29 +337,51 @@ function ContributionForm({
           url = history.goBack()
           break
         case 'hypothesis':
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              data ? data.id : addedData.data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         case 'experiment':
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              data ? data.id : addedData.data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         case 'data':
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              data ? data.id : addedData.data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         default:
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              data ? data.id : addedData.data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
       }
     } else if (back) {
       if (data || addedData) {
         url = history.push(
-          `/contribution/${questionUuid || addedData.data.uuid}`,
+          `/contribution/${
+            questionUuid || addedData.data.uuid
+          }?list=${addedData.data.id}`,
           {
             from: 'home'
           }

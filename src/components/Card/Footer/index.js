@@ -132,7 +132,7 @@ const Footer = ({
             data.userId === user.id &&
             data.children !== undefined &&
             data.children.length <= 0) ||
-          (user && data.category !== 'analysis') ? (
+          (user && data.category === 'data') ? (
             <CardButton
               action="contribute"
               onClick={() => {
