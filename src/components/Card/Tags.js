@@ -26,7 +26,7 @@ const Tags = ({
 Tags.propTypes = {
   type: PropTypes.string.isRequired,
   questionTags: PropTypes.array,
-  analysisTag: PropTypes.oneOf(['supports', 'refutes']),
+  analysisTag: PropTypes.any,
   deprecated: PropTypes.bool
 }
 

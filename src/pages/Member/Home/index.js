@@ -178,35 +178,40 @@ const MemberDashboard = ({ user, hasSession }) => {
                     <div id="test">
                       {questions.pages.map((group, i) => (
                         <React.Fragment key={i}>
-                          {group.draftQuestions.map(data => (
+                          {group.draftQuestions.map(
+                            (data, index) => (
+                              <div
+                                key={index}
+                                className={`${styles.content}`}
+                                onClick={() => {
+                                  history.push(
+                                    `/contribution/${
+                                      data.category ===
+                                      'question'
+                                        ? data.uuid
+                                        : data.parentQuestionUuid
+                                    }?list=${data.id}`,
+                                    {
+                                      state: data,
+                                      from: 'home'
+                                    }
+                                  )
+                                }}
+                              >
+                                <Card
+                                  data={data}
+                                  form={false}
+                                  linesToShow={5}
+                                  hideEdit
+                                  user={user}
+                                  hasSession={hasSession}
+                                />
+                              </div>
+                            )
+                          )}
+                          {group.data.map((data, index) => (
                             <div
-                              className={`${styles.content}`}
-                              onClick={() => {
-                                history.push(
-                                  `/contribution/${
-                                    data.category === 'question'
-                                      ? data.uuid
-                                      : data.parentQuestionUuid
-                                  }?list=${data.id}`,
-                                  {
-                                    state: data,
-                                    from: 'home'
-                                  }
-                                )
-                              }}
-                            >
-                              <Card
-                                data={data}
-                                form={false}
-                                linesToShow={5}
-                                hideEdit
-                                user={user}
-                                hasSession={hasSession}
-                              />
-                            </div>
-                          ))}
-                          {group.data.map(data => (
-                            <div
+                              key={index}
                               className={`${styles.content}`}
                               onClick={() => {
                                 history.push(

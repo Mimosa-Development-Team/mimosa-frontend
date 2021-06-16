@@ -18,7 +18,7 @@ const CardButton = ({ action, ...propsList }) => {
         <span className={`${styles.metaDivider}`}>·</span>
       )}
       <IconButton
-        disableRipple="true"
+        disableRipple
         aria-label={action}
         className={`${styles.cardButton} ${styles[action]}`}
         {...propsList}
