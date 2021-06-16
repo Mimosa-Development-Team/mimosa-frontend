@@ -187,7 +187,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                     data.category === 'question'
                                       ? data.uuid
                                       : data.parentQuestionUuid
-                                  }`,
+                                  }?list=${data.id}`,
                                   {
                                     state: data,
                                     from: 'home'
@@ -210,7 +210,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                               className={`${styles.content}`}
                               onClick={() => {
                                 history.push(
-                                  `/contribution/${data.uuid}`,
+                                  `/contribution/${data.uuid}?list=${data.id}`,
                                   {
                                     state: data,
                                     from: 'home'

@@ -39,7 +39,9 @@ const ContributionHeirarchy = ({
             <ConditionalWrapper
               condition={
                 data.children.length > 1 ||
-                data.category === 'data'
+                data.category === 'data' ||
+                data.category === 'experiment' ||
+                data.category === 'hypothesis'
               }
               wrapper={children => (
                 <ul
@@ -75,17 +77,13 @@ const ContributionHeirarchy = ({
         className={`${styles[data.category]} ${
           styles.contribution
         } ${
-          data.uuid === activeContribution.uuid
-            ? styles.active
-            : ''
+          data.id === activeContribution ? styles.active : ''
         }`}
         key={data.id}
         ref={
-          data.uuid === activeContribution.uuid
-            ? contributionRef
-            : null
+          data.id === activeContribution ? contributionRef : null
         }
-        onClick={() => onCardClick(data)}
+        onClick={() => onCardClick(data.id)}
       >
         <Card
           hasSession={hasSession}
@@ -93,7 +91,7 @@ const ContributionHeirarchy = ({
           getContribution={getContribution}
           data={data}
           treeView
-          isExpanded={data === activeContribution}
+          isExpanded={data.id === activeContribution}
           hideDetails={false}
           hideEdit={false}
         />
@@ -116,7 +114,7 @@ const ContributionHeirarchy = ({
 
 ContributionHeirarchy.propTypes = {
   contribution: PropTypes.object,
-  activeContribution: PropTypes.object
+  activeContribution: PropTypes.number
 }
 
 export default ContributionHeirarchy

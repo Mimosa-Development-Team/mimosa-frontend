@@ -20,11 +20,11 @@ const ContributionTree = ({
           <>
             <li
               className={`${styles[data.category]} ${
-                data.uuid === activeContribution.uuid
+                data.id === activeContribution
                   ? styles.active
                   : ''
               }`}
-              onClick={() => onTreeClick(data)}
+              onClick={() => onTreeClick(data.id)}
             >
               {data.category.charAt(0)}
             </li>
@@ -59,7 +59,7 @@ const ContributionTree = ({
 
 ContributionTree.propTypes = {
   contribution: PropTypes.object,
-  activeContribution: PropTypes.object
+  activeContribution: PropTypes.number
 }
 
 export default ContributionTree

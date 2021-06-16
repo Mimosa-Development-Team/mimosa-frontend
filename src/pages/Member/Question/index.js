@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
+import { useQueryParams } from 'utils/html/queryParams'
 import PageWrapper from 'components/PageWrapper'
 import PageContentWrapper from 'components/PageContentWrapper'
 import RightSidebar from 'components/RightSidebar'
@@ -13,13 +14,14 @@ import { useContribution } from './hooks'
 import styles from './styles.module.scss'
 
 const Question = ({ user, hasSession }) => {
+  const queryParams = useQueryParams()
+  const id = queryParams.get('list')
   const {
     contribution,
     isLoading,
     remove,
     getContribution
   } = useContribution(hasSession ? user.user.id : null)
-
   const [activeContribution, setActiveContribution] = useState(0)
   const [from, setFrom] = useState('home')
 
@@ -34,6 +36,7 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
+    window.history.pushState(null, null, `?list=${contribution}`)
   }
 
   const location = useLocation()
@@ -42,14 +45,14 @@ const Question = ({ user, hasSession }) => {
     if (location.state && location.state.from) {
       setFrom(location.state.from)
     }
-    if (location.state && location.state.state) {
-      setActiveContribution(location.state.state)
+    if (id) {
+      setActiveContribution(Number(id))
     }
     getContribution()
     return () => {
       remove()
     }
-  }, [getContribution, location, remove])
+  }, [getContribution, location, remove, id])
 
   return (
     <PageWrapper
