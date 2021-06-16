@@ -8,7 +8,7 @@ import PageContentWrapper from 'components/PageContentWrapper'
 import RightSidebar from 'components/RightSidebar'
 import loader from 'assets/images/loader_loading.gif'
 import { ROUTES, PRIVATE_ROUTES } from '../constants'
-import ContributionHeirarchy from './components/ContributionHeirarchy'
+import ContributionHierarchy from './components/ContributionHierarchy'
 import ContributionDetails from './components/ContributionDetails'
 import { useContribution } from './hooks'
 import styles from './styles.module.scss'
@@ -77,7 +77,7 @@ const Question = ({ user, hasSession }) => {
             >
               Question
             </Typography>
-            <ContributionHeirarchy
+            <ContributionHierarchy
               getContribution={getContribution}
               contribution={contribution}
               activeContribution={activeContribution}

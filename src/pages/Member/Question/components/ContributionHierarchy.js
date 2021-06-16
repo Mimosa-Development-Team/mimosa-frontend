@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
-const ContributionHeirarchy = ({
+const ContributionHierarchy = ({
   contribution,
   activeContribution,
   getContribution,
@@ -112,9 +112,9 @@ const ContributionHeirarchy = ({
   )
 }
 
-ContributionHeirarchy.propTypes = {
+ContributionHierarchy.propTypes = {
   contribution: PropTypes.object,
   activeContribution: PropTypes.number
 }
 
-export default ContributionHeirarchy
+export default ContributionHierarchy
