@@ -92,7 +92,18 @@ const Member = () => {
               )
             }}
           />
-          <Route path="/faq" component={FAQ} user={user} />
+          <Route
+            path="/faq"
+            component={props => {
+              return (
+                <FAQ
+                  {...props}
+                  hasSession={hasSession}
+                  user={user}
+                />
+              )
+            }}
+          />
           <Route
             path="/login"
             component={props => <Login {...props} />}

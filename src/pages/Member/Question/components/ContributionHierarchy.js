@@ -37,12 +37,7 @@ const ContributionHierarchy = ({
               user={finalUser}
             />{' '}
             <ConditionalWrapper
-              condition={
-                data.children.length > 1 ||
-                data.category === 'data' ||
-                data.category === 'experiment' ||
-                data.category === 'hypothesis'
-              }
+              condition={data.children.length > 1}
               wrapper={children => (
                 <ul
                   className={`${
