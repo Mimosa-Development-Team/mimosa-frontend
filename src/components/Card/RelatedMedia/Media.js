@@ -58,7 +58,11 @@ const Media = ({ media }) => {
                   </span> */}
                   By {data.userFullName}
                 </Typography>
-                <Link className={`${styles.link}`}>
+                <Link
+                  className={`${styles.link}`}
+                  href={data.mediaDetails.link}
+                  target="_blank"
+                >
                   <span className={`${styles.icon}`}>
                     <img src={LinkIcon} alt="" />
                   </span>

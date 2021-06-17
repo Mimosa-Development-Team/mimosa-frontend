@@ -334,7 +334,14 @@ function ContributionForm({
     } else if (status === 'publish') {
       switch (type) {
         case 'question':
-          url = history.goBack()
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              addedData ? addedData.data.id : data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         case 'hypothesis':
           url = history.push(
