@@ -109,7 +109,6 @@ $spacers: (
       margin-bottom: 15px !important;
     }
   }
-
 }
 
 .mr {
@@ -190,7 +189,7 @@ hr.MuiDivider-root {
 }
 
 .cardBody {
-  *, 
+  *,
   img {
     max-width: 100%;
   }
@@ -284,17 +283,17 @@ hr.MuiDivider-root {
       font-weight: bold;
     }
   }
-
+  
   .input {
     width: 100%;
     margin-top: 10px;
-    
+
     .MuiInputBase-root {
       border-radius: 8px !important;
       // background: $white;
 
       .MuiInputBase-input {
-        border: 1px solid rgba(178,180,189,0.5);
+        border: 1px solid rgba(178, 180, 189, 0.5);
         box-shadow: none;
         font-size: 16px;
         letter-spacing: 0.1px;
@@ -311,6 +310,12 @@ hr.MuiDivider-root {
     }
   }
 
+  .ql-editor {
+    min-height: 18em;
+    overflow-y: scroll;
+    resize: vertical;
+  }
+
   .quill.input {
     background: $white;
     border-radius: 8px;
@@ -318,7 +323,6 @@ hr.MuiDivider-root {
     font-size: 16px;
     letter-spacing: 0.1px;
     line-height: 19px;
-    overflow: hidden;
     .ql-toolbar.ql-snow {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
@@ -349,11 +353,11 @@ hr.MuiDivider-root {
   .input {
     width: 100%;
     margin-top: 10px;
-    
+
     .MuiInputBase-root {
       border-radius: 8px !important;
       padding: 5px 17px !important;
-      border: 1px solid rgba(178,180,189,0.5);
+      border: 1px solid rgba(178, 180, 189, 0.5);
       box-shadow: none;
       background: $white;
       min-height: 45px;
@@ -393,7 +397,7 @@ hr.MuiDivider-root {
 .inputCard {
   padding: 11px 17px;
   border-radius: 8px !important;
-  border: 1px solid rgba(178,180,189,0.5) !important;
+  border: 1px solid rgba(178, 180, 189, 0.5) !important;
   min-height: 45px;
   max-height: 45px;
 
@@ -486,7 +490,7 @@ span {
 .box {
   inset: 0px 0 15px !important;
 }
-// Loader 
+// Loader
 
 .loaderWrapper {
   width: 100%;
@@ -494,7 +498,7 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #E2E2E4;
+  background: #e2e2e4;
 }
 
 // Buttons target root mui classes later @k
@@ -561,7 +565,6 @@ button.btn {
     box-shadow: none;
   }
 
-
   // used in modal/dialog
   &.contained {
     border-radius: 25px;
@@ -602,13 +605,13 @@ button.btn {
   }
 }
 
-// dialog 
+// dialog
 div.dialog {
   min-height: 250px;
   width: 480px;
   border-radius: 8px;
   background-color: $white;
-  box-shadow: 0 2px 30px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.15);
   padding: 40px;
   position: absolute;
   top: 50%;
@@ -620,7 +623,7 @@ div.dialog {
   }
 
   .dialogTitle {
-    font-family: "Roboto-Bold";
+    font-family: 'Roboto-Bold';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.63px;
@@ -640,16 +643,12 @@ div.dialog {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.ql-container.ql-snow {
-  height: 100px;
-}
-
 .search-term {
   color: $primary;
   font-family: 'Roboto-Medium';
 }
 
-// slick 
+// slick
 ul.slick-dots {
   text-align: left;
   bottom: -11%;
