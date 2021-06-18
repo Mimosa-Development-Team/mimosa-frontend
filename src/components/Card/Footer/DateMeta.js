@@ -25,8 +25,7 @@ const DateMeta = ({ data }) => {
 }
 
 DateMeta.propTypes = {
-  data: PropTypes.string.isRequired
-  // dateModified: PropTypes.string
+  data: PropTypes.object.isRequired
 }
 
 export default DateMeta

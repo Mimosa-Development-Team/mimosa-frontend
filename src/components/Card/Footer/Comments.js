@@ -15,7 +15,7 @@ const Comments = ({ onMetaClick, contributionId }) => {
     <div>
       <span className={`${styles.metaDivider}`}>·</span>
       <Button
-        disableRipple="true"
+        disableRipple
         aria-label="comment"
         className={`${styles.metaButton}`}
         onClick={() => onMetaClick(1)}

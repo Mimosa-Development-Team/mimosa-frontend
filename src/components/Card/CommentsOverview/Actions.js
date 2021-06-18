@@ -49,7 +49,7 @@ const Actions = ({
               <>
                 {raw.orcidId === data.mmUser.orcidId ? (
                   <IconButton
-                    disableRipple="true"
+                    disableRipple
                     aria-label="edit"
                     className={`${styles.actionButton} mb-10`}
                     {...propsList}
@@ -62,7 +62,7 @@ const Actions = ({
                 {raw.role === 'admin' ||
                 raw.orcidId === data.mmUser.orcidId ? (
                   <IconButton
-                    disableRipple="true"
+                    disableRipple
                     aria-label="delete"
                     className={`${styles.actionButton}`}
                     {...propsList}

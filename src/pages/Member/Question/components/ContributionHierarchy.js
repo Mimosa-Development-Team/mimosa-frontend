@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from 'components/Card'
 import styles from './styles.module.scss'
 
-const ContributionHeirarchy = ({
+const ContributionHierarchy = ({
   contribution,
   activeContribution,
   getContribution,
@@ -37,12 +37,7 @@ const ContributionHeirarchy = ({
               user={finalUser}
             />{' '}
             <ConditionalWrapper
-              condition={
-                data.children.length > 1 ||
-                data.category === 'data' ||
-                data.category === 'experiment' ||
-                data.category === 'hypothesis'
-              }
+              condition={data.children.length > 1}
               wrapper={children => (
                 <ul
                   className={`${
@@ -57,8 +52,10 @@ const ContributionHeirarchy = ({
                 </ul>
               )}
             >
-              {(data.children || []).map(data => {
-                return <CategoryWrapper data={data} />
+              {(data.children || []).map((data, index) => {
+                return (
+                  <CategoryWrapper key={index} data={data} />
+                )
               })}
             </ConditionalWrapper>
           </>
@@ -112,9 +109,9 @@ const ContributionHeirarchy = ({
   )
 }
 
-ContributionHeirarchy.propTypes = {
+ContributionHierarchy.propTypes = {
   contribution: PropTypes.object,
   activeContribution: PropTypes.number
 }
 
-export default ContributionHeirarchy
+export default ContributionHierarchy
