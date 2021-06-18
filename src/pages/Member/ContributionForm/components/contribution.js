@@ -335,9 +335,9 @@ function ContributionForm({
       switch (type) {
         case 'question':
           url = history.push(
-            `/contribution/${questionUuid}?list=${
-              addedData ? addedData.data.id : data.id
-            }`,
+            `/contribution/${
+              questionUuid || addedData.data.uuid
+            }?list=${addedData ? addedData.data.id : data.id}`,
             {
               from: 'home'
             }
