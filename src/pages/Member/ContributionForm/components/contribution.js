@@ -264,7 +264,7 @@ function ContributionForm({
                 (addedData &&
                   `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -282,7 +282,7 @@ function ContributionForm({
                 (addedData &&
                   `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -300,7 +300,7 @@ function ContributionForm({
                 (addedData &&
                   `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -318,7 +318,7 @@ function ContributionForm({
                 (addedData &&
                   `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -388,7 +388,11 @@ function ContributionForm({
         url = history.push(
           `/contribution/${
             questionUuid || addedData.data.uuid
-          }?list=${data ? data.id : addedData.data.id}`,
+          }?list=${
+            addedData && addedData.data
+              ? addedData.data.id
+              : data.id
+          }`,
           {
             from: 'home'
           }
@@ -776,7 +780,7 @@ function ContributionForm({
                         history.push(
                           `/contribution/${
                             data.parentQuestionId || questionUuid
-                          }`,
+                          }?list=${data && data.id}`,
                           {
                             from: 'home'
                           }
