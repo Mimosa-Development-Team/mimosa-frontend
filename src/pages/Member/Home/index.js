@@ -78,11 +78,8 @@ const MemberDashboard = ({ user, hasSession }) => {
 
   useEffect(() => {
     refetch()
-  }, [refetch])
-
-  useEffect(() => {
-    getResults(search)
-  }, [getResults, search])
+    getResults()
+  }, [refetch, getResults])
 
   return (
     <PageWrapper
