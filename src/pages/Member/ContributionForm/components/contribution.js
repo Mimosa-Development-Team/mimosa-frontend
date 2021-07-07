@@ -262,9 +262,9 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -280,9 +280,9 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -298,9 +298,9 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -316,9 +316,9 @@ function ContributionForm({
               })
             : history.push(
                 (addedData &&
-                  `/contribution/${addedData.data.uuid}`) ||
+                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
                   (questionUuid &&
-                    `/contribution/${questionUuid}`) ||
+                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
                   '/',
                 {
                   from: 'home'
@@ -334,32 +334,65 @@ function ContributionForm({
     } else if (status === 'publish') {
       switch (type) {
         case 'question':
-          url = history.goBack()
+          url = history.push(
+            `/contribution/${
+              questionUuid || addedData.data.uuid
+            }?list=${addedData ? addedData.data.id : data.id}`,
+            {
+              from: 'home'
+            }
+          )
           break
         case 'hypothesis':
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              addedData ? addedData.data.id : data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         case 'experiment':
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              addedData ? addedData.data.id : data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         case 'data':
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              addedData ? addedData.data.id : data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
           break
         default:
-          url = history.push(`/contribution/${questionUuid}`, {
-            from: 'home'
-          })
+          url = history.push(
+            `/contribution/${questionUuid}?list=${
+              addedData ? addedData.data.id : data.id
+            }`,
+            {
+              from: 'home'
+            }
+          )
       }
     } else if (back) {
       if (data || addedData) {
         url = history.push(
-          `/contribution/${questionUuid || addedData.data.uuid}`,
+          `/contribution/${
+            questionUuid || addedData.data.uuid
+          }?list=${
+            addedData && addedData.data
+              ? addedData.data.id
+              : data.id
+          }`,
           {
             from: 'home'
           }
@@ -747,7 +780,7 @@ function ContributionForm({
                         history.push(
                           `/contribution/${
                             data.parentQuestionId || questionUuid
-                          }`,
+                          }?list=${data && data.id}`,
                           {
                             from: 'home'
                           }
@@ -1162,7 +1195,7 @@ function ContributionForm({
                       scrollToErrors(errors)
                     }}
                   >
-                    {method === 'new' ? 'PUBLISH NOW' : 'UPDATE'}
+                    PUBLISH NOW
                   </Button>
                 ) : null}
               </Grid>

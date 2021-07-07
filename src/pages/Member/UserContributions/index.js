@@ -121,28 +121,31 @@ const UserContributions = ({ user, hasSession }) => {
                   {userContributions.pages.map((group, i) => (
                     <React.Fragment key={i}>
                       {/* {JSON.stringify(group.contributions)} */}
-                      {(group.contributions || []).map(data => (
-                        <div
-                          className={`${styles.content}`}
-                          onClick={() => {
-                            history.push(
-                              `/contribution/${data.parentQuestionUuid}`,
-                              {
-                                state: data,
-                                from: 'my-contribution'
-                              }
-                            )
-                          }}
-                        >
-                          <Card
-                            data={data}
-                            form={false}
-                            linesToShow={5}
-                            parentTitle={data.parentTitle}
-                            hideEdit
-                          />
-                        </div>
-                      ))}
+                      {(group.contributions || []).map(
+                        (data, index) => (
+                          <div
+                            key={index}
+                            className={`${styles.content}`}
+                            onClick={() => {
+                              history.push(
+                                `/contribution/${data.parentQuestionUuid}?list=${data.id}`,
+                                {
+                                  state: data,
+                                  from: 'my-contribution'
+                                }
+                              )
+                            }}
+                          >
+                            <Card
+                              data={data}
+                              form={false}
+                              linesToShow={5}
+                              parentTitle={data.parentTitle}
+                              hideEdit
+                            />
+                          </div>
+                        )
+                      )}
                     </React.Fragment>
                   ))}
                 </>

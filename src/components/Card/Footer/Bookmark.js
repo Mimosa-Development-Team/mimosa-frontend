@@ -7,7 +7,7 @@ const Bookmark = () => {
   return (
     <div>
       <Button
-        disableRipple="true"
+        disableRipple
         aria-label="bookmark"
         className={`${styles.metaButton}`}
       >

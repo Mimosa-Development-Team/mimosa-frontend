@@ -70,8 +70,8 @@ const ContributionDetails = ({
 
 ContributionDetails.propTypes = {
   authors: PropTypes.array,
-  poster: PropTypes.string.isRequired,
-  datePosted: PropTypes.string.isRequired,
+  poster: PropTypes.string,
+  datePosted: PropTypes.string,
   dateModified: PropTypes.string
 }
 

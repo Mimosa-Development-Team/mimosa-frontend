@@ -57,11 +57,11 @@ export const useQuestionForm = id => {
   )
 
   const {
-    data,
-    isLoading,
-    error,
-    refetch,
-    isSuccess
+    data: childrenCount,
+    isLoading: childrenCountIsLoading,
+    error: childrenCountIsError,
+    refetch: getContributionChildrenCount,
+    isSuccess: childrenCountIsSuccess
   } = useQuery(
     [CONTRIBUTION_GET_CHILDREN_COUNT_QUERY_KEY, { id }],
     getContributionChildrenCountAPI,
@@ -78,18 +78,17 @@ export const useQuestionForm = id => {
     isSuccess,
     error,
 
-    // what is refetch for
-    getContributionChildrenCount: refetch,
-    comment: data,
-    isLoading,
-    isSuccess,
-    error,
-
     getMediaCount,
     mediaCount,
     mediaCountIsLoading,
     mediaCountIsSuccess,
     mediaCountIsError,
+
+    getContributionChildrenCount,
+    childrenCount,
+    childrenCountIsLoading,
+    childrenCountIsError,
+    childrenCountIsSuccess,
 
     deleteContribution,
     deleteIsLoadingContribution,

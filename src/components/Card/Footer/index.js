@@ -63,7 +63,7 @@ const Footer = ({
     }
   }
 
-  const childrenCount = getChildrenCount(data.id)
+  const { childrenCount } = useQuestionForm(data.id)
 
   return (
     <div className={`${styles.footer}`}>
@@ -124,9 +124,9 @@ const Footer = ({
               }}
             />
           ) : null}
-          {(childrenCount==0) &&
-          ((user && user.role === 'admin') ||
-          (user && data.userId === user.id)) ? (
+          {childrenCount === 0 &&
+          user &&
+          (user.role === 'admin' || data.userId === user.id) ? (
             <CardButton
               action="delete"
               onClick={() => setModal(true)}

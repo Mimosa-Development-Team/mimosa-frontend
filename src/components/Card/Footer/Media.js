@@ -15,7 +15,7 @@ const Media = ({ onMetaClick, contributionId }) => {
     <div className={`${styles.metaWrapper}`}>
       <span className={`${styles.metaDivider}`}>·</span>
       <Button
-        disableRipple="true"
+        disableRipple
         aria-label="media"
         className={`${styles.metaButton}`}
         onClick={() => onMetaClick(0)}

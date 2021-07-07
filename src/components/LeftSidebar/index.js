@@ -72,7 +72,7 @@ LeftSidebar.propTypes = {
   showNav: PropTypes.bool,
   links: PropTypes.array,
   contribution: PropTypes.object,
-  activeContribution: PropTypes.object
+  activeContribution: PropTypes.number
 }
 
 export default LeftSidebar

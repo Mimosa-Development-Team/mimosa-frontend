@@ -67,7 +67,7 @@ const MainNav = ({
 MainNav.propTypes = {
   links: PropTypes.array.isRequired,
   contribution: PropTypes.object,
-  activeContribution: PropTypes.object
+  activeContribution: PropTypes.number
 }
 
 export default MainNav
