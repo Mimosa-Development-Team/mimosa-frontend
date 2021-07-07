@@ -3,12 +3,14 @@ import { queryClient } from 'store/state'
 import {
   deleteContributionAPI,
   getCommentCountAPI,
-  getRelatedMediaCountAPI
+  getRelatedMediaCountAPI,
+  getContributionChildrenCountAPI
 } from './api'
 import {
   CONTRIBUTION_DELETE_QUERY_KEY,
   COMMENT_GET_COUNT_QUERY_KEY,
-  RELATED_MEDIA_GET_COUNT_QUERY_KEY
+  RELATED_MEDIA_GET_COUNT_QUERY_KEY,
+  CONTRIBUTION_GET_CHILDREN_COUNT_QUERY_KEY
 } from './constants'
 
 export const useQuestionForm = id => {
@@ -54,8 +56,30 @@ export const useQuestionForm = id => {
     }
   )
 
+  const {
+    data,
+    isLoading,
+    error,
+    refetch,
+    isSuccess
+  } = useQuery(
+    [CONTRIBUTION_GET_CHILDREN_COUNT_QUERY_KEY, { id }],
+    getContributionChildrenCountAPI,
+    {
+      // what is this for
+      enabled: false
+    }
+  )
+
   return {
     getCommentCount: refetch,
+    comment: data,
+    isLoading,
+    isSuccess,
+    error,
+
+    // what is refetch for
+    getContributionChildrenCount: refetch,
     comment: data,
     isLoading,
     isSuccess,
