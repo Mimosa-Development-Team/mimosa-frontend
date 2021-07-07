@@ -22,12 +22,3 @@ export const getRelatedMediaCountAPI = query => {
   }
   return null
 }
-
-export const getContributionChildrenCountAPI = query => {
-  if (query.queryKey[1].id) {
-    return getRequest(
-      `/api/v1/contribution/childrencount/${query.queryKey[1].id}`
-    )
-  }
-  return null
-}

@@ -63,8 +63,6 @@ const Footer = ({
     }
   }
 
-  const { childrenCount } = useQuestionForm(data.id)
-
   return (
     <div className={`${styles.footer}`}>
       {author && (
@@ -87,7 +85,7 @@ const Footer = ({
         deleteForm={modal}
         setDeleteForm={setModal}
         // this becomes useless as only leaves can be deleted
-        subContent={`This will delete all child contributions attached to this ${data.category}.`}
+        // subContent={`This will delete all child contributions attached to this ${data.category}.`}
       />
       <DateMeta
         datePosted={datePosted}
@@ -124,7 +122,7 @@ const Footer = ({
               }}
             />
           ) : null}
-          {childrenCount === 0 &&
+          {data.children.length === 0 &&
           user &&
           (user.role === 'admin' || data.userId === user.id) ? (
             <CardButton

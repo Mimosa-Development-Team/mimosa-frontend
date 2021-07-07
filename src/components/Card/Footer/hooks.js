@@ -3,14 +3,12 @@ import { queryClient } from 'store/state'
 import {
   deleteContributionAPI,
   getCommentCountAPI,
-  getRelatedMediaCountAPI,
-  getContributionChildrenCountAPI
+  getRelatedMediaCountAPI
 } from './api'
 import {
   CONTRIBUTION_DELETE_QUERY_KEY,
   COMMENT_GET_COUNT_QUERY_KEY,
-  RELATED_MEDIA_GET_COUNT_QUERY_KEY,
-  CONTRIBUTION_GET_CHILDREN_COUNT_QUERY_KEY
+  RELATED_MEDIA_GET_COUNT_QUERY_KEY
 } from './constants'
 
 export const useQuestionForm = id => {
@@ -27,6 +25,20 @@ export const useQuestionForm = id => {
       )
     }
   })
+
+  // const {
+  //   data: deleteContribution,
+  //   isLoading: deleteIsLoadingContribution,
+  //   error: deleteErrorContribution,
+  //   mutate: deleteMutate,
+  //   isSuccess: deleteIsSuccessContribution
+  // } = useMutation(deleteDraftAPI, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(
+  //       CONTRIBUTION_DELETE_QUERY_KEY
+  //     )
+  //   }
+  // })
 
   const {
     data,
@@ -56,21 +68,6 @@ export const useQuestionForm = id => {
     }
   )
 
-  const {
-    data: childrenCount,
-    isLoading: childrenCountIsLoading,
-    error: childrenCountIsError,
-    refetch: getContributionChildrenCount,
-    isSuccess: childrenCountIsSuccess
-  } = useQuery(
-    [CONTRIBUTION_GET_CHILDREN_COUNT_QUERY_KEY, { id }],
-    getContributionChildrenCountAPI,
-    {
-      // what is this for
-      enabled: false
-    }
-  )
-
   return {
     getCommentCount: refetch,
     comment: data,
@@ -83,12 +80,6 @@ export const useQuestionForm = id => {
     mediaCountIsLoading,
     mediaCountIsSuccess,
     mediaCountIsError,
-
-    getContributionChildrenCount,
-    childrenCount,
-    childrenCountIsLoading,
-    childrenCountIsError,
-    childrenCountIsSuccess,
 
     deleteContribution,
     deleteIsLoadingContribution,
