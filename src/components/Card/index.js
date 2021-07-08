@@ -52,7 +52,7 @@ const Card = ({
                   />
                 )}
               <Header
-                //data={data}
+                data={data}
                 showDraft={showDraft}
                 treeView={treeView}
                 type={
@@ -107,6 +107,7 @@ const Card = ({
                 onMetaClick={handleClick}
                 parentQuestionId={data.parentQuestionId}
                 hideEdit={hideEdit}
+                showDraft={showDraft}
               />
             </div>
             {showDetails && (

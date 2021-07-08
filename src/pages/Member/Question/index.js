@@ -85,7 +85,11 @@ const Question = ({ user, hasSession }) => {
               contributionRef={contributionRef}
               hasSession={hasSession}
               user={user}
-              showDraft={location.state.state.showDraft}
+              showDraft={
+                location.state.state
+                  ? location.state.state.showDraft
+                  : false
+              }
             />
           </PageContentWrapper>
           <Hidden smDown implementation="css">

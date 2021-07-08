@@ -5,6 +5,10 @@ export const deleteContributionAPI = id => {
   return deleteRequest(`/api/v1/contribution/${id}`)
 }
 
+export const deleteDraftAPI = id => {
+  return deleteRequest(`/api/v1/draft/${id}`)
+}
+
 export const getCommentCountAPI = query => {
   if (query.queryKey[1].id) {
     return getRequest(
