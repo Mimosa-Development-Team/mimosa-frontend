@@ -23,6 +23,7 @@ const Footer = ({
   dateModified,
   onMetaClick,
   hideEdit,
+  showDraft,
   userColor
 }) => {
   const history = useHistory()
@@ -39,7 +40,10 @@ const Footer = ({
   const {
     deleteContribution,
     deleteIsLoadingContribution,
-    deleteMutate
+    deleteMutate,
+    deleteDraft,
+    deleteIsLoadingDraft,
+    deleteDraftMutate
   } = useQuestionForm()
 
   const { getContribution } = useContribution(
@@ -62,29 +66,54 @@ const Footer = ({
         return null
     }
   }
+
   return (
     <div className={`${styles.footer}`}>
       {author && (
         <AuthorMeta author={author} userColor={userColor} />
       )}
-      <ModalDelete
-        header={`Delete a ${
-          data ? capitalizeText(data.category) : ''
-        }`}
-        content={`Are you sure you want to delete this ${
-          data ? capitalizeText(data.category) : ''
-        }?`}
-        deleteItem={deleteContribution}
-        deleteIsLoadingContribution={deleteIsLoadingContribution}
-        deleteMutate={deleteMutate}
-        url={() => getContribution()}
-        category={data.category}
-        heirarchy
-        id={data ? data.id : null}
-        deleteForm={modal}
-        setDeleteForm={setModal}
-        subContent={`This will delete all child contributions attached to this ${data.category}.`}
-      />
+      {showDraft ? (
+        <ModalDelete
+          header={`Discard this ${
+            data ? capitalizeText(data.category) : ''
+          } draft`}
+          content={`Are you sure you want to delete this ${
+            data ? capitalizeText(data.category) : ''
+          } draft?`}
+          deleteItem={deleteDraft}
+          deleteIsLoadingContribution={deleteIsLoadingDraft}
+          deleteMutate={deleteDraftMutate}
+          url={() => getContribution()}
+          category={data.category}
+          heirarchy
+          id={data ? data.id : null}
+          deleteForm={modal}
+          setDeleteForm={setModal}
+        />
+      ) : (
+        <ModalDelete
+          header={`Delete a ${
+            data ? capitalizeText(data.category) : ''
+          }`}
+          content={`Are you sure you want to delete this ${
+            data ? capitalizeText(data.category) : ''
+          }?`}
+          deleteItem={deleteContribution}
+          deleteIsLoadingContribution={
+            deleteIsLoadingContribution
+          }
+          deleteMutate={deleteMutate}
+          url={() => getContribution()}
+          category={data.category}
+          heirarchy
+          id={data ? data.id : null}
+          deleteForm={modal}
+          setDeleteForm={setModal}
+          // this becomes useless as only leaves can be deleted
+          // subContent={`This will delete all child contributions attached to this ${data.category}.`}
+        />
+      )}
+
       <DateMeta
         datePosted={datePosted}
         dateModified={dateModified}
@@ -120,8 +149,9 @@ const Footer = ({
               }}
             />
           ) : null}
-          {(user && user.role === 'admin') ||
-          (user && data.userId === user.id) ? (
+          {data.children.length === 0 &&
+          user &&
+          (user.role === 'admin' || data.userId === user.id) ? (
             <CardButton
               action="delete"
               onClick={() => setModal(true)}

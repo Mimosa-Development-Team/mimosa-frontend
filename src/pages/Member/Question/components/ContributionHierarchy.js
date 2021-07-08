@@ -8,6 +8,8 @@ const ContributionHierarchy = ({
   activeContribution,
   getContribution,
   onCardClick,
+  showDraft,
+  // what is that
   contributionRef,
   hasSession,
   user
@@ -35,6 +37,7 @@ const ContributionHierarchy = ({
               data={data}
               hasSession={finalSession}
               user={finalUser}
+              showDraft={showDraft}
             />{' '}
             <ConditionalWrapper
               condition={data.children.length > 1}
@@ -53,9 +56,12 @@ const ContributionHierarchy = ({
               )}
             >
               {(data.children || []).map((data, index) => {
-                return (
-                  <CategoryWrapper key={index} data={data} />
-                )
+                if (data.status !== 'draft' || showDraft) {
+                  return (
+                    <CategoryWrapper key={index} data={data} />
+                  )
+                }
+                return null
               })}
             </ConditionalWrapper>
           </>
@@ -67,7 +73,8 @@ const ContributionHierarchy = ({
     data,
     getContribution,
     user,
-    hasSession
+    hasSession,
+    showDraft
   }) => {
     return (
       <li
@@ -91,6 +98,7 @@ const ContributionHierarchy = ({
           isExpanded={data.id === activeContribution}
           hideDetails={false}
           hideEdit={false}
+          showDraft={showDraft}
         />
       </li>
     )
@@ -103,6 +111,7 @@ const ContributionHierarchy = ({
           hasSession={hasSession}
           getContribution={getContribution}
           data={contribution}
+          showDraft={showDraft}
         />
       </ul>
     </div>
