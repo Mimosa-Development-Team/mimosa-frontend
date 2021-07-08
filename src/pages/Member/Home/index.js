@@ -191,10 +191,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                         : data.parentQuestionUuid
                                     }?list=${data.id}`,
                                     {
-                                      state: {
-                                        draft: data,
-                                        showDraft: true
-                                      },
+                                      state: data,
                                       from: 'home'
                                     }
                                   )
