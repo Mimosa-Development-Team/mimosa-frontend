@@ -85,6 +85,11 @@ const Question = ({ user, hasSession }) => {
               contributionRef={contributionRef}
               hasSession={hasSession}
               user={user}
+              showDraft={
+                location.state.state
+                  ? location.state.state.showDraft
+                  : false
+              }
             />
           </PageContentWrapper>
           <Hidden smDown implementation="css">
@@ -93,9 +98,11 @@ const Question = ({ user, hasSession }) => {
                 hasSession={hasSession}
                 user={user}
                 authors={
-                  activeContribution.draft
-                    ? activeContribution.draft.author
-                    : activeContribution.author
+                  // allow people to see the original, do not force draft
+                  // activeContribution.draft
+                  //   ? activeContribution.draft.author
+                  //   :
+                  activeContribution.author
                 }
                 poster={activeContribution.postedBy}
                 posterColor={
@@ -105,9 +112,10 @@ const Question = ({ user, hasSession }) => {
                 }
                 datePosted={activeContribution.createdAt}
                 dateModified={
-                  activeContribution.draft
-                    ? activeContribution.draft.updatedAt
-                    : activeContribution.updatedAt
+                  // activeContribution.draft
+                  //   ? activeContribution.draft.updatedAt
+                  //   :
+                  activeContribution.updatedAt
                 }
               />
             </RightSidebar>

@@ -14,6 +14,7 @@ const Card = ({
   data,
   parentTitle,
   isExpanded,
+  showDraft,
   linesToShow,
   user,
   hasSession,
@@ -52,34 +53,39 @@ const Card = ({
                 )}
               <Header
                 data={data}
+                showDraft={showDraft}
                 treeView={treeView}
                 type={
-                  data.draft
+                  showDraft && data.draft
                     ? data.draft.category
                     : data.category
                 }
                 draft={data.draft}
                 questionTags={
-                  data.draft ? data.draft.tags : data.tags
+                  showDraft && data.draft
+                    ? data.draft.tags
+                    : data.tags
                 }
                 analysisTag={
-                  data.draft
+                  showDraft && data.draft
                     ? data.draft.hypothesisStatus
                     : data.hypothesisStatus
                 }
                 deprecated={
-                  data.draft
+                  showDraft && data.draft
                     ? data.draft.status === 'deprecated'
                     : data.status === 'deprecated'
                 }
                 title={
-                  data.draft ? data.draft.subject : data.subject
+                  showDraft && data.draft
+                    ? data.draft.subject
+                    : data.subject
                 }
               />
               {data.details && (
                 <Content
                   content={
-                    data && data.draft
+                    showDraft && data.draft
                       ? data.draft.details
                       : data.details
                   }
@@ -101,6 +107,7 @@ const Card = ({
                 onMetaClick={handleClick}
                 parentQuestionId={data.parentQuestionId}
                 hideEdit={hideEdit}
+                showDraft={showDraft}
               />
             </div>
             {showDetails && (

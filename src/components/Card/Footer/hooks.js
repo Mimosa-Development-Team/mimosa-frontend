@@ -2,11 +2,13 @@ import { useMutation, useQuery } from 'react-query'
 import { queryClient } from 'store/state'
 import {
   deleteContributionAPI,
+  deleteDraftAPI,
   getCommentCountAPI,
   getRelatedMediaCountAPI
 } from './api'
 import {
   CONTRIBUTION_DELETE_QUERY_KEY,
+  DRAFT_DELETE_QUERY_KEY,
   COMMENT_GET_COUNT_QUERY_KEY,
   RELATED_MEDIA_GET_COUNT_QUERY_KEY
 } from './constants'
@@ -23,6 +25,18 @@ export const useQuestionForm = id => {
       queryClient.invalidateQueries(
         CONTRIBUTION_DELETE_QUERY_KEY
       )
+    }
+  })
+
+  const {
+    data: deleteDraft,
+    isLoading: deleteIsLoadingDraft,
+    error: deleteErrorDraft,
+    mutate: deleteDraftMutate,
+    isSuccess: deleteIsSuccessDraft
+  } = useMutation(deleteDraftAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(DRAFT_DELETE_QUERY_KEY)
     }
   })
 
@@ -71,6 +85,12 @@ export const useQuestionForm = id => {
     deleteIsLoadingContribution,
     deleteErrorContribution,
     deleteMutate,
-    deleteIsSuccessContribution
+    deleteIsSuccessContribution,
+
+    deleteDraft,
+    deleteIsLoadingDraft,
+    deleteErrorDraft,
+    deleteDraftMutate,
+    deleteIsSuccessDraft
   }
 }

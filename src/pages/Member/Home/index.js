@@ -78,11 +78,8 @@ const MemberDashboard = ({ user, hasSession }) => {
 
   useEffect(() => {
     refetch()
-  }, [refetch])
-
-  useEffect(() => {
-    getResults(search)
-  }, [getResults, search])
+    getResults()
+  }, [refetch, getResults])
 
   return (
     <PageWrapper
@@ -184,6 +181,8 @@ const MemberDashboard = ({ user, hasSession }) => {
                                 key={index}
                                 className={`${styles.content}`}
                                 onClick={() => {
+                                  //if click from draft
+                                  data.showDraft = true
                                   history.push(
                                     `/contribution/${
                                       data.category ===
@@ -203,6 +202,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                   form={false}
                                   linesToShow={5}
                                   hideEdit
+                                  showDraft
                                   user={user}
                                   hasSession={hasSession}
                                 />
@@ -214,6 +214,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                               key={index}
                               className={`${styles.content}`}
                               onClick={() => {
+                                // if click not from draft
                                 history.push(
                                   `/contribution/${data.uuid}?list=${data.id}`,
                                   {
