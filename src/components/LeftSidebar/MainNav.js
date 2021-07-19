@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Logo from 'assets/images/logo.png'
+import Logo from 'assets/images/logo-main.svg'
 import { useHistory, useLocation } from 'react-router-dom'
 import ContributionTree from 'components/ContributionTree'
 import NavLink from './NavLink'
