@@ -832,7 +832,7 @@ function ContributionForm({
                   />
                 </Grid>
               ) : null}
-              <Grid item sm={12}>
+              <Grid item sm={12} className="text2">
                 <Controls.Input
                   type="text"
                   label={getSubjectLabel(type)}

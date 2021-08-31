@@ -162,6 +162,9 @@ const Login = () => {
               size="large"
               className={`${styles.loginBtn}`}
               onClick={() => {
+                if (token) {
+                  localStorage.setItem('login', true)
+                }
                 return token
                   ? submitLogin()
                   : window.location.assign(

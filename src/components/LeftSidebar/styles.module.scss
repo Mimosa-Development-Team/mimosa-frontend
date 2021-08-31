@@ -46,6 +46,32 @@ div.drawerPaper {
     }
   }
 
+  .notification {
+    position: absolute;
+    margin-left: 250px;
+    margin-top: -20px;
+  }
+
+  .subLink {
+    color: $white;
+    display: block;
+    text-decoration: none;
+    font-family: 'Roboto';
+    font-size: 18px;
+    letter-spacing: 0.11px;
+    line-height: 21px;
+    margin-top: 25px;
+    margin-left: 28px;
+  
+    &.active {
+      color: $yellow;
+    }
+  
+    img {
+      margin-right: 13px;
+    }
+  }
+
   .accountDropdown {
     margin-top: 30px;
     width: 209px;

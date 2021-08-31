@@ -71,11 +71,19 @@ const ContributionForm = props => {
           relatedMediaData={relatedMediaData}
           addedData={addedContribution}
           updatedData={updatedContribution}
-          questionUuid={location.state.questionUuid}
+          questionUuid={
+            location.state && location.state.questionUuid
+              ? location.state.questionUuid
+              : null
+          }
           userData={userData}
           type={match.params.type}
           method={match.params.method}
-          data={location.state.data ? location.state.data : null}
+          data={
+            location.state && location.state.data
+              ? location.state.data
+              : null
+          }
           addedContribution={addedContribution}
           addErrorContribution={addErrorContribution}
           updatedContribution={updatedContribution}

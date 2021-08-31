@@ -4,7 +4,9 @@ export const ROUTES = [
     title: 'Home',
     to: '/',
     location: 'top',
-    icon: 'home'
+    icon: 'home',
+    child: [],
+    url: true
   },
   // {
   //   id: 3,
@@ -18,14 +20,18 @@ export const ROUTES = [
     title: 'About Mimosa',
     to: '/about',
     location: 'bottom',
-    icon: 'about'
+    icon: 'about',
+    child: [],
+    url: true
   },
   {
     id: 5,
     title: 'FAQ',
     to: '/faq',
     location: 'bottom',
-    icon: 'faq'
+    icon: 'faq',
+    child: [],
+    url: true
   }
 ]
 
@@ -35,14 +41,18 @@ export const PRIVATE_ROUTES = [
     title: 'Home',
     to: '/',
     location: 'top',
-    icon: 'home'
+    icon: 'home',
+    child: [],
+    url: true
   },
   {
     id: 2,
     title: 'My Contributions',
     to: '/my-contributions',
     location: 'top',
-    icon: 'contributions'
+    icon: 'contributions',
+    child: [],
+    url: true
   },
   // {
   //   id: 3,
@@ -56,13 +66,32 @@ export const PRIVATE_ROUTES = [
     title: 'About Mimosa',
     to: '/about',
     location: 'bottom',
-    icon: 'about'
+    icon: 'about',
+    child: [],
+    url: true
   },
   {
     id: 5,
-    title: 'FAQ',
+    title: 'FAQ / Help',
     to: '/faq',
     location: 'bottom',
-    icon: 'faq'
+    icon: 'faq',
+    url: true,
+    child: [
+      {
+        id: 6,
+        title: 'FAQ',
+        to: '/faq',
+        location: 'bottom',
+        url: true
+      },
+      {
+        id: 7,
+        title: 'Help',
+        to: '/',
+        location: 'bottom',
+        url: true
+      }
+    ]
   }
 ]
