@@ -23,7 +23,6 @@ const Question = ({ user, hasSession }) => {
     getContribution
   } = useContribution(hasSession ? user.user.id : null)
   const [activeContribution, setActiveContribution] = useState(0)
-  const [from, setFrom] = useState('home')
 
   const contributionRef = useCallback(node => {
     if (node !== null) {
@@ -42,9 +41,6 @@ const Question = ({ user, hasSession }) => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.state && location.state.from) {
-      setFrom(location.state.from)
-    }
     if (id) {
       setActiveContribution(Number(id))
     }
@@ -70,7 +66,7 @@ const Question = ({ user, hasSession }) => {
         </div>
       ) : (
         <>
-          <PageContentWrapper backNav from={from}>
+          <PageContentWrapper backNav>
             <Typography
               className={`${styles.title}`}
               variant="h1"

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -11,38 +12,100 @@ import FaqIcon from 'assets/images/icons/faq.svg'
 import FaqActiveIcon from 'assets/images/icons/faq-active.svg'
 import AboutIcon from 'assets/images/icons/about.svg'
 import AboutActiveIcon from 'assets/images/icons/about-active.svg'
+import NotificationIcon from 'assets/images/icons/notification-icon.svg'
+import NotificationActiveIcon from 'assets/images/icons/notification-icon-active.svg'
 import styles from './styles.module.scss'
 
-const NavLink = ({ title, icon, active, to, ...rest }) => {
+const NavLink = ({
+  title,
+  icon,
+  active,
+  child,
+  to,
+  url,
+  ...rest
+}) => {
   const icons = {
     home: HomeIcon,
     contributions: ContribIcon,
     bookmarks: BookmarksIcon,
     faq: FaqIcon,
-    about: AboutIcon
+    about: AboutIcon,
+    notification: NotificationIcon
   }
   const activeIcons = {
     home: HomeActiveIcon,
     contributions: ContribActiveIcon,
     bookmarks: BookmarksActiveIcon,
     faq: FaqActiveIcon,
-    about: AboutActiveIcon
+    about: AboutActiveIcon,
+    notification: NotificationActiveIcon
   }
+
   return (
-    <Link
-      className={`${styles.navLink} ${
-        active ? styles.active : ''
-      }`}
-      to={to}
-      {...rest}
-    >
-      {active ? (
-        <img src={activeIcons[icon]} alt="" />
+    <>
+      {url && child && child.length > 0 ? (
+        <>
+          <Link
+            className={`${styles.navLink} ${
+              active ? styles.active : ''
+            }`}
+            to={to}
+            {...rest}
+          >
+            {active ? (
+              <img src={activeIcons[icon]} alt="" />
+            ) : (
+              <img src={icons[icon]} alt="" />
+            )}
+            {title}
+          </Link>
+          {child && child.length > 0 && active
+            ? child.map(x => {
+                return (
+                  <Link
+                    className={`${styles.subLink}`}
+                    to={x.to}
+                  >
+                    {x.title}
+                  </Link>
+                )
+              })
+            : null}
+        </>
       ) : (
-        <img src={icons[icon]} alt="" />
+        <>
+          <Link
+            className={`${styles.navLink} ${
+              active ? styles.active : ''
+            }`}
+            to={to}
+            {...rest}
+          >
+            {active ? (
+              <img src={activeIcons[icon]} alt="" />
+            ) : (
+              <img src={icons[icon]} alt="" />
+            )}
+            {title}
+          </Link>
+          {child && child.length > 0
+            ? child.map(x => {
+                return (
+                  <Link
+                    className={`${styles.subLink} ${
+                      active ? styles.active : ''
+                    }`}
+                    to={x.to}
+                  >
+                    {x.title}
+                  </Link>
+                )
+              })
+            : null}
+        </>
       )}
-      {title}
-    </Link>
+    </>
   )
 }
 

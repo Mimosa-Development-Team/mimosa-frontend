@@ -26,6 +26,7 @@ const AccountDropdown = ({ user, hasSession }) => {
       .catch(err => {
         return err
       })
+    localStorage.clear()
   }
 
   return (

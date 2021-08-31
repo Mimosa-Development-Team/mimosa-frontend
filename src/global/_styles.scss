@@ -54,6 +54,23 @@ $spacers: (
   }
 }
 
+.tour {
+  max-width: 461px!important;
+  border-radius: 8px!important;
+}
+
+.topImg {
+  position: absolute;
+  top: -28px;
+  right: -30px;
+}
+
+.bottomImg {
+  position: absolute;
+  bottom: -32px;
+  left: -30px;
+}
+
 /** Helper Classes **/
 .padding {
   &-40 {

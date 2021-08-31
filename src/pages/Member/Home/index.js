@@ -14,6 +14,7 @@ import loader from 'assets/images/loader_loading.gif'
 import SortFilter from 'components/SortFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import LoginModal from 'components/Dialog/login'
+import TooltipUi from '../../../components/Tooltip'
 import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './style.module.scss'
 import Banner from './components/Banner'
@@ -114,25 +115,31 @@ const MemberDashboard = ({ user, hasSession }) => {
                 search={search}
                 className={`${styles.searchBox}`}
               />
-              <Button
-                className="btn primary"
-                size="large"
-                variant="contained"
-                onClick={() => {
-                  if (hasSession) {
-                    history.push(
-                      '/contribution-form/question/new',
-                      {
-                        type: 'new'
-                      }
-                    )
-                  } else {
-                    setModal(true)
-                  }
-                }}
+              <TooltipUi
+                title="Create new Question"
+                style={{ padding: '10px' }}
+                arrow
               >
-                <AddBoxIcon /> NEW QUESTION
-              </Button>
+                <Button
+                  className="btn primary"
+                  size="large"
+                  variant="contained"
+                  onClick={() => {
+                    if (hasSession) {
+                      history.push(
+                        '/contribution-form/question/new',
+                        {
+                          type: 'new'
+                        }
+                      )
+                    } else {
+                      setModal(true)
+                    }
+                  }}
+                >
+                  <AddBoxIcon /> NEW QUESTION
+                </Button>
+              </TooltipUi>
             </div>
             {showResults ? (
               <SearchResults
@@ -172,14 +179,14 @@ const MemberDashboard = ({ user, hasSession }) => {
                         />
                       </div>
                     </div>
-                    <div id="test">
+                    <div id="test" className="test">
                       {questions.pages.map((group, i) => (
                         <React.Fragment key={i}>
                           {group.draftQuestions.map(
                             (data, index) => (
                               <div
                                 key={index}
-                                className={`${styles.content}`}
+                                className={`${styles.content} cardlist`}
                                 onClick={() => {
                                   //if click from draft
                                   data.showDraft = true
@@ -209,10 +216,12 @@ const MemberDashboard = ({ user, hasSession }) => {
                               </div>
                             )
                           )}
-                          {group.data.map((data, index) => (
+                          {group?.data.map((data, index) => (
                             <div
                               key={index}
-                              className={`${styles.content}`}
+                              className={`${
+                                styles.content
+                              } ${`test`}`}
                               onClick={() => {
                                 // if click not from draft
                                 history.push(
