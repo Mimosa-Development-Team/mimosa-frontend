@@ -44,67 +44,20 @@ const NavLink = ({
 
   return (
     <>
-      {url && child && child.length > 0 ? (
-        <>
-          <Link
-            className={`${styles.navLink} ${
-              active ? styles.active : ''
-            }`}
-            to={to}
-            {...rest}
-          >
-            {active ? (
-              <img src={activeIcons[icon]} alt="" />
-            ) : (
-              <img src={icons[icon]} alt="" />
-            )}
-            {title}
-          </Link>
-          {child && child.length > 0 && active
-            ? child.map(x => {
-                return (
-                  <Link
-                    className={`${styles.subLink}`}
-                    to={x.to}
-                  >
-                    {x.title}
-                  </Link>
-                )
-              })
-            : null}
-        </>
-      ) : (
-        <>
-          <Link
-            className={`${styles.navLink} ${
-              active ? styles.active : ''
-            }`}
-            to={to}
-            {...rest}
-          >
-            {active ? (
-              <img src={activeIcons[icon]} alt="" />
-            ) : (
-              <img src={icons[icon]} alt="" />
-            )}
-            {title}
-          </Link>
-          {child && child.length > 0
-            ? child.map(x => {
-                return (
-                  <Link
-                    className={`${styles.subLink} ${
-                      active ? styles.active : ''
-                    }`}
-                    to={x.to}
-                  >
-                    {x.title}
-                  </Link>
-                )
-              })
-            : null}
-        </>
-      )}
+      <Link
+        className={`${styles.navLink} ${
+          active ? styles.active : ''
+        }`}
+        to={to}
+        {...rest}
+      >
+        {active ? (
+          <img src={activeIcons[icon]} alt="" />
+        ) : (
+          <img src={icons[icon]} alt="" />
+        )}
+        {title}
+      </Link>
     </>
   )
 }

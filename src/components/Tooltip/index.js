@@ -19,7 +19,6 @@ const LightTooltip = withStyles(() => ({
 }))(Tooltip)
 
 const TooltipUi = ({ title, ...propsList }) => {
-  console.log(title)
   return (
     <LightTooltip title={title} arrow>
       {propsList.children}

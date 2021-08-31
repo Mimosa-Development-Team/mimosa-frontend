@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Logo from 'assets/images/logo-main.svg'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation, Link } from 'react-router-dom'
 import Popper from '@material-ui/core/Popper'
 import Fade from '@material-ui/core/Fade'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
+import { useGlobalState } from 'store/state'
 import ContributionTree from 'components/ContributionTree'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
+import FaqIcon from 'assets/images/icons/faq.svg'
 import NavLink from './NavLink'
 import AccountDropdown from './AccountDropdown'
 import styles from './styles.module.scss'
@@ -22,6 +24,7 @@ const MainNav = ({
   hasSession
 }) => {
   const location = useLocation()
+  const { login } = useGlobalState()
   const history = useHistory()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [open, setOpen] = React.useState(false)
@@ -77,6 +80,16 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
+        <Link
+          className={`${styles.navLink}`}
+          onClick={async () => {
+            await login.set(true)
+            await history.push('/')
+          }}
+        >
+          <img src={FaqIcon} alt="" />
+          How To
+        </Link>
         <h1
           style={{ fontWeight: 'normal', cursor: 'pointer' }}
           className={`${styles.navLink}`}
@@ -97,6 +110,9 @@ const MainNav = ({
               <Paper style={{ width: '300px' }}>
                 <div style={{ padding: '20px', width: '100%' }}>
                   <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <h1>Notifications</h1>
+                    </Grid>
                     <Grid item xs={3}>
                       <Avatar color="blue">A</Avatar>
                     </Grid>

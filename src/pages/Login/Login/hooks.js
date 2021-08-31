@@ -22,7 +22,11 @@ export const useUser = () => {
   const globalState = useGlobalState()
 
   if (isSuccess) {
-    globalState.merge({ user: addedData, isLoggedIn: true })
+    globalState.merge({
+      user: addedData,
+      isLoggedIn: true,
+      login: true
+    })
     history.push('/')
   }
 

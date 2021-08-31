@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter,
   Route,
@@ -10,16 +10,24 @@ import { Button } from '@material-ui/core'
 import { QueryClientProvider } from 'react-query'
 import Reactour from 'reactour'
 import Member from 'pages/Member'
-
 import { Routes } from 'global/routes'
 
-import { queryClient } from 'store/state'
-
+import { queryClient, useGlobalState } from 'store/state'
+import getRawData from 'utils/hookstate/getRawData'
 import Top from './assets/images/top.svg'
 import Bottom from './assets/images/bottom.svg'
 
 const App = () => {
-  const [open, setOpen] = useState(true)
+  const { login } = useGlobalState()
+  const status = getRawData(login)
+  const [open, setOpen] = useState(status)
+  useEffect(() => {
+    if (status) {
+      setOpen(true)
+    } else {
+      setOpen(false)
+    }
+  }, [login])
 
   const renderComponent = () => {
     return <Member />
@@ -42,6 +50,7 @@ const App = () => {
 const Tour = withRouter(
   // eslint-disable-next-line no-unused-vars
   ({ open, setOpen, location: { pathname }, history }) => {
+    const { login } = useGlobalState()
     const steps = [
       {
         content: () => (
@@ -171,7 +180,10 @@ const Tour = withRouter(
         showNavigation={false}
         steps={steps}
         isOpen={open}
-        onRequestClose={() => setOpen(false)}
+        onRequestClose={async () => {
+          await setOpen(false)
+          await login.set(false)
+        }}
         update={pathname}
       />
     )
