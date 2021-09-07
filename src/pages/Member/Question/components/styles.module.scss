@@ -1,101 +1,50 @@
 @import '~global/styles';
 
 .heirarchyWrapper {
-  ul.heirarchyList {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 50px;
-    
-    li.contribution {
-      position: relative;
-      cursor: pointer;
-      &.question {
-        padding: 0;
-      }
-      &.hypothesis,
-      &.experiment,
-      &.data,
-      &.analysis {
-        padding-left: 40px;
-      }
-      // activeColor
-      &.question.active > div {
-        border: 1px solid $yellow;
-      }
-      &.hypothesis.active > div {
-        border: 1px solid $orange;
-      }
-      &.experiment.active > div {
-        border: 1px solid $green;
-      }
-      &.data.active > div {
-        border: 1px solid $indigo;
-      }
-      &.analysis.active > div {
-        border: 1px solid $purple;
-      }
-      &.hypothesis::after {
-        content: '';
-        width: 20px;
-        display: block;
-        position: absolute;
-        left: 20px;
-        top: -10px;
-        border-bottom: 1px solid rgba(178, 180, 189, 0.5);
-        border-left: 1px solid rgba(178, 180, 189, 0.5);
-        height: calc(50% + 10px);
-        border-top: none !important;
-      }
-      &.experiment::after,
-      &.data::after {
-        content: '';
-        width: 20px;
-        display: block;
-        position: absolute;
-        left: 20px;
-        top: -60%;
-        border-bottom: 1px solid rgba(178, 180, 189, 0.5);
-        border-left: 1px solid rgba(178, 180, 189, 0.5);
-        height: calc(100% + 20px);
-        border-top: none !important;
-      }
-    }
-
-    ul.childWrapper {
+  ul {
+    margin-left: -10px;
+    list-style: none;
+  }
+  
+  $border: #ddd;
+  $border-hover: #aaa;
+  $bg-hover: #eee;
+  $text: #888;
+  $text-hover: #000;
+  $ident: 20px;
+  $left: -($ident);
+  
+  .wtree {
+    li {
       list-style-type: none;
-      padding-left: 40px;
-
-      li {
-        position: relative;
-        &:first-child::after {
-          content: '';
-          width: 20px;
-          display: block;
-          position: absolute;
-          left: 20px;
-          top: -10px;
-          border-bottom: 1px solid rgba(178, 180, 189, 0.5);
-          border-left: 1px solid rgba(178, 180, 189, 0.5);
-          height: calc(50% + 10px);
-          border-top: none !important;
-        }
-        &:not(:first-child)::after {
-          content: '';
-          width: 20px;
-          display: block;
-          position: absolute;
-          left: 20px;
-          top: -60%;
-          border-bottom: 1px solid rgba(178, 180, 189, 0.5);
-          border-left: 1px solid rgba(178, 180, 189, 0.5);
-          height: calc(100% + 20px);
-          border-top: none !important;
-        }
+      margin:10px 0 10px 10px;
+      position: relative;
+      &:before {
+        content: "";
+        position: absolute;
+        top:-10px;
+        left:$left;
+        border-left: 1px solid $border;
+        border-bottom:1px solid $border;
+        width:$ident;
+        height:80px;
+      }
+      &:after {
+        position:absolute;
+        content:"";
+        top:69px;
+        left:$left;
+        border-left: 1px solid $border;
+        border-top:1px solid $border;
+        width:$ident;
+        height:100%;
+      }
+      &:last-child:after {
+        display:none;
       }
     }
   }
 }
-
 
 .contributionDetails {
   padding: 40px;

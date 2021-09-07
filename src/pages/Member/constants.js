@@ -47,20 +47,13 @@ export const PRIVATE_ROUTES = [
   },
   {
     id: 2,
-    title: 'My Contributions',
+    title: 'User Profile',
     to: '/my-contributions',
     location: 'top',
     icon: 'contributions',
     child: [],
     url: true
   },
-  // {
-  //   id: 3,
-  //   title: 'Bookmarks',
-  //   to: '/bookmarks',
-  //   location: 'top',
-  //   icon: 'bookmarks'
-  // },
   {
     id: 4,
     title: 'About Mimosa',
@@ -76,6 +69,14 @@ export const PRIVATE_ROUTES = [
     to: '/faq',
     location: 'bottom',
     icon: 'faq',
+    url: true
+  },
+  {
+    id: 6,
+    title: 'How To',
+    to: '/how-to',
+    location: 'bottom',
+    icon: 'howto',
     url: true
   }
 ]

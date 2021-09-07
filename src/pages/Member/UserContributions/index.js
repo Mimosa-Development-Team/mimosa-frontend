@@ -79,7 +79,7 @@ const UserContributions = ({ user, hasSession }) => {
             scrollableTarget="scrollableList"
           >
             <Typography className="mb-20" variant="h1">
-              My Contributions
+              User Profile
             </Typography>
             {userContributions ? (
               <Dashboard

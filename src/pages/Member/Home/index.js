@@ -17,7 +17,7 @@ import LoginModal from 'components/Dialog/login'
 import TooltipUi from '../../../components/Tooltip'
 import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './style.module.scss'
-import Banner from './components/Banner'
+// import Banner from './components/Banner'
 import SearchResults from './components/SearchResults'
 import { useQuestions, useResults } from './hooks'
 
@@ -155,7 +155,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                   >
                     Home
                   </Typography>
-                  <Banner />
+                  {/* <Banner /> */}
                 </div>
                 {questions ? (
                   <>

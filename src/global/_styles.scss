@@ -489,18 +489,31 @@ hr.MuiDivider-root {
 span {
   &.question {
     color: $yellow;
+    background-color: #FDF4DC;
+    padding: 3px 15px 3px 15px;
+    border-radius: 15px;
   }
   &.hypothesis {
     color: $orange;
+    background-color: #FCEDDC;
+    padding: 3px 15px 3px 15px;
+    border-radius: 15px;
   }
   &.experiment {
     color: $green;
+    background-color: #DAF3E4;
+    padding: 3px 15px 3px 15px;
+    border-radius: 15px;
   }
   &.data {
     color: $indigo;
+    background-color: #DFE9F8;
+    padding: 3px 15px 3px 15px;
+    border-radius: 15px;
   }
   &.analysis {
     color: $purple;
+    background-color: #E9E2EC;
   }
 }
 

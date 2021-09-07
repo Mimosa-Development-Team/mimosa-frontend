@@ -14,6 +14,8 @@ import AboutIcon from 'assets/images/icons/about.svg'
 import AboutActiveIcon from 'assets/images/icons/about-active.svg'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
 import NotificationActiveIcon from 'assets/images/icons/notification-icon-active.svg'
+import HowToIcon from 'assets/images/icons/how-to.svg'
+import HowToActiveIcon from 'assets/images/icons/how-to-col.svg'
 import styles from './styles.module.scss'
 
 const NavLink = ({
@@ -31,7 +33,8 @@ const NavLink = ({
     bookmarks: BookmarksIcon,
     faq: FaqIcon,
     about: AboutIcon,
-    notification: NotificationIcon
+    notification: NotificationIcon,
+    howto: HowToIcon
   }
   const activeIcons = {
     home: HomeActiveIcon,
@@ -39,7 +42,8 @@ const NavLink = ({
     bookmarks: BookmarksActiveIcon,
     faq: FaqActiveIcon,
     about: AboutActiveIcon,
-    notification: NotificationActiveIcon
+    notification: NotificationActiveIcon,
+    howto: HowToActiveIcon
   }
 
   return (
