@@ -1,30 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Logo from 'assets/images/logo-main.svg'
-import { useHistory, useLocation, Link } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import Popper from '@material-ui/core/Popper'
+import Switch from '@material-ui/core/Switch'
 import Fade from '@material-ui/core/Fade'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
+// import ContributionTree from 'components/ContributionTree'
 import { useGlobalState } from 'store/state'
-import ContributionTree from 'components/ContributionTree'
+import getRawData from 'utils/parsing/Proxy'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
-import FaqIcon from 'assets/images/icons/faq.svg'
 import NavLink from './NavLink'
 import AccountDropdown from './AccountDropdown'
 import styles from './styles.module.scss'
 
 const MainNav = ({
   links,
-  contribution,
-  activeContribution,
-  onTreeClick,
+  // contribution,
+  // activeContribution,
+  // onTreeClick,
   user,
   hasSession
 }) => {
+  const { user: proxyUser } = useGlobalState()
   const location = useLocation()
-  const { login } = useGlobalState()
   const history = useHistory()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [open, setOpen] = React.useState(false)
@@ -58,13 +59,13 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
-        {contribution && (
+        {/* {contribution && (
           <ContributionTree
             contribution={contribution}
             activeContribution={activeContribution}
             onTreeClick={onTreeClick}
           />
-        )}
+        )} */}
       </div>
       <div>
         {links
@@ -80,16 +81,6 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
-        <Link
-          className={`${styles.navLink}`}
-          onClick={async () => {
-            await login.set(true)
-            await history.push('/')
-          }}
-        >
-          <img src={FaqIcon} alt="" />
-          How To
-        </Link>
         <h1
           style={{ fontWeight: 'normal', cursor: 'pointer' }}
           className={`${styles.navLink}`}
@@ -112,6 +103,17 @@ const MainNav = ({
                   <Grid container spacing={3}>
                     <Grid item xs={12}>
                       <h1>Notifications</h1>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <span>
+                        {getRawData(proxyUser) &&
+                          getRawData(proxyUser).user.email}
+                      </span>
+                      <Switch
+                        style={{ alignContent: 'right' }}
+                        checked
+                        name="notif"
+                      />
                     </Grid>
                     <Grid item xs={3}>
                       <Avatar color="blue">A</Avatar>

@@ -2,13 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 
-import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
-
+// import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
+import QuestionIcon from 'assets/images/icons/question-icon.svg'
+import HypothesisIcon from 'assets/images/icons/hypothesis-icon.svg'
+import ExperimentIcon from 'assets/images/icons/experiment-icon.svg'
+import DataIcon from 'assets/images/icons/data-icon.svg'
+import AnalysisIcon from 'assets/images/icons/analysis-icon.svg'
 import Tags from './Tags'
 import styles from './styles.module.scss'
 
 const Header = ({
-  treeView,
+  // treeView,
   type,
   title,
   questionTags,
@@ -17,7 +21,6 @@ const Header = ({
   showDraft,
   data
 }) => {
-  const fullTitle = `<h2 class=${styles.title}><span class='${styles.type} ${type}'>${type}: </span>${title}</h2>`
   return (
     <div>
       <Tags
@@ -29,21 +32,39 @@ const Header = ({
       {showDraft && (data.status === `draft` || data.draft) ? ( //data.status === 'draft' || data.draft
         <i className={`${styles.draft}`}>Draft</i>
       ) : null}
-      {treeView ? (
-        <Typography variant="h2">
+      <Typography variant="h2">
+        {type === 'question' && (
           <span className={`${styles.type} ${type}`}>
-            {type}:{' '}
+            <img src={QuestionIcon} />
+            {type}
           </span>
-          {title}
-        </Typography>
-      ) : (
-        <HTMLEllipsis
-          unsafeHTML={fullTitle}
-          maxLine="5"
-          ellipsisHTML="..."
-          basedOn="letters"
-        />
-      )}
+        )}
+        {type === 'hypothesis' && (
+          <span className={`${styles.type} ${type}`}>
+            <img src={HypothesisIcon} />
+            {type}
+          </span>
+        )}
+        {type === 'experiment' && (
+          <span className={`${styles.type} ${type}`}>
+            <img src={ExperimentIcon} />
+            {type}
+          </span>
+        )}
+        {type === 'data' && (
+          <span className={`${styles.type} ${type}`}>
+            <img src={DataIcon} />
+            {type}
+          </span>
+        )}
+        {type === 'analysis' && (
+          <span className={`${styles.type} ${type}`}>
+            <img src={AnalysisIcon} />
+            {type}
+          </span>
+        )}{' '}
+        {title}
+      </Typography>
     </div>
   )
 }

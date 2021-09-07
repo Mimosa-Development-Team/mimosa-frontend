@@ -26,7 +26,7 @@ const ContributionTree = ({
               }`}
               onClick={() => onTreeClick(data.id)}
             >
-              {data.category.charAt(0)}
+              {data.category && data.category.charAt(0)}
             </li>
             <ConditionalWrapper
               condition={data.children.length > 1}
