@@ -26,6 +26,14 @@ const Comments = ({ onMetaClick, contributionId }) => {
           {comment && comment.count !== undefined
             ? comment.count
             : 0}
+          <span
+            style={{
+              textTransform: 'lowercase',
+              marginLeft: '2px'
+            }}
+          >
+            comments
+          </span>
         </Button>
       </TooltipUi>
       {/* <span className={`${styles.metaDivider}`}>·</span> */}

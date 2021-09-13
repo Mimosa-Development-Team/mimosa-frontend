@@ -25,6 +25,7 @@ export default function Input(props) {
         render={({ onChange, value }) => (
           <TextareaAutosize
             size="small"
+            style={{ resize: 'none' }}
             type={type}
             className="textarea"
             onChange={onChange}

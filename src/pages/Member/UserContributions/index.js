@@ -126,6 +126,9 @@ const UserContributions = ({ user, hasSession }) => {
                           <div
                             key={index}
                             className={`${styles.content}`}
+                            data-tut={`${
+                              i === 0 && 'reactour__state'
+                            }`}
                             onClick={() => {
                               history.push(
                                 `/contribution/${data.parentQuestionUuid}?list=${data.id}`,

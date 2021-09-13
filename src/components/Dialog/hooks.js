@@ -1,10 +1,11 @@
 import { useMutation } from 'react-query'
-import { queryClient } from 'store/state'
+import { queryClient, useGlobalState } from 'store/state'
 
 import { putEmail } from './api'
 import { POST_EMAIL } from './constants'
 
 export const useEmail = () => {
+  const { user: proxyUser } = useGlobalState()
   const {
     data: updatedEmail,
     isLoading: updateIsLoadingEmail,
@@ -13,7 +14,8 @@ export const useEmail = () => {
     isSuccess: updateIsSuccessEmail,
     reset: resetEmailUpdate
   } = useMutation(putEmail, {
-    onSuccess: () => {
+    onSuccess: data => {
+      proxyUser.user.set(data.data)
       queryClient.invalidateQueries(POST_EMAIL)
     }
   })

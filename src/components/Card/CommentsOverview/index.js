@@ -72,14 +72,6 @@ const CommentsOverview = ({
     }
   }
 
-  const handleReset = () => {
-    if (editing) {
-      setEditing(false)
-      // resetCommentUpdate()
-    }
-    reset({ comment: '' })
-  }
-
   const handleDelete = data => {
     setDeleteForm(true)
     setActiveComment(data.id)
@@ -155,27 +147,6 @@ const CommentsOverview = ({
             >
               {editing ? 'UPDATE' : 'ADD'}
             </Button>
-            <Button
-              onClick={() => handleReset()}
-              className={`${styles.clearBtn} btn secondary`}
-            >
-              CANCEL
-            </Button>
-            {/* {editing && (
-              <Typography className={`${styles.editMeta}`}>
-                Escape to
-                <span className={`${styles.metaButton}`}>
-                  Cancel
-                </span>
-                <span className={`${styles.metaDivider}`}>
-                  ·
-                </span>
-                Enter to
-                <span className={`${styles.metaButton}`}>
-                  Save
-                </span>
-              </Typography>
-            )} */}
           </form>
         </div>
         {(comments || []).map(data => {

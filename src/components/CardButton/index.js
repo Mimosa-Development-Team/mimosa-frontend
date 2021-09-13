@@ -7,7 +7,7 @@ import ContributeIcon from 'assets/images/icons/contribute.svg'
 import TooltipUi from 'components/Tooltip'
 import styles from './styles.module.scss'
 
-const CardButton = ({ action, ...propsList }) => {
+const CardButton = ({ disabled, action, ...propsList }) => {
   const icons = {
     edit: EditIcon,
     delete: DeleteIcon,
@@ -26,8 +26,9 @@ const CardButton = ({ action, ...propsList }) => {
           aria-label={action}
           className={`${styles.cardButton} ${styles[action]}`}
           {...propsList}
+          disabled={disabled}
         >
-          <img src={icons[action]} alt="" />
+          {!disabled && <img src={icons[action]} alt="" />}
           {action}
         </IconButton>
       </TooltipUi>
