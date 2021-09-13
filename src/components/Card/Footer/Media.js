@@ -26,6 +26,14 @@ const Media = ({ onMetaClick, contributionId }) => {
           {mediaCount && mediaCount.count !== undefined
             ? mediaCount.count
             : 0}
+          <span
+            style={{
+              textTransform: 'lowercase',
+              marginLeft: '2px'
+            }}
+          >
+            related media
+          </span>
         </Button>
       </TooltipUi>
     </div>

@@ -69,9 +69,15 @@ const Footer = ({
 
   return (
     <div className={`${styles.footer}`}>
-      {author && (
-        <AuthorMeta author={author} userColor={userColor} />
-      )}
+      {author ||
+        (data && data.mmUser && (
+          <AuthorMeta
+            author={
+              author || (data.mmUser && data.mmUser.firstName)
+            }
+            userColor={userColor}
+          />
+        ))}
       {showDraft ? (
         <ModalDelete
           header={`Discard this ${
@@ -158,30 +164,22 @@ const Footer = ({
               onClick={() => setModal(true)}
             />
           ) : null}
-          {(user &&
-            data.category !== 'analysis' &&
-            data.userId === user.id &&
-            data.children &&
-            data.children !== undefined &&
-            data.children &&
-            data.children.length <= 0) ||
-          (user && data.category !== 'analysis') ? (
-            <CardButton
-              action="contribute"
-              onClick={() => {
-                history.push(
-                  `/contribution-form/${getType(
-                    data.category
-                  )}/new`,
-                  {
-                    type: 'new',
-                    data,
-                    questionUuid: data.parentQuestionId
-                  }
-                )
-              }}
-            />
-          ) : null}
+          <CardButton
+            action="contribute"
+            onClick={() => {
+              history.push(
+                `/contribution-form/${getType(
+                  data.category
+                )}/new`,
+                {
+                  type: 'new',
+                  data,
+                  questionUuid: data.parentQuestionId
+                }
+              )
+            }}
+            disabled={!user}
+          />
         </>
       ) : null}
     </div>

@@ -15,7 +15,6 @@ import UserContributions from './UserContributions'
 import About from './About'
 import ContributionForm from './ContributionForm'
 import FAQ from './FAQ'
-import HowTo from './HowTo'
 import Question from './Question'
 import './index.scss'
 
@@ -98,18 +97,6 @@ const Member = () => {
             component={props => {
               return (
                 <FAQ
-                  {...props}
-                  hasSession={hasSession}
-                  user={user}
-                />
-              )
-            }}
-          />
-          <Route
-            path="/how-to"
-            component={props => {
-              return (
-                <HowTo
                   {...props}
                   hasSession={hasSession}
                   user={user}

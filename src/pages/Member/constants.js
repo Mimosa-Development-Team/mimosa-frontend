@@ -65,18 +65,10 @@ export const PRIVATE_ROUTES = [
   },
   {
     id: 5,
-    title: 'FAQ',
+    title: 'FAQ / How to',
     to: '/faq',
     location: 'bottom',
     icon: 'faq',
-    url: true
-  },
-  {
-    id: 6,
-    title: 'How To',
-    to: '/how-to',
-    location: 'bottom',
-    icon: 'howto',
     url: true
   }
 ]

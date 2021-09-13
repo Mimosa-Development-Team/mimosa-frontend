@@ -17,7 +17,6 @@ import LoginModal from 'components/Dialog/login'
 import TooltipUi from '../../../components/Tooltip'
 import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './style.module.scss'
-// import Banner from './components/Banner'
 import SearchResults from './components/SearchResults'
 import { useQuestions, useResults } from './hooks'
 
@@ -121,7 +120,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                 arrow
               >
                 <Button
-                  className="btn primary"
+                  className="btn primary questionClass"
                   size="large"
                   variant="contained"
                   onClick={() => {
@@ -148,15 +147,6 @@ const MemberDashboard = ({ user, hasSession }) => {
               />
             ) : (
               <>
-                <div className={`${styles.homeBanner}`}>
-                  <Typography
-                    className={`${styles.title}`}
-                    variant="h1"
-                  >
-                    Home
-                  </Typography>
-                  {/* <Banner /> */}
-                </div>
                 {questions ? (
                   <>
                     <div className={`${styles.paperListHeader}`}>
