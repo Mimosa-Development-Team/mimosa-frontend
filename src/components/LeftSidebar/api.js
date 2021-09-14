@@ -8,8 +8,8 @@ export const getNotificationList = () => {
   return getRequest(`api/v1/notification`)
 }
 
-export const putEmail = email => {
-  return putRequest(`api/v1/user`, { email })
+export const putEmail = emailNotification => {
+  return putRequest(`api/v1/users`, emailNotification)
 }
 
 export const deleteNotificationSingle = id => {

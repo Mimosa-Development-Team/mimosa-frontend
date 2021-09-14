@@ -184,38 +184,6 @@ export default function ModalDialog({ modal, setModal }) {
             </Form>
           )}
         </Formik>
-        {/* <div className={classes.content}>
-          <Typography
-            variant="subtitle1"
-            id="simple-modal-description"
-            align="left"
-            color="success"
-          >
-            Email Address
-          </Typography>
-        </div>
-        <TextField
-          size="small"
-          className="input"
-          variant="outlined"
-          placeholder="Your Email"
-          style={{ width: '100%' }}
-          type="email"
-          onChange={e => {
-            setEmail(e.target.value)
-          }}
-        />
-        <div style={{ marginTop: '30px', textAlign: 'right' }}>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            className={`${classes.buttonLogin}`}
-            onClick={() => submit()}
-          >
-            Register
-          </Button>
-        </div> */}
       </div>
     </Modal>
   )

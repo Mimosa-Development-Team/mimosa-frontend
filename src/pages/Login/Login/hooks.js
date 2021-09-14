@@ -2,8 +2,8 @@ import { useMutation } from 'react-query'
 import { useHistory } from 'react-router-dom'
 import { queryClient, useGlobalState } from 'store/state'
 
-import { postUserAPI } from './api'
-import { USER_LOGIN_KEY } from './constants'
+import { postUserAPI, putEmail } from './api'
+import { USER_LOGIN_KEY, PUT_EMAIL } from './constants'
 
 export const useUser = () => {
   const history = useHistory()
@@ -16,6 +16,19 @@ export const useUser = () => {
   } = useMutation(postUserAPI, {
     onSuccess: () => {
       queryClient.invalidateQueries(USER_LOGIN_KEY)
+    }
+  })
+
+  const {
+    data: updatedEmail,
+    isLoading: updateIsLoadingEmail,
+    error: updateErrorEmail,
+    mutate: updateMutate,
+    isSuccess: updateIsSuccessEmail,
+    reset: resetEmailUpdate
+  } = useMutation(putEmail, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(PUT_EMAIL)
     }
   })
 
@@ -35,6 +48,13 @@ export const useUser = () => {
     addedData,
     addTodoLoading,
     addToDoError,
-    isSuccess
+    isSuccess,
+
+    updatedEmail,
+    updateIsLoadingEmail,
+    updateErrorEmail,
+    updateMutate,
+    updateIsSuccessEmail,
+    resetEmailUpdate
   }
 }
