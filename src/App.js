@@ -84,24 +84,6 @@ const Tour = withRouter(
       ...(pathname === '/'
         ? [
             {
-              selector: '.test',
-              content: () => (
-                <div>
-                  <h2>Contibution List</h2>
-                  <p>
-                    Lorem Ipsum, sometimes referred to as lipsum,
-                    is the placeholder text used in design when
-                    creating content. It helps designers plan out
-                    where the content will sit, without needing
-                    to wait for the content to be written and
-                    approved.2
-                  </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
-                </div>
-              )
-            },
-            {
               selector: '.questionClass',
               content: () => (
                 <div>
@@ -136,7 +118,6 @@ const Tour = withRouter(
           ]
         : pathname === '/contribution-form/question/new'
         ? [
-            {},
             {},
             {
               selector: '.text2',
@@ -208,7 +189,6 @@ const Tour = withRouter(
           ]
         : pathname === '/my-contributions'
         ? [
-            {},
             {},
             {},
             {},

@@ -48,14 +48,14 @@ const SwitchToggle = withStyles({
 
 const Notification = ({ anchorEl, setAnchorEl }) => {
   const { user: proxyUser } = useGlobalState()
-  const [toggle, setToggle] = useState(false)
   const { user } = getRawData(proxyUser)
   const [notificationId, setNotificationId] = useState(null)
   const [modal, setModal] = useState(false)
   const {
     notificationRefetch,
     notification,
-    deleteNotificationSingleMutate
+    deleteNotificationSingleMutate,
+    updateEmail
   } = useNotification(notificationId)
   const handleClose = () => {
     setAnchorEl(null)
@@ -106,9 +106,13 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
             >
               {user.email}{' '}
               <SwitchToggle
-                checked={toggle}
+                checked={user.emailNotification}
                 labelPlacement="top"
-                onChange={() => setToggle(!toggle)}
+                onChange={() => {
+                  updateEmail({
+                    emailNotification: !user.emailNotification
+                  })
+                }}
                 name="checkedA"
                 inputProps={{
                   'aria-label': 'secondary checkbox'

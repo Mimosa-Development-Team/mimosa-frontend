@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-expressions */
+import React, { useEffect, useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Backdrop,
   Button,
   Typography,
-  Link
+  Link,
+  Grid
 } from '@material-ui/core'
 
 import Slider from 'react-slick'
-
+import { Formik, Form } from 'formik'
+import Controls from 'components/controls/Controls'
+import * as yup from 'yup'
+// import { useGlobalState } from 'store/state'
+// import getRawData from 'utils/parsing/Proxy'
 import Logo from 'assets/images/logo.svg'
 import Asterisk from 'assets/images/asterisk.svg'
 import OrcidLogo from 'assets/images/login/orcid.png'
@@ -55,12 +62,16 @@ const Login = () => {
     }
   }, [addToDo])
 
-  const submitLogin = () => {
+  const submitLogin = email => {
     setLoading(true)
     setTimeout(() => {
-      addToDo({ token })
+      addToDo({ token, email })
     }, 2000)
   }
+  const formikRef = useRef()
+  const schema = yup.object().shape({
+    email: yup.string().email()
+  })
 
   return (
     <>
@@ -155,25 +166,90 @@ const Login = () => {
               Welcome back! You need to log in to publish
               comments and contributions
             </Typography>
-            <Button
-              type="submit"
-              disabled={isLoading}
-              variant="contained"
-              size="large"
-              className={`${styles.loginBtn}`}
-              onClick={() => {
-                return token
-                  ? submitLogin()
-                  : window.location.assign(
-                      `${dotenv.orcidUrl}${window.location.href}`
-                    )
-              }}
-            >
-              <img src={OrcidLogo} />
-              {data
-                ? `Continue as ${data.given_name} ${data.family_name}`
-                : 'Log in with ORCID'}
-            </Button>
+            {data && (
+              <Formik
+                innerRef={formikRef}
+                enableReinitialize
+                initialValues={{
+                  email: ''
+                }}
+                defaultValue={{
+                  email: ''
+                }}
+                validationSchema={schema}
+                onSubmit={async values => {
+                  submitLogin(values.email)
+                }}
+              >
+                {({
+                  values,
+                  errors,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit
+                }) => (
+                  <Form
+                    onSubmit={handleSubmit}
+                    style={{ marginTop: '15px' }}
+                  >
+                    <Grid
+                      container
+                      direction="row"
+                      justify="flex-start"
+                      alignItems="flex-start"
+                      spacing={3}
+                    >
+                      <Grid item sm={12} className="text2">
+                        <Controls.Input
+                          type="text"
+                          placeholder="Email Address"
+                          name="email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                          {...(errors &&
+                            errors.email && {
+                              error: true,
+                              helperText: errors.email
+                            })}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Button
+                          type="submit"
+                          disabled={isLoading}
+                          variant="contained"
+                          size="large"
+                          className={`${styles.loginBtn}`}
+                        >
+                          <img src={OrcidLogo} />
+                          {data
+                            ? `Continue as ${data.given_name} ${data.family_name}`
+                            : 'Log in with ORCID'}
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Form>
+                )}
+              </Formik>
+            )}
+            {!data && (
+              <Button
+                type="submit"
+                disabled={isLoading}
+                variant="contained"
+                size="large"
+                className={`${styles.loginBtn}`}
+                onClick={() => {
+                  window.location.assign(
+                    `${dotenv.orcidUrl}${window.location.href}`
+                  )
+                }}
+              >
+                <img src={OrcidLogo} />
+                Log in with ORCID
+              </Button>
+            )}
             <div className={`${styles.linkWrapper}`}>
               <Link
                 className={`${styles.link}`}

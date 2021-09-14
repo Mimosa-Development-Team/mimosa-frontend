@@ -3,11 +3,41 @@ import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
+import Switch from '@material-ui/core/Switch'
+import { withStyles } from '@material-ui/core'
 import AddMailModal from 'components/Dialog/addmail'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/parsing/Proxy'
-
+import { useNotification } from '../../../../components/LeftSidebar/hooks'
 import styles from '../styles.module.scss'
+
+const SwitchToggle = withStyles({
+  switchBase: {
+    color: 'orange',
+    marginTop: '-8px',
+    '&$checked': {
+      color: 'orange',
+      marginTop: '-8px'
+    },
+    '&$checked + $track': {
+      backgroundColor: 'orange',
+      marginTop: '-8px'
+    }
+  },
+  checked: {},
+  track: {
+    color: 'orange',
+    marginTop: '-8px',
+    '&$checked': {
+      color: 'orange',
+      marginTop: '-8px'
+    },
+    '&$checked + $track': {
+      backgroundColor: 'orange',
+      marginTop: '-8px'
+    }
+  }
+})(Switch)
 
 const Dashboard = ({
   question,
@@ -16,6 +46,7 @@ const Dashboard = ({
   data,
   analysis
 }) => {
+  const { updateEmail } = useNotification()
   const { user } = useGlobalState()
   const [modal, setModal] = useState(false)
 
@@ -72,6 +103,28 @@ const Dashboard = ({
                 Add Email Address
               </span>
             )}
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            alignItems="left"
+            style={{ marginTop: '10px' }}
+          >
+            <span>{getRawData(user).user.email}</span>
+            <SwitchToggle
+              checked={getRawData(user).user.emailNotification}
+              labelPlacement="top"
+              onChange={() => {
+                updateEmail({
+                  emailNotification: !getRawData(user).user
+                    .emailNotification
+                })
+              }}
+              name="checkedA"
+              inputProps={{
+                'aria-label': 'secondary checkbox'
+              }}
+            />
           </Grid>
         </Grid>
         <Grid item sm={2}>

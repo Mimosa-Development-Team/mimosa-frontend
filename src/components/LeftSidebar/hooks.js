@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from 'react-query'
-import { queryClient } from 'store/state'
+import { queryClient, useGlobalState } from 'store/state'
 
 import {
   getNotificationList,
@@ -15,6 +15,7 @@ import {
 } from './constants'
 
 export const useNotification = id => {
+  const { user: proxyUser } = useGlobalState()
   const {
     data: notification,
     isLoading: notificationIsLoading,
@@ -31,7 +32,10 @@ export const useNotification = id => {
     error: updateError,
     mutate: updateEmail
   } = useMutation(putEmail, {
-    onSuccess: () => {
+    onSuccess: data => {
+      const temp = data.data
+      temp.notification = false
+      proxyUser.user.set(temp)
       queryClient.invalidateQueries(NOTIFICATION_PUT_EMAIL)
     }
   })
