@@ -1,4 +1,6 @@
 import { useMutation, useQuery } from 'react-query'
+import { toast } from 'material-react-toastify'
+import { useHistory } from 'react-router-dom'
 import { queryClient } from 'store/state'
 import {
   getUserAPI,
@@ -20,6 +22,7 @@ import {
 } from './constants'
 
 export const useQuestionForm = id => {
+  const history = useHistory()
   const { data: user, refetch: userFetch } = useQuery(
     USER_QUERY_KEY,
     getUserAPI,
@@ -40,8 +43,8 @@ export const useQuestionForm = id => {
     data: relatedMedia,
     refetch: relatedMediaFetch
   } = useQuery(
-    [RELATEDMEDIA_GET_QUERY_KEY, { id }],
-    getRelatedMediaAPI,
+    RELATEDMEDIA_GET_QUERY_KEY,
+    () => getRelatedMediaAPI(id),
     {
       enabled: false
     }
@@ -55,7 +58,19 @@ export const useQuestionForm = id => {
     isSuccess: addIsSuccessContribution,
     reset: resetAdd
   } = useMutation(postContributionAPI, {
-    onSuccess: () => {
+    onSuccess: data => {
+      toast.success('Create Contribution Success!')
+      queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
+      if (data.contribution.category === 'question') {
+        history.push('/')
+      } else {
+        history.push(
+          `/contribution/${data.contribution.uuid}?list=${data.contribution.mainParentId}`
+        )
+      }
+    },
+    onError: () => {
+      toast.error('Create Contribution Error!')
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
     }
   })
@@ -98,9 +113,15 @@ export const useQuestionForm = id => {
     isSuccess: updateIsSuccessContribution,
     reset: resetUpdate
   } = useMutation(putContributionAPI, {
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
+      toast.success('Update Contribution Success!')
       relatedMediaFetch()
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
+      history.push(
+        `/contribution/${data.uuid}?list=${
+          data.mainParentId ? data.mainParentId : data.id
+        }`
+      )
     }
   })
 

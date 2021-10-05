@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Logo from 'assets/images/logo-main.svg'
 import { useHistory, useLocation } from 'react-router-dom'
-// import ContributionTree from 'components/ContributionTree'
+import ContributionTree from 'components/ContributionTree'
 // import { useGlobalState } from 'store/state'
 // import getRawData from 'utils/parsing/Proxy'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
@@ -13,9 +13,9 @@ import styles from './styles.module.scss'
 
 const MainNav = ({
   links,
-  // contribution,
-  // activeContribution,
-  // onTreeClick,
+  contribution,
+  activeContribution,
+  onTreeClick,
   user,
   hasSession
 }) => {
@@ -52,13 +52,13 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
-        {/* {contribution && (
+        {contribution && (
           <ContributionTree
             contribution={contribution}
             activeContribution={activeContribution}
             onTreeClick={onTreeClick}
           />
-        )} */}
+        )}
       </div>
       <div>
         {links

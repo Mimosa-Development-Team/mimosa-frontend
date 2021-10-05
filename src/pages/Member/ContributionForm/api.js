@@ -21,8 +21,7 @@ export const putContributionAPI = data => {
   return putRequest(`/api/v1/contribution/${data.id}`, data)
 }
 
-export const getRelatedMediaAPI = data => {
-  const { id } = data.queryKey[1]
+export const getRelatedMediaAPI = id => {
   return getRequest(`/api/v1/related-media/list/${id}`)
 }
 

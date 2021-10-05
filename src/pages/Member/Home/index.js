@@ -126,10 +126,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                   onClick={() => {
                     if (hasSession) {
                       history.push(
-                        '/contribution-form/question/new',
-                        {
-                          type: 'new'
-                        }
+                        '/contribution-form/question/new'
                       )
                     } else {
                       setModal(true)
@@ -154,7 +151,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                         className={`${styles.title}`}
                         variant="h5"
                       >
-                        Contribution List
+                        Paper List
                       </Typography>
                       <div className={`${styles.sortWrapper}`}>
                         <Typography

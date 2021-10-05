@@ -1,5 +1,5 @@
 import { getRequest } from 'utils/http'
 
-export const getContributionAPI = () => {
-  return getRequest(`api/v1/contribution/questionslist`)
+export const getContributionAPI = id => {
+  return getRequest(`api/v1/contribution/questionslist/${id}`)
 }

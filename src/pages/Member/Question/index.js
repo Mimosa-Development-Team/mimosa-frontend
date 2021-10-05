@@ -21,9 +21,13 @@ const Question = ({ user, hasSession }) => {
     isLoading,
     remove,
     getContribution
-  } = useContribution(hasSession ? user.user.id : null)
-  const [activeContribution, setActiveContribution] = useState(0)
-
+  } = useContribution(id)
+  const [activeContribution, setActiveContribution] = useState(
+    contribution
+  )
+  const [contributionDetails, setContributionDetails] = useState(
+    null
+  )
   const contributionRef = useCallback(node => {
     if (node !== null) {
       node.scrollIntoView({
@@ -35,16 +39,21 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    window.history.pushState(null, null, `?list=${contribution}`)
+    setContributionDetails(contribution)
+    window.history.pushState(
+      null,
+      null,
+      `?list=${contribution.id}`
+    )
   }
 
   const location = useLocation()
 
   useEffect(() => {
-    if (id) {
-      setActiveContribution(Number(id))
-    }
     getContribution()
+    if (contribution) {
+      setActiveContribution(contribution)
+    }
     return () => {
       remove()
     }
@@ -81,11 +90,6 @@ const Question = ({ user, hasSession }) => {
               contributionRef={contributionRef}
               hasSession={hasSession}
               user={user}
-              showDraft={
-                location.state.state
-                  ? location.state.state.showDraft
-                  : false
-              }
             />
           </PageContentWrapper>
           <Hidden smDown implementation="css">
@@ -93,26 +97,8 @@ const Question = ({ user, hasSession }) => {
               <ContributionDetails
                 hasSession={hasSession}
                 user={user}
-                authors={
-                  // allow people to see the original, do not force draft
-                  // activeContribution.draft
-                  //   ? activeContribution.draft.author
-                  //   :
-                  activeContribution.author
-                }
-                poster={activeContribution.postedBy}
-                posterColor={
-                  activeContribution.userColorPoster
-                    ? activeContribution.userColorPoster
-                    : activeContribution.userColor
-                }
-                datePosted={activeContribution.createdAt}
-                dateModified={
-                  // activeContribution.draft
-                  //   ? activeContribution.draft.updatedAt
-                  //   :
-                  activeContribution.updatedAt
-                }
+                data={contributionDetails}
+                activeContribution={activeContribution}
               />
             </RightSidebar>
           </Hidden>
