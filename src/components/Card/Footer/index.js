@@ -23,7 +23,8 @@ const Footer = ({
   dateModified,
   onMetaClick,
   hideEdit,
-  showDraft
+  showDraft,
+  heirarchyList
 }) => {
   const history = useHistory()
   const { user: proxyUser } = useGlobalState()
@@ -136,9 +137,11 @@ const Footer = ({
           />
         </>
       )}
-      <Contribution
-        contribution={data.total ? data.total.length : 0}
-      />
+      {!heirarchyList && (
+        <Contribution
+          contribution={data.total ? data.total.length : 0}
+        />
+      )}
       {hideEdit !== true && data ? (
         <>
           {user && data.userId === user.id ? (

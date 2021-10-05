@@ -10,6 +10,7 @@ const ContributionHierarchy = ({
   getContribution,
   showDraft,
   hasSession,
+  onCardClick,
   user
 }) => {
   const ListItem = ({ item }) => {
@@ -37,8 +38,12 @@ const ContributionHierarchy = ({
             : ''
         }`}
         style={{ listStyle: 'none' }}
+        onClick={() => {
+          onCardClick(item)
+        }}
       >
         <Card
+          heirarchyList
           hasSession={hasSession}
           user={user}
           getContribution={getContribution}

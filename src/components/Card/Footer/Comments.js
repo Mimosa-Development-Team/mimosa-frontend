@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
-import CommentIcon from 'assets/images/icons/comment.svg'
+import CommentIcon from 'assets/images/card/comment-bw.svg'
+import CommentIconColored from 'assets/images/card/comments.svg'
 import TooltipUi from 'components/Tooltip'
 import styles from './styles.module.scss'
 import { useQuestionForm } from './hooks'
@@ -9,11 +10,15 @@ const Comments = ({ onMetaClick, contributionId }) => {
   const { comment, getCommentCount } = useQuestionForm(
     contributionId
   )
+  const [active, setActive] = useState(false)
   useEffect(() => {
     getCommentCount()
   }, [getCommentCount])
   return (
-    <div>
+    <div
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+    >
       <span className={`${styles.metaDivider}`}>·</span>
       <TooltipUi title="Comments">
         <Button
@@ -22,7 +27,11 @@ const Comments = ({ onMetaClick, contributionId }) => {
           className={`${styles.metaButton}`}
           onClick={() => onMetaClick(1)}
         >
-          <img src={CommentIcon} alt="" />
+          <img
+            src={active ? CommentIconColored : CommentIcon}
+            style={{ width: '15px' }}
+            alt=""
+          />
           {comment && comment.count !== undefined
             ? comment.count
             : 0}
