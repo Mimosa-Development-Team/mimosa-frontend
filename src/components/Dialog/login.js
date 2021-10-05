@@ -130,7 +130,7 @@ export default function ModalDialog({ modal, setModal }) {
             className={`${classes.buttonLogin}`}
             onClick={() => {
               window.location.assign(
-                `${dotenv.orcidUrl}${window.location.href}login`
+                `${dotenv.orcidUrl}${window.location.origin}/login`
               )
             }}
           >

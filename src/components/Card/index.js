@@ -19,7 +19,8 @@ const Card = ({
   user,
   hasSession,
   hideEdit,
-  getContribution
+  getContribution,
+  heirarchyList
 }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -94,6 +95,7 @@ const Card = ({
                 />
               )}
               <Footer
+                heirarchyList={heirarchyList}
                 user={user}
                 hasSession={hasSession}
                 getContribution={getContribution}

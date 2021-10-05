@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
@@ -15,7 +16,7 @@ import styles from './styles.module.scss'
 
 const Question = ({ user, hasSession }) => {
   const queryParams = useQueryParams()
-  const id = queryParams.get('list')
+  const id = parseInt(queryParams.get('list'))
   const {
     contribution,
     isLoading,
@@ -24,9 +25,6 @@ const Question = ({ user, hasSession }) => {
   } = useContribution(id)
   const [activeContribution, setActiveContribution] = useState(
     contribution
-  )
-  const [contributionDetails, setContributionDetails] = useState(
-    null
   )
   const contributionRef = useCallback(node => {
     if (node !== null) {
@@ -39,7 +37,6 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    setContributionDetails(contribution)
     window.history.pushState(
       null,
       null,
@@ -50,10 +47,9 @@ const Question = ({ user, hasSession }) => {
   const location = useLocation()
 
   useEffect(() => {
-    getContribution()
-    if (contribution) {
-      setActiveContribution(contribution)
-    }
+    getContribution().then(data => {
+      setActiveContribution(data.data)
+    })
     return () => {
       remove()
     }
@@ -97,7 +93,7 @@ const Question = ({ user, hasSession }) => {
               <ContributionDetails
                 hasSession={hasSession}
                 user={user}
-                data={contributionDetails}
+                data={activeContribution}
                 activeContribution={activeContribution}
               />
             </RightSidebar>

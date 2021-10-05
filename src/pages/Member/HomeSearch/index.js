@@ -54,45 +54,47 @@ const HomeSearch = ({ user, hasSession }) => {
               className={`${styles.searchBox}`}
             />
           </div>
-          <>
-            {results ? (
-              <>
-                <div className={`${styles.paperListHeader}`}>
-                  <Typography
-                    className={`${styles.title}`}
-                    variant="h5"
-                  >
-                    Showing results for
-                    <span className={`${styles.term}`}>
-                      {' `'}
-                      {search}
-                      {'`'}
-                    </span>
-                  </Typography>
-                </div>
-                {(results || []).map(data => (
-                  <div
-                    className={`${styles.content}`}
-                    onClick={() => {
-                      history.push(
-                        `/contribution/${data.parentQuestionId}`,
-                        { state: data }
-                      )
-                    }}
-                  >
-                    <Card
-                      data={data}
-                      form={false}
-                      hideDetails
-                      hideEdit
-                    />
+          {search.length > 4 && (
+            <>
+              {results ? (
+                <>
+                  <div className={`${styles.paperListHeader}`}>
+                    <Typography
+                      className={`${styles.title}`}
+                      variant="h5"
+                    >
+                      Showing results for
+                      <span className={`${styles.term}`}>
+                        {' `'}
+                        {search}
+                        {'`'}
+                      </span>
+                    </Typography>
                   </div>
-                ))}
-              </>
-            ) : (
-              <NoResultsFound term={search} />
-            )}
-          </>
+                  {(results || []).map(data => (
+                    <div
+                      className={`${styles.content}`}
+                      onClick={() => {
+                        history.push(
+                          `/contribution/${data.parentQuestionId}`,
+                          { state: data }
+                        )
+                      }}
+                    >
+                      <Card
+                        data={data}
+                        form={false}
+                        hideDetails
+                        hideEdit
+                      />
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <NoResultsFound term={search} />
+              )}
+            </>
+          )}
         </PageContentWrapper>
       )}
     </PageWrapper>
