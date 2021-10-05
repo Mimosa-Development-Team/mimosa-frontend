@@ -12,7 +12,8 @@ import { QueryClientProvider } from 'react-query'
 import Reactour from 'reactour'
 import Member from 'pages/Member'
 import { Routes } from 'global/routes'
-
+import { ToastContainer } from 'material-react-toastify'
+import 'material-react-toastify/dist/ReactToastify.css'
 import { queryClient, useGlobalState } from 'store/state'
 import getRawData from 'utils/hookstate/getRawData'
 import Top from './assets/images/top.svg'
@@ -29,7 +30,7 @@ const App = () => {
     } else {
       setOpen(false)
     }
-  }, [proxyUser, user])
+  }, [proxyUser])
 
   const renderComponent = () => {
     return <Member />
@@ -37,6 +38,18 @@ const App = () => {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <ToastContainer
+          style={{ marginTop: '15px' }}
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Switch>
           <Route
             path={Routes.HOME_PAGE}

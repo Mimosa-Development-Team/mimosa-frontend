@@ -333,6 +333,14 @@ hr.MuiDivider-root {
     resize: vertical;
   }
 
+  .ql-snow * {
+    background-color: white;
+  }
+
+  .ql-snow {
+    background-color: white;
+  }
+
   .quill.input {
     background: $white;
     border-radius: 8px;
@@ -341,10 +349,12 @@ hr.MuiDivider-root {
     letter-spacing: 0.1px;
     line-height: 19px;
     .ql-toolbar.ql-snow {
+      background-color: white;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
     }
     .ql-container.ql-snow {
+      background-color: white;
       min-height: 200px;
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;

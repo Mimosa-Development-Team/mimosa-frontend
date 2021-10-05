@@ -51,7 +51,15 @@ const formats = [
 ]
 
 export default function Input(props) {
-  const { name, control, label, asterisk, ...propsList } = props
+  const {
+    name,
+    error,
+    helperText,
+    control,
+    label,
+    asterisk,
+    ...propsList
+  } = props
   return (
     <div className="inputWrapper">
       <InputLabel className="label">
@@ -65,6 +73,15 @@ export default function Input(props) {
         {...propsList}
         preserveWhitespace
       />
+      <span
+        style={{
+          color: '#f44336',
+          fontSize: '.75rem',
+          marginLeft: '14px'
+        }}
+      >
+        {helperText}
+      </span>
     </div>
   )
 }

@@ -6,7 +6,6 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core'
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -60,22 +59,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ModalDialog({
-  content,
-  header,
-  method,
   submitLoading,
-  submitSuccess,
   modal,
   setModal,
-  data,
-  status,
-  reset,
+  formDataValues,
   submit,
-  url,
-  subContent
+  message,
+  subcontent
 }) {
-  const submitForm = () => {
-    submit(data)
+  const submitForm = async () => {
+    await submit(formDataValues)
   }
 
   function getModalStyle() {
@@ -101,20 +94,6 @@ export default function ModalDialog({
       disableBackdropClick
     >
       <div style={modalStyle} className={classes.paper}>
-        {header || submitSuccess ? (
-          <Typography variant="h1" align="center">
-            {submitSuccess ? (
-              <div>
-                <CheckCircleOutlineIcon
-                  className={classes.icon}
-                />
-                <p>Success</p>
-              </div>
-            ) : (
-              header
-            )}
-          </Typography>
-        ) : null}
         <div className={classes.content}>
           <Typography
             variant="subtitle1"
@@ -122,65 +101,30 @@ export default function ModalDialog({
             align="center"
             color="success"
           >
-            {submitSuccess
-              ? method === 'new' && status === 'publish'
-                ? 'Your contribution has been successfully published'
-                : status === 'draft'
-                ? 'Your contribution has been saved as draft'
-                : 'Changes have been published successfully'
-              : content}
+            {message}
             <br />
-            {subContent && !submitSuccess ? subContent : ''}
+            {subcontent}
           </Typography>
         </div>
         <div style={{ marginTop: '30px', textAlign: 'center' }}>
-          {submitSuccess ? (
-            <Button
-              variant="outlined ml-30 mt-30"
-              className="btn contained"
-              onClick={() => {
-                setModal(!modal)
-                url()
-                reset()
-              }}
-            >
-              OK
-            </Button>
-          ) : (
-            <>
-              <Button
-                className="btn outline mr-30 mt-30"
-                variant="outlined"
-                onClick={() => {
-                  if (method === 'new' && status === 'draft') {
-                    url()
-                  } else if (method === 'new') {
-                    setModal(false)
-                  } else {
-                    url()
-                  }
-                }}
-              >
-                CANCEL
-              </Button>
-              <Button
-                variant="contained"
-                className="btn contained"
-                style={{ float: 'right' }}
-                disabled={submitLoading}
-                onClick={() => {
-                  submitForm()
-                }}
-              >
-                {(method === 'new' && status === 'draft') ||
-                (method === 'update' && status === 'draft')
-                  ? 'Proceed'
-                  : method === 'new'
-                  ? 'Publish'
-                  : 'Update'}
-              </Button>
-            </>
-          )}
+          <Button
+            className="btn outline mr-30 mt-30"
+            variant="outlined"
+            onClick={() => setModal(!modal)}
+          >
+            CANCEL
+          </Button>
+          <Button
+            variant="contained"
+            className="btn contained"
+            style={{ float: 'right' }}
+            disabled={submitLoading}
+            onClick={() => {
+              submitForm()
+            }}
+          >
+            Publish
+          </Button>
         </div>
       </div>
     </Modal>

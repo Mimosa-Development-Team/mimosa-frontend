@@ -12,10 +12,10 @@ const Conference = ({ conference }) => {
       {(conference && conference.length > 0
         ? conference
         : [] || []
-      ).map(data => {
+      ).map((data, index) => {
         return Object.keys(data.conferenceDateDetails).length >
           0 ? (
-          <div className={`${styles.conference}`}>
+          <div className={`${styles.conference}`} key={index}>
             <Typography variant="h4">
               {data.conferenceName}
             </Typography>

@@ -28,8 +28,7 @@ const CommentsOverview = ({
     deleteComment,
     deleteIsLoadingComment,
     // deleteErrorComment,
-    deleteMutate,
-    resetCommentDelete
+    deleteMutate
     // deleteIsSuccessComment,
   } = useComments(contributionId)
 
@@ -99,10 +98,6 @@ const CommentsOverview = ({
         id={activeComment}
         deleteForm={deleteForm}
         setDeleteForm={setDeleteForm}
-        url={() => {
-          setDeleteForm(!deleteForm)
-          resetCommentDelete()
-        }}
       />
       <div className={`${styles.commentsWrapper}`}>
         <div

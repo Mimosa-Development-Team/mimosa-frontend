@@ -101,7 +101,7 @@ const Card = ({
                 userColor={
                   data.userColor || data.userColorPoster
                 }
-                author={treeView ? null : data.postedBy}
+                author={data && data.poster}
                 datePosted={data.createdAt}
                 dateModified={data.updatedAt}
                 onMetaClick={handleClick}

@@ -63,14 +63,9 @@ const RelatedMedia = ({
   user,
   hasSession
 }) => {
-  const {
-    getMedia,
-    media,
-    addedData,
-    addMediaLoading,
-    addData,
-    reset
-  } = useMedia(contributionId)
+  const { getMedia, media, addMediaLoading, addData } = useMedia(
+    contributionId
+  )
 
   const Schema = yup.object().shape({
     title: yup.string().required('* Mandatory Field'),
@@ -124,6 +119,7 @@ const RelatedMedia = ({
       contributionId
     }
     addData(formFields)
+    setOpen(!open)
   }
 
   return (
@@ -169,38 +165,23 @@ const RelatedMedia = ({
                     })}
                   />
                 </Grid>
-                {addedData ? (
-                  <Grid item sm={12}>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        reset()
-                        setOpen(false)
-                      }}
-                      className={classes.buttonClose}
-                    >
-                      CLOSE
-                    </Button>{' '}
-                  </Grid>
-                ) : (
-                  <Grid item sm={12}>
-                    <Button
-                      variant="outlined"
-                      onClick={() => setOpen(false)}
-                      className={classes.buttonOnClose}
-                    >
-                      CLOSE
-                    </Button>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      className={classes.buttonSubmit}
-                      disabled={addMediaLoading}
-                    >
-                      UPLOAD
-                    </Button>{' '}
-                  </Grid>
-                )}
+                <Grid item sm={12}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setOpen(false)}
+                    className={classes.buttonOnClose}
+                  >
+                    CLOSE
+                  </Button>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    className={classes.buttonSubmit}
+                    disabled={addMediaLoading}
+                  >
+                    UPLOAD
+                  </Button>{' '}
+                </Grid>
               </Grid>
             </div>
           </form>

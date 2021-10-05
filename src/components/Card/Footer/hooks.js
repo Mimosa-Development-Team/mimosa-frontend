@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from 'react-query'
+import { toast } from 'material-react-toastify'
 import { queryClient } from 'store/state'
 import {
   deleteContributionAPI,
@@ -22,6 +23,7 @@ export const useQuestionForm = id => {
     isSuccess: deleteIsSuccessContribution
   } = useMutation(deleteContributionAPI, {
     onSuccess: () => {
+      toast.success('Contribution Deleted Successfully!')
       queryClient.invalidateQueries(
         CONTRIBUTION_DELETE_QUERY_KEY
       )
@@ -36,6 +38,7 @@ export const useQuestionForm = id => {
     isSuccess: deleteIsSuccessDraft
   } = useMutation(deleteDraftAPI, {
     onSuccess: () => {
+      toast.success('Draft Deleted Successfully!')
       queryClient.invalidateQueries(DRAFT_DELETE_QUERY_KEY)
     }
   })

@@ -1,9 +1,29 @@
 @import '~global/styles';
 
 .heirarchyWrapper {
-  ul {
+  ul.heirarchyList {
     margin-left: -10px;
     list-style: none;
+    
+    li.contribution {
+      list-style: none;
+      // activeColor
+      &.question.active > div {
+        border: 1px solid $yellow;
+      }
+      &.hypothesis.active > div {
+        border: 1px solid $orange;
+      }
+      &.experiment.active > div {
+        border: 1px solid $green;
+      }
+      &.data.active > div {
+        border: 1px solid $indigo;
+      }
+      &.analysis.active > div {
+        border: 1px solid $purple;
+      }
+    }
   }
   
   $border: #ddd;

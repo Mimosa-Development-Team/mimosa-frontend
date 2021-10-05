@@ -20,16 +20,19 @@ const ContributionTree = ({
           <>
             <li
               className={`${styles[data.category]} ${
-                data.id === activeContribution
+                activeContribution &&
+                data.id === activeContribution.id
                   ? styles.active
                   : ''
               }`}
-              onClick={() => onTreeClick(data.id)}
+              onClick={() => onTreeClick(data)}
             >
               {data.category && data.category.charAt(0)}
             </li>
             <ConditionalWrapper
-              condition={data.children.length > 1}
+              condition={
+                data.children && data.children.length > 1
+              }
               wrapper={children => (
                 <ul className={`${styles.subtree}`}>
                   {children}
@@ -60,8 +63,7 @@ const ContributionTree = ({
 }
 
 ContributionTree.propTypes = {
-  contribution: PropTypes.object,
-  activeContribution: PropTypes.number
+  contribution: PropTypes.object
 }
 
 export default ContributionTree

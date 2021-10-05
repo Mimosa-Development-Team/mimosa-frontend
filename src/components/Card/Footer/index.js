@@ -13,18 +13,17 @@ import CardButton from 'components/CardButton'
 import ModalDelete from 'components/Dialog/delete'
 import capitalizeText from 'utils/parsing/capitalize'
 import { useContribution } from '../../../pages/Member/Question/hooks'
+import Contribution from './Contribution'
 import styles from './styles.module.scss'
 import { useQuestionForm } from './hooks'
 
 const Footer = ({
-  author,
   data,
   datePosted,
   dateModified,
   onMetaClick,
   hideEdit,
-  showDraft,
-  userColor
+  showDraft
 }) => {
   const history = useHistory()
   const { user: proxyUser } = useGlobalState()
@@ -69,15 +68,14 @@ const Footer = ({
 
   return (
     <div className={`${styles.footer}`}>
-      {author ||
-        (data && data.mmUser && (
-          <AuthorMeta
-            author={
-              author || (data.mmUser && data.mmUser.firstName)
-            }
-            userColor={userColor}
-          />
-        ))}
+      {data && data.poster && (
+        <AuthorMeta
+          author={`${data.poster && data.poster.firstName} ${
+            data.poster && data.poster.lastName
+          }`}
+          userColor={data.poster && data.poster.userColor}
+        />
+      )}
       {showDraft ? (
         <ModalDelete
           header={`Discard this ${
@@ -138,6 +136,9 @@ const Footer = ({
           />
         </>
       )}
+      <Contribution
+        contribution={data.total ? data.total.length : 0}
+      />
       {hideEdit !== true && data ? (
         <>
           {user && data.userId === user.id ? (
@@ -187,7 +188,6 @@ const Footer = ({
 }
 
 Footer.propTypes = {
-  author: PropTypes.string,
   datePosted: PropTypes.string.isRequired,
   dateModified: PropTypes.string
 }
