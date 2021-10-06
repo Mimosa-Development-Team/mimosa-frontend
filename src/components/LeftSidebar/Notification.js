@@ -90,7 +90,12 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
           }}
           onClick={handleClose}
         />
-        <div style={{ paddingLeft: '15px', paddingTop: '15px' }}>
+        <div
+          style={{
+            paddingLeft: '15px',
+            paddingTop: '15px'
+          }}
+        >
           <h2>Notifications</h2>
         </div>
         {user && user.email && (
@@ -236,8 +241,12 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
               textAlign: 'center',
               color: 'white',
               padding: '8px',
-              marginBottom: '-8px',
-              cursor: 'pointer'
+              marginBottom: '8px',
+              cursor: 'pointer',
+              position: 'fixed',
+              width: '395px',
+              borderBottomLeftRadius: '5px',
+              borderBottomRightRadius: '5px'
             }}
           >
             <i>Clear All Notifications</i>

@@ -27,6 +27,7 @@ export const useQuestionForm = id => {
       queryClient.invalidateQueries(
         CONTRIBUTION_DELETE_QUERY_KEY
       )
+      window.location.reload()
     }
   })
 

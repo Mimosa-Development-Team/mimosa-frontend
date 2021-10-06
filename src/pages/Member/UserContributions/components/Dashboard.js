@@ -104,28 +104,30 @@ const Dashboard = ({
               </span>
             )}
           </Grid>
-          <Grid
-            container
-            direction="row"
-            alignItems="left"
-            style={{ marginTop: '10px' }}
-          >
-            <span>{getRawData(user).user.email}</span>
-            <SwitchToggle
-              checked={getRawData(user).user.emailNotification}
-              labelPlacement="top"
-              onChange={() => {
-                updateEmail({
-                  emailNotification: !getRawData(user).user
-                    .emailNotification
-                })
-              }}
-              name="checkedA"
-              inputProps={{
-                'aria-label': 'secondary checkbox'
-              }}
-            />
-          </Grid>
+          {getRawData(user).user.email && (
+            <Grid
+              container
+              direction="row"
+              alignItems="left"
+              style={{ marginTop: '10px' }}
+            >
+              <span>{getRawData(user).user.email}</span>
+              <SwitchToggle
+                checked={getRawData(user).user.emailNotification}
+                labelPlacement="top"
+                onChange={() => {
+                  updateEmail({
+                    emailNotification: !getRawData(user).user
+                      .emailNotification
+                  })
+                }}
+                name="checkedA"
+                inputProps={{
+                  'aria-label': 'secondary checkbox'
+                }}
+              />
+            </Grid>
+          )}
         </Grid>
         <Grid item sm={2}>
           <div className={`${styles.contributionInfo}`}>

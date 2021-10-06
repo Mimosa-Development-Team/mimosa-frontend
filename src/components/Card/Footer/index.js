@@ -24,7 +24,9 @@ const Footer = ({
   onMetaClick,
   hideEdit,
   showDraft,
-  heirarchyList
+  heirarchyList,
+  postedBy,
+  userColor
 }) => {
   const history = useHistory()
   const { user: proxyUser } = useGlobalState()
@@ -69,14 +71,18 @@ const Footer = ({
 
   return (
     <div className={`${styles.footer}`}>
-      {data && data.poster && (
+      {postedBy || (data && data.poster) ? (
         <AuthorMeta
-          author={`${data.poster && data.poster.firstName} ${
-            data.poster && data.poster.lastName
+          author={`${
+            postedBy ||
+            (data.poster &&
+              `${data.poster.firstName} ${data.poster.lastName}`)
           }`}
-          userColor={data.poster && data.poster.userColor}
+          userColor={
+            userColor || (data.poster && data.poster.userColor)
+          }
         />
-      )}
+      ) : null}
       {showDraft ? (
         <ModalDelete
           header={`Discard this ${
