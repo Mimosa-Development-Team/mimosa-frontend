@@ -104,6 +104,7 @@ const Card = ({
                   data.userColor || data.userColorPoster
                 }
                 author={data && data.poster}
+                postedBy={data && data.postedBy}
                 datePosted={data.createdAt}
                 dateModified={data.updatedAt}
                 onMetaClick={handleClick}
