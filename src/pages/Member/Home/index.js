@@ -209,18 +209,17 @@ const MemberDashboard = ({ user, hasSession }) => {
                               className={`${
                                 styles.content
                               } ${`test`}`}
-                              onClick={() => {
-                                // if click not from draft
-                                history.push(
-                                  `/contribution/${data.uuid}?list=${data.id}`,
-                                  {
-                                    state: data,
-                                    from: 'home'
-                                  }
-                                )
-                              }}
                             >
                               <Card
+                                click={() => {
+                                  history.push(
+                                    `/contribution/${data.uuid}?list=${data.id}`,
+                                    {
+                                      state: data,
+                                      from: 'home'
+                                    }
+                                  )
+                                }}
                                 data={data}
                                 form={false}
                                 linesToShow={5}
