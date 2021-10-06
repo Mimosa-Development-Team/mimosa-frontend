@@ -19,10 +19,12 @@ const Header = ({
   analysisTag,
   deprecated,
   showDraft,
-  data
+  data,
+  click,
+  heirarchyList
 }) => {
   return (
-    <div>
+    <div onClick={() => !heirarchyList && click()}>
       <Tags
         type={type}
         questionTags={questionTags}

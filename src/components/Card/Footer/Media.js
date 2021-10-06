@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable radix */
+import React, { useEffect } from 'react'
 import Button from '@material-ui/core/Button'
 import MediaIcon from 'assets/images/card/relatedmedia-bw.svg'
 import MediaIconColored from 'assets/images/card/media.svg'
@@ -10,16 +11,11 @@ const Media = ({ onMetaClick, contributionId }) => {
   const { mediaCount, getMediaCount } = useQuestionForm(
     contributionId
   )
-  const [active, setActive] = useState(false)
   useEffect(() => {
     getMediaCount()
   }, [getMediaCount])
   return (
-    <div
-      className={`${styles.metaWrapper}`}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
-    >
+    <div className={`${styles.metaWrapper}`}>
       <span className={`${styles.metaDivider}`}>·</span>
       <TooltipUi title="Related Media">
         <Button
@@ -29,7 +25,11 @@ const Media = ({ onMetaClick, contributionId }) => {
           onClick={() => onMetaClick(0)}
         >
           <img
-            src={active ? MediaIconColored : MediaIcon}
+            src={
+              mediaCount && parseInt(mediaCount.count) > 0
+                ? MediaIconColored
+                : MediaIcon
+            }
             style={{ width: '15px', marginTop: '2px' }}
             alt=""
           />

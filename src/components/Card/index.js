@@ -20,7 +20,8 @@ const Card = ({
   hasSession,
   hideEdit,
   getContribution,
-  heirarchyList
+  heirarchyList,
+  click
 }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -53,6 +54,8 @@ const Card = ({
                   />
                 )}
               <Header
+                heirarchyList={heirarchyList}
+                click={click}
                 data={data}
                 showDraft={showDraft}
                 treeView={treeView}
