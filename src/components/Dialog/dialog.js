@@ -59,7 +59,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ModalDialog({
-  submitLoading,
   modal,
   setModal,
   formDataValues,
@@ -70,6 +69,7 @@ export default function ModalDialog({
   const submitForm = async () => {
     await submit(formDataValues)
   }
+  const [buttonDisabled, setButtonDisabled] = useState(false)
 
   function getModalStyle() {
     const top = 50
@@ -118,8 +118,9 @@ export default function ModalDialog({
             variant="contained"
             className="btn contained"
             style={{ float: 'right' }}
-            disabled={submitLoading}
+            disabled={buttonDisabled}
             onClick={() => {
+              setButtonDisabled(true)
               submitForm()
             }}
           >

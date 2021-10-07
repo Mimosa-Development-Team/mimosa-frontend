@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 import Logo from 'assets/images/logo-main.svg'
 import { useHistory, useLocation } from 'react-router-dom'
 import ContributionTree from 'components/ContributionTree'
-// import { useGlobalState } from 'store/state'
-// import getRawData from 'utils/parsing/Proxy'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
 import Notification from './Notification'
 import NavLink from './NavLink'
@@ -19,7 +18,6 @@ const MainNav = ({
   user,
   hasSession
 }) => {
-  // const { user: proxyUser } = useGlobalState()
   const location = useLocation()
   const history = useHistory()
 
@@ -74,18 +72,22 @@ const MainNav = ({
               active={location.pathname === link.to}
             />
           ))}
-        <h1
-          style={{ fontWeight: 'normal', cursor: 'pointer' }}
-          className={`${styles.navLink}`}
-          onClick={handleClick}
-        >
-          <img src={NotificationIcon} alt="" />
-          Notifications
-        </h1>
-        <Notification
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
-        />
+        {!isEmpty(user) && (
+          <>
+            <h1
+              style={{ fontWeight: 'normal', cursor: 'pointer' }}
+              className={`${styles.navLink}`}
+              onClick={handleClick}
+            >
+              <img src={NotificationIcon} alt="" />
+              Notifications
+            </h1>
+            <Notification
+              anchorEl={anchorEl}
+              setAnchorEl={setAnchorEl}
+            />
+          </>
+        )}
         <AccountDropdown user={user} hasSession={hasSession} />
       </div>
     </div>

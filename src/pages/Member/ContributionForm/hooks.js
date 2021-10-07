@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from 'react-query'
 import { toast } from 'material-react-toastify'
+import capitalizeText from 'utils/parsing/capitalize'
 import { useHistory } from 'react-router-dom'
 import { queryClient } from 'store/state'
 import {
@@ -59,7 +60,11 @@ export const useQuestionForm = id => {
     reset: resetAdd
   } = useMutation(postContributionAPI, {
     onSuccess: data => {
-      toast.success('Create Contribution Success!')
+      toast.success(
+        `${capitalizeText(
+          data.contribution.category
+        )} contribution was published successfully.`
+      )
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
       if (data.contribution.category === 'question') {
         history.push('/')
@@ -70,7 +75,9 @@ export const useQuestionForm = id => {
       }
     },
     onError: () => {
-      toast.error('Create Contribution Error!')
+      toast.error(
+        'Unable to Publish/Update contribution. An error was encountered.'
+      )
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
     }
   })
@@ -114,7 +121,11 @@ export const useQuestionForm = id => {
     reset: resetUpdate
   } = useMutation(putContributionAPI, {
     onSuccess: ({ data }) => {
-      toast.success('Update Contribution Success!')
+      toast.success(
+        `${capitalizeText(
+          data.category
+        )} contribution was updated successfully.`
+      )
       relatedMediaFetch()
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
       history.push(
