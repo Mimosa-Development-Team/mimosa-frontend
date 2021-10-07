@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from 'react-query'
 import { toast } from 'material-react-toastify'
+import { useHistory } from 'react-router-dom'
 import { queryClient } from 'store/state'
+import capitalizeText from 'utils/parsing/capitalize'
 import {
   deleteContributionAPI,
   deleteDraftAPI,
@@ -15,6 +17,7 @@ import {
 } from './constants'
 
 export const useQuestionForm = id => {
+  const history = useHistory()
   const {
     data: deleteContribution,
     isLoading: deleteIsLoadingContribution,
@@ -22,12 +25,20 @@ export const useQuestionForm = id => {
     mutate: deleteMutate,
     isSuccess: deleteIsSuccessContribution
   } = useMutation(deleteContributionAPI, {
-    onSuccess: () => {
-      toast.success('Contribution Deleted Successfully!')
+    onSuccess: data => {
+      toast.success(
+        `${capitalizeText(
+          data.data.category
+        )} was deleted successfully.`
+      )
       queryClient.invalidateQueries(
         CONTRIBUTION_DELETE_QUERY_KEY
       )
-      window.location.reload()
+      if (data.data.category === 'question') {
+        history.push('/')
+      } else {
+        window.location.reload()
+      }
     }
   })
 
@@ -38,8 +49,10 @@ export const useQuestionForm = id => {
     mutate: deleteDraftMutate,
     isSuccess: deleteIsSuccessDraft
   } = useMutation(deleteDraftAPI, {
-    onSuccess: () => {
-      toast.success('Draft Deleted Successfully!')
+    onSuccess: data => {
+      toast.success(
+        `Draft ${data.data.category} was deleted successfully.`
+      )
       queryClient.invalidateQueries(DRAFT_DELETE_QUERY_KEY)
     }
   })

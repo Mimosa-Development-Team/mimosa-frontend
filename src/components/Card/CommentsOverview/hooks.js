@@ -84,7 +84,9 @@ export const useComments = id => {
       queryClient.invalidateQueries(COMMENT_DELETE_QUERY_KEY)
     },
     onError: () => {
-      toast.error('Error in Deleting Comment!')
+      toast.error(
+        'Unable to delete comment. An error was encountered.'
+      )
     }
   })
 

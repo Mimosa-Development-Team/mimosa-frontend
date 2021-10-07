@@ -282,7 +282,10 @@ function ContributionForm({
         submit={
           method === 'new' ? addContribution : updateContribution
         }
-        message="Are you sure you want to publish this Question?"
+        message={`Are you sure you want to publish this ${
+          formDataValues &&
+          capitalizeText(formDataValues.category)
+        }?`}
         subcontent=""
       />
       <Formik
@@ -366,8 +369,9 @@ function ContributionForm({
           errors,
           handleChange,
           handleBlur,
-          setFieldValue
-          // isValid
+          setFieldValue,
+          isValid,
+          dirty
         }) => (
           <Form>
             <Grid
@@ -748,6 +752,7 @@ function ContributionForm({
                   variant="contained"
                   style={{ position: 'absolute', right: 22 }}
                   type="submit"
+                  disabled={!(isValid && dirty)}
                   onClick={() => {
                     if (isEmpty(errors)) {
                       setModal(!modal)

@@ -44,12 +44,14 @@ export const useMedia = id => {
   } = useMutation(postRelatedMedia, {
     onSuccess: () => {
       refetch()
-      toast.success('Add Related Media Success!')
+      toast.success('Related media was added successfully')
       getRelatedMediaCount()
       queryClient.invalidateQueries(MEDIA_POST_QUERY_KEY)
     },
     onError: () => {
-      toast.error('Add Related Media Failed!')
+      toast.error(
+        'Unable to add related media. An error was encountered.'
+      )
     }
   })
 

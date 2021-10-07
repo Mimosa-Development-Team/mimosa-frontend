@@ -34,7 +34,10 @@ const Header = ({
       {showDraft && (data.status === `draft` || data.draft) ? ( //data.status === 'draft' || data.draft
         <i className={`${styles.draft}`}>Draft</i>
       ) : null}
-      <Typography variant="h2">
+      <Typography
+        variant="h2"
+        className={`${!heirarchyList && styles.headerTitle}`}
+      >
         {type === 'question' && (
           <span className={`${styles.type} ${type}`}>
             <img src={QuestionIcon} /> {type}
