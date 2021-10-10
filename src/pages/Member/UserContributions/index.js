@@ -129,17 +129,17 @@ const UserContributions = ({ user, hasSession }) => {
                             data-tut={`${
                               i === 0 && 'reactour__state'
                             }`}
-                            onClick={() => {
-                              history.push(
-                                `/contribution/${data.parentQuestionUuid}?list=${data.id}`,
-                                {
-                                  state: data,
-                                  from: 'my-contribution'
-                                }
-                              )
-                            }}
                           >
                             <Card
+                              click={() => {
+                                history.push(
+                                  `/contribution/${data.parentQuestionUuid}?list=${data.id}&from=profile`,
+                                  {
+                                    state: data,
+                                    from: 'my-contribution'
+                                  }
+                                )
+                              }}
                               data={data}
                               form={false}
                               linesToShow={5}

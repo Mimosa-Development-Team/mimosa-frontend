@@ -158,8 +158,7 @@ const Footer = ({
                   `/contribution-form/${data.category}/update`,
                   {
                     type: 'update',
-                    data,
-                    questionUuid: data.parentQuestionId
+                    data
                   }
                 )
               }}
@@ -174,22 +173,23 @@ const Footer = ({
               onClick={() => setModal(true)}
             />
           ) : null}
-          <CardButton
-            action="contribute"
-            onClick={() => {
-              history.push(
-                `/contribution-form/${getType(
-                  data.category
-                )}/new`,
-                {
-                  type: 'new',
-                  data,
-                  questionUuid: data.parentQuestionId
-                }
-              )
-            }}
-            disabled={!user}
-          />
+          {data.category !== 'analysis' && (
+            <CardButton
+              action="contribute"
+              onClick={() => {
+                history.push(
+                  `/contribution-form/${getType(
+                    data.category
+                  )}/new`,
+                  {
+                    type: 'new',
+                    data
+                  }
+                )
+              }}
+              disabled={!user}
+            />
+          )}
         </>
       ) : null}
     </div>

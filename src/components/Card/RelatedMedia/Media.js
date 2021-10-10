@@ -24,6 +24,12 @@ const Media = ({ media }) => {
     }
     return type
   }
+  const getClickableLink = link => {
+    return link.startsWith('http://') ||
+      link.startsWith('https://')
+      ? link
+      : `http://${link}`
+  }
   return (
     <div className={`${styles.media}`}>
       <ul>
@@ -60,7 +66,7 @@ const Media = ({ media }) => {
                 </Typography>
                 <Link
                   className={`${styles.link}`}
-                  href={data.mediaDetails.link}
+                  href={getClickableLink(data.mediaDetails.link)}
                   target="_blank"
                 >
                   <span className={`${styles.icon}`}>

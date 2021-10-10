@@ -18,7 +18,6 @@ const Header = ({
   questionTags,
   analysisTag,
   deprecated,
-  showDraft,
   data,
   click,
   heirarchyList
@@ -31,8 +30,13 @@ const Header = ({
         analysisTag={analysisTag}
         deprecated={deprecated}
       />
-      {showDraft && (data.status === `draft` || data.draft) ? ( //data.status === 'draft' || data.draft
-        <i className={`${styles.draft}`}>Draft</i>
+      {data.status === `draft` || data.draft ? ( //data.status === 'draft' || data.draft
+        <div style={{ paddingBottom: '5px' }}>
+          <span>
+            <i className={`${styles.draft}`}>Draft: </i>{' '}
+            {data.draft && data.draft.subject}
+          </span>
+        </div>
       ) : null}
       <Typography
         variant="h2"

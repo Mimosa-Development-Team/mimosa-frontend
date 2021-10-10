@@ -17,5 +17,5 @@ export const deleteNotificationSingle = id => {
 }
 
 export const deleteNotificationAll = () => {
-  return deleteRequest(`/api/v1/notification/all`)
+  return deleteRequest(`/api/v1/notification`)
 }

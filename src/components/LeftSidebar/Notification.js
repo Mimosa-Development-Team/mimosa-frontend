@@ -55,7 +55,8 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
     notificationRefetch,
     notification,
     deleteNotificationSingleMutate,
-    updateEmail
+    updateEmail,
+    deleteNotificationAllMutate
   } = useNotification(notificationId)
   const handleClose = () => {
     setAnchorEl(null)
@@ -248,6 +249,7 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
               borderBottomLeftRadius: '5px',
               borderBottomRightRadius: '5px'
             }}
+            onClick={() => deleteNotificationAllMutate()}
           >
             <i>Clear All Notifications</i>
           </div>

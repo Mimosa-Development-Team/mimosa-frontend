@@ -1,13 +1,11 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable func-names */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-nested-ternary */
-import React, {
-  useEffect,
-  // useMemo,
-  useState
-} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import Controls from 'components/controls/Controls'
@@ -17,22 +15,15 @@ import {
   Typography,
   Divider
 } from '@material-ui/core'
-import {
-  // useFormikContext,
-  Formik,
-  FieldArray,
-  Form
-} from 'formik'
-import moment from 'moment'
+import { Formik, FieldArray, Form } from 'formik'
 import FormikErrorFocus from 'formik-error-focus'
 import * as yup from 'yup'
-// import debounce from 'just-debounce-it'
-
 import ModalDialog from 'components/Dialog/dialog'
-
 import DeleteIcon from 'assets/images/icons/delete.svg'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
+import moment from 'moment'
+import { useQuestionForm } from '../hooks'
 import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
 
@@ -135,36 +126,6 @@ const schema = yup.object().shape({
     )
 })
 
-// const AutoSave = ({ debounceMs, updatedAt }) => {
-//   const formik = useFormikContext()
-//   const [lastSaved, setLastSaved] = useState(null)
-//   const debouncedSubmit = useMemo(
-//     () =>
-//       debounce(
-//         () =>
-//           formik
-//             .submitForm()
-//             .then(() => setLastSaved(new Date().toISOString())),
-//         debounceMs
-//       ),
-//     [debounceMs, formik.submitForm]
-//   )
-
-//   useEffect(() => {
-//     debouncedSubmit()
-//   }, [debouncedSubmit, formik.values])
-
-//   return (
-//     <>
-//       {formik.isSubmitting
-//         ? 'saving...'
-//         : lastSaved !== null
-//         ? updatedAt
-//         : null}
-//     </>
-//   )
-// }
-
 const getSubjectLabel = val => {
   switch (val) {
     case 'question':
@@ -204,28 +165,34 @@ function ContributionForm({
   tagsData,
   userData,
   type,
-  addContribution,
-  updateContribution,
-  data,
   method,
-  relatedMediaData
+  props
 }) {
   const history = useHistory()
   const [modal, setModal] = useState(false)
   const [rMedia, setRmedia] = useState([])
-  const [formDataValues, setFormDataValues] = useState(null)
+  const [lastSave, setLastSave] = useState(null)
+  const [data, setData] = useState(null)
   const [conference, setConference] = useState({
     conferenceName: '',
     presentationDetails: '',
     startTime: '',
     endTime: '',
-    id: ''
+    id: null
   })
+  const {
+    addContribution,
+    addedContribution,
+    updateContribution,
+    updatedContribution,
+    deleteRelatedMediaMutate
+  } = useQuestionForm(
+    method === 'update' ? props.id : data && data.id
+  )
 
   const scrollToErrors = errors => {
     const errorKeys = Object.keys(errors)
     if (errorKeys.length > 0) {
-      //if else statement on relatedmedia because it is an array
       errorKeys[0] === 'relatedmedia'
         ? document
             .getElementsByName('relatedmedia[0].title')[0]
@@ -238,103 +205,97 @@ function ContributionForm({
     }
   }
 
-  useEffect(() => {
-    if (relatedMediaData) {
-      setRmedia([])
-
-      for (let i = 0; i < relatedMediaData.length; i++) {
-        if (relatedMediaData[i].conferenceName) {
-          setConference({
-            conferenceName: relatedMediaData[i].conferenceName,
-            presentationDetails: moment(
-              relatedMediaData[i].presentationDetails
-            ).format('YYYY-MM-DD'),
-            startTime: moment(
-              relatedMediaData[i].startTime,
-              'HH:mm'
-            ).format('HH:mm'),
-            endTime: moment(
-              relatedMediaData[i].endTime,
-              'HH:mm'
-            ).format('HH:mm'),
-            id: relatedMediaData[i].id
-          })
-        } else if (relatedMediaData[i].link) {
-          setRmedia(oldArray => [
-            ...oldArray,
-            {
-              id: relatedMediaData[i].id,
-              link: relatedMediaData[i].link,
-              title: relatedMediaData[i].title
-            }
-          ])
-        }
+  const submitForm = values => {
+    if (method === 'update') {
+      if (!modal) {
+        values.status = 'draft'
+      } else {
+        values.status = 'publish'
       }
     }
-  }, [relatedMediaData])
+    if (!data) {
+      addContribution(values)
+    } else {
+      values.id = data.id
+      if (values.conferenceName && conference.id) {
+        values.conferenceId = conference.id
+      }
+      updateContribution(values)
+    }
+  }
+
+  useEffect(() => {
+    if (method === 'update' && props) {
+      setData(props)
+    }
+    if (updatedContribution && updatedContribution.data) {
+      setData(updatedContribution.data)
+      setLastSave(
+        updatedContribution.data.updatedAt ||
+          updatedContribution.data.createdAt
+      )
+      setRmedia(updatedContribution.relatedmedia)
+      setConference(updatedContribution.conference)
+    } else if (
+      addedContribution &&
+      addedContribution.data &&
+      !(updatedContribution && updatedContribution.data)
+    ) {
+      setData(addedContribution.data)
+      setLastSave(
+        addedContribution.data.updatedAt ||
+          addedContribution.data.createdAt
+      )
+      setConference(addedContribution.conference)
+      setRmedia(addedContribution.relatedmedia)
+    }
+    if (
+      addedContribution &&
+      addedContribution.relatedmedia.length <= 0 &&
+      updatedContribution &&
+      updatedContribution.relatedmedia.length <= 0
+    ) {
+      setRmedia([{ title: '', link: '' }])
+    }
+    if (!addedContribution && !updatedContribution) {
+      setRmedia([{ title: '', link: '' }])
+    }
+  }, [addedContribution, updatedContribution])
 
   return (
     <>
       <ModalDialog
         modal={modal}
         setModal={setModal}
-        formDataValues={formDataValues}
-        submit={
-          method === 'new' ? addContribution : updateContribution
-        }
-        message={`Are you sure you want to publish this ${
-          formDataValues &&
-          capitalizeText(formDataValues.category)
-        }?`}
+        submit={() => submitForm(data)}
+        message={`Are you sure you want to publish this ${capitalizeText(
+          (data && data.category) || ''
+        )}?`}
         subcontent=""
       />
       <Formik
         initialValues={{
-          category:
-            data && data.category && method === 'update'
-              ? data.category
-              : type,
-          subject:
-            data && data.subject && method === 'update'
-              ? data.subject
-              : '',
-          details:
-            data && data.details && method === 'update'
-              ? data.details
-              : '',
-          tags:
-            data && data.tags && method === 'update'
-              ? data.tags
-              : [],
-          author:
-            data && data.author && method === 'update'
-              ? data.author
-              : profile && profile.lastName
-              ? [
-                  {
-                    id: profile.id,
-                    name: `${profile.firstName} ${
-                      profile.lastName ? profile.lastName : ''
-                    }`,
-                    userColor: profile.userColor
-                  }
-                ]
-              : [
-                  {
-                    id: profile && profile.id,
-                    name: `${profile && profile.firstName}`,
-                    userColor: profile && profile.userColor
-                  }
-                ],
-          userId: profile && profile.id,
-          status: 'publish',
+          category: type,
+          subject: (data && data.subject) || '',
+          details: (data && data.details) || '',
+          tags: (data && data.tags) || [],
+          author: (data && data.author) || [
+            {
+              id: profile && profile.id,
+              name: `${profile && profile.firstName}`,
+              userColor: profile && profile.userColor
+            }
+          ],
+          userId:
+            (data && data.userId) || (profile && profile.id),
+          status: (data && data.status) || 'draft',
           conferenceId: (conference && conference.id) || null,
           version: '1.0.0',
-          uuid: null,
-          parentId: data && method === 'new' ? data.id : null,
+          uuid: (data && data.uuid) || null,
+          parentId: props && method === 'new' ? props.id : null,
           relatedmedia: rMedia,
           hypothesisStatus:
-            type === 'analysis' ? 'supports' : '',
+            (data && data.hypothesisStatus) || '',
           conferenceName:
             (conference && conference.conferenceName) || '',
           presentationDetails:
@@ -342,10 +303,11 @@ function ContributionForm({
           startTime: (conference && conference.startTime) || '',
           endTime: (conference && conference.endTime) || '',
           mainParentId:
-            (data && method === 'new' && data.mainParentId) ||
-            (data && method === 'new' && data.id) ||
+            (props && method === 'new' && props.mainParentId) ||
+            (props && method === 'new' && props.id) ||
             null
         }}
+        enableReinitialize
         validationSchema={schema}
         defaultValue={{
           author: [
@@ -355,12 +317,8 @@ function ContributionForm({
               })
           ]
         }}
-        enableReinitialize
         onSubmit={async (values, { setSubmitting }) => {
-          if (method === 'update') {
-            values.id = data.id
-          }
-          await setFormDataValues(values)
+          submitForm(values)
           await setSubmitting()
         }}
       >
@@ -368,7 +326,6 @@ function ContributionForm({
           values,
           errors,
           handleChange,
-          handleBlur,
           setFieldValue,
           isValid,
           dirty
@@ -382,12 +339,49 @@ function ContributionForm({
               spacing={2}
             >
               <Grid item xs={12} sm={2}>
-                <div className={`${styles.btnBack}`}>
+                <div
+                  className={`${styles.btnBack}`}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className={`${styles.backNav}`}>
                     <Typography
                       className={`${styles.back}`}
                       variant="h4"
-                      onClick={() => history.goBack()}
+                      onClick={() => {
+                        if (
+                          method === 'new' &&
+                          type === 'question'
+                        ) {
+                          history.push('/')
+                        }
+                        if (
+                          method === 'new' &&
+                          type !== 'question' &&
+                          props
+                        ) {
+                          history.push(
+                            `/contribution/${props.uuid}?list=${
+                              props.mainParentId || props.id
+                            }&from=home`
+                          )
+                        }
+                        if (
+                          method === 'update' &&
+                          type === 'question'
+                        ) {
+                          history.push(
+                            `/contribution/${props.uuid}?list=${props.id}&from=home`
+                          )
+                        }
+                        if (
+                          method === 'update' &&
+                          type !== 'question'
+                        ) {
+                          history.push(
+                            `/contribution/${props.uuid}?list=${props.mainParentId}&from=home`
+                          )
+                        }
+                      }}
                     >
                       <span className={`${styles.icon}`}>
                         <img src={BackIcon} alt="back" />
@@ -405,20 +399,18 @@ function ContributionForm({
                     color: 'grey'
                   }}
                 >
-                  {/* {isValid && (
-                    <AutoSave
-                      debounceMs={300}
-                      updatedAt={moment(new Date()).format(
+                  <span>
+                    {lastSave &&
+                      `Last save: ${moment(lastSave).format(
                         'lll'
-                      )}
-                    />
-                  )} */}
+                      )}`}
+                  </span>
                 </div>
               </Grid>
               {type !== 'question' && method === 'new' ? (
                 <Grid item sm={12}>
                   <ContributionHeader
-                    data={data}
+                    data={props || data}
                     type={capitalizeText(type)}
                   />
                 </Grid>
@@ -430,7 +422,11 @@ function ContributionForm({
                   asterisk
                   label={getSubjectLabel(type)}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onBlur={() => {
+                    if (isValid && dirty) {
+                      submitForm(values, false)
+                    }
+                  }}
                   value={values.subject}
                   {...(errors &&
                     errors.subject && {
@@ -446,6 +442,11 @@ function ContributionForm({
                   asterisk
                   label={getDetailsLabel(type)}
                   onChange={v => setFieldValue('details', v)}
+                  onBlur={() => {
+                    if (isValid && dirty) {
+                      submitForm(values, false)
+                    }
+                  }}
                   value={values.details}
                   {...(errors &&
                     errors.details && {
@@ -467,7 +468,11 @@ function ContributionForm({
                       label="Conference Name"
                       name="conferenceName"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, false)
+                        }
+                      }}
                       value={values.conferenceName}
                       {...(errors &&
                         errors.conferenceName && {
@@ -482,7 +487,11 @@ function ContributionForm({
                       label="Presentation Date"
                       name="presentationDetails"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, false)
+                        }
+                      }}
                       value={values.presentationDetails}
                       {...(errors &&
                         errors.presentationDetails && {
@@ -497,7 +506,11 @@ function ContributionForm({
                       label="Start Time GMT"
                       name="startTime"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, false)
+                        }
+                      }}
                       value={values.startTime}
                       {...(errors &&
                         errors.startTime && {
@@ -512,7 +525,11 @@ function ContributionForm({
                       label="End Time GMT"
                       name="endTime"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, false)
+                        }
+                      }}
                       value={values.endTime}
                       {...(errors &&
                         errors.endTime && {
@@ -548,46 +565,52 @@ function ContributionForm({
                                   alignItems="flex-start"
                                   spacing={2}
                                 >
-                                  {values.relatedmedia.length >
-                                    1 && (
-                                    <div
-                                      className={`${styles.list}`}
-                                      style={{ width: '100%' }}
-                                    >
-                                      <Typography
-                                        className={`${styles.typography}`}
-                                        align="right"
-                                        style={{
-                                          cursor: 'pointer',
-                                          float: 'right',
-                                          color: '#e84441'
-                                        }}
-                                        onClick={() => {
-                                          // if (value.id) {
-                                          //   setDeleteMedia(true)
-                                          //   setDeleteMediaId(
-                                          //     value.id
-                                          //   )
-                                          // } else {
+                                  <div
+                                    className={`${styles.list}`}
+                                    style={{ width: '100%' }}
+                                  >
+                                    <Typography
+                                      className={`${styles.typography}`}
+                                      align="right"
+                                      style={{
+                                        cursor: 'pointer',
+                                        float: 'right',
+                                        color: '#e84441'
+                                      }}
+                                      onClick={async () => {
+                                        if (value.id) {
+                                          await deleteRelatedMediaMutate(
+                                            value.id
+                                          )
                                           arrayHelpers.remove(
                                             index
                                           )
-                                          // }
-                                        }}
-                                      >
-                                        <img
-                                          src={DeleteIcon}
-                                          className={`${styles.deleteIcon}`}
-                                        />{' '}
-                                        Remove Media
-                                      </Typography>
-                                    </div>
-                                  )}
+                                        } else {
+                                          arrayHelpers.remove(
+                                            index
+                                          )
+                                        }
+                                      }}
+                                    >
+                                      <img
+                                        src={DeleteIcon}
+                                        className={`${styles.deleteIcon}`}
+                                      />{' '}
+                                      Remove Media
+                                    </Typography>
+                                  </div>
                                   <Grid item sm={12}>
                                     <Controls.Input
                                       name={`relatedmedia[${index}].title`}
                                       onChange={handleChange}
-                                      onBlur={handleBlur}
+                                      onBlur={() => {
+                                        if (isValid && dirty) {
+                                          submitForm(
+                                            values,
+                                            false
+                                          )
+                                        }
+                                      }}
                                       label="Media Title"
                                       value={value.title}
                                       {...(errors &&
@@ -610,7 +633,14 @@ function ContributionForm({
                                     <Controls.Input
                                       name={`relatedmedia.${index}.link`}
                                       onChange={handleChange}
-                                      onBlur={handleBlur}
+                                      onBlur={() => {
+                                        if (isValid && dirty) {
+                                          submitForm(
+                                            values,
+                                            false
+                                          )
+                                        }
+                                      }}
                                       label="Media Link"
                                       value={value.link}
                                       {...(errors &&
@@ -662,6 +692,7 @@ function ContributionForm({
                       )}
                     />
                   </div>
+
                   <Grid item xs={12}>
                     <Controls.MultiSelect
                       onChange={(e, options) => {
@@ -669,6 +700,11 @@ function ContributionForm({
                           return val
                         })
                         setFieldValue('tags', arr)
+                      }}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, false)
+                        }
                       }}
                       name="tags"
                       label="Add tags to help people find your contribution"
@@ -706,6 +742,11 @@ function ContributionForm({
                             ) === i
                         )
                         await setFieldValue('author', filterArr)
+                      }}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, false)
+                        }
                       }}
                       name="author"
                       asterisk
@@ -747,16 +788,69 @@ function ContributionForm({
                 className={`${styles.btnContainer}`}
                 xs={12}
               >
+                {type !== 'analysis' && (
+                  <Button
+                    className="btn secondary submitBtn mr-30 mb-15m"
+                    variant="outlined"
+                    style={{ position: 'absolute', right: 200 }}
+                    onClick={() => {
+                      if (type === 'question') {
+                        history.push(
+                          `/contribution-form/hypothesis/new`,
+                          {
+                            type: 'new',
+                            data
+                          }
+                        )
+                      }
+                      if (type === 'hypothesis') {
+                        history.push(
+                          `/contribution-form/experiment/new`,
+                          {
+                            type: 'new',
+                            data
+                          }
+                        )
+                      }
+                      if (type === 'experiment') {
+                        history.push(
+                          `/contribution-form/data/new`,
+                          {
+                            type: 'new',
+                            data
+                          }
+                        )
+                      }
+                      if (type === 'data') {
+                        history.push(
+                          `/contribution-form/analysis/new`,
+                          {
+                            type: 'new',
+                            data
+                          }
+                        )
+                      }
+                    }}
+                  >
+                    ADD {type === 'question' ? 'Hypothesis' : ''}
+                    {type === 'hypothesis' ? 'Experiment' : ''}
+                    {type === 'experiment' ? 'Data' : ''}
+                    {type === 'data' ? 'Analysis' : ''}
+                  </Button>
+                )}
                 <Button
                   className="btn primary submitBtn publish"
                   variant="contained"
                   style={{ position: 'absolute', right: 22 }}
-                  type="submit"
-                  disabled={!(isValid && dirty)}
+                  disabled={!isValid}
                   onClick={() => {
                     if (isEmpty(errors)) {
                       setModal(!modal)
                     }
+                    setData(prevState => ({
+                      ...prevState,
+                      status: 'publish'
+                    }))
                     scrollToErrors(errors)
                   }}
                 >
