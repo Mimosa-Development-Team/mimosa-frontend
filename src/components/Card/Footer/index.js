@@ -144,9 +144,7 @@ const Footer = ({
         </>
       )}
       {!heirarchyList && (
-        <Contribution
-          contribution={data.total ? data.total.length : 0}
-        />
+        <Contribution contribution={data && data.total} />
       )}
       {hideEdit !== true && data ? (
         <>
