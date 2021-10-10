@@ -37,11 +37,7 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    window.history.pushState(
-      null,
-      null,
-      `?list=${contribution.id}`
-    )
+    window.history.pushState(null, null, ``)
   }
 
   const location = useLocation()

@@ -61,13 +61,13 @@ const useStyles = makeStyles(theme => ({
 export default function ModalDialog({
   modal,
   setModal,
-  formDataValues,
   submit,
   message,
   subcontent
 }) {
   const submitForm = async () => {
-    await submit(formDataValues)
+    await submit()
+    setModal(false)
   }
   const [buttonDisabled, setButtonDisabled] = useState(false)
 

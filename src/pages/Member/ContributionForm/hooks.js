@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from 'react-query'
-import { toast } from 'material-react-toastify'
-import capitalizeText from 'utils/parsing/capitalize'
-import { useHistory } from 'react-router-dom'
 import { queryClient } from 'store/state'
+import { toast } from 'material-react-toastify'
+import { useHistory } from 'react-router-dom'
+import capitalizeText from 'utils/parsing/capitalize'
 import {
   getUserAPI,
   getTagsAPI,
@@ -59,25 +59,10 @@ export const useQuestionForm = id => {
     isSuccess: addIsSuccessContribution,
     reset: resetAdd
   } = useMutation(postContributionAPI, {
-    onSuccess: data => {
-      toast.success(
-        `${capitalizeText(
-          data.contribution.category
-        )} contribution was published successfully.`
-      )
+    onSuccess: () => {
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
-      if (data.contribution.category === 'question') {
-        history.push('/')
-      } else {
-        history.push(
-          `/contribution/${data.contribution.uuid}?list=${data.contribution.mainParentId}`
-        )
-      }
     },
     onError: () => {
-      toast.error(
-        'Unable to Publish/Update contribution. An error was encountered.'
-      )
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
     }
   })
@@ -106,6 +91,7 @@ export const useQuestionForm = id => {
   } = useMutation(deleteRelatedMediaAPI, {
     onSuccess: () => {
       relatedMediaFetch()
+      toast.success('Related media was deleted successfully.')
       queryClient.invalidateQueries(
         RELATEDMEDIA_DELETE_QUERY_KEY
       )
@@ -120,19 +106,30 @@ export const useQuestionForm = id => {
     isSuccess: updateIsSuccessContribution,
     reset: resetUpdate
   } = useMutation(putContributionAPI, {
-    onSuccess: ({ data }) => {
-      toast.success(
-        `${capitalizeText(
-          data.category
-        )} contribution was updated successfully.`
-      )
-      relatedMediaFetch()
+    onSuccess: data => {
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
-      history.push(
-        `/contribution/${data.uuid}?list=${
-          data.mainParentId ? data.mainParentId : data.id
-        }`
-      )
+      if (data && data.data && data.data.status === 'publish') {
+        if (window.location.href.split('/').pop() === 'new') {
+          toast.success(
+            `${capitalizeText(
+              data.data.category
+            )} contribution was published successfully.`
+          )
+          if (data.data.category === 'question') {
+            history.push(
+              `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
+            )
+          } else {
+            history.push(
+              `/contribution/${data.data.uuid}?list=${
+                data.data.mainParentId ||
+                data.data.parentId ||
+                data.data.id
+              }&from=home`
+            )
+          }
+        }
+      }
     }
   })
 

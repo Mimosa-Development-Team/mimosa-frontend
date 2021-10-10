@@ -76,8 +76,7 @@
     .btnBack:active.focus,
     .backNav {
       margin-bottom: 30px;
-      cursor: pointer;
-      width: 100%;
+      width: 100%;  
 
       h4.back {
         font-family: 'Roboto';
@@ -99,6 +98,15 @@
     margin-top: 50px;
     margin-bottom: 50px;
   }
+}
+
+.btnContainer {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  text-align: end;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 @media screen and (max-width: 959px) {

@@ -174,24 +174,25 @@ const MemberDashboard = ({ user, hasSession }) => {
                               <div
                                 key={index}
                                 className={`${styles.content} cardlist`}
-                                onClick={() => {
-                                  //if click from draft
-                                  data.showDraft = true
-                                  history.push(
-                                    `/contribution/${
-                                      data.category ===
-                                      'question'
-                                        ? data.uuid
-                                        : data.parentQuestionUuid
-                                    }?list=${data.id}`,
-                                    {
-                                      state: data,
-                                      from: 'home'
-                                    }
-                                  )
-                                }}
                               >
                                 <Card
+                                  click={() => {
+                                    data.showDraft = true
+                                    history.push(
+                                      `/contribution/${
+                                        data.category ===
+                                        'question'
+                                          ? data.uuid
+                                          : data.parentQuestionUuid
+                                      }?list=${
+                                        data.id
+                                      }&from=home`,
+                                      {
+                                        state: data,
+                                        from: 'home'
+                                      }
+                                    )
+                                  }}
                                   data={data}
                                   form={false}
                                   linesToShow={5}
@@ -213,7 +214,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                               <Card
                                 click={() => {
                                   history.push(
-                                    `/contribution/${data.uuid}?list=${data.id}`,
+                                    `/contribution/${data.uuid}?list=${data.id}&from=home`,
                                     {
                                       state: data,
                                       from: 'home'
