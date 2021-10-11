@@ -206,7 +206,10 @@ const About = ({ user, hasSession }) => {
 
               <Typography className="mb-10">
                 Contact{' '}
-                <Link href="mailto:hello@openmimosa.org">
+                <Link
+                  target="_blank"
+                  href="mailto:hello@openmimosa.org"
+                >
                   hello@openmimosa.org
                 </Link>
               </Typography>
@@ -216,7 +219,10 @@ const About = ({ user, hasSession }) => {
               </Typography>
 
               <Typography className="mb-20">
-                <Link href="https://github.com/Mimosa-Development-Team">
+                <Link
+                  target="_blank"
+                  href="https://github.com/Mimosa-Development-Team"
+                >
                   https://github.com/mimosa
                 </Link>
               </Typography>
@@ -229,7 +235,10 @@ const About = ({ user, hasSession }) => {
               </Typography>
 
               <Typography className="mb-20">
-                <Link href=" https://openmimosablog.wordpress.com/">
+                <Link
+                  target="_blank"
+                  href=" https://openmimosablog.wordpress.com/"
+                >
                   https://openmimosablog.wordpress.com/
                 </Link>
               </Typography>

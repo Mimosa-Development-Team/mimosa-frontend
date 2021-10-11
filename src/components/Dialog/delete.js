@@ -79,12 +79,14 @@ export default function ModalDialog({
             onClick={() => {
               setDeleteForm(!deleteForm)
             }}
+            style={{ left: -30 }}
           >
             CLOSE
           </Button>
           <Button
             variant="contained"
             className="btn contained"
+            style={{ right: -30 }}
             onClick={() => {
               deleteMutate(id)
               setDeleteForm(!deleteForm)

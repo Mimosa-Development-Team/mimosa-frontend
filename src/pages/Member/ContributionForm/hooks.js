@@ -22,7 +22,7 @@ import {
   RELATEDMEDIA_DELETE_QUERY_KEY
 } from './constants'
 
-export const useQuestionForm = id => {
+export const useQuestionForm = (id, redirectUrl) => {
   const history = useHistory()
   const { data: user, refetch: userFetch } = useQuery(
     USER_QUERY_KEY,
@@ -59,8 +59,63 @@ export const useQuestionForm = id => {
     isSuccess: addIsSuccessContribution,
     reset: resetAdd
   } = useMutation(postContributionAPI, {
-    onSuccess: () => {
+    onSuccess: data => {
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
+      if (redirectUrl && redirectUrl === 'hierarchy') {
+        if (data.data) {
+          toast.success(
+            `${capitalizeText(
+              data.data.category
+            )} contribution was published successfully.`
+          )
+          if (data.data.category === 'question') {
+            history.push(
+              `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
+            )
+          } else {
+            history.push(
+              `/contribution/${data.data.uuid}?list=${
+                data.data.mainParentId ||
+                data.data.parentId ||
+                data.data.id
+              }&from=home`
+            )
+          }
+        }
+      }
+      if (redirectUrl && redirectUrl === 'new-contribution') {
+        if (data.data) {
+          toast.success(
+            `${capitalizeText(
+              data.data.category
+            )} contribution was published successfully.`
+          )
+          if (data.data.category === 'question') {
+            history.push(`/contribution-form/hypothesis/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+          if (data.data.category === 'hypothesis') {
+            history.push(`/contribution-form/experiment/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+          if (data.data.category === 'experiment') {
+            history.push(`/contribution-form/data/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+          if (data.data.category === 'data') {
+            history.push(`/contribution-form/analysis/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+        }
+      }
     },
     onError: () => {
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)

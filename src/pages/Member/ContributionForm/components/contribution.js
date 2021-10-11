@@ -170,9 +170,12 @@ function ContributionForm({
 }) {
   const history = useHistory()
   const [modal, setModal] = useState(false)
+  const [confirmation, setConfirmation] = useState(false)
+  const [navigation, setNavigation] = useState(false)
   const [rMedia, setRmedia] = useState([])
   const [lastSave, setLastSave] = useState(null)
   const [data, setData] = useState(null)
+  const [redirectUrl, setRedirectUrl] = useState(null)
   const [conference, setConference] = useState({
     conferenceName: '',
     presentationDetails: '',
@@ -187,7 +190,8 @@ function ContributionForm({
     updatedContribution,
     deleteRelatedMediaMutate
   } = useQuestionForm(
-    method === 'update' ? props.id : data && data.id
+    method === 'update' ? props.id : data && data.id,
+    redirectUrl
   )
 
   const scrollToErrors = errors => {
@@ -213,7 +217,12 @@ function ContributionForm({
         values.status = 'publish'
       }
     }
-    if (!data) {
+    if (
+      !data ||
+      (values.status === 'publish' && method === 'new') ||
+      (values.status === 'draft' &&
+        redirectUrl === 'new-contribution')
+    ) {
       addContribution(values)
     } else {
       values.id = data.id
@@ -257,6 +266,12 @@ function ContributionForm({
     ) {
       setRmedia([{ title: '', link: '' }])
     }
+    if (
+      addedContribution &&
+      addedContribution.relatedmedia.length <= 0
+    ) {
+      setRmedia([{ title: '', link: '' }])
+    }
     if (!addedContribution && !updatedContribution) {
       setRmedia([{ title: '', link: '' }])
     }
@@ -272,6 +287,61 @@ function ContributionForm({
           (data && data.category) || ''
         )}?`}
         subcontent=""
+      />
+      <ModalDialog
+        modal={confirmation}
+        setModal={setConfirmation}
+        submit={() => submitForm(data)}
+        message="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        subcontent=""
+        proceed
+      />
+      <ModalDialog
+        modal={navigation}
+        setModal={setNavigation}
+        submit={() => {
+          if (redirectUrl && data) {
+            if (data.category === 'question') {
+              history.push(`/contribution-form/hypothesis/new`, {
+                type: 'new',
+                data
+              })
+            }
+            if (data.category === 'hypothesis') {
+              history.push(`/contribution-form/experiment/new`, {
+                type: 'new',
+                data
+              })
+            }
+            if (data.category === 'experiment') {
+              history.push(`/contribution-form/data/new`, {
+                type: 'new',
+                data
+              })
+            }
+            if (data.category === 'data') {
+              history.push(`/contribution-form/analysis/new`, {
+                type: 'new',
+                data
+              })
+            }
+          } else if (data) {
+            if (data.category === 'question') {
+              history.push(
+                `/contribution/${data.uuid}?list=${data.id}&from=home`
+              )
+            } else {
+              history.push(
+                `/contribution/${data.uuid}?list=${
+                  data.mainParentId || data.parentId || data.id
+                }&from=home`
+              )
+            }
+          }
+        }}
+        message="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        subcontent=""
+        proceed
       />
       <Formik
         initialValues={{
@@ -348,38 +418,44 @@ function ContributionForm({
                       className={`${styles.back}`}
                       variant="h4"
                       onClick={() => {
-                        if (
-                          method === 'new' &&
-                          type === 'question'
-                        ) {
-                          history.push('/')
-                        }
-                        if (
-                          method === 'new' &&
-                          type !== 'question' &&
-                          props
-                        ) {
-                          history.push(
-                            `/contribution/${props.uuid}?list=${
-                              props.mainParentId || props.id
-                            }&from=home`
-                          )
-                        }
-                        if (
-                          method === 'update' &&
-                          type === 'question'
-                        ) {
-                          history.push(
-                            `/contribution/${props.uuid}?list=${props.id}&from=home`
-                          )
-                        }
-                        if (
-                          method === 'update' &&
-                          type !== 'question'
-                        ) {
-                          history.push(
-                            `/contribution/${props.uuid}?list=${props.mainParentId}&from=home`
-                          )
+                        if (!data) {
+                          if (
+                            method === 'new' &&
+                            type === 'question'
+                          ) {
+                            history.push('/')
+                          }
+                          if (
+                            method === 'new' &&
+                            type !== 'question' &&
+                            props
+                          ) {
+                            history.push(
+                              `/contribution/${
+                                props.uuid
+                              }?list=${
+                                props.mainParentId || props.id
+                              }&from=home`
+                            )
+                          }
+                          if (
+                            method === 'update' &&
+                            type === 'question'
+                          ) {
+                            history.push(
+                              `/contribution/${props.uuid}?list=${props.id}&from=home`
+                            )
+                          }
+                          if (
+                            method === 'update' &&
+                            type !== 'question'
+                          ) {
+                            history.push(
+                              `/contribution/${props.uuid}?list=${props.mainParentId}&from=home`
+                            )
+                          }
+                        } else {
+                          setNavigation(!navigation)
                         }
                       }}
                     >
@@ -793,42 +869,14 @@ function ContributionForm({
                     className="btn secondary submitBtn mr-30 mb-15m"
                     variant="outlined"
                     style={{ position: 'absolute', right: 200 }}
-                    onClick={() => {
-                      if (type === 'question') {
-                        history.push(
-                          `/contribution-form/hypothesis/new`,
-                          {
-                            type: 'new',
-                            data
-                          }
-                        )
-                      }
-                      if (type === 'hypothesis') {
-                        history.push(
-                          `/contribution-form/experiment/new`,
-                          {
-                            type: 'new',
-                            data
-                          }
-                        )
-                      }
-                      if (type === 'experiment') {
-                        history.push(
-                          `/contribution-form/data/new`,
-                          {
-                            type: 'new',
-                            data
-                          }
-                        )
-                      }
-                      if (type === 'data') {
-                        history.push(
-                          `/contribution-form/analysis/new`,
-                          {
-                            type: 'new',
-                            data
-                          }
-                        )
+                    disabled={!isValid}
+                    onClick={async () => {
+                      await setRedirectUrl('new-contribution')
+                      if (!data) {
+                        await setData(values)
+                        await setConfirmation(!confirmation)
+                      } else {
+                        setNavigation(!navigation)
                       }
                     }}
                   >
@@ -847,10 +895,12 @@ function ContributionForm({
                     if (isEmpty(errors)) {
                       setModal(!modal)
                     }
-                    setData(prevState => ({
-                      ...prevState,
-                      status: 'publish'
-                    }))
+                    setRedirectUrl('hierarchy')
+                    if (!data) {
+                      const temp = values
+                      temp.status = 'publish'
+                      setData(temp)
+                    }
                     scrollToErrors(errors)
                   }}
                 >
