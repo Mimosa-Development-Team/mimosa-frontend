@@ -162,8 +162,8 @@ const Footer = ({
               }}
             />
           ) : null}
-          {data.children &&
-          data.children.length === 0 &&
+          {((data.children && data.children.length === 0) ||
+            data.category === 'analysis') &&
           user &&
           (user.role === 'admin' || data.userId === user.id) ? (
             <CardButton

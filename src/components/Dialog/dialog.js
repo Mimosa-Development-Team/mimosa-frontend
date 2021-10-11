@@ -63,7 +63,8 @@ export default function ModalDialog({
   setModal,
   submit,
   message,
-  subcontent
+  subcontent,
+  proceed
 }) {
   const submitForm = async () => {
     await submit()
@@ -124,7 +125,7 @@ export default function ModalDialog({
               submitForm()
             }}
           >
-            Publish
+            {proceed ? 'Proceed' : 'Publish'}
           </Button>
         </div>
       </div>
