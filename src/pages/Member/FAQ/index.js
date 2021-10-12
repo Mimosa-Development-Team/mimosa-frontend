@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
@@ -6,6 +7,7 @@ import PageContentWrapper from 'components/PageContentWrapper'
 import SearchField from 'components/SearchField'
 import NoResultsFound from 'components/NoResultsFound'
 import loader from 'assets/images/loader_loading.gif'
+import Loading from 'components/LoadingPage'
 import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import VerticalTab from './components/VerticalTab'
 import SearchResults from './components/SearchResults'
@@ -15,7 +17,11 @@ const MemberFAQ = ({ user, hasSession }) => {
   const { faq, isLoading, getFaq } = useFaq()
   const [searchFaq, setSearchFaq] = useState('')
   const [showResults, setShowResults] = useState(false)
-  const { faqResults, getFaqResults } = useFaqResults(searchFaq)
+  const {
+    faqResults,
+    getFaqResults,
+    isLoading: faqLoading
+  } = useFaqResults(searchFaq)
 
   const handleKeyPress = e => {
     setSearchFaq(e.target.value)
@@ -81,6 +87,8 @@ const MemberFAQ = ({ user, hasSession }) => {
                   searchTerm={searchFaq}
                   data={faqResults}
                 />
+              ) : faqLoading ? (
+                <Loading />
               ) : (
                 <NoResultsFound term={searchFaq} />
               )}

@@ -33,7 +33,11 @@ const MemberDashboard = ({ user, hasSession }) => {
   } = useQuestions(orderBy, !isEmpty(user) ? user.user.id : null)
   const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
-  const { results, getResults } = useResults(search)
+  const {
+    results,
+    getResults,
+    isLoading: resultLoading
+  } = useResults(search)
   const [sort, setSort] = useState('Most Recent')
   const [modal, setModal] = useState(false)
 
@@ -139,6 +143,7 @@ const MemberDashboard = ({ user, hasSession }) => {
             </div>
             {showResults ? (
               <SearchResults
+                resultLoading={resultLoading}
                 searchTerm={search}
                 data={results}
               />
