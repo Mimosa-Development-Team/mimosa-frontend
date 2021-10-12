@@ -63,11 +63,13 @@ export const useQuestionForm = (id, redirectUrl) => {
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
       if (redirectUrl && redirectUrl === 'hierarchy') {
         if (data.data) {
-          toast.success(
-            `${capitalizeText(
-              data.data.category
-            )} contribution was published successfully.`
-          )
+          if (data.data.status === 'publish') {
+            toast.success(
+              `${capitalizeText(
+                data.data.category
+              )} contribution was published successfully.`
+            )
+          }
           if (data.data.category === 'question') {
             history.push(
               `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
@@ -85,11 +87,13 @@ export const useQuestionForm = (id, redirectUrl) => {
       }
       if (redirectUrl && redirectUrl === 'new-contribution') {
         if (data.data) {
-          toast.success(
-            `${capitalizeText(
-              data.data.category
-            )} contribution was published successfully.`
-          )
+          if (data.data.status === 'publish') {
+            toast.success(
+              `${capitalizeText(
+                data.data.category
+              )} contribution was published successfully.`
+            )
+          }
           if (data.data.category === 'question') {
             history.push(`/contribution-form/hypothesis/new`, {
               type: 'new',
@@ -169,6 +173,27 @@ export const useQuestionForm = (id, redirectUrl) => {
             `${capitalizeText(
               data.data.category
             )} contribution was published successfully.`
+          )
+          if (data.data.category === 'question') {
+            history.push(
+              `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
+            )
+          } else {
+            history.push(
+              `/contribution/${data.data.uuid}?list=${
+                data.data.mainParentId ||
+                data.data.parentId ||
+                data.data.id
+              }&from=home`
+            )
+          }
+        } else if (
+          window.location.href.split('/').pop() === 'update'
+        ) {
+          toast.success(
+            `${capitalizeText(
+              data.data.category
+            )} contribution was updated successfully.`
           )
           if (data.data.category === 'question') {
             history.push(
