@@ -33,7 +33,7 @@ const Header = ({
       {data.status === `draft` || data.draft ? ( //data.status === 'draft' || data.draft
         <div style={{ paddingBottom: '5px' }}>
           <span>
-            <i className={`${styles.draft}`}>Draft: </i>{' '}
+            <i className={`${styles.draft}`}>Draft </i>{' '}
             {data.draft && data.draft.subject}
           </span>
         </div>

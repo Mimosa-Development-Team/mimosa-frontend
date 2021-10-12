@@ -133,7 +133,11 @@ const UserContributions = ({ user, hasSession }) => {
                             <Card
                               click={() => {
                                 history.push(
-                                  `/contribution/${data.parentQuestionUuid}?list=${data.id}&from=profile`,
+                                  `/contribution/${
+                                    data.uuid
+                                  }?list=${
+                                    data.mainParentId || data.id
+                                  }&from=profile`,
                                   {
                                     state: data,
                                     from: 'my-contribution'

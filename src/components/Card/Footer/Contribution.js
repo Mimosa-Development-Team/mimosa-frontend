@@ -1,11 +1,13 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import ContributionIcon from 'assets/images/card/contribution-bw.svg'
 import ContributionIconColored from 'assets/images/card/contribution.svg'
 import TooltipUi from 'components/Tooltip'
 import styles from './styles.module.scss'
 
-const ContributionCount = ({ contribution }) => {
+const ContributionCount = ({ contribution, data }) => {
+  const history = useHistory()
   return (
     <div>
       <span className={`${styles.metaDivider}`}>·</span>
@@ -14,6 +16,11 @@ const ContributionCount = ({ contribution }) => {
           disableRipple
           aria-label="contribution"
           className={`${styles.metaButton}`}
+          onClick={() => {
+            history.push(
+              `/contribution/${data.uuid}?list=${data.id}&from=home`
+            )
+          }}
         >
           <img
             src={

@@ -7,7 +7,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { isEmpty } from 'lodash'
 import Controls from 'components/controls/Controls'
 import {
   Button,
@@ -219,13 +218,25 @@ function ContributionForm({
     }
     if (
       !data ||
-      (values.status === 'publish' && method === 'new') ||
+      (data && !data.id) ||
+      (values.status === 'publish' &&
+        method === 'new' &&
+        !modal) ||
       (values.status === 'draft' &&
         redirectUrl === 'new-contribution')
     ) {
+      if (props) {
+        values.mainParentId =
+          props.mainParentId || props.id || null
+        values.parentId = props.id || null
+      }
+      // if (values && values.asdasd) {
       addContribution(values)
+      // }
     } else {
       values.id = data.id
+      values.mainParentId = (data && data.mainParentId) || null
+      values.parentId = (data && data.parentId) || null
       if (values.conferenceName && conference.id) {
         values.conferenceId = conference.id
       }
@@ -236,6 +247,39 @@ function ContributionForm({
   useEffect(() => {
     if (method === 'update' && props) {
       setData(props)
+    }
+    if (
+      props &&
+      props.relatedmedia &&
+      props.relatedmedia.length > 0 &&
+      !updatedContribution &&
+      !addedContribution
+    ) {
+      const tempRmedia = []
+      for (let i = 0; i < props.relatedmedia.length; i++) {
+        if (props.relatedmedia[i].mediaDetails) {
+          tempRmedia.push({
+            id: props.relatedmedia[i].id,
+            title: props.relatedmedia[i].mediaDetails.title,
+            link: props.relatedmedia[i].mediaDetails.link
+          })
+        } else {
+          setConference({
+            conferenceName: props.relatedmedia[i].conferenceName,
+            presentationDetails:
+              props.relatedmedia[i].conferenceDateDetails
+                .presentationDetails,
+            startTime:
+              props.relatedmedia[i].conferenceDateDetails
+                .startTime,
+            endTime:
+              props.relatedmedia[i].conferenceDateDetails
+                .endTime,
+            id: props.relatedmedia[i].id
+          })
+        }
+      }
+      setRmedia(tempRmedia)
     }
     if (updatedContribution && updatedContribution.data) {
       setData(updatedContribution.data)
@@ -266,13 +310,8 @@ function ContributionForm({
     ) {
       setRmedia([{ title: '', link: '' }])
     }
-    if (
-      addedContribution &&
-      addedContribution.relatedmedia.length <= 0
-    ) {
-      setRmedia([{ title: '', link: '' }])
-    }
-    if (!addedContribution && !updatedContribution) {
+
+    if (!addedContribution && !updatedContribution && !props) {
       setRmedia([{ title: '', link: '' }])
     }
   }, [addedContribution, updatedContribution])
@@ -348,11 +387,14 @@ function ContributionForm({
           category: type,
           subject: (data && data.subject) || '',
           details: (data && data.details) || '',
-          tags: (data && data.tags) || [],
+          tags:
+            (data && data.tags) || (props && props.tags) || [],
           author: (data && data.author) || [
             {
               id: profile && profile.id,
-              name: `${profile && profile.firstName}`,
+              name: `${profile && profile.firstName} ${
+                profile && profile.lastName
+              }`,
               userColor: profile && profile.userColor
             }
           ],
@@ -361,8 +403,6 @@ function ContributionForm({
           status: (data && data.status) || 'draft',
           conferenceId: (conference && conference.id) || null,
           version: '1.0.0',
-          uuid: (data && data.uuid) || null,
-          parentId: props && method === 'new' ? props.id : null,
           relatedmedia: rMedia,
           hypothesisStatus:
             (data && data.hypothesisStatus) || '',
@@ -371,11 +411,7 @@ function ContributionForm({
           presentationDetails:
             (conference && conference.presentationDetails) || '',
           startTime: (conference && conference.startTime) || '',
-          endTime: (conference && conference.endTime) || '',
-          mainParentId:
-            (props && method === 'new' && props.mainParentId) ||
-            (props && method === 'new' && props.id) ||
-            null
+          endTime: (conference && conference.endTime) || ''
         }}
         enableReinitialize
         validationSchema={schema}
@@ -851,6 +887,11 @@ function ContributionForm({
                         e.target.value
                       )
                     }}
+                    onBlur={() => {
+                      if (isValid && dirty) {
+                        submitForm(values, false)
+                      }
+                    }}
                     value={values.hypothesisStatus}
                     {...(errors.hypothesisStatus && {
                       error: true,
@@ -891,17 +932,27 @@ function ContributionForm({
                   variant="contained"
                   style={{ position: 'absolute', right: 22 }}
                   disabled={!isValid}
-                  onClick={() => {
-                    if (isEmpty(errors)) {
-                      setModal(!modal)
-                    }
-                    setRedirectUrl('hierarchy')
+                  onClick={async () => {
+                    scrollToErrors(errors)
+                    await setRedirectUrl('hierarchy')
                     if (!data) {
                       const temp = values
                       temp.status = 'publish'
-                      setData(temp)
+                      await setData(temp)
+                      await setModal(!modal)
+                    } else if (props) {
+                      const temp = values
+                      temp.id = data.id
+                      temp.status = 'publish'
+                      await setData(temp)
+                      await setModal(!modal)
+                    } else {
+                      const temp = values
+                      temp.id = data.id
+                      temp.status = 'publish'
+                      await setData(temp)
+                      await setModal(!modal)
                     }
-                    scrollToErrors(errors)
                   }}
                 >
                   {method === 'new' ? 'PUBLISH' : 'UPDATE'}
