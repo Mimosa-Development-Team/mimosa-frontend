@@ -174,6 +174,7 @@ function ContributionForm({
   const [rMedia, setRmedia] = useState([])
   const [lastSave, setLastSave] = useState(null)
   const [data, setData] = useState(null)
+  const [back, setBack] = useState(false)
   const [redirectUrl, setRedirectUrl] = useState(null)
   const [conference, setConference] = useState({
     conferenceName: '',
@@ -383,7 +384,28 @@ function ContributionForm({
             }
           }
         }}
-        message="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        message={`${
+          back
+            ? `Are you sure you want to exit ${
+                data && capitalizeText(data.category)
+              } form?`
+            : `Are you sure you want to exit ${
+                data && capitalizeText(data.category)
+              } and proceed to ${
+                (data &&
+                  data.category === 'question' &&
+                  'Hypothesis') ||
+                (data &&
+                  data.category === 'hypothesis' &&
+                  'Experiment') ||
+                (data &&
+                  data.category === 'experiment' &&
+                  'Data') ||
+                (data && data.category === 'data' && 'Analysis')
+              }? ${
+                data && capitalizeText(data.category)
+              } is already saved as draft.`
+        }`}
         subcontent=""
         proceed
       />
@@ -498,6 +520,7 @@ function ContributionForm({
                         } else {
                           setNavigation(!navigation)
                         }
+                        setBack(true)
                       }}
                     >
                       <span className={`${styles.icon}`}>

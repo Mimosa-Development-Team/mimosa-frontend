@@ -72,6 +72,7 @@ const MemberFAQ = ({ user, hasSession }) => {
           </Typography>
           <div className="mt-10 align-center">
             <SearchField
+              faq
               variant="large"
               inputSubmit={handleSubmit}
               inputChange={handleKeyPress}
