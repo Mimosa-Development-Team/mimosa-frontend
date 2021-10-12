@@ -230,13 +230,18 @@ function ContributionForm({
           props.mainParentId || props.id || null
         values.parentId = props.id || null
       }
-      // if (values && values.asdasd) {
       addContribution(values)
-      // }
     } else {
       values.id = data.id
-      values.mainParentId = (data && data.mainParentId) || null
-      values.parentId = (data && data.parentId) || null
+      values.mainParentId =
+        (data && data.mainParentId) ||
+        (method === 'update' && props.mainParentId) ||
+        method === 'update' ||
+        null
+      values.parentId =
+        (data && data.parentId) ||
+        (method === 'update' && props.mainParentId) ||
+        null
       if (values.conferenceName && conference.id) {
         values.conferenceId = conference.id
       }

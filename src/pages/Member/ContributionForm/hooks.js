@@ -150,7 +150,6 @@ export const useQuestionForm = (id, redirectUrl) => {
   } = useMutation(deleteRelatedMediaAPI, {
     onSuccess: () => {
       relatedMediaFetch()
-      toast.success('Related media was deleted successfully.')
       queryClient.invalidateQueries(
         RELATEDMEDIA_DELETE_QUERY_KEY
       )
