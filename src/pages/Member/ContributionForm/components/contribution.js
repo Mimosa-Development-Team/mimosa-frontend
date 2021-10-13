@@ -954,7 +954,7 @@ function ContributionForm({
                 className={`${styles.btnContainer}`}
                 xs={12}
               >
-                {type !== 'analysis' && (
+                {type !== 'analysis' && method === 'new' && (
                   <Button
                     className="btn secondary submitBtn mr-30 mb-15m"
                     variant="outlined"
