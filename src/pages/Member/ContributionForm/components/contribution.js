@@ -23,6 +23,7 @@ import DeleteIcon from 'assets/images/icons/delete.svg'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
 import moment from 'moment'
+import { draft } from 'utils/parsing/message'
 import { useQuestionForm } from '../hooks'
 import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
@@ -176,6 +177,7 @@ function ContributionForm({
   const [rMedia, setRmedia] = useState([])
   const [lastSave, setLastSave] = useState(null)
   const [data, setData] = useState(null)
+  const [draftData, setdraftData] = useState(null)
   const [back, setBack] = useState(false)
   const [ids, setIds] = useState({
     id: '',
@@ -224,25 +226,45 @@ function ContributionForm({
         values.status = 'publish'
       }
     }
+    // if (
+    // (method !== 'update' && !ids.id) ||
+    // (values.status === 'publish' &&
+    //   method === 'new' &&
+    //   !modal) ||
+    // (values.status === 'draft' &&
+    //   redirectUrl === 'new-contribution' &&
+    //   method !== 'update')
+    // )
+
     if (
-      (method !== 'update' && !ids.id) ||
-      (values.status === 'publish' &&
-        method === 'new' &&
-        !modal) ||
-      (values.status === 'draft' &&
-        redirectUrl === 'new-contribution' &&
-        method !== 'update')
+      method === 'new' &&
+      !(addedContribution || updatedContribution)
     ) {
       if (props) {
         values.mainParentId =
-          props.mainParentId || props.id || null
-        values.parentId = props.id || null
+          props.mainParentId || props.parentId
+        values.parentId = (props && props.id) || null
       }
       addContribution(values)
     } else {
-      values.id = props.id
-      values.mainParentId = props.mainParentId
-      values.parentId = props.parentId
+      values.id =
+        (addedContribution && addedContribution.data.id) ||
+        (updatedContribution && updatedContribution.data.id) ||
+        (props && props.id) ||
+        null
+      values.mainParentId =
+        (addedContribution &&
+          addedContribution.data.mainParentId) ||
+        (updatedContribution &&
+          updatedContribution.data.mainParentId) ||
+        (props && props.mainParentId) ||
+        null
+      values.parentId =
+        (addedContribution && addedContribution.data.parentId) ||
+        (updatedContribution &&
+          updatedContribution.data.parentId) ||
+        (props && props.parentId) ||
+        null
       if (values.conferenceName && conference.id) {
         values.conferenceId = conference.id
       }
@@ -293,6 +315,7 @@ function ContributionForm({
       formikRef.current.setFieldValue('relatedmedia', tempRmedia)
     }
     if (updatedContribution && updatedContribution.data) {
+      setdraftData(updatedContribution.data)
       setIds({
         id: updatedContribution && updatedContribution.data.id,
         mainParentId:
@@ -337,6 +360,7 @@ function ContributionForm({
       addedContribution.data &&
       !(updatedContribution && updatedContribution.data)
     ) {
+      setdraftData(addedContribution.data)
       setIds({
         id: addedContribution && addedContribution.data.id,
         mainParentId:
@@ -386,36 +410,38 @@ function ContributionForm({
       <ModalDialog
         modal={modal}
         setModal={setModal}
-        submit={() => submitForm(data)}
+        submit={() => submitForm(draftData)}
         message={`Are you sure you want to publish this ${capitalizeText(
-          (data && data.category) || ''
+          (draftData && draftData.category) || ''
         )}?`}
         subcontent=""
       />
       <ModalDialog
         modal={confirmation}
         setModal={setConfirmation}
-        submit={() => submitForm(data)}
+        submit={() => submitForm(draftData)}
         message={`${
           back
             ? `Are you sure you want to exit ${
-                data && capitalizeText(data.category)
+                draftData && capitalizeText(draftData.category)
               } form?`
             : `Are you sure you want to exit ${
-                data && capitalizeText(data.category)
+                draftData && capitalizeText(draftData.category)
               } and proceed to ${
-                (data &&
-                  data.category === 'question' &&
+                (draftData &&
+                  draftData.category === 'question' &&
                   'Hypothesis') ||
-                (data &&
-                  data.category === 'hypothesis' &&
+                (draftData &&
+                  draftData.category === 'hypothesis' &&
                   'Experiment') ||
-                (data &&
-                  data.category === 'experiment' &&
+                (draftData &&
+                  draftData.category === 'experiment' &&
                   'Data') ||
-                (data && data.category === 'data' && 'Analysis')
+                (draftData &&
+                  draftData.category === 'data' &&
+                  'Analysis')
               }? ${
-                data && capitalizeText(data.category)
+                draftData && capitalizeText(draftData.category)
               } is already saved as draft.`
         }`}
         subcontent=""
@@ -425,40 +451,42 @@ function ContributionForm({
         modal={navigation}
         setModal={setNavigation}
         submit={() => {
-          if (redirectUrl && data) {
-            if (data.category === 'question') {
+          if (redirectUrl && draftData) {
+            if (draftData.category === 'question') {
               history.push(`/contribution-form/hypothesis/new`, {
                 type: 'new',
-                data
+                data: draftData
               })
             }
-            if (data.category === 'hypothesis') {
+            if (draftData.category === 'hypothesis') {
               history.push(`/contribution-form/experiment/new`, {
                 type: 'new',
-                data
+                data: draftData
               })
             }
-            if (data.category === 'experiment') {
+            if (draftData.category === 'experiment') {
               history.push(`/contribution-form/data/new`, {
                 type: 'new',
-                data
+                data: draftData
               })
             }
-            if (data.category === 'data') {
+            if (draftData.category === 'data') {
               history.push(`/contribution-form/analysis/new`, {
                 type: 'new',
-                data
+                data: draftData
               })
             }
           } else if (data) {
-            if (data.category === 'question') {
+            if (draftData.category === 'question') {
               history.push(
-                `/contribution/${data.uuid}?list=${data.id}&from=home`
+                `/contribution/${draftData.uuid}?list=${draftData.id}&from=home`
               )
             } else {
               history.push(
-                `/contribution/${data.uuid}?list=${
-                  data.mainParentId || data.parentId || data.id
+                `/contribution/${draftData.uuid}?list=${
+                  draftData.mainParentId ||
+                  draftData.parentId ||
+                  draftData.id
                 }&from=home`
               )
             }
@@ -467,23 +495,25 @@ function ContributionForm({
         message={`${
           back
             ? `Are you sure you want to exit ${
-                data && capitalizeText(data.category)
+                draftData && capitalizeText(draftData.category)
               } form?`
             : `Are you sure you want to exit ${
-                data && capitalizeText(data.category)
+                draftData && capitalizeText(draftData.category)
               } and proceed to ${
-                (data &&
-                  data.category === 'question' &&
+                (draftData &&
+                  draftData.category === 'question' &&
                   'Hypothesis') ||
-                (data &&
-                  data.category === 'hypothesis' &&
+                (draftData &&
+                  draftData.category === 'hypothesis' &&
                   'Experiment') ||
-                (data &&
-                  data.category === 'experiment' &&
+                (draftData &&
+                  draftData.category === 'experiment' &&
                   'Data') ||
-                (data && data.category === 'data' && 'Analysis')
+                (draftData &&
+                  draftData.category === 'data' &&
+                  'Analysis')
               }? ${
-                data && capitalizeText(data.category)
+                draftData && capitalizeText(draftData.category)
               } is already saved as draft.`
         }`}
         subcontent=""
@@ -1038,8 +1068,8 @@ function ContributionForm({
                     disabled={!isValid}
                     onClick={async () => {
                       await setRedirectUrl('new-contribution')
-                      if (!data) {
-                        await setData(values)
+                      if (!draftData) {
+                        await setdraftData(values)
                         await setConfirmation(!confirmation)
                       } else {
                         setNavigation(!navigation)
@@ -1060,22 +1090,28 @@ function ContributionForm({
                   onClick={async () => {
                     scrollToErrors(errors)
                     await setRedirectUrl('hierarchy')
-                    if (!data) {
+                    if (!draftData) {
                       const temp = values
                       temp.status = 'publish'
-                      await setData(temp)
+                      await setdraftData(temp)
+                      await setModal(!modal)
+                    } else if (draftData) {
+                      const temp = values
+                      temp.id = draftData.id
+                      temp.status = 'publish'
+                      await setdraftData(temp)
                       await setModal(!modal)
                     } else if (props) {
                       const temp = values
-                      temp.id = data.id
+                      temp.id = draftData.id
                       temp.status = 'publish'
-                      await setData(temp)
+                      await setdraftData(temp)
                       await setModal(!modal)
                     } else {
                       const temp = values
-                      temp.id = data.id
+                      temp.id = draftData.id
                       temp.status = 'publish'
-                      await setData(temp)
+                      await setdraftData(temp)
                       await setModal(!modal)
                     }
                   }}
