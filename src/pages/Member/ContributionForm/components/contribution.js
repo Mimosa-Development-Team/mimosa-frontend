@@ -248,20 +248,29 @@ function ContributionForm({
       addContribution(values)
     } else {
       values.id =
-        (addedContribution && addedContribution.data.id) ||
-        (updatedContribution && updatedContribution.data.id) ||
+        (addedContribution &&
+          addedContribution.data &&
+          addedContribution.data.id) ||
+        (updatedContribution &&
+          updatedContribution.data &&
+          updatedContribution.data.id) ||
         (props && props.id) ||
         null
       values.mainParentId =
         (addedContribution &&
+          addedContribution.data &&
           addedContribution.data.mainParentId) ||
         (updatedContribution &&
+          updatedContribution.data &&
           updatedContribution.data.mainParentId) ||
         (props && props.mainParentId) ||
         null
       values.parentId =
-        (addedContribution && addedContribution.data.parentId) ||
+        (addedContribution &&
+          addedContribution.data &&
+          addedContribution.data.parentId) ||
         (updatedContribution &&
+          updatedContribution.data &&
           updatedContribution.data.parentId) ||
         (props && props.parentId) ||
         null
