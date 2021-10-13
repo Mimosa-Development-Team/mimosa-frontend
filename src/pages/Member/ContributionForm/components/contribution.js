@@ -251,9 +251,6 @@ function ContributionForm({
   }
 
   useEffect(() => {
-    if (method === 'update' && props) {
-      setData(props)
-    }
     if (
       props &&
       props.relatedmedia &&
