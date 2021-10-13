@@ -337,7 +337,28 @@ function ContributionForm({
         modal={confirmation}
         setModal={setConfirmation}
         submit={() => submitForm(data)}
-        message="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        message={`${
+          back
+            ? `Are you sure you want to exit ${
+                data && capitalizeText(data.category)
+              } form?`
+            : `Are you sure you want to exit ${
+                data && capitalizeText(data.category)
+              } and proceed to ${
+                (data &&
+                  data.category === 'question' &&
+                  'Hypothesis') ||
+                (data &&
+                  data.category === 'hypothesis' &&
+                  'Experiment') ||
+                (data &&
+                  data.category === 'experiment' &&
+                  'Data') ||
+                (data && data.category === 'data' && 'Analysis')
+              }? ${
+                data && capitalizeText(data.category)
+              } is already saved as draft.`
+        }`}
         subcontent=""
         proceed
       />
