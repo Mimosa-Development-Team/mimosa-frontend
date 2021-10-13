@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
@@ -5,7 +6,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import Controls from 'components/controls/Controls'
 import {
@@ -167,6 +168,7 @@ function ContributionForm({
   method,
   props
 }) {
+  const formikRef = useRef()
   const history = useHistory()
   const [modal, setModal] = useState(false)
   const [confirmation, setConfirmation] = useState(false)
@@ -175,6 +177,11 @@ function ContributionForm({
   const [lastSave, setLastSave] = useState(null)
   const [data, setData] = useState(null)
   const [back, setBack] = useState(false)
+  const [ids, setIds] = useState({
+    id: '',
+    mainParentId: '',
+    parentId: ''
+  })
   const [redirectUrl, setRedirectUrl] = useState(null)
   const [conference, setConference] = useState({
     conferenceName: '',
@@ -218,13 +225,13 @@ function ContributionForm({
       }
     }
     if (
-      !data ||
-      (data && !data.id) ||
+      (method !== 'update' && !ids.id) ||
       (values.status === 'publish' &&
         method === 'new' &&
         !modal) ||
       (values.status === 'draft' &&
-        redirectUrl === 'new-contribution')
+        redirectUrl === 'new-contribution' &&
+        method !== 'update')
     ) {
       if (props) {
         values.mainParentId =
@@ -233,16 +240,9 @@ function ContributionForm({
       }
       addContribution(values)
     } else {
-      values.id = data.id
-      values.mainParentId =
-        (data && data.mainParentId) ||
-        (method === 'update' && props.mainParentId) ||
-        method === 'update' ||
-        null
-      values.parentId =
-        (data && data.parentId) ||
-        (method === 'update' && props.mainParentId) ||
-        null
+      values.id = props.id
+      values.mainParentId = props.mainParentId
+      values.parentId = props.parentId
       if (values.conferenceName && conference.id) {
         values.conferenceId = conference.id
       }
@@ -270,55 +270,117 @@ function ContributionForm({
             link: props.relatedmedia[i].mediaDetails.link
           })
         } else {
-          setConference({
-            conferenceName: props.relatedmedia[i].conferenceName,
-            presentationDetails:
-              props.relatedmedia[i].conferenceDateDetails
-                .presentationDetails,
-            startTime:
-              props.relatedmedia[i].conferenceDateDetails
-                .startTime,
-            endTime:
-              props.relatedmedia[i].conferenceDateDetails
-                .endTime,
-            id: props.relatedmedia[i].id
-          })
+          formikRef.current.setFieldValue(
+            'conferenceName',
+            props.relatedmedia[i].conferenceName
+          )
+          formikRef.current.setFieldValue(
+            'presentationDetails',
+            props.relatedmedia[i].conferenceDateDetails
+              .presentationDetails
+          )
+          formikRef.current.setFieldValue(
+            'startTime',
+            props.relatedmedia[i].conferenceDateDetails.startTime
+          )
+          formikRef.current.setFieldValue(
+            'endTime',
+            props.relatedmedia[i].conferenceDateDetails.endTime
+          )
+          formikRef.current.setFieldValue(
+            'conferenceId',
+            props.relatedmedia[i].id
+          )
         }
       }
-      setRmedia(tempRmedia)
+      formikRef.current.setFieldValue('relatedmedia', tempRmedia)
     }
     if (updatedContribution && updatedContribution.data) {
-      setData(updatedContribution.data)
+      setIds({
+        id: updatedContribution && updatedContribution.data.id,
+        mainParentId:
+          updatedContribution &&
+          updatedContribution.data.mainParentId,
+        parentId:
+          updatedContribution &&
+          updatedContribution.data.parentId
+      })
       setLastSave(
         updatedContribution.data.updatedAt ||
           updatedContribution.data.createdAt
       )
-      setRmedia(updatedContribution.relatedmedia)
-      setConference(updatedContribution.conference)
+      if (updatedContribution.relatedmedia.length > 0) {
+        formikRef.current.setFieldValue(
+          'relatedmedia',
+          updatedContribution.relatedmedia
+        )
+      }
+      formikRef.current.setFieldValue(
+        'conferenceName',
+        updatedContribution.conference.conferenceName
+      )
+      formikRef.current.setFieldValue(
+        'presentationDetails',
+        updatedContribution.conference.presentationDetails
+      )
+      formikRef.current.setFieldValue(
+        'startTime',
+        updatedContribution.conference.startTime
+      )
+      formikRef.current.setFieldValue(
+        'endTime',
+        updatedContribution.conference.endTime
+      )
+      formikRef.current.setFieldValue(
+        'conferenceId',
+        updatedContribution.conference.id
+      )
     } else if (
       addedContribution &&
       addedContribution.data &&
       !(updatedContribution && updatedContribution.data)
     ) {
-      setData(addedContribution.data)
+      setIds({
+        id: addedContribution && addedContribution.data.id,
+        mainParentId:
+          addedContribution &&
+          addedContribution.data.mainParentId,
+        parentId:
+          addedContribution && addedContribution.data.parentId
+      })
       setLastSave(
         addedContribution.data.updatedAt ||
           addedContribution.data.createdAt
       )
       setConference(addedContribution.conference)
-      setRmedia(addedContribution.relatedmedia)
-    }
-    if (
-      addedContribution &&
-      addedContribution.relatedmedia.length <= 0 &&
-      updatedContribution &&
-      updatedContribution.relatedmedia.length <= 0
-    ) {
-      setRmedia([{ title: '', link: '' }])
-    }
-
-    if (!addedContribution && !updatedContribution && !props) {
-      setRmedia([{ title: '', link: '' }])
+      if (addedContribution.conference) {
+        formikRef.current.setFieldValue(
+          'conferenceName',
+          addedContribution.conference.conferenceName
+        )
+        formikRef.current.setFieldValue(
+          'presentationDetails',
+          addedContribution.conference.presentationDetails
+        )
+        formikRef.current.setFieldValue(
+          'startTime',
+          addedContribution.conference.startTime
+        )
+        formikRef.current.setFieldValue(
+          'endTime',
+          addedContribution.conference.endTime
+        )
+        formikRef.current.setFieldValue(
+          'conferenceId',
+          addedContribution.conference.id
+        )
+      }
+      if (addedContribution.relatedmedia.length > 0) {
+        formikRef.current.setFieldValue(
+          'relatedmedia',
+          addedContribution.relatedmedia
+        )
+      }
     }
   }, [addedContribution, updatedContribution])
 
@@ -433,11 +495,17 @@ function ContributionForm({
       <Formik
         initialValues={{
           category: type,
-          subject: (data && data.subject) || '',
-          details: (data && data.details) || '',
+          subject:
+            (method === 'update' && props && props.subject) ||
+            '',
+          details:
+            (method === 'update' && props && props.details) ||
+            '',
           tags:
-            (data && data.tags) || (props && props.tags) || [],
-          author: (data && data.author) || [
+            (method === 'update' && props && props.tags) || [],
+          author: (method === 'update' &&
+            props &&
+            props.author) || [
             {
               id: profile && profile.id,
               name: `${profile && profile.firstName} ${
@@ -446,14 +514,18 @@ function ContributionForm({
               userColor: profile && profile.userColor
             }
           ],
-          userId:
-            (data && data.userId) || (profile && profile.id),
-          status: (data && data.status) || 'draft',
+          userId: profile && profile.id,
+          status:
+            (method === 'update' && props && props.status) ||
+            'draft',
           conferenceId: (conference && conference.id) || null,
           version: '1.0.0',
           relatedmedia: rMedia,
           hypothesisStatus:
-            (data && data.hypothesisStatus) || '',
+            (method === 'update' &&
+              props &&
+              props.hypothesisStatus) ||
+            '',
           conferenceName:
             (conference && conference.conferenceName) || '',
           presentationDetails:
@@ -461,7 +533,7 @@ function ContributionForm({
           startTime: (conference && conference.startTime) || '',
           endTime: (conference && conference.endTime) || ''
         }}
-        enableReinitialize
+        innerRef={formikRef}
         validationSchema={schema}
         defaultValue={{
           author: [
@@ -714,6 +786,13 @@ function ContributionForm({
                       name="relatedmedia"
                       render={arrayHelpers => (
                         <div>
+                          {rMedia.length > 0 &&
+                            rMedia[0].title &&
+                            values.relatedmedia.length === 0 &&
+                            setFieldValue(
+                              'relatedmedia',
+                              rMedia
+                            )}
                           {values.relatedmedia.length > 0 &&
                             values.relatedmedia.map(
                               (value, index) => (
