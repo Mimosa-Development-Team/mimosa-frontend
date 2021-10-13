@@ -10,7 +10,7 @@
   }
 
   ul.heirarchyList {
-    margin-left: -20px;
+    margin-left: -30px;
     list-style: none;
     text-align: center;
     
@@ -55,7 +55,7 @@
   $bg-hover: #eee;
   $text: #888;
   $text-hover: #000;
-  $ident: 40px;
+  $ident: 20px;
   $left: -($ident);
   
   .wtree {
@@ -71,7 +71,7 @@
         border-left: 1px solid $border;
         border-bottom:1px solid $border;
         width:$ident;
-        height:40px;
+        height:20px;
       }
       &:after {
         position:absolute;
