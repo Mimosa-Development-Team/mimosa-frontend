@@ -14,17 +14,18 @@ const PageContentWrapper = ({ children, backNav }) => {
   return (
     <div className={`${styles.contentWrapper}`}>
       {backNav && (
-        <div
-          onClick={() => {
-            if (url === 'profile') {
-              history.push('/my-contributions')
-            } else {
-              history.push('/')
-            }
-          }}
-          className={`${styles.backNav}`}
-        >
-          <Typography className={`${styles.back}`} variant="h4">
+        <div className={`${styles.backNav}`}>
+          <Typography
+            className={`${styles.back}`}
+            variant="h4"
+            onClick={() => {
+              if (url === 'profile') {
+                history.push('/my-contributions')
+              } else {
+                history.push('/')
+              }
+            }}
+          >
             <span className={`${styles.icon}`}>
               <img src={BackIcon} alt="back" />
             </span>

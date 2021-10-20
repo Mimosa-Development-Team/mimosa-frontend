@@ -20,7 +20,8 @@ const Header = ({
   deprecated,
   data,
   click,
-  heirarchyList
+  heirarchyList,
+  showDraft
 }) => {
   return (
     <div onClick={() => !heirarchyList && click()}>
@@ -30,7 +31,8 @@ const Header = ({
         analysisTag={analysisTag}
         deprecated={deprecated}
       />
-      {data.status === `draft` || data.draft ? ( //data.status === 'draft' || data.draft
+      {(showDraft && data.status === `draft`) ||
+      (showDraft && data.draft) ? ( //data.status === 'draft' || data.draft
         <div style={{ paddingBottom: '5px' }}>
           <span>
             <i className={`${styles.draft}`}>Draft </i>{' '}

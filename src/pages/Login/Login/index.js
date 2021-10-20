@@ -1,7 +1,9 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 import React, { useEffect, useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 import {
   Backdrop,
   Button,
@@ -34,10 +36,16 @@ import 'slick-carousel/slick/slick-theme.css'
 
 const Login = () => {
   const history = useHistory()
-  const { addToDo, isLoading } = useUser()
+  const [data, setData] = useState(null)
+  const {
+    addToDo,
+    isLoading,
+    refetchOrcidData,
+    orcidData
+  } = useUser(data)
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState(null)
-  const [data, setData] = useState(null)
+  const [profile, setProfile] = useState(null)
 
   const settings = {
     dots: true,
@@ -47,7 +55,7 @@ const Login = () => {
     slidesToScroll: 1
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     if (window.location.hash) {
       const params = window.location.hash.substr(1).split('&')
       for (let i = 0; i < params.length; i++) {
@@ -57,6 +65,17 @@ const Login = () => {
           const token = a[1]
           setToken(token)
           setData(jwtDecode(token))
+          await axios
+            .get(
+              `${
+                process.env.REACT_APP_BACKEND_URL
+              }/api/v1/users/orcid/${jwtDecode(token).sub}`
+            )
+            .then(res => {
+              if (res.data) {
+                setProfile(res.data)
+              }
+            })
         }
       }
     }
@@ -201,7 +220,11 @@ const Login = () => {
                     >
                       <Grid item sm={12} className="text2">
                         <Controls.Input
-                          type="text"
+                          type={
+                            profile && profile.email
+                              ? 'hidden'
+                              : 'text'
+                          }
                           placeholder="Email Address"
                           name="email"
                           onChange={handleChange}

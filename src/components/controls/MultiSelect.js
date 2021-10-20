@@ -10,7 +10,9 @@ export default function ControlledAutocomplete({
   defaultValue,
   asterisk,
   name,
+  error,
   onChange,
+  helperText,
   ...propsList
 }) {
   return (
@@ -40,6 +42,15 @@ export default function ControlledAutocomplete({
           />
         )}
       />
+      <span
+        style={{
+          color: '#f44336',
+          fontSize: '.75rem',
+          marginLeft: '14px'
+        }}
+      >
+        {helperText}
+      </span>
     </div>
   )
 }

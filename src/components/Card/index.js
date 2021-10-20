@@ -21,7 +21,9 @@ const Card = ({
   hideEdit,
   getContribution,
   heirarchyList,
-  click
+  click,
+  detailsClickable,
+  onCardClick
 }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -43,7 +45,11 @@ const Card = ({
     <>
       {data ? (
         <ClickAwayListener onClickAway={handleClickAway}>
-          <Paper elevation={0} className={`${styles.paper}`}>
+          <Paper
+            elevation={0}
+            className={`${styles.paper}`}
+            onClick={() => onCardClick && onCardClick(data)}
+          >
             <div className={`${styles.contentWrapper}`}>
               {!treeView &&
                 data.category !== 'question' &&
@@ -88,6 +94,7 @@ const Card = ({
               />
               {data.details && (
                 <Content
+                  detailsClickable={detailsClickable}
                   content={
                     showDraft && data.draft
                       ? data.draft.details

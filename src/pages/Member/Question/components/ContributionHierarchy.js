@@ -38,11 +38,9 @@ const ContributionHierarchy = ({
             : ''
         }`}
         style={{ listStyle: 'none' }}
-        onClick={() => {
-          onCardClick(item)
-        }}
       >
         <Card
+          onCardClick={onCardClick}
           heirarchyList
           hasSession={hasSession}
           user={user}

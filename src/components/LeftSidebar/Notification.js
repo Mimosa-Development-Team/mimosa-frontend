@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 import AddMailModal from 'components/Dialog/addmail'
 import capitalizeText from 'utils/parsing/capitalize'
+
 import TimeAgo from 'react-timeago'
 import enString from 'react-timeago/lib/language-strings/en'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'

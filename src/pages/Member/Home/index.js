@@ -182,7 +182,6 @@ const MemberDashboard = ({ user, hasSession }) => {
                               >
                                 <Card
                                   click={() => {
-                                    data.showDraft = true
                                     history.push(
                                       `/contribution/${
                                         data.category ===
@@ -202,7 +201,11 @@ const MemberDashboard = ({ user, hasSession }) => {
                                   form={false}
                                   linesToShow={5}
                                   hideEdit
-                                  showDraft
+                                  showDraft={
+                                    user &&
+                                    user.user &&
+                                    user.user.id === data.userId
+                                  }
                                   user={user}
                                   hasSession={hasSession}
                                 />
@@ -226,6 +229,12 @@ const MemberDashboard = ({ user, hasSession }) => {
                                     }
                                   )
                                 }}
+                                showDraft={
+                                  user &&
+                                  user.user &&
+                                  user.user.id === data.userId
+                                }
+                                detailsClickable={false}
                                 data={data}
                                 form={false}
                                 linesToShow={5}
