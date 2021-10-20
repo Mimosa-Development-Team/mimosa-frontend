@@ -1,12 +1,24 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { useHistory } from 'react-router-dom'
 import { queryClient, useGlobalState } from 'store/state'
 
-import { postUserAPI, putEmail } from './api'
-import { USER_LOGIN_KEY, PUT_EMAIL } from './constants'
+import { postUserAPI, putEmail, getOrcidId } from './api'
+import {
+  USER_LOGIN_KEY,
+  PUT_EMAIL,
+  GET_ORCID
+} from './constants'
 
-export const useUser = () => {
+export const useUser = id => {
   const history = useHistory()
+
+  const {
+    data: orcidData,
+    refetch: refetchOrcidData
+  } = useQuery(GET_ORCID, () => getOrcidId(id), {
+    enabled: false
+  })
+
   const {
     data: addedData,
     isLoading: addTodoLoading,
@@ -55,6 +67,9 @@ export const useUser = () => {
     updateErrorEmail,
     updateMutate,
     updateIsSuccessEmail,
-    resetEmailUpdate
+    resetEmailUpdate,
+
+    orcidData,
+    refetchOrcidData
   }
 }

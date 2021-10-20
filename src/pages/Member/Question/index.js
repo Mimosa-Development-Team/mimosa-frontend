@@ -17,12 +17,13 @@ import styles from './styles.module.scss'
 const Question = ({ user, hasSession }) => {
   const queryParams = useQueryParams()
   const id = parseInt(queryParams.get('list'))
+  const active = parseInt(queryParams.get('active'))
   const {
     contribution,
     isLoading,
     remove,
     getContribution
-  } = useContribution(id)
+  } = useContribution(id, active)
   const [activeContribution, setActiveContribution] = useState(
     contribution
   )
@@ -37,7 +38,7 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    window.history.pushState(null, null, ``)
+    window.history.pushState(null, null, 5)
   }
 
   const location = useLocation()
@@ -75,6 +76,13 @@ const Question = ({ user, hasSession }) => {
               Question
             </Typography>
             <ContributionHierarchy
+              showDraft={
+                user &&
+                user.user &&
+                user.user.id === contribution &&
+                contribution.userId
+              }
+              detailsClickable
               getContribution={getContribution}
               contribution={contribution}
               activeContribution={activeContribution}

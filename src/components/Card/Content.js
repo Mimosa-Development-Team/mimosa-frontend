@@ -4,7 +4,12 @@ import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
 import parse from 'html-react-parser'
 import styles from './styles.module.scss'
 
-const Content = ({ content, isExpanded, linesToShow = 2 }) => {
+const Content = ({
+  content,
+  isExpanded,
+  linesToShow = 2,
+  detailsClickable
+}) => {
   const [expanded, setExpanded] = useState(isExpanded)
   return (
     <div className={`${styles.bodyWrapper}`}>
@@ -13,7 +18,7 @@ const Content = ({ content, isExpanded, linesToShow = 2 }) => {
       ) : (
         <div
           className="cardBody preview"
-          onClick={() => setExpanded(true)}
+          onClick={() => detailsClickable && setExpanded(true)}
         >
           <HTMLEllipsis
             unsafeHTML={content}

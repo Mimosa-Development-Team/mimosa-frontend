@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
@@ -23,7 +22,6 @@ import DeleteIcon from 'assets/images/icons/delete.svg'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
 import moment from 'moment'
-import { draft } from 'utils/parsing/message'
 import { useQuestionForm } from '../hooks'
 import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
@@ -174,24 +172,12 @@ function ContributionForm({
   const [modal, setModal] = useState(false)
   const [confirmation, setConfirmation] = useState(false)
   const [navigation, setNavigation] = useState(false)
-  const [rMedia, setRmedia] = useState([])
   const [lastSave, setLastSave] = useState(null)
-  const [data, setData] = useState(null)
+  const [data] = useState(null)
   const [draftData, setdraftData] = useState(null)
   const [back, setBack] = useState(false)
-  const [ids, setIds] = useState({
-    id: '',
-    mainParentId: '',
-    parentId: ''
-  })
   const [redirectUrl, setRedirectUrl] = useState(null)
-  const [conference, setConference] = useState({
-    conferenceName: '',
-    presentationDetails: '',
-    startTime: '',
-    endTime: '',
-    id: null
-  })
+  const [conferenceId, setConferenceId] = useState(null)
   const {
     addContribution,
     addedContribution,
@@ -226,15 +212,6 @@ function ContributionForm({
         values.status = 'publish'
       }
     }
-    // if (
-    // (method !== 'update' && !ids.id) ||
-    // (values.status === 'publish' &&
-    //   method === 'new' &&
-    //   !modal) ||
-    // (values.status === 'draft' &&
-    //   redirectUrl === 'new-contribution' &&
-    //   method !== 'update')
-    // )
 
     if (
       method === 'new' &&
@@ -242,7 +219,7 @@ function ContributionForm({
     ) {
       if (props) {
         values.mainParentId =
-          props.mainParentId || props.parentId
+          props.mainParentId || props.parentId || props.id
         values.parentId = (props && props.id) || null
       }
       addContribution(values)
@@ -274,9 +251,6 @@ function ContributionForm({
           updatedContribution.data.parentId) ||
         (props && props.parentId) ||
         null
-      if (values.conferenceName && conference.id) {
-        values.conferenceId = conference.id
-      }
       updateContribution(values)
     }
   }
@@ -324,45 +298,19 @@ function ContributionForm({
       formikRef.current.setFieldValue('relatedmedia', tempRmedia)
     }
     if (updatedContribution && updatedContribution.data) {
-      setdraftData(updatedContribution.data)
-      setIds({
-        id: updatedContribution && updatedContribution.data.id,
-        mainParentId:
-          updatedContribution &&
-          updatedContribution.data.mainParentId,
-        parentId:
-          updatedContribution &&
-          updatedContribution.data.parentId
-      })
-      setLastSave(
-        updatedContribution.data.updatedAt ||
-          updatedContribution.data.createdAt
-      )
+      if (updatedContribution.conference) {
+        setConferenceId(updatedContribution.conference.id)
+      }
       if (updatedContribution.relatedmedia.length > 0) {
         formikRef.current.setFieldValue(
           'relatedmedia',
           updatedContribution.relatedmedia
         )
       }
-      formikRef.current.setFieldValue(
-        'conferenceName',
-        updatedContribution.conference.conferenceName
-      )
-      formikRef.current.setFieldValue(
-        'presentationDetails',
-        updatedContribution.conference.presentationDetails
-      )
-      formikRef.current.setFieldValue(
-        'startTime',
-        updatedContribution.conference.startTime
-      )
-      formikRef.current.setFieldValue(
-        'endTime',
-        updatedContribution.conference.endTime
-      )
-      formikRef.current.setFieldValue(
-        'conferenceId',
-        updatedContribution.conference.id
+      setdraftData(updatedContribution.data)
+      setLastSave(
+        updatedContribution.data.updatedAt ||
+          updatedContribution.data.createdAt
       )
     } else if (
       addedContribution &&
@@ -370,40 +318,12 @@ function ContributionForm({
       !(updatedContribution && updatedContribution.data)
     ) {
       setdraftData(addedContribution.data)
-      setIds({
-        id: addedContribution && addedContribution.data.id,
-        mainParentId:
-          addedContribution &&
-          addedContribution.data.mainParentId,
-        parentId:
-          addedContribution && addedContribution.data.parentId
-      })
       setLastSave(
         addedContribution.data.updatedAt ||
           addedContribution.data.createdAt
       )
-      setConference(addedContribution.conference)
       if (addedContribution.conference) {
-        formikRef.current.setFieldValue(
-          'conferenceName',
-          addedContribution.conference.conferenceName
-        )
-        formikRef.current.setFieldValue(
-          'presentationDetails',
-          addedContribution.conference.presentationDetails
-        )
-        formikRef.current.setFieldValue(
-          'startTime',
-          addedContribution.conference.startTime
-        )
-        formikRef.current.setFieldValue(
-          'endTime',
-          addedContribution.conference.endTime
-        )
-        formikRef.current.setFieldValue(
-          'conferenceId',
-          addedContribution.conference.id
-        )
+        setConferenceId(addedContribution.conference.id)
       }
       if (addedContribution.relatedmedia.length > 0) {
         formikRef.current.setFieldValue(
@@ -554,20 +474,18 @@ function ContributionForm({
           status:
             (method === 'update' && props && props.status) ||
             'draft',
-          conferenceId: (conference && conference.id) || null,
           version: '1.0.0',
-          relatedmedia: rMedia,
+          relatedmedia: [{ title: '', description: '' }],
           hypothesisStatus:
             (method === 'update' &&
               props &&
               props.hypothesisStatus) ||
-            '',
-          conferenceName:
-            (conference && conference.conferenceName) || '',
-          presentationDetails:
-            (conference && conference.presentationDetails) || '',
-          startTime: (conference && conference.startTime) || '',
-          endTime: (conference && conference.endTime) || ''
+            'supports',
+          conferenceId,
+          conferenceName: '',
+          presentationDetails: '',
+          startTime: '',
+          endTime: ''
         }}
         innerRef={formikRef}
         validationSchema={schema}
@@ -600,66 +518,66 @@ function ContributionForm({
               alignItems="flex-start"
               spacing={2}
             >
-              <Grid item xs={12} sm={2}>
-                <div
-                  className={`${styles.btnBack}`}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <div className={`${styles.backNav}`}>
-                    <Typography
-                      className={`${styles.back}`}
-                      variant="h4"
-                      onClick={() => {
-                        if (!data) {
-                          if (
-                            method === 'new' &&
-                            type === 'question'
-                          ) {
-                            history.push('/')
-                          }
-                          if (
-                            method === 'new' &&
-                            type !== 'question' &&
-                            props
-                          ) {
-                            history.push(
-                              `/contribution/${
-                                props.uuid
-                              }?list=${
-                                props.mainParentId || props.id
-                              }&from=home`
-                            )
-                          }
-                          if (
-                            method === 'update' &&
-                            type === 'question'
-                          ) {
-                            history.push(
-                              `/contribution/${props.uuid}?list=${props.id}&from=home`
-                            )
-                          }
-                          if (
-                            method === 'update' &&
-                            type !== 'question'
-                          ) {
-                            history.push(
-                              `/contribution/${props.uuid}?list=${props.mainParentId}&from=home`
-                            )
-                          }
-                        } else {
-                          setNavigation(!navigation)
+              <div
+                className={`${styles.btnBack}`}
+                style={{
+                  cursor: 'pointer',
+                  marginTop: '20px',
+                  marginLeft: '10px'
+                }}
+              >
+                <div className={`${styles.backNav}`}>
+                  <Typography
+                    className={`${styles.back}`}
+                    variant="h4"
+                    onClick={() => {
+                      if (!data) {
+                        if (
+                          method === 'new' &&
+                          type === 'question'
+                        ) {
+                          history.push('/')
                         }
-                        setBack(true)
-                      }}
-                    >
-                      <span className={`${styles.icon}`}>
-                        <img src={BackIcon} alt="back" />
-                      </span>{' '}
-                      Back
-                    </Typography>
-                  </div>
+                        if (
+                          method === 'new' &&
+                          type !== 'question' &&
+                          props
+                        ) {
+                          history.push(
+                            `/contribution/${props.uuid}?list=${
+                              props.mainParentId || props.id
+                            }&from=home`
+                          )
+                        }
+                        if (
+                          method === 'update' &&
+                          type === 'question'
+                        ) {
+                          history.push(
+                            `/contribution/${props.uuid}?list=${props.id}&from=home`
+                          )
+                        }
+                        if (
+                          method === 'update' &&
+                          type !== 'question'
+                        ) {
+                          history.push(
+                            `/contribution/${props.uuid}?list=${props.mainParentId}&from=home`
+                          )
+                        }
+                      } else {
+                        setNavigation(!navigation)
+                      }
+                      setBack(true)
+                    }}
+                  >
+                    <span className={`${styles.icon}`}>
+                      <img src={BackIcon} alt="back" />
+                    </span>{' '}
+                    Back
+                  </Typography>
                 </div>
-              </Grid>
+              </div>
               <Grid item xs={12} sm={10}>
                 <div
                   style={{
@@ -822,13 +740,6 @@ function ContributionForm({
                       name="relatedmedia"
                       render={arrayHelpers => (
                         <div>
-                          {rMedia.length > 0 &&
-                            rMedia[0].title &&
-                            values.relatedmedia.length === 0 &&
-                            setFieldValue(
-                              'relatedmedia',
-                              rMedia
-                            )}
                           {values.relatedmedia.length > 0 &&
                             values.relatedmedia.map(
                               (value, index) => (
@@ -1031,7 +942,7 @@ function ContributionForm({
                       options={userData || []}
                       {...(errors.author && {
                         error: true,
-                        helperText: errors.author.message
+                        helperText: errors.author
                       })}
                       defaultValue={values.author}
                       value={values.author}

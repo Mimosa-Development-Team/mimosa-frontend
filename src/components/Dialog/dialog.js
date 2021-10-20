@@ -69,6 +69,7 @@ export default function ModalDialog({
   const submitForm = async () => {
     await submit()
     setModal(false)
+    setButtonDisabled(false)
   }
   const [buttonDisabled, setButtonDisabled] = useState(false)
 

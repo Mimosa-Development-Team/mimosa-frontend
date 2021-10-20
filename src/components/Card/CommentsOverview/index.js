@@ -121,16 +121,24 @@ const CommentsOverview = ({
             className={`${styles.form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Controls.Textarea
-              className={`${styles.input}`}
-              name="comment"
-              control={control}
-              disabled={!hasSession}
-              placeholder="Write a comment..."
-              addedComment={addedComment}
-              addLoadingComment={addLoadingComment}
-              addErrorComment={addErrorComment}
-            />
+            <div
+              onClick={() => {
+                if (!hasSession) {
+                  setModal(true)
+                }
+              }}
+            >
+              <Controls.Textarea
+                className={`${styles.input}`}
+                name="comment"
+                control={control}
+                disabled={!hasSession}
+                placeholder="Write a comment..."
+                addedComment={addedComment}
+                addLoadingComment={addLoadingComment}
+                addErrorComment={addErrorComment}
+              />
+            </div>
             <Button
               type="submit"
               className={`${styles.submitBtn} btn primary`}

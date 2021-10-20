@@ -5,8 +5,10 @@ import Logo from 'assets/images/logo-main.svg'
 import { useHistory, useLocation } from 'react-router-dom'
 import ContributionTree from 'components/ContributionTree'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
+import NotificationIconActive from 'assets/images/icons/notification-icon-active.svg'
 import Notification from './Notification'
 import NavLink from './NavLink'
+import { useNotification } from './hooks'
 import AccountDropdown from './AccountDropdown'
 import styles from './styles.module.scss'
 
@@ -20,12 +22,21 @@ const MainNav = ({
 }) => {
   const location = useLocation()
   const history = useHistory()
+  const { notification } = useNotification()
 
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
+    setStatus(false)
   }
+  const [status, setStatus] = useState(false)
+
+  useState(() => {
+    if (notification) {
+      setStatus(!status)
+    }
+  }, [notification])
 
   return (
     <div className={`${styles.mainNav}`}>
@@ -75,11 +86,22 @@ const MainNav = ({
         {!isEmpty(user) && (
           <>
             <h1
-              style={{ fontWeight: 'normal', cursor: 'pointer' }}
+              style={{
+                fontWeight: 'normal',
+                cursor: 'pointer'
+              }}
               className={`${styles.navLink}`}
               onClick={handleClick}
             >
-              <img src={NotificationIcon} alt="" />
+              {status ? (
+                <img
+                  src={NotificationIconActive}
+                  alt=""
+                  style={{ width: '17px' }}
+                />
+              ) : (
+                <img src={NotificationIcon} alt="" />
+              )}
               Notifications
             </h1>
             <Notification

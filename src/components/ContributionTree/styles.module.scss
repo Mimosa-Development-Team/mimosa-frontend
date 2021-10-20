@@ -2,90 +2,98 @@
 
 
 .heirarchyWrapper {
-  margin-top: 50px;
+  margin-top: 13px;
   color: white;
+  height: 100%;
+  // margin-left: 20px;
 
   .title {
     color: white
   }
+  .mainul {
+    margin-left: -40px;
+    margin-top: 10px;
+    overflow: auto;
+    height: 100%;
 
-  ul.heirarchyList {
-    margin-left: -30px;
-    list-style: none;
-    text-align: center;
-    
-    li.contribution {
-      list-style: none;
-      // activeColor
+    .childul {
+      margin-top: 5px;
+      margin-left: -8px;
+    }
+  }
+  ul {
+    list-style-type: none;
+    li {
+      margin-top: 10px;
+      opacity: 0.7;
+      color: white;
+      &.active {
+        opacity: 1;
+      }
       &.question {
-        background: $yellow;
+        background-color: $yellow;
+        text-align: center;
         width: 20px;
-        border-radius: 2px;
         height: 20px;
+        border-radius: 5px;
       }
       &.hypothesis {
-        background: $orange;
+        background-color: $orange;
+        text-align: center;
         width: 20px;
-        border-radius: 2px;
         height: 20px;
+        border-radius: 5px;
       }
       &.experiment {
-        background: $green;
+        background-color: $green;
+        text-align: center;
         width: 20px;
-        border-radius: 2px;
         height: 20px;
+        border-radius: 5px;
       }
       &.data {
-        background: $indigo;
+        background-color: $indigo;
+        text-align: center;
         width: 20px;
-        border-radius: 2px;
         height: 20px;
+        border-radius: 5px;
       }
       &.analysis {
-        background: $purple;
+        background-color: $purple;
+        text-align: center;
         width: 20px;
-        border-radius: 2px;
         height: 20px;
+        border-radius: 5px;
       }
     }
   }
-  
-  $border: #ddd;
-  $border-hover: #aaa;
-  $bg-hover: #eee;
-  $text: #888;
-  $text-hover: #000;
-  $ident: 20px;
-  $left: -($ident);
-  
-  .wtree {
-    li {
-      list-style-type: none;
-      margin: 10px 0 15px 10px;
-      position: relative;
-      &:before {
-        content: "";
-        position: absolute;
-        top:-10px;
-        left:$left;
-        border-left: 1px solid $border;
-        border-bottom:1px solid $border;
-        width:$ident;
-        height:20px;
-      }
-      &:after {
-        position:absolute;
-        content:"";
-        top:41px;
-        left:$left;
-        border-left: 1px solid $border;
-        border-top:1px solid $border;
-        width:$ident;
-        height:100%;
-      }
-      &:last-child:after {
-        display:none;
-      }
-    }
-  }
+
+  //   ul.tree ul {
+  //     margin-left: 18px;
+  //   }
+  //   ul.tree li {
+  //     margin: 0;
+  //     padding: 0 7px;
+  //     line-height: 18px;
+  //     color: #369;
+  //     font-weight: bold;
+  //     border-left:1px solid grey;
+  //   }
+  //   ul.tree li:last-child {
+  //       border-left:none;
+  //   }
+  //   ul.tree li:before {
+  //     position:relative;
+  //     top:-0.3em;
+  //     height:1em;
+  //     width:12px;
+  //     color:white;
+  //     border-bottom:1px solid rgb(100,100,100);
+  //     content:"";
+  //     display:inline-block;
+  //     left:-7px;
+  //   }
+  //   ul.tree li:last-child:before {
+  //     border-left:1px solid rgb(100,100,100);   
+  //   }
 }

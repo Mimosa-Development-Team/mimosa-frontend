@@ -93,20 +93,22 @@ const VerticalTab = ({ data }) => {
               />
             ))}
           </Tabs>
-          <Button
-            style={{ marginTop: '25px', width: '65%' }}
-            className="btn primary"
-            size="large"
-            variant="contained"
-            onClick={async () => {
-              const tempData = user
-              tempData.notification = true
-              await proxyUser.user.set(tempData)
-              history.push('/')
-            }}
-          >
-            HOW TO
-          </Button>
+          {user && (
+            <Button
+              style={{ marginTop: '25px', width: '65%' }}
+              className="btn primary"
+              size="large"
+              variant="contained"
+              onClick={async () => {
+                const tempData = user
+                tempData.notification = true
+                await proxyUser.user.set(tempData)
+                history.push('/')
+              }}
+            >
+              HOW TO
+            </Button>
+          )}
         </Grid>
         <Grid item xs={12} sm={9}>
           {(data || []).map((data, key1) => {
