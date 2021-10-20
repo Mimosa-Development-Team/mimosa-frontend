@@ -38,7 +38,7 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    window.history.pushState(null, null, 5)
+    window.history.pushState(null, null, ``)
   }
 
   const location = useLocation()
