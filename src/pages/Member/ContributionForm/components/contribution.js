@@ -1007,7 +1007,7 @@ function ContributionForm({
                   className="btn primary submitBtn publish"
                   variant="contained"
                   style={{ position: 'absolute', right: 22 }}
-                  disabled={!isValid}
+                  disabled={!(isValid && dirty)}
                   onClick={async () => {
                     scrollToErrors(errors)
                     await setRedirectUrl('hierarchy')
