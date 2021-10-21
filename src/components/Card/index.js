@@ -62,6 +62,7 @@ const Card = ({
               <Header
                 heirarchyList={heirarchyList}
                 click={click}
+                user={user}
                 data={data}
                 showDraft={showDraft}
                 treeView={treeView}

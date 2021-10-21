@@ -49,7 +49,19 @@ const schema = yup.object().shape({
     )
   ), // these constraints are shown if and only if inner constraints are satisfied
   subject: yup.string().required('* Mandatory Field'),
-  details: yup.string().required('* Mandatory Field'),
+  details: yup
+    .string()
+    .test('details', '** Mandatory Field', function (value) {
+      if (
+        (value &&
+          value.replace(/<(.|\n)*?>/g, '').trim().length ===
+            0) ||
+        !value
+      ) {
+        return false
+      }
+      return true
+    }),
   author: yup
     .array()
     .min(1, '* Mandatory Field')
@@ -173,7 +185,6 @@ function ContributionForm({
   const [confirmation, setConfirmation] = useState(false)
   const [navigation, setNavigation] = useState(false)
   const [lastSave, setLastSave] = useState(null)
-  const [data] = useState(null)
   const [draftData, setdraftData] = useState(null)
   const [back, setBack] = useState(false)
   const [redirectUrl, setRedirectUrl] = useState(null)
@@ -183,9 +194,10 @@ function ContributionForm({
     addedContribution,
     updateContribution,
     updatedContribution,
-    deleteRelatedMediaMutate
+    deleteRelatedMediaMutate,
+    isLoading
   } = useQuestionForm(
-    method === 'update' ? props.id : data && data.id,
+    method === 'update' ? props.id : draftData && draftData.id,
     redirectUrl
   )
 
@@ -204,13 +216,9 @@ function ContributionForm({
     }
   }
 
-  const submitForm = values => {
-    if (method === 'update') {
-      if (!modal) {
-        values.status = 'draft'
-      } else {
-        values.status = 'publish'
-      }
+  const submitForm = (values, status) => {
+    if (status) {
+      values.status = status
     }
 
     if (
@@ -221,6 +229,9 @@ function ContributionForm({
         values.mainParentId =
           props.mainParentId || props.parentId || props.id
         values.parentId = (props && props.id) || null
+      }
+      if (addedContribution || updatedContribution) {
+        values.conferenceId = conferenceId
       }
       addContribution(values)
     } else {
@@ -251,6 +262,9 @@ function ContributionForm({
           updatedContribution.data.parentId) ||
         (props && props.parentId) ||
         null
+      if (values.conferenceName && !values.conferenceId) {
+        values.conferenceId = conferenceId
+      }
       updateContribution(values)
     }
   }
@@ -295,7 +309,12 @@ function ContributionForm({
           )
         }
       }
-      formikRef.current.setFieldValue('relatedmedia', tempRmedia)
+      if (tempRmedia.length > 0) {
+        formikRef.current.setFieldValue(
+          'relatedmedia',
+          tempRmedia
+        )
+      }
     }
     if (updatedContribution && updatedContribution.data) {
       if (updatedContribution.conference) {
@@ -339,17 +358,34 @@ function ContributionForm({
       <ModalDialog
         modal={modal}
         setModal={setModal}
-        submit={() => submitForm(draftData)}
+        submit={() => submitForm(draftData, 'publish')}
         message={`Are you sure you want to publish this ${capitalizeText(
           (draftData && draftData.category) || ''
         )}?`}
         subcontent=""
-        cancel={() => setdraftData(null)}
+        cancel={() => {
+          setRedirectUrl(null)
+          setdraftData(null)
+          formikRef.current.setFieldValue('status', 'draft')
+        }}
+        isLoading={isLoading}
       />
       <ModalDialog
         modal={confirmation}
         setModal={setConfirmation}
-        submit={() => submitForm(draftData)}
+        submit={async () => {
+          await submitForm(draftData)
+
+          if (back) {
+            history.push(
+              `/contribution?list=${
+                draftData.category === 'question'
+                  ? draftData.id
+                  : draftData.mainParentId
+              }&active=${draftData.id}&from=home`
+            )
+          }
+        }}
         message={`${
           back
             ? `Are you sure you want to exit ${
@@ -376,6 +412,11 @@ function ContributionForm({
         }`}
         subcontent=""
         proceed
+        cancel={() => {
+          setRedirectUrl(null)
+          setdraftData(null)
+          formikRef.current.setFieldValue('status', 'draft')
+        }}
       />
       <ModalDialog
         modal={navigation}
@@ -406,10 +447,10 @@ function ContributionForm({
                 data: draftData
               })
             }
-          } else if (data) {
+          } else if (draftData) {
             if (draftData.category === 'question') {
               history.push(
-                `/contribution?list=${draftData.id}&from=home`
+                `/contribution?list=${draftData.id}&active=${draftData.id}&from=home`
               )
             } else {
               history.push(
@@ -417,7 +458,7 @@ function ContributionForm({
                   draftData.mainParentId ||
                   draftData.parentId ||
                   draftData.id
-                }&from=home`
+                }&active=${draftData.id}&from=home`
               )
             }
           }
@@ -448,6 +489,11 @@ function ContributionForm({
         }`}
         subcontent=""
         proceed
+        cancel={() => {
+          setRedirectUrl(null)
+          setdraftData(null)
+          formikRef.current.setFieldValue('status', 'draft')
+        }}
       />
       <Formik
         initialValues={{
@@ -532,44 +578,12 @@ function ContributionForm({
                     className={`${styles.back}`}
                     variant="h4"
                     onClick={() => {
-                      if (!data) {
-                        if (
-                          method === 'new' &&
-                          type === 'question'
-                        ) {
-                          history.push('/')
-                        }
-                        if (
-                          method === 'new' &&
-                          type !== 'question' &&
-                          props
-                        ) {
-                          history.push(
-                            `/contribution?list=${
-                              props.mainParentId || props.id
-                            }&from=home`
-                          )
-                        }
-                        if (
-                          method === 'update' &&
-                          type === 'question'
-                        ) {
-                          history.push(
-                            `/contribution?list=${props.id}&from=home`
-                          )
-                        }
-                        if (
-                          method === 'update' &&
-                          type !== 'question'
-                        ) {
-                          history.push(
-                            `/contribution?list=${props.mainParentId}&from=home`
-                          )
-                        }
-                      } else {
-                        setNavigation(!navigation)
-                      }
                       setBack(true)
+                      if (draftData || (isValid && dirty)) {
+                        setConfirmation(!confirmation)
+                      } else {
+                        history.push('/')
+                      }
                     }}
                   >
                     <span className={`${styles.icon}`}>
@@ -598,7 +612,7 @@ function ContributionForm({
               {type !== 'question' && method === 'new' ? (
                 <Grid item sm={12}>
                   <ContributionHeader
-                    data={props || data}
+                    data={props || draftData}
                     type={capitalizeText(type)}
                   />
                 </Grid>
@@ -612,7 +626,8 @@ function ContributionForm({
                   onChange={handleChange}
                   onBlur={() => {
                     if (isValid && dirty) {
-                      submitForm(values, false)
+                      setdraftData(values)
+                      submitForm(values, 'draft')
                     }
                   }}
                   value={values.subject}
@@ -632,7 +647,7 @@ function ContributionForm({
                   onChange={v => setFieldValue('details', v)}
                   onBlur={() => {
                     if (isValid && dirty) {
-                      submitForm(values, false)
+                      submitForm(values, 'draft')
                     }
                   }}
                   value={values.details}
@@ -658,7 +673,7 @@ function ContributionForm({
                       onChange={handleChange}
                       onBlur={() => {
                         if (isValid && dirty) {
-                          submitForm(values, false)
+                          submitForm(values, 'draft')
                         }
                       }}
                       value={values.conferenceName}
@@ -677,7 +692,7 @@ function ContributionForm({
                       onChange={handleChange}
                       onBlur={() => {
                         if (isValid && dirty) {
-                          submitForm(values, false)
+                          submitForm(values, 'draft')
                         }
                       }}
                       value={values.presentationDetails}
@@ -696,7 +711,7 @@ function ContributionForm({
                       onChange={handleChange}
                       onBlur={() => {
                         if (isValid && dirty) {
-                          submitForm(values, false)
+                          submitForm(values, 'draft')
                         }
                       }}
                       value={values.startTime}
@@ -715,7 +730,7 @@ function ContributionForm({
                       onChange={handleChange}
                       onBlur={() => {
                         if (isValid && dirty) {
-                          submitForm(values, false)
+                          submitForm(values, 'draft')
                         }
                       }}
                       value={values.endTime}
@@ -891,7 +906,7 @@ function ContributionForm({
                       }}
                       onBlur={() => {
                         if (isValid && dirty) {
-                          submitForm(values, false)
+                          submitForm(values, 'draft')
                         }
                       }}
                       name="tags"
@@ -933,7 +948,7 @@ function ContributionForm({
                       }}
                       onBlur={() => {
                         if (isValid && dirty) {
-                          submitForm(values, false)
+                          submitForm(values, 'draft')
                         }
                       }}
                       name="author"
@@ -965,7 +980,7 @@ function ContributionForm({
                     }}
                     onBlur={() => {
                       if (isValid && dirty) {
-                        submitForm(values, false)
+                        submitForm(values, 'draft')
                       }
                     }}
                     value={values.hypothesisStatus}
@@ -986,7 +1001,7 @@ function ContributionForm({
                     className="btn secondary submitBtn mr-30 mb-15m"
                     variant="outlined"
                     style={{ position: 'absolute', right: 200 }}
-                    disabled={!isValid}
+                    disabled={!(isValid && dirty)}
                     onClick={async () => {
                       await setRedirectUrl('new-contribution')
                       if (!draftData) {
@@ -1010,31 +1025,14 @@ function ContributionForm({
                   disabled={!(isValid && dirty)}
                   onClick={async () => {
                     scrollToErrors(errors)
-                    await setRedirectUrl('hierarchy')
-                    if (!draftData) {
-                      const temp = values
-                      temp.status = 'publish'
-                      await setdraftData(temp)
-                      await setModal(!modal)
-                    } else if (draftData) {
-                      const temp = values
+                    const temp = values
+                    await submitForm(values, 'draft')
+                    if (draftData) {
                       temp.id = draftData.id
-                      temp.status = 'publish'
-                      await setdraftData(temp)
-                      await setModal(!modal)
-                    } else if (props) {
-                      const temp = values
-                      temp.id = draftData.id
-                      temp.status = 'publish'
-                      await setdraftData(temp)
-                      await setModal(!modal)
-                    } else {
-                      const temp = values
-                      temp.id = draftData.id
-                      temp.status = 'publish'
-                      await setdraftData(temp)
-                      await setModal(!modal)
                     }
+                    await setdraftData(temp)
+                    await setRedirectUrl('hierarchy')
+                    await setModal(!modal)
                   }}
                 >
                   {method === 'new' ? 'PUBLISH' : 'UPDATE'}

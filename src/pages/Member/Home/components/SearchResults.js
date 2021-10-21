@@ -35,7 +35,7 @@ const SearchResults = ({
               className={`${styles.content}`}
               onClick={() => {
                 history.push(
-                  `/contribution?list=${data.id}&from=home`,
+                  `/contribution?list=${data.id}&active=${data.id}&from=home`,
                   { state: data }
                 )
               }}

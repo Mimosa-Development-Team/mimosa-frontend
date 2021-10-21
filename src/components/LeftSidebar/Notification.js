@@ -188,7 +188,7 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
                       className={`${styles.comment}`}
                       onClick={() => {
                         history.push(
-                          `/contribution?list=${x.contributionId}&from=home`
+                          `/contribution?list=${x.contributionId}&active=${x.contributionId}&from=home`
                         )
                       }}
                     >

@@ -18,7 +18,7 @@ const ContributionCount = ({ contribution, data }) => {
           className={`${styles.metaButton}`}
           onClick={() => {
             history.push(
-              `/contribution?list=${data.id}&from=home`
+              `/contribution?list=${data.id}&active=${data.id}&from=home`
             )
           }}
         >
