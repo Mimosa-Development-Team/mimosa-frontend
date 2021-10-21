@@ -65,7 +65,8 @@ export default function ModalDialog({
   message,
   subcontent,
   proceed,
-  cancel
+  cancel,
+  isLoading
 }) {
   const submitForm = async () => {
     await submit()
@@ -94,6 +95,7 @@ export default function ModalDialog({
       aria-describedby="simple-modal-description"
       open={modal}
       onClose={() => setModal(!modal)}
+      disableBackdropClick
     >
       <div style={modalStyle} className={classes.paper}>
         <div className={classes.content}>
@@ -103,7 +105,7 @@ export default function ModalDialog({
             align="center"
             color="success"
           >
-            {message}
+            {isLoading ? 'Saving as draft . . .' : message}
             <br />
             {subcontent}
           </Typography>
@@ -125,7 +127,7 @@ export default function ModalDialog({
             variant="contained"
             className="btn contained"
             style={{ float: 'right' }}
-            disabled={buttonDisabled}
+            disabled={isLoading || buttonDisabled}
             onClick={() => {
               setButtonDisabled(true)
               submitForm()

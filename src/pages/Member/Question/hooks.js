@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
 
-import { getContributionAPI } from './api'
-import { CONTRIB_QUERY_KEY } from './constants'
+import { getContributionAPI, getSingleAPI } from './api'
+import { CONTRIB_QUERY_KEY, SINGLE_QUERY_KEY } from './constants'
 
-export const useContribution = id => {
+export const useContribution = (id, value) => {
   const {
     data,
     isLoading,
@@ -15,12 +15,28 @@ export const useContribution = id => {
     enabled: false
   })
 
+  const {
+    data: singledata,
+    isLoading: singleLoading,
+    error: singleError,
+    refetch: singleRefetch,
+    isSuccess: singleSuccess
+  } = useQuery(SINGLE_QUERY_KEY, () => getSingleAPI(value), {
+    enabled: false
+  })
+
   return {
     getContribution: refetch,
     contribution: data,
     remove,
     isLoading,
     isSuccess,
-    error
+    error,
+
+    singleError,
+    singledata,
+    singleLoading,
+    singleRefetch,
+    singleSuccess
   }
 }

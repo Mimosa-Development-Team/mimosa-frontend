@@ -72,7 +72,7 @@ export const useQuestionForm = (id, redirectUrl) => {
           }
           if (data.data.category === 'question') {
             history.push(
-              `/contribution?list=${data.data.id}&from=home`
+              `/contribution?list=${data.data.id}&active=${data.data.id}&from=home`
             )
           } else {
             history.push(
@@ -80,6 +80,8 @@ export const useQuestionForm = (id, redirectUrl) => {
                 data.data.mainParentId ||
                 data.data.parentId ||
                 data.data.id
+              }&active=${
+                data.data.mainParentId || data.data.id
               }&from=home`
             )
           }
@@ -166,10 +168,7 @@ export const useQuestionForm = (id, redirectUrl) => {
   } = useMutation(putContributionAPI, {
     onSuccess: data => {
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
-      if (
-        (data && data.data && data.data.status === 'publish') ||
-        (data && data.data && data.data.status === 'deprecated')
-      ) {
+      if (data && data.data && data.data.status === 'publish') {
         if (window.location.href.split('/').pop() === 'new') {
           toast.success(
             `${capitalizeText(
@@ -178,7 +177,7 @@ export const useQuestionForm = (id, redirectUrl) => {
           )
           if (data.data.category === 'question') {
             history.push(
-              `/contribution?list=${data.data.id}&from=home`
+              `/contribution?list=${data.data.id}&active=${data.data.id}&from=home`
             )
           } else {
             history.push(
@@ -186,7 +185,7 @@ export const useQuestionForm = (id, redirectUrl) => {
                 data.data.mainParentId ||
                 data.data.parentId ||
                 data.data.id
-              }&from=home`
+              }&active=${data.data.id}&from=home`
             )
           }
         } else if (
@@ -199,7 +198,7 @@ export const useQuestionForm = (id, redirectUrl) => {
           )
           if (data.data.category === 'question') {
             history.push(
-              `/contribution?list=${data.data.id}&from=home`
+              `/contribution?list=${data.data.id}&active=${data.data.id}&from=home`
             )
           } else {
             history.push(
@@ -207,7 +206,7 @@ export const useQuestionForm = (id, redirectUrl) => {
                 data.data.mainParentId ||
                 data.data.parentId ||
                 data.data.id
-              }&from=home`
+              }&active=${data.data.id}&from=home`
             )
           }
         }
@@ -231,7 +230,8 @@ export const useQuestionForm = (id, redirectUrl) => {
     addErrorContribution,
     addIsSuccessContribution,
     resetAdd,
-
+    isLoading:
+      addLoadingContribution || updateIsLoadingContribution,
     updateContribution: updateMutate,
     updatedContribution,
     updateIsLoadingContribution,

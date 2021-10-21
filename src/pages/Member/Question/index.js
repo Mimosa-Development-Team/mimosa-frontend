@@ -22,7 +22,8 @@ const Question = ({ user, hasSession }) => {
     contribution,
     isLoading,
     remove,
-    getContribution
+    getContribution,
+    singleRefetch
   } = useContribution(id, active)
   const [activeContribution, setActiveContribution] = useState(
     contribution
@@ -44,9 +45,11 @@ const Question = ({ user, hasSession }) => {
   const location = useLocation()
 
   useEffect(() => {
-    getContribution().then(data => {
-      setActiveContribution(data.data)
+    getContribution()
+    singleRefetch().then(({ data }) => {
+      setActiveContribution(data && data.data)
     })
+
     return () => {
       remove()
     }
@@ -76,12 +79,9 @@ const Question = ({ user, hasSession }) => {
               Question
             </Typography>
             <ContributionHierarchy
-              showDraft={
-                user &&
-                user.user &&
-                user.user.id === contribution &&
-                contribution.userId
-              }
+              showDraft={`${
+                user && user.user && user.user.id
+              } === ${contribution && contribution.userId}`}
               detailsClickable
               getContribution={getContribution}
               contribution={contribution}

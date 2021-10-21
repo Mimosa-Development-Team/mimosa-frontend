@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
@@ -21,7 +22,8 @@ const Header = ({
   data,
   click,
   heirarchyList,
-  showDraft
+  showDraft,
+  user
 }) => {
   return (
     <div onClick={() => !heirarchyList && click()}>
@@ -32,7 +34,10 @@ const Header = ({
         deprecated={deprecated}
       />
       {(showDraft && data.status === `draft`) ||
-      (showDraft && data.draft) ? ( //data.status === 'draft' || data.draft
+      (user &&
+        user.user.id === data.userId &&
+        showDraft &&
+        data.draft) ? (
         <div style={{ paddingBottom: '5px' }}>
           <span>
             <i className={`${styles.draft}`}>Draft </i>{' '}

@@ -135,6 +135,8 @@ const UserContributions = ({ user, hasSession }) => {
                                 history.push(
                                   `/contribution?list=${
                                     data.mainParentId || data.id
+                                  }&active=${
+                                    data.id
                                   }&from=profile`,
                                   {
                                     state: data,

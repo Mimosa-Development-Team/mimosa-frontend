@@ -183,7 +183,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                 <Card
                                   click={() => {
                                     history.push(
-                                      `/contribution?list=${data.id}&from=home`,
+                                      `/contribution?list=${data.id}&active=${data.id}&from=home`,
                                       {
                                         state: data,
                                         from: 'home'
@@ -215,7 +215,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                               <Card
                                 click={() => {
                                   history.push(
-                                    `/contribution?list=${data.id}&from=home`,
+                                    `/contribution?list=${data.id}&active=${data.id}&from=home`,
                                     {
                                       state: data,
                                       from: 'home'
