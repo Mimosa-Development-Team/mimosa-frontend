@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import Menu from '@material-ui/core/Menu'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
@@ -48,6 +49,7 @@ const SwitchToggle = withStyles({
 })(Switch)
 
 const Notification = ({ anchorEl, setAnchorEl }) => {
+  const history = useHistory()
   const { user: proxyUser } = useGlobalState()
   const { user } = getRawData(proxyUser)
   const [notificationId, setNotificationId] = useState(null)
@@ -182,7 +184,14 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
               {notification &&
                 notification.map((x, i) => {
                   return (
-                    <div className={`${styles.comment}`}>
+                    <div
+                      className={`${styles.comment}`}
+                      onClick={() => {
+                        history.push(
+                          `/contribution?list=${x.contributionId}&from=home`
+                        )
+                      }}
+                    >
                       <Grid container key={i}>
                         <Grid item xs={3}>
                           <Avatar

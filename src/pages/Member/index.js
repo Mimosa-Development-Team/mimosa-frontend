@@ -45,7 +45,7 @@ const Member = () => {
             )}
           />
           <Route
-            path="/contribution/:id"
+            path="/contribution"
             component={props => {
               return (
                 <Question

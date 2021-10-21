@@ -5,7 +5,6 @@ import Logo from 'assets/images/logo-main.svg'
 import { useHistory, useLocation } from 'react-router-dom'
 import ContributionTree from 'components/ContributionTree'
 import NotificationIcon from 'assets/images/icons/notification-icon.svg'
-import NotificationIconActive from 'assets/images/icons/notification-icon-active.svg'
 import Notification from './Notification'
 import NavLink from './NavLink'
 import { useNotification } from './hooks'
@@ -93,15 +92,7 @@ const MainNav = ({
               className={`${styles.navLink}`}
               onClick={handleClick}
             >
-              {status ? (
-                <img
-                  src={NotificationIconActive}
-                  alt=""
-                  style={{ width: '17px' }}
-                />
-              ) : (
-                <img src={NotificationIcon} alt="" />
-              )}
+              <img src={NotificationIcon} alt="" />
               Notifications
             </h1>
             <Notification

@@ -344,6 +344,7 @@ function ContributionForm({
           (draftData && draftData.category) || ''
         )}?`}
         subcontent=""
+        cancel={() => setdraftData(null)}
       />
       <ModalDialog
         modal={confirmation}
@@ -408,11 +409,11 @@ function ContributionForm({
           } else if (data) {
             if (draftData.category === 'question') {
               history.push(
-                `/contribution/${draftData.uuid}?list=${draftData.id}&from=home`
+                `/contribution?list=${draftData.id}&from=home`
               )
             } else {
               history.push(
-                `/contribution/${draftData.uuid}?list=${
+                `/contribution?list=${
                   draftData.mainParentId ||
                   draftData.parentId ||
                   draftData.id
@@ -544,7 +545,7 @@ function ContributionForm({
                           props
                         ) {
                           history.push(
-                            `/contribution/${props.uuid}?list=${
+                            `/contribution?list=${
                               props.mainParentId || props.id
                             }&from=home`
                           )
@@ -554,7 +555,7 @@ function ContributionForm({
                           type === 'question'
                         ) {
                           history.push(
-                            `/contribution/${props.uuid}?list=${props.id}&from=home`
+                            `/contribution?list=${props.id}&from=home`
                           )
                         }
                         if (
@@ -562,7 +563,7 @@ function ContributionForm({
                           type !== 'question'
                         ) {
                           history.push(
-                            `/contribution/${props.uuid}?list=${props.mainParentId}&from=home`
+                            `/contribution?list=${props.mainParentId}&from=home`
                           )
                         }
                       } else {

@@ -64,7 +64,8 @@ export default function ModalDialog({
   submit,
   message,
   subcontent,
-  proceed
+  proceed,
+  cancel
 }) {
   const submitForm = async () => {
     await submit()
@@ -93,7 +94,6 @@ export default function ModalDialog({
       aria-describedby="simple-modal-description"
       open={modal}
       onClose={() => setModal(!modal)}
-      disableBackdropClick
     >
       <div style={modalStyle} className={classes.paper}>
         <div className={classes.content}>
@@ -112,7 +112,12 @@ export default function ModalDialog({
           <Button
             className="btn outline mr-30 mt-30"
             variant="outlined"
-            onClick={() => setModal(!modal)}
+            onClick={() => {
+              setModal(!modal)
+              if (cancel) {
+                cancel()
+              }
+            }}
           >
             CANCEL
           </Button>

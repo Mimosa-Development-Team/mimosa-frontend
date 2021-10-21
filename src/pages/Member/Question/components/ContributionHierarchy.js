@@ -62,10 +62,12 @@ const ContributionHierarchy = ({
 
   return (
     <div className={`${styles.heirarchyWrapper}`}>
-      {contribution &&
-        [contribution].map(i => (
-          <ListItem item={i} key={i.id} />
-        ))}
+      <ul className={`${styles.heirarchyList}`}>
+        {contribution &&
+          [contribution].map(i => (
+            <ListItem item={i} key={i.id} />
+          ))}
+      </ul>
     </div>
   )
 }
