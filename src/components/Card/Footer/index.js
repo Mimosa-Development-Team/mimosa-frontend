@@ -23,7 +23,7 @@ const Footer = ({
   dateModified,
   onMetaClick,
   hideEdit,
-  showDraft,
+  // showDraft,
   heirarchyList,
   postedBy,
   userColor
@@ -42,10 +42,10 @@ const Footer = ({
   const {
     deleteContribution,
     deleteIsLoadingContribution,
-    deleteMutate,
-    deleteDraft,
-    deleteIsLoadingDraft,
-    deleteDraftMutate
+    deleteMutate
+    // deleteDraft,
+    // deleteIsLoadingDraft,
+    // deleteDraftMutate
   } = useQuestionForm()
 
   const { getContribution } = useContribution(
@@ -83,25 +83,7 @@ const Footer = ({
           }
         />
       ) : null}
-      {showDraft ? (
-        <ModalDelete
-          header={`Discard this ${
-            data ? capitalizeText(data.category) : ''
-          } draft`}
-          content={`Are you sure you want to delete this ${
-            data ? capitalizeText(data.category) : ''
-          } draft?`}
-          deleteItem={deleteDraft}
-          deleteIsLoadingContribution={deleteIsLoadingDraft}
-          deleteMutate={deleteDraftMutate}
-          url={() => getContribution()}
-          category={data.category}
-          heirarchy
-          id={data ? data.id : null}
-          deleteForm={modal}
-          setDeleteForm={setModal}
-        />
-      ) : (
+      {
         <ModalDelete
           header={`Delete a ${
             data ? capitalizeText(data.category) : ''
@@ -123,7 +105,7 @@ const Footer = ({
           // this becomes useless as only leaves can be deleted
           // subContent={`This will delete all child contributions attached to this ${data.category}.`}
         />
-      )}
+      }
 
       <DateMeta
         datePosted={datePosted}
