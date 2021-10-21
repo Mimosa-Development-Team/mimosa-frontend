@@ -35,6 +35,7 @@ const Header = ({
       />
       {(showDraft && data.status === `draft`) ||
       (user &&
+        user.user &&
         user.user.id === data.userId &&
         showDraft &&
         data.draft) ? (
