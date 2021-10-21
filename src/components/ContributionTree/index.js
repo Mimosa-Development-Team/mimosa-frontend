@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
-import React, { useState, useEffect } from 'react'
-import Typography from '@material-ui/core/Typography'
+import { Typography } from '@material-ui/core'
+import React from 'react'
 import capitalizeText from 'utils/parsing/capitalize'
 import styles from './styles.module.scss'
 
@@ -9,45 +9,65 @@ const ContributionTree = ({
   activeContribution,
   onTreeClick
 }) => {
-  const [data, setData] = useState([])
-  useEffect(() => {
-    setData([contribution])
-  }, [])
-  const TreeNode = ({ node, children }) => {
-    let nodes
-    if (children) {
-      nodes = children.map(i => (
-        <TreeNode node={i} children={i.children} />
-      ))
+  const ListItem = ({ item }) => {
+    let children = null
+    if (item.children) {
+      children = (
+        <ul
+          className={`${
+            item.category === 'question'
+              ? styles.wtree
+              : styles.uitree
+          } ${styles.heirarchyList}`}
+        >
+          {item.children.map(i => (
+            <ListItem item={i} key={i.id} />
+          ))}
+        </ul>
+      )
     }
     return (
       <li
-        style={{ zIndex: node.id + 1 }}
-        className={`${styles[node.category]} ${
-          activeContribution && node.id === activeContribution.id
+        className={`${styles[item.category]} ${
+          styles.contribution
+        } ${
+          activeContribution && item.id === activeContribution.id
             ? styles.active
             : ''
         }`}
-        onClick={() => {
-          onTreeClick(node)
-        }}
+        style={{ listStyle: 'none' }}
       >
-        {capitalizeText(node.category.charAt(0))}
-        <ul className={`${styles.childul}`}>{nodes}</ul>
+        <span
+          className={`${styles[item.category]} ${
+            activeContribution &&
+            item.id === activeContribution.id
+              ? styles.active
+              : ''
+          }`}
+          onClick={() => onTreeClick(item)}
+        >
+          {capitalizeText(item.category.charAt(0))}
+        </span>
+        {children}
       </li>
     )
   }
 
   return (
-    <div className={`${styles.heirarchyWrapper}`}>
+    <div className={`${styles.main}`}>
       <Typography className={`${styles.title}`} variant="h5">
         Contribution Tree:
       </Typography>
-      <ul className={`${styles.mainul}`}>
-        {data.map(i => (
-          <TreeNode node={i} children={i.children} />
-        ))}
-      </ul>
+      <div className={`${styles.heirarchyWrapper}`}>
+        <ul
+          className={`${styles.questionUl} ${styles.question}`}
+        >
+          {contribution &&
+            [contribution].map(i => (
+              <ListItem item={i} key={i.id} />
+            ))}
+        </ul>
+      </div>
     </div>
   )
 }

@@ -133,9 +133,7 @@ const UserContributions = ({ user, hasSession }) => {
                             <Card
                               click={() => {
                                 history.push(
-                                  `/contribution/${
-                                    data.uuid
-                                  }?list=${
+                                  `/contribution?list=${
                                     data.mainParentId || data.id
                                   }&from=profile`,
                                   {
@@ -144,6 +142,10 @@ const UserContributions = ({ user, hasSession }) => {
                                   }
                                 )
                               }}
+                              showDraft={
+                                `${user && user.user.id}` ===
+                                `${data && data.userId}`
+                              }
                               data={data}
                               form={false}
                               linesToShow={5}

@@ -72,11 +72,11 @@ export const useQuestionForm = (id, redirectUrl) => {
           }
           if (data.data.category === 'question') {
             history.push(
-              `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
+              `/contribution?list=${data.data.id}&from=home`
             )
           } else {
             history.push(
-              `/contribution/${data.data.uuid}?list=${
+              `/contribution?list=${
                 data.data.mainParentId ||
                 data.data.parentId ||
                 data.data.id
@@ -166,7 +166,10 @@ export const useQuestionForm = (id, redirectUrl) => {
   } = useMutation(putContributionAPI, {
     onSuccess: data => {
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
-      if (data && data.data && data.data.status === 'publish') {
+      if (
+        (data && data.data && data.data.status === 'publish') ||
+        (data && data.data && data.data.status === 'deprecated')
+      ) {
         if (window.location.href.split('/').pop() === 'new') {
           toast.success(
             `${capitalizeText(
@@ -175,11 +178,11 @@ export const useQuestionForm = (id, redirectUrl) => {
           )
           if (data.data.category === 'question') {
             history.push(
-              `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
+              `/contribution?list=${data.data.id}&from=home`
             )
           } else {
             history.push(
-              `/contribution/${data.data.uuid}?list=${
+              `/contribution?list=${
                 data.data.mainParentId ||
                 data.data.parentId ||
                 data.data.id
@@ -196,11 +199,11 @@ export const useQuestionForm = (id, redirectUrl) => {
           )
           if (data.data.category === 'question') {
             history.push(
-              `/contribution/${data.data.uuid}?list=${data.data.id}&from=home`
+              `/contribution?list=${data.data.id}&from=home`
             )
           } else {
             history.push(
-              `/contribution/${data.data.uuid}?list=${
+              `/contribution?list=${
                 data.data.mainParentId ||
                 data.data.parentId ||
                 data.data.id

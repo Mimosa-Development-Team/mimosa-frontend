@@ -36,9 +36,6 @@ const Header = ({
         <div style={{ paddingBottom: '5px' }}>
           <span>
             <i className={`${styles.draft}`}>Draft </i>{' '}
-            {data.draft &&
-              data.draft.subject !== data.subject &&
-              data.draft.subject}
           </span>
         </div>
       ) : null}

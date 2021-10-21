@@ -183,14 +183,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                 <Card
                                   click={() => {
                                     history.push(
-                                      `/contribution/${
-                                        data.category ===
-                                        'question'
-                                          ? data.uuid
-                                          : data.parentQuestionUuid
-                                      }?list=${
-                                        data.id
-                                      }&from=home`,
+                                      `/contribution?list=${data.id}&from=home`,
                                       {
                                         state: data,
                                         from: 'home'
@@ -222,7 +215,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                               <Card
                                 click={() => {
                                   history.push(
-                                    `/contribution/${data.uuid}?list=${data.id}&from=home`,
+                                    `/contribution?list=${data.id}&from=home`,
                                     {
                                       state: data,
                                       from: 'home'

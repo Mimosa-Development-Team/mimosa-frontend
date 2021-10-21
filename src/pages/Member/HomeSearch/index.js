@@ -76,7 +76,7 @@ const HomeSearch = ({ user, hasSession }) => {
                       className={`${styles.content}`}
                       onClick={() => {
                         history.push(
-                          `/contribution/${data.parentQuestionId}`,
+                          `/contribution?list=${data.id}&from=home`,
                           { state: data }
                         )
                       }}
