@@ -18,9 +18,7 @@ const ContributionHierarchy = ({
     if (item.children) {
       children = (
         <ul
-          className={`${
-            item.category === 'question' && styles.wtree
-          } ${styles.heirarchyList}`}
+          className={`${styles.wtree} ${styles.heirarchyList}`}
         >
           {item.children.map(i => (
             <ListItem item={i} key={i.id} />
@@ -30,14 +28,13 @@ const ContributionHierarchy = ({
     }
     return (
       <li
-        className={`${styles[item.category]} ${
+        className={`${styles.test} ${styles[item.category]} ${
           styles.contribution
         } ${
           activeContribution && item.id === activeContribution.id
             ? styles.active
             : ''
         }`}
-        style={{ listStyle: 'none' }}
       >
         <Card
           onCardClick={onCardClick}

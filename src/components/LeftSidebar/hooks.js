@@ -1,3 +1,4 @@
+import { toast } from 'material-react-toastify'
 import { useMutation, useQuery } from 'react-query'
 import { queryClient, useGlobalState } from 'store/state'
 
@@ -37,6 +38,9 @@ export const useNotification = id => {
       temp.notification = false
       proxyUser.user.set(temp)
       queryClient.invalidateQueries(NOTIFICATION_PUT_EMAIL)
+      toast.success(
+        'Notifications have been turned off/on successfully.'
+      )
     }
   })
 

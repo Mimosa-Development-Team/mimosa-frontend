@@ -26,16 +26,16 @@
       margin-left: -30px;
       text-align: center;
       li {
+        width: 0;
+        opacity: 0.9;
+        &.active {
+          opacity: 1;
+        }
         &.question {
-          background-color: $yellow;
+          background-color: rgba(167, 160, 143, .5);
           width: 20px;
           height: 20px;
           border-radius: 3px;
-          opacity: 0.5;
-
-          &.active {
-            opacity: 1;
-          }
         }
       }
     }
@@ -77,18 +77,12 @@
       li {
         span {
           color: white;
-          opacity: 0.8;
+          opacity: 0.5;
           &.active {
             opacity: 1;
           }
-          &.question {
-            background-color: $yellow;
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
-          }
           &.hypothesis {
-            background-color: $orange;
+            background-color: rgba(236, 138, 33, .5);
             width: 20px;
             height: 20px;
             border-radius: 3px;

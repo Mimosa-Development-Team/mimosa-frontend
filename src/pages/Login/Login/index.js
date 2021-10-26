@@ -222,7 +222,7 @@ const Login = () => {
                         <Controls.Input
                           type={
                             profile && profile.email
-                              ? 'hi dden'
+                              ? 'hidden'
                               : 'text'
                           }
                           placeholder="Email Address"

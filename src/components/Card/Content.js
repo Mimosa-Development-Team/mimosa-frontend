@@ -14,10 +14,12 @@ const Content = ({
   return (
     <div className={`${styles.bodyWrapper}`}>
       {expanded ? (
-        <div className="cardBody">{parse(content)}</div>
+        <div className={`${styles.content} cardBody`}>
+          {parse(content)}
+        </div>
       ) : (
         <div
-          className="cardBody preview"
+          className={`${styles.content} cardBody preview`}
           onClick={() => detailsClickable && setExpanded(true)}
         >
           <HTMLEllipsis
