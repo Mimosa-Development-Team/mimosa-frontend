@@ -68,7 +68,7 @@ const Dashboard = ({
             </span>
           </Avatar>
         </Grid>
-        <Grid item sm={7} style={{ textAlign: 'left' }}>
+        <Grid item sm={9} style={{ textAlign: 'left' }}>
           <Typography
             className={`${styles.userName}`}
             variant="h2"
@@ -111,7 +111,7 @@ const Dashboard = ({
               alignItems="left"
               style={{ marginTop: '10px' }}
             >
-              <span>{getRawData(user).user.email}</span>
+              <span>Send notifications: </span>
               <SwitchToggle
                 checked={getRawData(user).user.emailNotification}
                 labelPlacement="top"
