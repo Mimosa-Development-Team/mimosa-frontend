@@ -32,7 +32,7 @@
           opacity: 1;
         }
         &.question {
-          background-color: rgba(167, 160, 143, .5);
+          background-color: $yellow;
           width: 20px;
           height: 20px;
           border-radius: 3px;
@@ -77,12 +77,12 @@
       li {
         span {
           color: white;
-          opacity: 0.5;
+          opacity: 0.9;
           &.active {
             opacity: 1;
           }
           &.hypothesis {
-            background-color: rgba(236, 138, 33, .5);
+            background-color: $orange;
             width: 20px;
             height: 20px;
             border-radius: 3px;

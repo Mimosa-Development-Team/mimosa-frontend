@@ -27,18 +27,11 @@ const ContributionTree = ({
       )
     }
     return (
-      <li
-        className={`${styles[item.category]} ${
-          styles.contribution
-        } ${
-          activeContribution && item.id === activeContribution.id
-            ? styles.active
-            : ''
-        }`}
-        style={{ listStyle: 'none' }}
-      >
+      <li style={{ listStyle: 'none' }}>
         <span
-          className={`${styles[item.category]} ${
+          className={`${styles.listtree} ${
+            styles[item.category]
+          } ${
             activeContribution &&
             item.id === activeContribution.id
               ? styles.active
