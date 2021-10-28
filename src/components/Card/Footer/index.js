@@ -13,17 +13,19 @@ import CardButton from 'components/CardButton'
 import ModalDelete from 'components/Dialog/delete'
 import capitalizeText from 'utils/parsing/capitalize'
 import { useContribution } from '../../../pages/Member/Question/hooks'
+import Contribution from './Contribution'
 import styles from './styles.module.scss'
 import { useQuestionForm } from './hooks'
 
 const Footer = ({
-  author,
   data,
   datePosted,
   dateModified,
   onMetaClick,
   hideEdit,
-  showDraft,
+  // showDraft,
+  heirarchyList,
+  postedBy,
   userColor
 }) => {
   const history = useHistory()
@@ -40,10 +42,10 @@ const Footer = ({
   const {
     deleteContribution,
     deleteIsLoadingContribution,
-    deleteMutate,
-    deleteDraft,
-    deleteIsLoadingDraft,
-    deleteDraftMutate
+    deleteMutate
+    // deleteDraft,
+    // deleteIsLoadingDraft,
+    // deleteDraftMutate
   } = useQuestionForm()
 
   const { getContribution } = useContribution(
@@ -69,28 +71,19 @@ const Footer = ({
 
   return (
     <div className={`${styles.footer}`}>
-      {author && (
-        <AuthorMeta author={author} userColor={userColor} />
-      )}
-      {showDraft ? (
-        <ModalDelete
-          header={`Discard this ${
-            data ? capitalizeText(data.category) : ''
-          } draft`}
-          content={`Are you sure you want to delete this ${
-            data ? capitalizeText(data.category) : ''
-          } draft?`}
-          deleteItem={deleteDraft}
-          deleteIsLoadingContribution={deleteIsLoadingDraft}
-          deleteMutate={deleteDraftMutate}
-          url={() => getContribution()}
-          category={data.category}
-          heirarchy
-          id={data ? data.id : null}
-          deleteForm={modal}
-          setDeleteForm={setModal}
+      {postedBy || (data && data.poster) ? (
+        <AuthorMeta
+          author={`${
+            postedBy ||
+            (data.poster &&
+              `${data.poster.firstName} ${data.poster.lastName}`)
+          }`}
+          userColor={
+            userColor || (data.poster && data.poster.userColor)
+          }
         />
-      ) : (
+      ) : null}
+      {
         <ModalDelete
           header={`Delete a ${
             data ? capitalizeText(data.category) : ''
@@ -112,7 +105,7 @@ const Footer = ({
           // this becomes useless as only leaves can be deleted
           // subContent={`This will delete all child contributions attached to this ${data.category}.`}
         />
-      )}
+      }
 
       <DateMeta
         datePosted={datePosted}
@@ -132,6 +125,12 @@ const Footer = ({
           />
         </>
       )}
+      {!heirarchyList && (
+        <Contribution
+          contribution={data && data.total && data.total.length}
+          data={data}
+        />
+      )}
       {hideEdit !== true && data ? (
         <>
           {user && data.userId === user.id ? (
@@ -142,14 +141,14 @@ const Footer = ({
                   `/contribution-form/${data.category}/update`,
                   {
                     type: 'update',
-                    data,
-                    questionUuid: data.parentQuestionId
+                    data
                   }
                 )
               }}
             />
           ) : null}
-          {data.children.length === 0 &&
+          {((data.children && data.children.length === 0) ||
+            data.category === 'analysis') &&
           user &&
           (user.role === 'admin' || data.userId === user.id) ? (
             <CardButton
@@ -157,12 +156,7 @@ const Footer = ({
               onClick={() => setModal(true)}
             />
           ) : null}
-          {(user &&
-            data.category !== 'analysis' &&
-            data.userId === user.id &&
-            data.children !== undefined &&
-            data.children.length <= 0) ||
-          (user && data.category !== 'analysis') ? (
+          {data.category !== 'analysis' && (
             <CardButton
               action="contribute"
               onClick={() => {
@@ -172,13 +166,13 @@ const Footer = ({
                   )}/new`,
                   {
                     type: 'new',
-                    data,
-                    questionUuid: data.parentQuestionId
+                    data
                   }
                 )
               }}
+              disabled={!user}
             />
-          ) : null}
+          )}
         </>
       ) : null}
     </div>
@@ -186,7 +180,6 @@ const Footer = ({
 }
 
 Footer.propTypes = {
-  author: PropTypes.string,
   datePosted: PropTypes.string.isRequired,
   dateModified: PropTypes.string
 }

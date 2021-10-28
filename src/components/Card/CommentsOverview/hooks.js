@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query'
 import { queryClient } from 'store/state'
-
+import { toast } from 'material-react-toastify'
 import { getCommentCountAPI } from '../Footer/api'
 import { COMMENT_GET_COUNT_QUERY_KEY } from '../Footer/constants'
 
@@ -78,9 +78,15 @@ export const useComments = id => {
     reset: resetCommentDelete
   } = useMutation(deleteCommentAPI, {
     onSuccess: () => {
+      toast.success('Comment Deleted Success!')
       refetch()
       getCommentCount()
       queryClient.invalidateQueries(COMMENT_DELETE_QUERY_KEY)
+    },
+    onError: () => {
+      toast.error(
+        'Unable to delete comment. An error was encountered.'
+      )
     }
   })
 

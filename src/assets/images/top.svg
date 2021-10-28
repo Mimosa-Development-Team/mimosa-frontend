@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="140px" height="136px" viewBox="0 0 140 136" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 8 Copy 3</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="80" height="76" rx="8"></rect>
+        <filter x="-57.5%" y="-57.9%" width="215.0%" height="221.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="15" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <polygon id="path-4" points="0 0 112 0 112 80 0 80"></polygon>
+    </defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-8-Copy-3" transform="translate(30.000000, 28.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" fill="black" fill-opacity="1">
+                <use filter="url(#filter-3)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Group-8-Copy-5" opacity="0.421352653" mask="url(#mask-2)">
+                <g transform="translate(3.000000, -38.000000)">
+                    <polygon id="Fill-1" fill="#F2BA1D" points="42 114 69 114 69 0 42 0"></polygon>
+                    <polygon id="Fill-3" fill="#EF8C20" points="0 74.5099804 98.5461433 17 112 40.4900196 13.4519105 98"></polygon>
+                    <g id="Group-7" stroke-width="1" fill="none" transform="translate(0.000000, 17.000000)">
+                        <mask id="mask-5" fill="white">
+                            <use xlink:href="#path-4"></use>
+                        </mask>
+                        <g id="Clip-6"></g>
+                        <polygon id="Fill-5" fill="#3476D6" mask="url(#mask-5)" points="13.4050261 0 112.000973 56.7332459 98.5949739 80 -0.000972576807 23.2667541"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -4,9 +4,10 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from 'assets/images/icons/delete.svg'
 import EditIcon from 'assets/images/icons/edit.png'
 import ContributeIcon from 'assets/images/icons/contribute.svg'
+import TooltipUi from 'components/Tooltip'
 import styles from './styles.module.scss'
 
-const CardButton = ({ action, ...propsList }) => {
+const CardButton = ({ disabled, action, ...propsList }) => {
   const icons = {
     edit: EditIcon,
     delete: DeleteIcon,
@@ -17,15 +18,20 @@ const CardButton = ({ action, ...propsList }) => {
       {action !== 'contribute' && (
         <span className={`${styles.metaDivider}`}>·</span>
       )}
-      <IconButton
-        disableRipple
-        aria-label={action}
-        className={`${styles.cardButton} ${styles[action]}`}
-        {...propsList}
+      <TooltipUi
+        title={action === 'contribute' ? 'Contribute' : ''}
       >
-        <img src={icons[action]} alt="" />
-        {action}
-      </IconButton>
+        <IconButton
+          disableRipple
+          aria-label={action}
+          className={`${styles.cardButton} ${styles[action]}`}
+          {...propsList}
+          disabled={disabled}
+        >
+          {!disabled && <img src={icons[action]} alt="" />}
+          {action}
+        </IconButton>
+      </TooltipUi>
     </div>
   )
 }

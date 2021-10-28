@@ -1,11 +1,23 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import ArrowBack from '@material-ui/icons/ArrowBack'
 import CustomScrollbar from 'components/CustomScrollbar'
 import styles from './styles.module.scss'
 
 const PageTermsConditions = () => {
+  const history = useHistory()
   return (
     <div className={`${styles.staticWrapper} ${styles.tc}`}>
+      <IconButton
+        style={{ marginLeft: '-20px' }}
+        onClick={() => {
+          history.goBack()
+        }}
+      >
+        <ArrowBack />
+      </IconButton>
       <CustomScrollbar>
         <Typography variant="h1" className="mb-20">
           Terms and Conditions

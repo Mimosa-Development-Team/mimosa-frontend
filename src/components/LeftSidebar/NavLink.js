@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -11,38 +12,57 @@ import FaqIcon from 'assets/images/icons/faq.svg'
 import FaqActiveIcon from 'assets/images/icons/faq-active.svg'
 import AboutIcon from 'assets/images/icons/about.svg'
 import AboutActiveIcon from 'assets/images/icons/about-active.svg'
+import NotificationIcon from 'assets/images/icons/notification-icon.svg'
+import NotificationActiveIcon from 'assets/images/icons/notification-icon-active.svg'
+import HowToIcon from 'assets/images/icons/how-to.svg'
+import HowToActiveIcon from 'assets/images/icons/how-to-col.svg'
 import styles from './styles.module.scss'
 
-const NavLink = ({ title, icon, active, to, ...rest }) => {
+const NavLink = ({
+  title,
+  icon,
+  active,
+  child,
+  to,
+  url,
+  ...rest
+}) => {
   const icons = {
     home: HomeIcon,
     contributions: ContribIcon,
     bookmarks: BookmarksIcon,
     faq: FaqIcon,
-    about: AboutIcon
+    about: AboutIcon,
+    notification: NotificationIcon,
+    howto: HowToIcon
   }
   const activeIcons = {
     home: HomeActiveIcon,
     contributions: ContribActiveIcon,
     bookmarks: BookmarksActiveIcon,
     faq: FaqActiveIcon,
-    about: AboutActiveIcon
+    about: AboutActiveIcon,
+    notification: NotificationActiveIcon,
+    howto: HowToActiveIcon
   }
+
   return (
-    <Link
-      className={`${styles.navLink} ${
-        active ? styles.active : ''
-      }`}
-      to={to}
-      {...rest}
-    >
-      {active ? (
-        <img src={activeIcons[icon]} alt="" />
-      ) : (
-        <img src={icons[icon]} alt="" />
-      )}
-      {title}
-    </Link>
+    <>
+      <Link
+        className={`${styles.navLink} ${
+          active ? styles.active : ''
+        }`}
+        to={to}
+        {...rest}
+      >
+        {active ? (
+          <img src={activeIcons[icon]} alt="" />
+        ) : (
+          <img src={icons[icon]} alt="" />
+        )}
+        {title}
+      </Link>
+    </>
   )
 }
 

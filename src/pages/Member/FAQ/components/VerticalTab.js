@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
+import { useHistory } from 'react-router-dom'
 import Tab from '@material-ui/core/Tab'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 import Hidden from '@material-ui/core/Hidden'
+import { useGlobalState } from 'store/state'
+import getRawData from 'utils/hookstate/getRawData'
 import Typography from '@material-ui/core/Typography'
 import styles from './styles.module.scss'
 import TabPanel from './TabPanel'
@@ -42,6 +46,9 @@ const Topic = ({ topic }) => {
 }
 
 const VerticalTab = ({ data }) => {
+  const history = useHistory()
+  const { user: proxyUser } = useGlobalState()
+  const { user } = getRawData(proxyUser)
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
@@ -86,6 +93,22 @@ const VerticalTab = ({ data }) => {
               />
             ))}
           </Tabs>
+          {user && (
+            <Button
+              style={{ marginTop: '25px', width: '65%' }}
+              className="btn primary"
+              size="large"
+              variant="contained"
+              onClick={async () => {
+                const tempData = user
+                tempData.notification = true
+                await proxyUser.user.set(tempData)
+                history.push('/')
+              }}
+            >
+              HOW TO
+            </Button>
+          )}
         </Grid>
         <Grid item xs={12} sm={9}>
           {(data || []).map((data, key1) => {

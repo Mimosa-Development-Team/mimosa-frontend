@@ -1,15 +1,21 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Card from 'components/Card'
+import Loading from 'components/LoadingPage'
 import NoResultsFound from 'components/NoResultsFound'
 import styles from '../style.module.scss'
 
-const SearchResults = ({ data, searchTerm }) => {
+const SearchResults = ({
+  data: arrayData,
+  searchTerm,
+  resultLoading
+}) => {
   const history = useHistory()
   return (
     <>
-      {data ? (
+      {arrayData && !resultLoading ? (
         <>
           <div className={`${styles.paperListHeader}`}>
             <Typography
@@ -24,17 +30,18 @@ const SearchResults = ({ data, searchTerm }) => {
               </span>
             </Typography>
           </div>
-          {(data || []).map(data => (
+          {(arrayData || []).map(data => (
             <div
               className={`${styles.content}`}
               onClick={() => {
                 history.push(
-                  `/contribution/${data.parentQuestionId}`,
+                  `/contribution?list=${data.id}&active=${data.id}&from=home`,
                   { state: data }
                 )
               }}
             >
               <Card
+                heirarchyList
                 data={data}
                 form={false}
                 hideDetails
@@ -43,6 +50,8 @@ const SearchResults = ({ data, searchTerm }) => {
             </div>
           ))}
         </>
+      ) : resultLoading ? (
+        <Loading />
       ) : (
         <NoResultsFound term={searchTerm} />
       )}

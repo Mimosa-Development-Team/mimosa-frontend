@@ -1,9 +1,9 @@
 import { getRequest } from 'utils/http'
 
-export const getContributionAPI = data => {
-  const id = window.location.pathname.split('/').pop()
+export const getContributionAPI = id => {
+  return getRequest(`api/v1/contribution/questionslist/${id}`)
+}
 
-  return getRequest(
-    `api/v1/contribution/list/${id}/${data.queryKey[1].userId}`
-  )
+export const getSingleAPI = id => {
+  return getRequest(`api/v1/contribution/question/${id}`)
 }

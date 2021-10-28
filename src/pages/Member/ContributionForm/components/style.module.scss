@@ -68,6 +68,7 @@
     background-color: inherit;
     border: none;
     outline: none;
+    margin-top: 50px;
 
     .btnBack:focus,
     .btnBack:active:focus,
@@ -76,14 +77,14 @@
     .btnBack:active.focus,
     .backNav {
       margin-bottom: 30px;
-      cursor: pointer;
+      width: 100%;  
 
       h4.back {
         font-family: 'Roboto';
 
         .icon {
           position: relative;
-          top: -1px;
+          top: 2px;
           margin-right: 15px;
         }
       }
@@ -98,6 +99,15 @@
     margin-top: 50px;
     margin-bottom: 50px;
   }
+}
+
+.btnContainer {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  text-align: end;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 @media screen and (max-width: 959px) {

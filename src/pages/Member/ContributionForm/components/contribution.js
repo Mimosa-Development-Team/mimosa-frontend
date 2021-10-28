@@ -1,713 +1,544 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable func-names */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
-/* eslint-disable func-names */
-/* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-else-return */
-/* eslint-disable no-unused-expressions */
-import React, { useEffect, useState, useRef } from 'react'
-import Controls from 'components/controls/Controls'
+import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Formik, FieldArray, Form } from 'formik'
+import Controls from 'components/controls/Controls'
 import {
   Button,
   Grid,
   Typography,
   Divider
 } from '@material-ui/core'
+import { Formik, FieldArray, Form } from 'formik'
+import FormikErrorFocus from 'formik-error-focus'
 import * as yup from 'yup'
 import ModalDialog from 'components/Dialog/dialog'
-import ModalDelete from 'components/Dialog/delete'
-import moment from 'moment'
-import FormikErrorFocus from 'formik-error-focus'
+import DeleteIcon from 'assets/images/icons/delete.svg'
 import BackIcon from 'assets/images/icons/back.svg'
 import capitalizeText from 'utils/parsing/capitalize'
-import DeleteIcon from 'assets/images/icons/delete.svg'
+import moment from 'moment'
+import { useQuestionForm } from '../hooks'
 import ContributionHeader from './contribution-header'
 import styles from './style.module.scss'
 
-function ContributionForm({
-  tagsData,
-  userData,
-  profile,
-  data,
-  method,
-  type,
-  relatedMediaData,
-  addContribution,
-  updateContribution,
-  questionUuid,
-  addLoadingContribution,
-  updateIsLoadingContribution,
-  addIsSuccessContribution,
-  updateIsSuccessContribution,
-  resetUpdate,
-  resetAdd,
-  addErrorContribution,
-  updateErrorContribution,
-  addedData,
-  deleteContribution,
-  deleteIsLoadingContribution,
-  deleteMutate,
-  deletedRelatedMedia,
-  deleteIsLoadingRelatedMedia,
-  deleteRelatedMediaMutate,
-  resetMediaDelete
-}) {
-  const history = useHistory()
-  const formikRef = useRef()
-
-  const [conference, setConference] = useState({
-    conferenceName: '',
-    presentationDetails: '',
-    startTime: '',
-    endTime: '',
-    id: ''
-  })
-
-  const schema = yup.object().shape({
-    relatedmedia: yup.array().of(
-      yup.object().shape(
-        {
-          title: yup.string().when('link', {
-            is: value => !!value,
-            then: yup.string().required('* Mandatory Field')
-          }),
-          link: yup.string().when('title', {
-            is: value => !!value,
-            then: yup
-              .string()
-              .matches(
-                /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i,
-                'Enter correct url!'
-              )
-              .required('* Mandatory')
-          })
-        },
-        ['title', 'link']
-      )
-    ), // these constraints are shown if and only if inner constraints are satisfied
-    subject: yup.string().required('* Mandatory Field'),
-    author: yup
-      .array()
-      .min(1, '* Mandatory Field')
-      .required('* Mandatory Field'),
-    conferenceName: yup
-      .string()
-      .test(
-        'conferenceName',
-        '** Mandatory Field',
-        function (value) {
-          const {
-            presentationDetails,
-            startTime,
-            endTime
-          } = this.parent
-          if (
-            !value &&
-            (presentationDetails || startTime || endTime)
-          ) {
-            return false
-          } else {
-            return true
-          }
-        }
-      ),
-    startTime: yup
-      .string()
-      .test('startTime', '** Mandatory Field', function (value) {
+const schema = yup.object().shape({
+  relatedmedia: yup.array().of(
+    yup.object().shape(
+      {
+        title: yup.string().when('link', {
+          is: value => !!value,
+          then: yup.string().required('* Mandatory Field')
+        }),
+        link: yup.string().when('title', {
+          is: value => !!value,
+          then: yup
+            .string()
+            .matches(
+              /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i,
+              'Enter correct url!'
+            )
+            .required('* Mandatory')
+        })
+      },
+      ['title', 'link']
+    )
+  ), // these constraints are shown if and only if inner constraints are satisfied
+  subject: yup.string().required('* Mandatory Field'),
+  details: yup
+    .string()
+    .test('details', '** Mandatory Field', function (value) {
+      if (value.match(/<img/)) {
+        return true
+      }
+      if (
+        (value &&
+          value.replace(/<(.|\n)*?>/g, '').trim().length ===
+            0) ||
+        !value
+      ) {
+        return false
+      }
+      return true
+    }),
+  author: yup
+    .array()
+    .min(1, '* Mandatory Field')
+    .required('* Mandatory Field'),
+  conferenceName: yup
+    .string()
+    .test(
+      'conferenceName',
+      '** Mandatory Field',
+      function (value) {
         const {
           presentationDetails,
-          conferenceName,
+          startTime,
           endTime
         } = this.parent
         if (
           !value &&
-          (presentationDetails || conferenceName || endTime)
+          (presentationDetails || startTime || endTime)
         ) {
           return false
-        } else {
-          return true
         }
-      }),
-    endTime: yup
-      .string()
-      .test('endTime', '** Mandatory Field', function (value) {
+        return true
+      }
+    ),
+  startTime: yup
+    .string()
+    .test('startTime', '** Mandatory Field', function (value) {
+      const {
+        presentationDetails,
+        conferenceName,
+        endTime
+      } = this.parent
+      if (
+        !value &&
+        (presentationDetails || conferenceName || endTime)
+      ) {
+        return false
+      }
+      return true
+    }),
+  endTime: yup
+    .string()
+    .test('endTime', '** Mandatory Field', function (value) {
+      const {
+        presentationDetails,
+        conferenceName,
+        startTime
+      } = this.parent
+      if (
+        !value &&
+        (presentationDetails || conferenceName || startTime)
+      ) {
+        return false
+      }
+      return true
+    }),
+  presentationDetails: yup
+    .string()
+    .test(
+      'presentationDetails',
+      '** Mandatory Field',
+      function (value) {
         const {
-          presentationDetails,
+          entTime,
           conferenceName,
           startTime
         } = this.parent
-        if (
-          !value &&
-          (presentationDetails || conferenceName || startTime)
-        ) {
+        if (!value && (entTime || conferenceName || startTime)) {
           return false
-        } else {
-          return true
         }
-      }),
-    presentationDetails: yup
-      .string()
-      .test(
-        'presentationDetails',
-        '** Mandatory Field',
-        function (value) {
-          const {
-            entTime,
-            conferenceName,
-            startTime
-          } = this.parent
-          if (
-            !value &&
-            (entTime || conferenceName || startTime)
-          ) {
-            return false
-          } else {
-            return true
-          }
-        }
-      )
-  })
+        return true
+      }
+    )
+})
 
-  const [rMedia, setRmedia] = useState([{ title: '', link: '' }])
-  const [openForm, setOpenForm] = useState(false)
-  const [openDraft, setOpenDraft] = useState(false)
-  const [formData, setFormData] = useState(false)
-  const [deleteForm, setDeleteForm] = useState(false)
+const getSubjectLabel = val => {
+  switch (val) {
+    case 'question':
+      return 'In one sentence, what is your research question?'
+    case 'hypothesis':
+      return 'Hypothesis: What is your answer to this question?'
+    case 'experiment':
+      return 'What is this experiment testing?'
+    case 'data':
+      return 'What is this dataset about?'
+    case 'analysis':
+      return 'In one sentence, what is the conclusion fo your analysis? '
+    default:
+      return null
+  }
+}
+
+const getDetailsLabel = val => {
+  switch (val) {
+    case 'question':
+      return 'Add some details about your research question'
+    case 'hypothesis':
+      return 'Add some details to your reasoning'
+    case 'experiment':
+      return 'Experimental Protocol: describe how to perform this experiment'
+    case 'data':
+      return 'Describe your data'
+    case 'analysis':
+      return 'Add some details to your reasoning'
+    default:
+      return null
+  }
+}
+
+function ContributionForm({
+  profile,
+  tagsData,
+  userData,
+  type,
+  method,
+  props
+}) {
+  const formikRef = useRef()
+  const history = useHistory()
+  const [modal, setModal] = useState(false)
+  const [confirmation, setConfirmation] = useState(false)
+  const [navigation, setNavigation] = useState(false)
+  const [lastSave, setLastSave] = useState(null)
+  const [draftData, setdraftData] = useState(null)
   const [back, setBack] = useState(false)
-  const [add, setAdd] = useState(false)
-  const [deleteMediaId, setDeleteMediaId] = useState(null)
-  const [deleteMedia, setDeleteMedia] = useState(false)
-
-  useEffect(() => {
-    if (relatedMediaData) {
-      setRmedia([])
-
-      for (let i = 0; i < relatedMediaData.length; i++) {
-        if (relatedMediaData[i].conferenceName) {
-          setConference({
-            conferenceName: relatedMediaData[i].conferenceName,
-            presentationDetails: moment(
-              relatedMediaData[i].presentationDetails
-            ).format('YYYY-MM-DD'),
-            startTime: moment(
-              relatedMediaData[i].startTime,
-              'HH:mm'
-            ).format('HH:mm'),
-            endTime: moment(
-              relatedMediaData[i].endTime,
-              'HH:mm'
-            ).format('HH:mm'),
-            id: relatedMediaData[i].id
-          })
-        } else if (relatedMediaData[i].link) {
-          setRmedia(oldArray => [
-            ...oldArray,
-            {
-              id: relatedMediaData[i].id,
-              link: relatedMediaData[i].link,
-              title: relatedMediaData[i].title
-            }
-          ])
-        }
-      }
-    }
-  }, [relatedMediaData])
-
-  const getSubjectLabel = val => {
-    switch (val) {
-      case 'question':
-        return 'In one sentence, what is your research question?'
-      case 'hypothesis':
-        return 'Hypothesis: What is your answer to this question?'
-      case 'experiment':
-        return 'What is this experiment testing?'
-      case 'data':
-        return 'What is this dataset about?'
-      case 'analysis':
-        return 'In one sentence, what is the conclusion fo your analysis? '
-      default:
-        return null
-    }
-  }
-
-  const getDetailsLabel = val => {
-    switch (val) {
-      case 'question':
-        return 'Add some details about your research question'
-      case 'hypothesis':
-        return 'Add some details to your reasoning'
-      case 'experiment':
-        return 'Experimental Protocol: describe how to perform this experiment'
-      case 'data':
-        return 'Describe your data'
-      case 'analysis':
-        return 'Add some details to your reasoning'
-      default:
-        return null
-    }
-  }
-
-  const getUrl = status => {
-    let url = ''
-    if (status === 'draft' && !back && add) {
-      switch (type) {
-        case 'question':
-          url = addedData
-            ? history.push('/contribution-form/hypothesis/new', {
-                type: 'new',
-                data: addedData.data,
-                questionUuid: addedData.data.uuid
-              })
-            : history.push(
-                (addedData &&
-                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
-                  (questionUuid &&
-                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
-                  '/',
-                {
-                  from: 'home'
-                }
-              )
-          break
-        case 'hypothesis':
-          url = addedData
-            ? history.push('/contribution-form/experiment/new', {
-                type: 'new',
-                data: addedData.data,
-                questionUuid
-              })
-            : history.push(
-                (addedData &&
-                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
-                  (questionUuid &&
-                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
-                  '/',
-                {
-                  from: 'home'
-                }
-              )
-          break
-        case 'experiment':
-          url = addedData
-            ? history.push('/contribution-form/data/new', {
-                type: 'new',
-                data: addedData.data,
-                questionUuid
-              })
-            : history.push(
-                (addedData &&
-                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
-                  (questionUuid &&
-                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
-                  '/',
-                {
-                  from: 'home'
-                }
-              )
-          break
-        case 'data':
-          url = addedData
-            ? history.push('/contribution-form/analysis/new', {
-                type: 'new',
-                data: addedData.data,
-                questionUuid
-              })
-            : history.push(
-                (addedData &&
-                  `/contribution/${addedData.data.uuid}?list=${addedData.data.id}`) ||
-                  (questionUuid &&
-                    `/contribution/${questionUuid}?list=${addedData.data.id}`) ||
-                  '/',
-                {
-                  from: 'home'
-                }
-              )
-          break
-        default:
-          url = history.goBack()
-      }
-    } else if (status === 'draft' && !back && !add) {
-      setOpenForm(!openForm)
-      setAdd(false)
-    } else if (status === 'publish') {
-      switch (type) {
-        case 'question':
-          url = history.push(
-            `/contribution/${
-              questionUuid || addedData.data.uuid
-            }?list=${addedData ? addedData.data.id : data.id}`,
-            {
-              from: 'home'
-            }
-          )
-          break
-        case 'hypothesis':
-          url = history.push(
-            `/contribution/${questionUuid}?list=${
-              addedData ? addedData.data.id : data.id
-            }`,
-            {
-              from: 'home'
-            }
-          )
-          break
-        case 'experiment':
-          url = history.push(
-            `/contribution/${questionUuid}?list=${
-              addedData ? addedData.data.id : data.id
-            }`,
-            {
-              from: 'home'
-            }
-          )
-          break
-        case 'data':
-          url = history.push(
-            `/contribution/${questionUuid}?list=${
-              addedData ? addedData.data.id : data.id
-            }`,
-            {
-              from: 'home'
-            }
-          )
-          break
-        default:
-          url = history.push(
-            `/contribution/${questionUuid}?list=${
-              addedData ? addedData.data.id : data.id
-            }`,
-            {
-              from: 'home'
-            }
-          )
-      }
-    } else if (back) {
-      if (data || addedData) {
-        url = history.push(
-          `/contribution/${
-            questionUuid || addedData.data.uuid
-          }?list=${
-            addedData && addedData.data
-              ? addedData.data.id
-              : data.id
-          }`,
-          {
-            from: 'home'
-          }
-        )
-      } else {
-        url = history.push('/')
-      }
-    }
-
-    return url
-  }
+  const [redirectUrl, setRedirectUrl] = useState(null)
+  const [conferenceId, setConferenceId] = useState(null)
+  const {
+    addContribution,
+    addedContribution,
+    updateContribution,
+    updatedContribution,
+    deleteRelatedMediaMutate,
+    isLoading
+  } = useQuestionForm(
+    method === 'update' ? props.id : draftData && draftData.id,
+    redirectUrl
+  )
 
   const scrollToErrors = errors => {
     const errorKeys = Object.keys(errors)
     if (errorKeys.length > 0) {
-      //if else statement on relatedmedia because it is an array
       errorKeys[0] === 'relatedmedia'
         ? document
             .getElementsByName('relatedmedia[0].title')[0]
             .focus()
+        : errorKeys[0] === 'details'
+        ? document
+            .getElementsByClassName('details')[0]
+            .scrollIntoView()
         : document.getElementsByName(errorKeys[0])[0].focus()
     }
   }
 
-  const submitForm = (val, stat) => {
-    const formFields = {
-      category: type,
-      subject: val.subject,
-      details: val.details,
-      tags: val.tags ? val.tags : [],
-      author: val.author ? val.author : [],
-      userId: profile.id,
-      status: stat,
-      version: '1.0.0',
-      uuid: data && data.uuid ? data.uuid : null,
-      parentId:
-        method === 'new'
-          ? data && data.id
-            ? data.id
-            : 0
-          : data.parentId,
-      parentUuid:
-        data && data.parentQuestionUuid
-          ? data.parentQuestionUuid
-          : questionUuid || 0,
-      parentQuestionUuid:
-        data && data.parentQuestionUuid
-          ? data.parentQuestionUuid
-          : questionUuid || 0,
-      hypothesisStatus: val.hypothesisStatus,
-      relatedMedia: [],
-      conferenceDetails: null,
-      method
+  const submitForm = (values, status) => {
+    if (status) {
+      values.status = status
     }
 
     if (
-      val.conferenceName &&
-      val.presentationDetails &&
-      val.startTime &&
-      val.endTime &&
-      method === 'new'
+      method === 'new' &&
+      !(addedContribution || updatedContribution)
     ) {
-      formFields.relatedMedia.push({
-        conferenceName: val.conferenceName,
-        conferenceDateDetails: {
-          presentationDetails: val.presentationDetails,
-          startTime: val.startTime,
-          endTime: val.endTime
-        },
-        mediaDetails: null,
-        userId: profile.id
-      })
-    }
-
-    if (
-      (val.conferenceName &&
-        val.startTime &&
-        val.endTime &&
-        method === 'update') ||
-      conference.id
-    ) {
-      formFields.relatedMedia.push({
-        conferenceName: val.conferenceName,
-        conferenceDateDetails: {
-          presentationDetails: val.presentationDetails || '',
-          startTime: val.startTime,
-          endTime: val.endTime
-        },
-        id: conference ? conference.id : null,
-        mediaDetails: null,
-        userId: profile.id
-      })
-    }
-
-    if (val.status === 'draft') {
-      if (data && data.draft && data.draft.id) {
-        formFields.contributionId = data.draft.contributionId
+      if (props) {
+        values.mainParentId =
+          props.mainParentId || props.parentId || props.id
+        values.parentId = (props && props.id) || null
       }
+      if (addedContribution || updatedContribution) {
+        values.conferenceId = conferenceId
+      }
+      addContribution(values)
+    } else {
+      values.id =
+        (addedContribution &&
+          addedContribution.data &&
+          addedContribution.data.id) ||
+        (updatedContribution &&
+          updatedContribution.data &&
+          updatedContribution.data.id) ||
+        (props && props.id) ||
+        null
+      values.mainParentId =
+        (addedContribution &&
+          addedContribution.data &&
+          addedContribution.data.mainParentId) ||
+        (updatedContribution &&
+          updatedContribution.data &&
+          updatedContribution.data.mainParentId) ||
+        (props && props.mainParentId) ||
+        null
+      values.parentId =
+        (addedContribution &&
+          addedContribution.data &&
+          addedContribution.data.parentId) ||
+        (updatedContribution &&
+          updatedContribution.data &&
+          updatedContribution.data.parentId) ||
+        (props && props.parentId) ||
+        null
+      if (values.conferenceName && !values.conferenceId) {
+        values.conferenceId = conferenceId
+      }
+      updateContribution(values)
     }
+  }
 
-    if (val.relatedmedia.length > 0) {
-      for (let z = 0; z < val.relatedmedia.length; z++) {
-        if (
-          (val.relatedmedia[z].title &&
-            val.relatedmedia[z].link) ||
-          val.relatedmedia[z].id
-        ) {
-          formFields.relatedMedia.push(val.relatedmedia[z])
+  useEffect(() => {
+    if (
+      props &&
+      props.relatedmedia &&
+      props.relatedmedia.length > 0 &&
+      !updatedContribution &&
+      !addedContribution
+    ) {
+      const tempRmedia = []
+      for (let i = 0; i < props.relatedmedia.length; i++) {
+        if (props.relatedmedia[i].mediaDetails) {
+          tempRmedia.push({
+            id: props.relatedmedia[i].id,
+            title: props.relatedmedia[i].mediaDetails.title,
+            link: props.relatedmedia[i].mediaDetails.link
+          })
+        } else {
+          formikRef.current.setFieldValue(
+            'conferenceName',
+            props.relatedmedia[i].conferenceName
+          )
+          formikRef.current.setFieldValue(
+            'presentationDetails',
+            props.relatedmedia[i].conferenceDateDetails
+              .presentationDetails
+          )
+          formikRef.current.setFieldValue(
+            'startTime',
+            props.relatedmedia[i].conferenceDateDetails.startTime
+          )
+          formikRef.current.setFieldValue(
+            'endTime',
+            props.relatedmedia[i].conferenceDateDetails.endTime
+          )
+          formikRef.current.setFieldValue(
+            'conferenceId',
+            props.relatedmedia[i].id
+          )
         }
       }
+      if (tempRmedia.length > 0) {
+        formikRef.current.setFieldValue(
+          'relatedmedia',
+          tempRmedia
+        )
+      }
     }
-
-    if (data) {
-      formFields.id = data.id
+    if (updatedContribution && updatedContribution.data) {
+      if (updatedContribution.conference) {
+        setConferenceId(updatedContribution.conference.id)
+      }
+      if (updatedContribution.relatedmedia.length > 0) {
+        formikRef.current.setFieldValue(
+          'relatedmedia',
+          updatedContribution.relatedmedia
+        )
+      }
+      setdraftData(updatedContribution.data)
+      setLastSave(
+        updatedContribution.data.updatedAt ||
+          updatedContribution.data.createdAt
+      )
+    } else if (
+      addedContribution &&
+      addedContribution.data &&
+      !(updatedContribution && updatedContribution.data)
+    ) {
+      setdraftData(addedContribution.data)
+      setLastSave(
+        addedContribution.data.updatedAt ||
+          addedContribution.data.createdAt
+      )
+      if (addedContribution.conference) {
+        setConferenceId(addedContribution.conference.id)
+      }
+      if (addedContribution.relatedmedia.length > 0) {
+        formikRef.current.setFieldValue(
+          'relatedmedia',
+          addedContribution.relatedmedia
+        )
+      }
     }
-
-    // if (method === 'low') {
-    setFormData(formFields)
-    if (formFields.status === 'draft') {
-      setOpenDraft(true)
-    } else {
-      setOpenForm(true)
-    }
-
-    // }
-  }
+  }, [addedContribution, updatedContribution])
 
   return (
     <>
       <ModalDialog
-        type={capitalizeText(type)}
-        header={
-          method === 'new'
-            ? 'Publish Contribution'
-            : 'Update Contribution'
-        }
-        content={
-          method === 'new'
-            ? `Are you sure you want to ${
-                formData.status
-              } this ${capitalizeText(type)}?`
-            : `Do you want to publish changes to this ${capitalizeText(
-                type
-              )}?`
-        }
-        method={method}
-        submitLoading={
-          method === 'new'
-            ? addLoadingContribution
-            : updateIsLoadingContribution
-        }
-        submitSuccess={
-          method === 'new'
-            ? addIsSuccessContribution
-            : updateIsSuccessContribution
-        }
-        submit={
-          method === 'new' ? addContribution : updateContribution
-        }
-        modal={openForm}
-        setModal={setOpenForm}
-        data={formData}
-        reset={method === 'new' ? resetAdd : resetUpdate}
-        submitError={
-          method === 'new'
-            ? addErrorContribution
-            : updateErrorContribution
-        }
-        url={() => {
-          getUrl(formData.status)
+        modal={modal}
+        setModal={setModal}
+        submit={() => submitForm(draftData, 'publish')}
+        message={`Are you sure you want to publish this ${capitalizeText(
+          (draftData && draftData.category) || ''
+        )}?`}
+        subcontent=""
+        cancel={() => {
+          setRedirectUrl(null)
+          setdraftData(null)
+          formikRef.current.setFieldValue('status', 'draft')
         }}
-        status={formData.status}
+        isLoading={isLoading}
       />
       <ModalDialog
-        type={capitalizeText(type)}
-        header=""
-        content={` Save this ${capitalizeText(
-          type
-        )} as Draft and proceed?`}
-        method={method}
-        submitLoading={
-          method === 'new'
-            ? addLoadingContribution
-            : updateIsLoadingContribution
-        }
-        submitSuccess={
-          method === 'new'
-            ? addIsSuccessContribution
-            : updateIsSuccessContribution
-        }
-        submit={
-          method === 'new' ? addContribution : updateContribution
-        }
-        modal={openDraft}
-        setModal={setOpenDraft}
-        data={formData}
-        reset={method === 'new' ? resetAdd : resetUpdate}
-        submitError={
-          method === 'new'
-            ? addErrorContribution
-            : updateErrorContribution
-        }
-        url={() => {
-          getUrl(formData.status)
-          formikRef.current.setFieldValue('subject', '')
-          formikRef.current.setFieldValue('details', '')
+        modal={confirmation}
+        setModal={setConfirmation}
+        submit={async () => {
+          await submitForm(draftData)
+
+          if (back) {
+            history.push(
+              `/contribution?list=${
+                draftData.category === 'question'
+                  ? draftData.id
+                  : draftData.mainParentId
+              }&active=${draftData.id}&from=home`
+            )
+          }
         }}
-        status={formData.status}
+        message={`${
+          back
+            ? `Are you sure you want to exit ${
+                draftData && capitalizeText(draftData.category)
+              } form?`
+            : `Are you sure you want to exit ${
+                draftData && capitalizeText(draftData.category)
+              } and proceed to ${
+                (draftData &&
+                  draftData.category === 'question' &&
+                  'Hypothesis') ||
+                (draftData &&
+                  draftData.category === 'hypothesis' &&
+                  'Experiment') ||
+                (draftData &&
+                  draftData.category === 'experiment' &&
+                  'Data') ||
+                (draftData &&
+                  draftData.category === 'data' &&
+                  'Analysis')
+              }? ${
+                draftData && capitalizeText(draftData.category)
+              } is already saved as draft.`
+        }`}
+        subcontent=""
+        proceed
+        cancel={() => {
+          setRedirectUrl(null)
+          setdraftData(null)
+          formikRef.current.setFieldValue('status', 'draft')
+        }}
       />
-      <ModalDelete
-        header={`Delete a ${
-          data ? capitalizeText(data.category) : ''
-        }`}
-        content={`Are you sure you want to delete this ${
-          data ? capitalizeText(data.category) : ''
-        }`}
-        deleteItem={deleteContribution}
-        deleteIsLoadingContribution={deleteIsLoadingContribution}
-        deleteMutate={deleteMutate}
-        url={() => {
-          return type === 'question'
-            ? history.push('/')
-            : history.push(
-                `/contribution/${
-                  data.parentQuestionId || questionUuid
-                }`,
-                {
-                  from: 'home'
-                }
+      <ModalDialog
+        modal={navigation}
+        setModal={setNavigation}
+        submit={() => {
+          if (redirectUrl && draftData) {
+            if (draftData.category === 'question') {
+              history.push(`/contribution-form/hypothesis/new`, {
+                type: 'new',
+                data: draftData
+              })
+            }
+            if (draftData.category === 'hypothesis') {
+              history.push(`/contribution-form/experiment/new`, {
+                type: 'new',
+                data: draftData
+              })
+            }
+            if (draftData.category === 'experiment') {
+              history.push(`/contribution-form/data/new`, {
+                type: 'new',
+                data: draftData
+              })
+            }
+            if (draftData.category === 'data') {
+              history.push(`/contribution-form/analysis/new`, {
+                type: 'new',
+                data: draftData
+              })
+            }
+          } else if (draftData) {
+            if (draftData.category === 'question') {
+              history.push(
+                `/contribution?list=${draftData.id}&active=${draftData.id}&from=home`
               )
+            } else {
+              history.push(
+                `/contribution?list=${
+                  draftData.mainParentId ||
+                  draftData.parentId ||
+                  draftData.id
+                }&active=${draftData.id}&from=home`
+              )
+            }
+          }
         }}
-        id={data ? data.id : null}
-        deleteForm={deleteForm}
-        setDeleteForm={setDeleteForm}
-        subContent="This will delete all child contributions attached to this question."
-      />
-      <ModalDelete
-        header="Delete Related Media"
-        content="Are you sure you want to delete this Related Media?"
-        deleteItem={deletedRelatedMedia}
-        deleteIsLoadingContribution={deleteIsLoadingRelatedMedia}
-        deleteMutate={deleteRelatedMediaMutate}
-        url={() => {
-          resetMediaDelete()
+        message={`${
+          back
+            ? `Are you sure you want to exit ${
+                draftData && capitalizeText(draftData.category)
+              } form?`
+            : `Are you sure you want to exit ${
+                draftData && capitalizeText(draftData.category)
+              } and proceed to ${
+                (draftData &&
+                  draftData.category === 'question' &&
+                  'Hypothesis') ||
+                (draftData &&
+                  draftData.category === 'hypothesis' &&
+                  'Experiment') ||
+                (draftData &&
+                  draftData.category === 'experiment' &&
+                  'Data') ||
+                (draftData &&
+                  draftData.category === 'data' &&
+                  'Analysis')
+              }? ${
+                draftData && capitalizeText(draftData.category)
+              } is already saved as draft.`
+        }`}
+        subcontent=""
+        proceed
+        cancel={() => {
+          setRedirectUrl(null)
+          setdraftData(null)
+          formikRef.current.setFieldValue('status', 'draft')
         }}
-        id={deleteMediaId}
-        setDeleteForm={setDeleteMedia}
-        deleteForm={deleteMedia}
       />
       <Formik
-        innerRef={formikRef}
-        enableReinitialize
         initialValues={{
-          category:
-            data && data.category && method === 'update'
-              ? data.draft && data.draft.id
-                ? data.draft.category
-                : data.category
-              : '',
+          category: type,
           subject:
-            data && data.subject && method === 'update'
-              ? data.draft && data.draft.id
-                ? data.draft.subject
-                : data.subject
-              : '',
+            (method === 'update' && props && props.subject) ||
+            '',
           details:
-            data && data.details && method === 'update'
-              ? data.draft && data.draft.id
-                ? data.draft.details
-                : data.details
-              : '',
+            (method === 'update' && props && props.details) ||
+            '',
           tags:
-            data && data.tags && method === 'update'
-              ? data.draft && data.draft.id
-                ? data.draft.tags
-                : data.tags
-              : [],
-          author:
-            data && data.author && method === 'update'
-              ? data.draft && data.draft.id
-                ? data.draft.author
-                : data.author
-              : profile && profile.lastName
-              ? [
-                  {
-                    id: profile.id,
-                    name: `${profile.firstName} ${
-                      profile.lastName ? profile.lastName : ''
-                    }`,
-                    userColor: profile.userColor
-                  }
-                ]
-              : [
-                  {
-                    id: profile && profile.id,
-                    name: `${profile && profile.firstName}`,
-                    userColor: profile && profile.userColor
-                  }
-                ],
+            (method === 'update' && props && props.tags) || [],
+          author: (method === 'update' &&
+            props &&
+            props.author) || [
+            {
+              id: profile && profile.id,
+              name: `${profile && profile.firstName} ${
+                profile && profile.lastName
+              }`,
+              userColor: profile && profile.userColor
+            }
+          ],
           userId: profile && profile.id,
-          status: 'publish',
-          conferenceId: (conference && conference.id) || null,
+          status:
+            (method === 'update' && props && props.status) ||
+            'draft',
           version: '1.0.0',
-          uuid: null,
-          parentId: null,
-          parentUuid: null,
-          relatedmedia: rMedia,
-          hypothesisStatus: 'supports',
-          conferenceName:
-            (conference && conference.conferenceName) || '',
-          presentationDetails:
-            (conference && conference.presentationDetails) || '',
-          startTime: (conference && conference.startTime) || '',
-          endTime: (conference && conference.endTime) || ''
+          relatedmedia: [{ title: '', description: '' }],
+          hypothesisStatus:
+            (method === 'update' &&
+              props &&
+              props.hypothesisStatus) ||
+            'supports',
+          conferenceId,
+          conferenceName: '',
+          presentationDetails: '',
+          startTime: '',
+          endTime: ''
         }}
+        innerRef={formikRef}
+        validationSchema={schema}
         defaultValue={{
           author: [
             userData &&
@@ -716,27 +547,20 @@ function ContributionForm({
               })
           ]
         }}
-        validationSchema={schema}
-        onSubmit={(values, { setSubmitting }) => {
-          submitForm(values, values.status)
-          setTimeout(() => {
-            setSubmitting(false)
-          }, 400)
+        onSubmit={async (values, { setSubmitting }) => {
+          submitForm(values)
+          await setSubmitting()
         }}
       >
         {({
           values,
           errors,
           handleChange,
-          handleBlur,
-          handleSubmit,
           setFieldValue,
-          isValid
+          isValid,
+          dirty
         }) => (
-          <Form
-            onSubmit={handleSubmit}
-            className={`${styles.form}`}
-          >
+          <Form>
             <Grid
               container
               direction="row"
@@ -744,101 +568,71 @@ function ContributionForm({
               alignItems="flex-start"
               spacing={2}
             >
-              <Grid item xs={12} sm={12}>
-                {(data &&
-                  data.children &&
-                  data.children.length <= 0 &&
-                  isValid) ||
-                (method === 'new' && isValid) ? (
-                  <button
+              <div
+                className={`${styles.btnBack}`}
+                style={{
+                  cursor: 'pointer',
+                  marginTop: '20px',
+                  marginLeft: '10px'
+                }}
+              >
+                <div className={`${styles.backNav}`}>
+                  <Typography
+                    className={`${styles.back}`}
+                    variant="h4"
                     onClick={() => {
-                      setFieldValue('status', 'draft')
                       setBack(true)
-                    }}
-                    type="submit"
-                    className={`${styles.btnBack}`}
-                  >
-                    <div className={`${styles.backNav}`}>
-                      <Typography
-                        className={`${styles.back}`}
-                        variant="h4"
-                      >
-                        <span className={`${styles.icon}`}>
-                          <img src={BackIcon} alt="back" />
-                        </span>
-                        Back
-                      </Typography>
-                    </div>
-                  </button>
-                ) : (
-                  <div
-                    onClick={() => {
-                      if (
-                        (data && data.parentQuestionId) ||
-                        questionUuid
-                      ) {
-                        history.push(
-                          `/contribution/${
-                            data.parentQuestionId || questionUuid
-                          }?list=${data && data.id}`,
-                          {
-                            from: 'home'
-                          }
-                        )
+                      if (draftData || (isValid && dirty)) {
+                        setConfirmation(!confirmation)
                       } else {
-                        history.goBack()
+                        history.push('/')
                       }
                     }}
-                    className={`${styles.btnBack}`}
                   >
-                    <div className={`${styles.backNav}`}>
-                      <Typography
-                        className={`${styles.back}`}
-                        variant="h4"
-                      >
-                        <span className={`${styles.icon}`}>
-                          <img src={BackIcon} alt="back" />
-                        </span>
-                        Back
-                      </Typography>
-                    </div>
-                  </div>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h1" gutterBottom>
-                  {method === 'new' ? 'Add' : 'Edit'}{' '}
-                  {capitalizeText(type)}
-                </Typography>
-              </Grid>
-              <Grid item sm={6}>
-                {data && data.draft === 'draft' && (
-                  <Typography
-                    className={`${styles.draftText}`}
-                    variant="subtitle1"
-                  >
-                    Saved as Draft{' '}
-                    {moment(new Date(data.updatedAt)).format(
-                      'lll'
-                    )}
+                    <span className={`${styles.icon}`}>
+                      <img src={BackIcon} alt="back" />
+                    </span>{' '}
+                    Back
                   </Typography>
-                )}
+                </div>
+              </div>
+              <Grid item xs={12} sm={10}>
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: 30,
+                    color: 'grey'
+                  }}
+                >
+                  <span>
+                    {lastSave &&
+                      `Last save: ${moment(lastSave).format(
+                        'lll'
+                      )}`}
+                  </span>
+                </div>
               </Grid>
               {type !== 'question' && method === 'new' ? (
                 <Grid item sm={12}>
                   <ContributionHeader
-                    data={data}
+                    data={props || draftData}
                     type={capitalizeText(type)}
                   />
                 </Grid>
               ) : null}
-              <Grid item sm={12}>
+              <Grid item sm={12} className="text2">
                 <Controls.Input
                   type="text"
-                  label={getSubjectLabel(type)}
                   name="subject"
+                  asterisk
+                  label={getSubjectLabel(type)}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onBlur={() => {
+                    if (isValid && dirty) {
+                      setdraftData(values)
+                      submitForm(values, 'draft')
+                    }
+                  }}
                   value={values.subject}
                   {...(errors &&
                     errors.subject && {
@@ -849,10 +643,22 @@ function ContributionForm({
               </Grid>
               <Grid item xs={12}>
                 <Controls.Quill
-                  label={getDetailsLabel(type)}
+                  className="text3 details"
                   name="details"
+                  asterisk
+                  label={getDetailsLabel(type)}
                   onChange={v => setFieldValue('details', v)}
+                  onBlur={() => {
+                    if (isValid && dirty) {
+                      submitForm(values, 'draft')
+                    }
+                  }}
                   value={values.details}
+                  {...(errors &&
+                    errors.details && {
+                      error: true,
+                      helperText: errors.details
+                    })}
                 />
               </Grid>
               {type === 'question' && (
@@ -868,7 +674,11 @@ function ContributionForm({
                       label="Conference Name"
                       name="conferenceName"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, 'draft')
+                        }
+                      }}
                       value={values.conferenceName}
                       {...(errors &&
                         errors.conferenceName && {
@@ -880,10 +690,14 @@ function ContributionForm({
                   <Grid item sm={2}>
                     <Controls.Input
                       type="date"
-                      label="Presentation Details"
+                      label="Presentation Date"
                       name="presentationDetails"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, 'draft')
+                        }
+                      }}
                       value={values.presentationDetails}
                       {...(errors &&
                         errors.presentationDetails && {
@@ -898,7 +712,11 @@ function ContributionForm({
                       label="Start Time GMT"
                       name="startTime"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, 'draft')
+                        }
+                      }}
                       value={values.startTime}
                       {...(errors &&
                         errors.startTime && {
@@ -913,7 +731,11 @@ function ContributionForm({
                       label="End Time GMT"
                       name="endTime"
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, 'draft')
+                        }
+                      }}
                       value={values.endTime}
                       {...(errors &&
                         errors.endTime && {
@@ -961,11 +783,13 @@ function ContributionForm({
                                         float: 'right',
                                         color: '#e84441'
                                       }}
-                                      onClick={() => {
+                                      onClick={async () => {
                                         if (value.id) {
-                                          setDeleteMedia(true)
-                                          setDeleteMediaId(
+                                          await deleteRelatedMediaMutate(
                                             value.id
+                                          )
+                                          arrayHelpers.remove(
+                                            index
                                           )
                                         } else {
                                           arrayHelpers.remove(
@@ -985,7 +809,14 @@ function ContributionForm({
                                     <Controls.Input
                                       name={`relatedmedia[${index}].title`}
                                       onChange={handleChange}
-                                      onBlur={handleBlur}
+                                      onBlur={() => {
+                                        if (isValid && dirty) {
+                                          submitForm(
+                                            values,
+                                            false
+                                          )
+                                        }
+                                      }}
                                       label="Media Title"
                                       value={value.title}
                                       {...(errors &&
@@ -1008,7 +839,14 @@ function ContributionForm({
                                     <Controls.Input
                                       name={`relatedmedia.${index}.link`}
                                       onChange={handleChange}
-                                      onBlur={handleBlur}
+                                      onBlur={() => {
+                                        if (isValid && dirty) {
+                                          submitForm(
+                                            values,
+                                            false
+                                          )
+                                        }
+                                      }}
                                       label="Media Link"
                                       value={value.link}
                                       {...(errors &&
@@ -1039,9 +877,6 @@ function ContributionForm({
                             spacing={2}
                           >
                             <Grid item xs={12}>
-                              <Divider variant="middle" />
-                            </Grid>
-                            <Grid item xs={12}>
                               <Button
                                 className="btn secondary padding-lr25"
                                 variant="outlined"
@@ -1055,11 +890,15 @@ function ContributionForm({
                                 ADD MEDIA
                               </Button>
                             </Grid>
+                            <Grid item xs={12}>
+                              <Divider variant="middle" />
+                            </Grid>
                           </Grid>
                         </div>
                       )}
                     />
                   </div>
+
                   <Grid item xs={12}>
                     <Controls.MultiSelect
                       onChange={(e, options) => {
@@ -1067,6 +906,11 @@ function ContributionForm({
                           return val
                         })
                         setFieldValue('tags', arr)
+                      }}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, 'draft')
+                        }
                       }}
                       name="tags"
                       label="Add tags to help people find your contribution"
@@ -1105,6 +949,11 @@ function ContributionForm({
                         )
                         await setFieldValue('author', filterArr)
                       }}
+                      onBlur={() => {
+                        if (isValid && dirty) {
+                          submitForm(values, 'draft')
+                        }
+                      }}
                       name="author"
                       asterisk
                       label="Authors"
@@ -1112,7 +961,7 @@ function ContributionForm({
                       options={userData || []}
                       {...(errors.author && {
                         error: true,
-                        helperText: errors.author.message
+                        helperText: errors.author
                       })}
                       defaultValue={values.author}
                       value={values.author}
@@ -1132,6 +981,11 @@ function ContributionForm({
                         e.target.value
                       )
                     }}
+                    onBlur={() => {
+                      if (isValid && dirty) {
+                        submitForm(values, 'draft')
+                      }
+                    }}
                     value={values.hypothesisStatus}
                     {...(errors.hypothesisStatus && {
                       error: true,
@@ -1145,59 +999,47 @@ function ContributionForm({
                 className={`${styles.btnContainer}`}
                 xs={12}
               >
-                {method === 'new' ? (
-                  type !== 'analysis' ? (
-                    <Button
-                      className="btn secondary submitBtn mr-30 mb-15m"
-                      variant="outlined"
-                      onClick={() => {
-                        setFieldValue('status', 'draft')
-                        setAdd(true)
-                      }}
-                      type="submit"
-                    >
-                      ADD{' '}
-                      {type === 'question' ? 'Hypothesis' : ''}
-                      {type === 'hypothesis' ? 'Experiment' : ''}
-                      {type === 'experiment' ? 'Data' : ''}
-                      {type === 'data' ? 'Analysis' : ''}
-                    </Button>
-                  ) : null
-                ) : null}
-                {method === 'update' ? (
+                {type !== 'analysis' && method === 'new' && (
                   <Button
-                    className="btn delete submitBtn mr-30 mb-15m"
+                    className="btn secondary submitBtn mr-30 mb-15m"
                     variant="outlined"
-                    onClick={() => {
-                      setDeleteForm(true)
+                    style={{ position: 'absolute', right: 200 }}
+                    disabled={!(isValid && dirty)}
+                    onClick={async () => {
+                      await setRedirectUrl('new-contribution')
+                      if (!draftData) {
+                        await setdraftData(values)
+                        await setConfirmation(!confirmation)
+                      } else {
+                        setNavigation(!navigation)
+                      }
                     }}
                   >
-                    DELETE
+                    ADD {type === 'question' ? 'Hypothesis' : ''}
+                    {type === 'hypothesis' ? 'Experiment' : ''}
+                    {type === 'experiment' ? 'Data' : ''}
+                    {type === 'data' ? 'Analysis' : ''}
                   </Button>
-                ) : null}
-                {(profile &&
-                  profile.role === 'admin' &&
-                  data &&
-                  data.userId === profile.id) ||
-                (profile &&
-                  profile.role !== 'admin' &&
-                  data &&
-                  data.userId === profile.id) ||
-                (data && data.userId === profile.id) ||
-                method === 'new' ? (
-                  <Button
-                    type="submit"
-                    className="btn primary submitBtn"
-                    variant="contained"
-                    // disabled={}
-                    onClick={() => {
-                      setFieldValue('status', 'publish')
-                      scrollToErrors(errors)
-                    }}
-                  >
-                    PUBLISH NOW
-                  </Button>
-                ) : null}
+                )}
+                <Button
+                  className="btn primary submitBtn publish"
+                  variant="contained"
+                  style={{ position: 'absolute', right: 22 }}
+                  disabled={!(isValid && dirty)}
+                  onClick={async () => {
+                    scrollToErrors(errors)
+                    const temp = values
+                    await submitForm(values, 'draft')
+                    if (draftData) {
+                      temp.id = draftData.id
+                    }
+                    await setdraftData(temp)
+                    await setRedirectUrl('hierarchy')
+                    await setModal(!modal)
+                  }}
+                >
+                  {method === 'new' ? 'PUBLISH' : 'UPDATE'}
+                </Button>
               </Grid>
             </Grid>
             <FormikErrorFocus

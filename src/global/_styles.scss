@@ -54,6 +54,23 @@ $spacers: (
   }
 }
 
+.tour {
+  max-width: 461px!important;
+  border-radius: 8px!important;
+}
+
+.topImg {
+  position: absolute;
+  top: -28px;
+  right: -30px;
+}
+
+.bottomImg {
+  position: absolute;
+  bottom: -32px;
+  left: -30px;
+}
+
 /** Helper Classes **/
 .padding {
   &-40 {
@@ -316,6 +333,14 @@ hr.MuiDivider-root {
     resize: vertical;
   }
 
+  .ql-snow * {
+    background-color: white;
+  }
+
+  .ql-snow {
+    background-color: white;
+  }
+
   .quill.input {
     background: $white;
     border-radius: 8px;
@@ -324,10 +349,12 @@ hr.MuiDivider-root {
     letter-spacing: 0.1px;
     line-height: 19px;
     .ql-toolbar.ql-snow {
+      background-color: white;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
     }
     .ql-container.ql-snow {
+      background-color: white;
       min-height: 200px;
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
@@ -472,18 +499,33 @@ hr.MuiDivider-root {
 span {
   &.question {
     color: $yellow;
+    background-color: #FDF4DC;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
   }
   &.hypothesis {
     color: $orange;
+    background-color: #FCEDDC;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
   }
   &.experiment {
     color: $green;
+    background-color: #DAF3E4;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
   }
   &.data {
     color: $indigo;
+    background-color: #DFE9F8;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
   }
   &.analysis {
     color: $purple;
+    background-color: #E9E2EC;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
   }
 }
 

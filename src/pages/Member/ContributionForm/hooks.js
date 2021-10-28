@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from 'react-query'
 import { queryClient } from 'store/state'
+import { toast } from 'material-react-toastify'
+import { useHistory } from 'react-router-dom'
+import capitalizeText from 'utils/parsing/capitalize'
 import {
   getUserAPI,
   getTagsAPI,
@@ -19,7 +22,8 @@ import {
   RELATEDMEDIA_DELETE_QUERY_KEY
 } from './constants'
 
-export const useQuestionForm = id => {
+export const useQuestionForm = (id, redirectUrl) => {
+  const history = useHistory()
   const { data: user, refetch: userFetch } = useQuery(
     USER_QUERY_KEY,
     getUserAPI,
@@ -40,8 +44,8 @@ export const useQuestionForm = id => {
     data: relatedMedia,
     refetch: relatedMediaFetch
   } = useQuery(
-    [RELATEDMEDIA_GET_QUERY_KEY, { id }],
-    getRelatedMediaAPI,
+    RELATEDMEDIA_GET_QUERY_KEY,
+    () => getRelatedMediaAPI(id),
     {
       enabled: false
     }
@@ -55,7 +59,71 @@ export const useQuestionForm = id => {
     isSuccess: addIsSuccessContribution,
     reset: resetAdd
   } = useMutation(postContributionAPI, {
-    onSuccess: () => {
+    onSuccess: data => {
+      queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
+      if (redirectUrl && redirectUrl === 'hierarchy') {
+        if (data.data) {
+          if (data.data.status === 'publish') {
+            toast.success(
+              `${capitalizeText(
+                data.data.category
+              )} contribution was published successfully.`
+            )
+          }
+          if (data.data.category === 'question') {
+            history.push(
+              `/contribution?list=${data.data.id}&active=${data.data.id}&from=home`
+            )
+          } else {
+            history.push(
+              `/contribution?list=${
+                data.data.mainParentId ||
+                data.data.parentId ||
+                data.data.id
+              }&active=${
+                data.data.mainParentId || data.data.id
+              }&from=home`
+            )
+          }
+        }
+      }
+      if (redirectUrl && redirectUrl === 'new-contribution') {
+        if (data.data) {
+          if (data.data.status === 'publish') {
+            toast.success(
+              `${capitalizeText(
+                data.data.category
+              )} contribution was published successfully.`
+            )
+          }
+          if (data.data.category === 'question') {
+            history.push(`/contribution-form/hypothesis/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+          if (data.data.category === 'hypothesis') {
+            history.push(`/contribution-form/experiment/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+          if (data.data.category === 'experiment') {
+            history.push(`/contribution-form/data/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+          if (data.data.category === 'data') {
+            history.push(`/contribution-form/analysis/new`, {
+              type: 'new',
+              data: data.data
+            })
+          }
+        }
+      }
+    },
+    onError: () => {
       queryClient.invalidateQueries(CONTRIBUTION_POST_QUERY_KEY)
     }
   })
@@ -98,9 +166,51 @@ export const useQuestionForm = id => {
     isSuccess: updateIsSuccessContribution,
     reset: resetUpdate
   } = useMutation(putContributionAPI, {
-    onSuccess: () => {
-      relatedMediaFetch()
+    onSuccess: data => {
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
+      if (data && data.data && data.data.status === 'publish') {
+        if (window.location.href.split('/').pop() === 'new') {
+          toast.success(
+            `${capitalizeText(
+              data.data.category
+            )} contribution was published successfully.`
+          )
+          if (data.data.category === 'question') {
+            history.push(
+              `/contribution?list=${data.data.id}&active=${data.data.id}&from=home`
+            )
+          } else {
+            history.push(
+              `/contribution?list=${
+                data.data.mainParentId ||
+                data.data.parentId ||
+                data.data.id
+              }&active=${data.data.id}&from=home`
+            )
+          }
+        } else if (
+          window.location.href.split('/').pop() === 'update'
+        ) {
+          toast.success(
+            `${capitalizeText(
+              data.data.category
+            )} contribution was updated successfully.`
+          )
+          if (data.data.category === 'question') {
+            history.push(
+              `/contribution?list=${data.data.id}&active=${data.data.id}&from=home`
+            )
+          } else {
+            history.push(
+              `/contribution?list=${
+                data.data.mainParentId ||
+                data.data.parentId ||
+                data.data.id
+              }&active=${data.data.id}&from=home`
+            )
+          }
+        }
+      }
     }
   })
 
@@ -120,7 +230,8 @@ export const useQuestionForm = id => {
     addErrorContribution,
     addIsSuccessContribution,
     resetAdd,
-
+    isLoading:
+      addLoadingContribution || updateIsLoadingContribution,
     updateContribution: updateMutate,
     updatedContribution,
     updateIsLoadingContribution,

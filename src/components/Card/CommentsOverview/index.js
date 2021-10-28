@@ -28,8 +28,7 @@ const CommentsOverview = ({
     deleteComment,
     deleteIsLoadingComment,
     // deleteErrorComment,
-    deleteMutate,
-    resetCommentDelete
+    deleteMutate
     // deleteIsSuccessComment,
   } = useComments(contributionId)
 
@@ -72,14 +71,6 @@ const CommentsOverview = ({
     }
   }
 
-  const handleReset = () => {
-    if (editing) {
-      setEditing(false)
-      // resetCommentUpdate()
-    }
-    reset({ comment: '' })
-  }
-
   const handleDelete = data => {
     setDeleteForm(true)
     setActiveComment(data.id)
@@ -107,10 +98,6 @@ const CommentsOverview = ({
         id={activeComment}
         deleteForm={deleteForm}
         setDeleteForm={setDeleteForm}
-        url={() => {
-          setDeleteForm(!deleteForm)
-          resetCommentDelete()
-        }}
       />
       <div className={`${styles.commentsWrapper}`}>
         <div
@@ -134,16 +121,24 @@ const CommentsOverview = ({
             className={`${styles.form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Controls.Textarea
-              className={`${styles.input}`}
-              name="comment"
-              control={control}
-              disabled={!hasSession}
-              placeholder="Write a comment..."
-              addedComment={addedComment}
-              addLoadingComment={addLoadingComment}
-              addErrorComment={addErrorComment}
-            />
+            <div
+              onClick={() => {
+                if (!hasSession) {
+                  setModal(true)
+                }
+              }}
+            >
+              <Controls.Textarea
+                className={`${styles.input}`}
+                name="comment"
+                control={control}
+                disabled={!hasSession}
+                placeholder="Write a comment..."
+                addedComment={addedComment}
+                addLoadingComment={addLoadingComment}
+                addErrorComment={addErrorComment}
+              />
+            </div>
             <Button
               type="submit"
               className={`${styles.submitBtn} btn primary`}
@@ -155,27 +150,6 @@ const CommentsOverview = ({
             >
               {editing ? 'UPDATE' : 'ADD'}
             </Button>
-            <Button
-              onClick={() => handleReset()}
-              className={`${styles.clearBtn} btn secondary`}
-            >
-              CANCEL
-            </Button>
-            {/* {editing && (
-              <Typography className={`${styles.editMeta}`}>
-                Escape to
-                <span className={`${styles.metaButton}`}>
-                  Cancel
-                </span>
-                <span className={`${styles.metaDivider}`}>
-                  ·
-                </span>
-                Enter to
-                <span className={`${styles.metaButton}`}>
-                  Save
-                </span>
-              </Typography>
-            )} */}
           </form>
         </div>
         {(comments || []).map(data => {

@@ -1,12 +1,24 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { useHistory } from 'react-router-dom'
 import { queryClient, useGlobalState } from 'store/state'
 
-import { postUserAPI } from './api'
-import { USER_LOGIN_KEY } from './constants'
+import { postUserAPI, putEmail, getOrcidId } from './api'
+import {
+  USER_LOGIN_KEY,
+  PUT_EMAIL,
+  GET_ORCID
+} from './constants'
 
-export const useUser = () => {
+export const useUser = id => {
   const history = useHistory()
+
+  const {
+    data: orcidData,
+    refetch: refetchOrcidData
+  } = useQuery(GET_ORCID, () => getOrcidId(id), {
+    enabled: false
+  })
+
   const {
     data: addedData,
     isLoading: addTodoLoading,
@@ -19,10 +31,27 @@ export const useUser = () => {
     }
   })
 
+  const {
+    data: updatedEmail,
+    isLoading: updateIsLoadingEmail,
+    error: updateErrorEmail,
+    mutate: updateMutate,
+    isSuccess: updateIsSuccessEmail,
+    reset: resetEmailUpdate
+  } = useMutation(putEmail, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(PUT_EMAIL)
+    }
+  })
+
   const globalState = useGlobalState()
 
   if (isSuccess) {
-    globalState.merge({ user: addedData, isLoggedIn: true })
+    globalState.merge({
+      user: addedData,
+      isLoggedIn: true,
+      login: true
+    })
     history.push('/')
   }
 
@@ -31,6 +60,16 @@ export const useUser = () => {
     addedData,
     addTodoLoading,
     addToDoError,
-    isSuccess
+    isSuccess,
+
+    updatedEmail,
+    updateIsLoadingEmail,
+    updateErrorEmail,
+    updateMutate,
+    updateIsSuccessEmail,
+    resetEmailUpdate,
+
+    orcidData,
+    refetchOrcidData
   }
 }

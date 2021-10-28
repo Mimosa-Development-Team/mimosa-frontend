@@ -14,9 +14,9 @@ import loader from 'assets/images/loader_loading.gif'
 import SortFilter from 'components/SortFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import LoginModal from 'components/Dialog/login'
+import TooltipUi from '../../../components/Tooltip'
 import { ROUTES, PRIVATE_ROUTES } from '../constants'
 import styles from './style.module.scss'
-import Banner from './components/Banner'
 import SearchResults from './components/SearchResults'
 import { useQuestions, useResults } from './hooks'
 
@@ -33,7 +33,11 @@ const MemberDashboard = ({ user, hasSession }) => {
   } = useQuestions(orderBy, !isEmpty(user) ? user.user.id : null)
   const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
-  const { results, getResults } = useResults(search)
+  const {
+    results,
+    getResults,
+    isLoading: resultLoading
+  } = useResults(search)
   const [sort, setSort] = useState('Most Recent')
   const [modal, setModal] = useState(false)
 
@@ -114,42 +118,37 @@ const MemberDashboard = ({ user, hasSession }) => {
                 search={search}
                 className={`${styles.searchBox}`}
               />
-              <Button
-                className="btn primary"
-                size="large"
-                variant="contained"
-                onClick={() => {
-                  if (hasSession) {
-                    history.push(
-                      '/contribution-form/question/new',
-                      {
-                        type: 'new'
-                      }
-                    )
-                  } else {
-                    setModal(true)
-                  }
-                }}
+              <TooltipUi
+                title="Create new Question"
+                style={{ padding: '10px' }}
+                arrow
               >
-                <AddBoxIcon /> NEW QUESTION
-              </Button>
+                <Button
+                  className="btn primary questionClass"
+                  size="large"
+                  variant="contained"
+                  onClick={() => {
+                    if (hasSession) {
+                      history.push(
+                        '/contribution-form/question/new'
+                      )
+                    } else {
+                      setModal(true)
+                    }
+                  }}
+                >
+                  <AddBoxIcon /> NEW QUESTION
+                </Button>
+              </TooltipUi>
             </div>
             {showResults ? (
               <SearchResults
+                resultLoading={resultLoading}
                 searchTerm={search}
                 data={results}
               />
             ) : (
               <>
-                <div className={`${styles.homeBanner}`}>
-                  <Typography
-                    className={`${styles.title}`}
-                    variant="h1"
-                  >
-                    Home
-                  </Typography>
-                  <Banner />
-                </div>
                 {questions ? (
                   <>
                     <div className={`${styles.paperListHeader}`}>
@@ -157,7 +156,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                         className={`${styles.title}`}
                         variant="h5"
                       >
-                        Contribution List
+                        Paper List
                       </Typography>
                       <div className={`${styles.sortWrapper}`}>
                         <Typography
@@ -172,59 +171,63 @@ const MemberDashboard = ({ user, hasSession }) => {
                         />
                       </div>
                     </div>
-                    <div id="test">
+                    <div id="test" className="test">
                       {questions.pages.map((group, i) => (
                         <React.Fragment key={i}>
                           {group.draftQuestions.map(
                             (data, index) => (
                               <div
                                 key={index}
-                                className={`${styles.content}`}
-                                onClick={() => {
-                                  //if click from draft
-                                  data.showDraft = true
-                                  history.push(
-                                    `/contribution/${
-                                      data.category ===
-                                      'question'
-                                        ? data.uuid
-                                        : data.parentQuestionUuid
-                                    }?list=${data.id}`,
-                                    {
-                                      state: data,
-                                      from: 'home'
-                                    }
-                                  )
-                                }}
+                                className={`${styles.content} cardlist`}
                               >
                                 <Card
+                                  click={() => {
+                                    history.push(
+                                      `/contribution?list=${data.id}&active=${data.id}&from=home`,
+                                      {
+                                        state: data,
+                                        from: 'home'
+                                      }
+                                    )
+                                  }}
                                   data={data}
                                   form={false}
                                   linesToShow={5}
                                   hideEdit
-                                  showDraft
+                                  showDraft={
+                                    user &&
+                                    user.user &&
+                                    user.user.id === data.userId
+                                  }
                                   user={user}
                                   hasSession={hasSession}
                                 />
                               </div>
                             )
                           )}
-                          {group.data.map((data, index) => (
+                          {group?.data.map((data, index) => (
                             <div
                               key={index}
-                              className={`${styles.content}`}
-                              onClick={() => {
-                                // if click not from draft
-                                history.push(
-                                  `/contribution/${data.uuid}?list=${data.id}`,
-                                  {
-                                    state: data,
-                                    from: 'home'
-                                  }
-                                )
-                              }}
+                              className={`${
+                                styles.content
+                              } ${`test`}`}
                             >
                               <Card
+                                click={() => {
+                                  history.push(
+                                    `/contribution?list=${data.id}&active=${data.id}&from=home`,
+                                    {
+                                      state: data,
+                                      from: 'home'
+                                    }
+                                  )
+                                }}
+                                showDraft={
+                                  user &&
+                                  user.user &&
+                                  user.user.id === data.userId
+                                }
+                                detailsClickable={false}
                                 data={data}
                                 form={false}
                                 linesToShow={5}

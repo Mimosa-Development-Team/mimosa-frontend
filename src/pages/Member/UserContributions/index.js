@@ -79,7 +79,7 @@ const UserContributions = ({ user, hasSession }) => {
             scrollableTarget="scrollableList"
           >
             <Typography className="mb-20" variant="h1">
-              My Contributions
+              User Profile
             </Typography>
             {userContributions ? (
               <Dashboard
@@ -126,17 +126,28 @@ const UserContributions = ({ user, hasSession }) => {
                           <div
                             key={index}
                             className={`${styles.content}`}
-                            onClick={() => {
-                              history.push(
-                                `/contribution/${data.parentQuestionUuid}?list=${data.id}`,
-                                {
-                                  state: data,
-                                  from: 'my-contribution'
-                                }
-                              )
-                            }}
+                            data-tut={`${
+                              i === 0 && 'reactour__state'
+                            }`}
                           >
                             <Card
+                              click={() => {
+                                history.push(
+                                  `/contribution?list=${
+                                    data.mainParentId || data.id
+                                  }&active=${
+                                    data.id
+                                  }&from=profile`,
+                                  {
+                                    state: data,
+                                    from: 'my-contribution'
+                                  }
+                                )
+                              }}
+                              showDraft={
+                                `${user && user.user.id}` ===
+                                `${data && data.userId}`
+                              }
                               data={data}
                               form={false}
                               linesToShow={5}

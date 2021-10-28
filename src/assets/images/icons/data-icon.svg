@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="15px" viewBox="0 0 20 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>DA3B73C8-2DEF-4E47-B8DF-C73FE0D87529</title>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="home---question" transform="translate(-375.000000, -822.000000)">
+            <g id="Group-12" transform="translate(365.000000, 814.000000)">
+                <g id="Group-9" transform="translate(11.000000, 8.000000)">
+                    <path d="M5.4588,13.988 L1.5348,13.988 L1.5348,4.117 C1.5348,3.234 2.2508,2.518 3.1338,2.518 L3.8598,2.518 C4.7428,2.518 5.4588,3.234 5.4588,4.117 L5.4588,13.988 Z" id="Fill-1" fill="#40BD58"></path>
+                    <path d="M10.6617,13.988 L6.7377,13.988 L6.7377,7.453 C6.7377,6.692 7.3557,6.075 8.1167,6.075 L9.2827,6.075 C10.0447,6.075 10.6617,6.692 10.6617,7.453 L10.6617,13.988 Z" id="Fill-3" fill="#DE2D44"></path>
+                    <path d="M16.0352,13.988 L12.1112,13.988 L12.1112,1.273 C12.1112,0.57 12.6812,0 13.3842,0 L14.7622,0 C15.4652,0 16.0352,0.57 16.0352,1.273 L16.0352,13.988 Z" id="Fill-5" fill="#557CE0"></path>
+                    <line x1="0" y1="13.8174" x2="17.514" y2="13.8174" id="Stroke-7" stroke="#171A46" stroke-width="2" stroke-linecap="round"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

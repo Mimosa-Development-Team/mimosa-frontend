@@ -1,43 +1,64 @@
 @import '~global/styles';
 
+.modal {
+  display: 'flex';
+  align-items: 'center';
+  justify-content: 'center';
+  background-color: white;
+  opacity: 1;
+  width: 350px;
+  height: 200px;
+  border-radius: 20px;
+  text-align: center;
+}
+
 .dashboardWrapper {
   background: $white;
   border: 1px solid $lightgray;
   border-radius: 8px;
   padding: 24px 42px;
-  display: flex;
   justify-content: space-between;
 
-  .userInfo {
-    display: flex;
-    align-items: center;
-    .avatar {
-      width: 105px;
-      height: 105px;
-      span {
-        font-family: 'Roboto-Bold';
-        font-size: 60px;
-        letter-spacing: 0.38px;
-        line-height: 71px;
-        text-align: center;
-        position: relative;
-        top: 2px;
-      }
+  .avatar {
+    width: 105px;
+    height: 105px;
+    span {
+      font-family: 'Roboto-Bold';
+      font-size: 60px;
+      letter-spacing: 0.38px;
+      line-height: 71px;
+      text-align: center;
+      position: relative;
+      top: 2px;
     }
-    .userName {
-      margin-left: 30px;
-      font-family: 'Roboto-Medium';
-      font-size: 22px;
-      letter-spacing: 0.14px;
-      line-height: 25px;
-    }
+  }
+  .userName {
+    font-family: 'Roboto-Medium';
+    font-size: 22px;
+    letter-spacing: 0.14px;
+    line-height: 25px;
+  }
+
+  .mail {
+    font-family: 'Roboto';
+    font-size: 20px;
+    margin-left: 5px;
+    font-style: italic;
+    letter-spacing: 0.54px;
+    line-height: 25px;
+    cursor: pointer;
+  }
+
+  .icon {
+    vertical-align: 'middle';
+    display: 'inline-flex';
   }
 
   .contributionInfo {
     border-radius: 10px;
     background: $offwhite;
     padding: 15px 25px;
-    width: 25%;
+    width: 100%;
 
     ul {
       padding: 0;
@@ -70,7 +91,6 @@
 
 .content {
   margin-top: .5em;
-  cursor: pointer;
 }
 
 .loadMore {

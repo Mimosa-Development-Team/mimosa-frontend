@@ -10,7 +10,7 @@ const modules = {
   toolbar: [
     [{ header: '1' }, { header: '2' }, { font: [] }],
     [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    ['bold', 'italic', 'underline', 'strike'],
     [{ script: 'sub' }, { script: 'super' }],
     [
       { list: 'ordered' },
@@ -39,7 +39,6 @@ const formats = [
   'italic',
   'underline',
   'strike',
-  'blockquote',
   'list',
   'bullet',
   'indent',
@@ -51,7 +50,15 @@ const formats = [
 ]
 
 export default function Input(props) {
-  const { name, control, label, asterisk, ...propsList } = props
+  const {
+    name,
+    error,
+    helperText,
+    control,
+    label,
+    asterisk,
+    ...propsList
+  } = props
   return (
     <div className="inputWrapper">
       <InputLabel className="label">
@@ -65,6 +72,15 @@ export default function Input(props) {
         {...propsList}
         preserveWhitespace
       />
+      <span
+        style={{
+          color: '#f44336',
+          fontSize: '.75rem',
+          marginLeft: '14px'
+        }}
+      >
+        {helperText}
+      </span>
     </div>
   )
 }

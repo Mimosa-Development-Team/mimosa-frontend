@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from 'react-query'
+import { toast } from 'material-react-toastify'
 import { queryClient } from 'store/state'
 import { getRelatedMediaCountAPI } from '../Footer/api'
 import { RELATED_MEDIA_GET_COUNT_QUERY_KEY } from '../Footer/constants'
@@ -43,8 +44,14 @@ export const useMedia = id => {
   } = useMutation(postRelatedMedia, {
     onSuccess: () => {
       refetch()
+      toast.success('Related media was added successfully')
       getRelatedMediaCount()
       queryClient.invalidateQueries(MEDIA_POST_QUERY_KEY)
+    },
+    onError: () => {
+      toast.error(
+        'Unable to add related media. An error was encountered.'
+      )
     }
   })
 

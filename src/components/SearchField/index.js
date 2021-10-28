@@ -12,7 +12,8 @@ const SearchField = ({
   inputChange,
   inputSubmit,
   inputClear,
-  search
+  search,
+  faq
 }) => {
   return (
     <Paper
@@ -30,7 +31,11 @@ const SearchField = ({
       >
         <InputBase
           className={`${styles.input}`}
-          placeholder="Search for keywords, authors, tags"
+          placeholder={`${
+            faq
+              ? 'Search for topic and details'
+              : 'Search for keywords, authors, tags'
+          }`}
           inputProps={{ 'aria-label': 'search' }}
           onKeyUp={e => inputChange(e)}
         />

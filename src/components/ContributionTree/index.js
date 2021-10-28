@@ -1,6 +1,7 @@
+/* eslint-disable react/no-children-prop */
+import { Typography } from '@material-ui/core'
 import React from 'react'
-import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
+import capitalizeText from 'utils/parsing/capitalize'
 import styles from './styles.module.scss'
 
 const ContributionTree = ({
@@ -8,60 +9,60 @@ const ContributionTree = ({
   activeContribution,
   onTreeClick
 }) => {
-  const ConditionalWrapper = ({
-    condition,
-    wrapper,
-    children
-  }) => (condition ? wrapper(children) : children)
-  const CategoryWrapper = ({ data }) => {
+  const ListItem = ({ item }) => {
+    let children = null
+    if (item.children) {
+      children = (
+        <ul
+          className={`${
+            item.category === 'question'
+              ? styles.wtree
+              : styles.uitree
+          } ${styles.heirarchyList}`}
+        >
+          {item.children.map(i => (
+            <ListItem item={i} key={i.id} />
+          ))}
+        </ul>
+      )
+    }
     return (
-      <>
-        {data ? (
-          <>
-            <li
-              className={`${styles[data.category]} ${
-                data.id === activeContribution
-                  ? styles.active
-                  : ''
-              }`}
-              onClick={() => onTreeClick(data.id)}
-            >
-              {data.category.charAt(0)}
-            </li>
-            <ConditionalWrapper
-              condition={data.children.length > 1}
-              wrapper={children => (
-                <ul className={`${styles.subtree}`}>
-                  {children}
-                </ul>
-              )}
-            >
-              {(data.children || []).map((data, index) => {
-                return (
-                  <CategoryWrapper key={index} data={data} />
-                )
-              })}
-            </ConditionalWrapper>
-          </>
-        ) : null}
-      </>
+      <li style={{ listStyle: 'none' }}>
+        <span
+          className={`${styles.listtree} ${
+            styles[item.category]
+          } ${
+            activeContribution &&
+            item.id === activeContribution.id
+              ? styles.active
+              : ''
+          }`}
+          onClick={() => onTreeClick(item)}
+        >
+          {capitalizeText(item.category.charAt(0))}
+        </span>
+        {children}
+      </li>
     )
   }
+
   return (
-    <div className={`${styles.contributionTree}`}>
+    <div className={`${styles.main}`}>
       <Typography className={`${styles.title}`} variant="h5">
         Contribution Tree:
       </Typography>
-      <ul className={`${styles.tree}`}>
-        <CategoryWrapper data={contribution} />
-      </ul>
+      <div className={`${styles.heirarchyWrapper}`}>
+        <ul
+          className={`${styles.questionUl} ${styles.question}`}
+        >
+          {contribution &&
+            [contribution].map(i => (
+              <ListItem item={i} key={i.id} />
+            ))}
+        </ul>
+      </div>
     </div>
   )
-}
-
-ContributionTree.propTypes = {
-  contribution: PropTypes.object,
-  activeContribution: PropTypes.number
 }
 
 export default ContributionTree

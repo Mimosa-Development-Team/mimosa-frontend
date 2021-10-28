@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import {
   Modal,
   Typography,
@@ -28,13 +27,10 @@ export default function ModalDialog({
   deleteForm,
   setDeleteForm,
   id,
-  url,
   subContent,
-  category,
-  heirarchy
+  category
 }) {
   const classes = useStyles()
-  const history = useHistory()
 
   return (
     <Modal
@@ -75,54 +71,30 @@ export default function ModalDialog({
               : null}
           </Typography>
         </div>
-        {deleteItem ? (
+        <>
           <Button
             variant="outlined"
             className="btn outline"
             disabled={deleteIsLoadingItem}
             onClick={() => {
-              if (heirarchy && category === 'question') {
-                history.push('/')
-              } else if (heirarchy && category !== 'question') {
-                url()
-                setDeleteForm(!deleteForm)
-              } else if (category === 'question' && !heirarchy) {
-                history.goBack()
-              } else if (
-                url &&
-                category !== 'question' &&
-                !heirarchy
-              ) {
-                url()
-                setDeleteForm(!deleteForm)
-              } else {
-                setDeleteForm(!deleteForm)
-              }
+              setDeleteForm(!deleteForm)
             }}
+            style={{ left: -30 }}
           >
             CLOSE
           </Button>
-        ) : (
-          <>
-            <Button
-              className="btn outline mr-30"
-              variant="outlined"
-              disabled={deleteIsLoadingItem}
-              onClick={() => {
-                return url ? url() : setDeleteForm(!deleteForm)
-              }}
-            >
-              CLOSE
-            </Button>
-            <Button
-              variant="contained"
-              className="btn contained"
-              onClick={() => deleteMutate(id)}
-            >
-              DELETE
-            </Button>
-          </>
-        )}
+          <Button
+            variant="contained"
+            className="btn contained"
+            style={{ right: -30 }}
+            onClick={() => {
+              deleteMutate(id)
+              setDeleteForm(!deleteForm)
+            }}
+          >
+            DELETE
+          </Button>
+        </>
       </div>
     </Modal>
   )

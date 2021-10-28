@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
@@ -15,16 +16,18 @@ import styles from './styles.module.scss'
 
 const Question = ({ user, hasSession }) => {
   const queryParams = useQueryParams()
-  const id = queryParams.get('list')
+  const id = parseInt(queryParams.get('list'))
+  const active = parseInt(queryParams.get('active'))
   const {
     contribution,
     isLoading,
     remove,
-    getContribution
-  } = useContribution(hasSession ? user.user.id : null)
-  const [activeContribution, setActiveContribution] = useState(0)
-  const [from, setFrom] = useState('home')
-
+    getContribution,
+    singleRefetch
+  } = useContribution(id, active)
+  const [activeContribution, setActiveContribution] = useState(
+    contribution
+  )
   const contributionRef = useCallback(node => {
     if (node !== null) {
       node.scrollIntoView({
@@ -36,19 +39,17 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    window.history.pushState(null, null, `?list=${contribution}`)
+    window.history.pushState(null, null, ``)
   }
 
   const location = useLocation()
 
   useEffect(() => {
-    if (location.state && location.state.from) {
-      setFrom(location.state.from)
-    }
-    if (id) {
-      setActiveContribution(Number(id))
-    }
     getContribution()
+    singleRefetch().then(({ data }) => {
+      setActiveContribution(data && data.data)
+    })
+
     return () => {
       remove()
     }
@@ -70,7 +71,7 @@ const Question = ({ user, hasSession }) => {
         </div>
       ) : (
         <>
-          <PageContentWrapper backNav from={from}>
+          <PageContentWrapper backNav>
             <Typography
               className={`${styles.title}`}
               variant="h1"
@@ -78,6 +79,10 @@ const Question = ({ user, hasSession }) => {
               Question
             </Typography>
             <ContributionHierarchy
+              showDraft={`${
+                user && user.user && user.user.id
+              } === ${contribution && contribution.userId}`}
+              detailsClickable
               getContribution={getContribution}
               contribution={contribution}
               activeContribution={activeContribution}
@@ -85,11 +90,6 @@ const Question = ({ user, hasSession }) => {
               contributionRef={contributionRef}
               hasSession={hasSession}
               user={user}
-              showDraft={
-                location.state.state
-                  ? location.state.state.showDraft
-                  : false
-              }
             />
           </PageContentWrapper>
           <Hidden smDown implementation="css">
@@ -97,26 +97,8 @@ const Question = ({ user, hasSession }) => {
               <ContributionDetails
                 hasSession={hasSession}
                 user={user}
-                authors={
-                  // allow people to see the original, do not force draft
-                  // activeContribution.draft
-                  //   ? activeContribution.draft.author
-                  //   :
-                  activeContribution.author
-                }
-                poster={activeContribution.postedBy}
-                posterColor={
-                  activeContribution.userColorPoster
-                    ? activeContribution.userColorPoster
-                    : activeContribution.userColor
-                }
-                datePosted={activeContribution.createdAt}
-                dateModified={
-                  // activeContribution.draft
-                  //   ? activeContribution.draft.updatedAt
-                  //   :
-                  activeContribution.updatedAt
-                }
+                data={activeContribution}
+                activeContribution={activeContribution}
               />
             </RightSidebar>
           </Hidden>
