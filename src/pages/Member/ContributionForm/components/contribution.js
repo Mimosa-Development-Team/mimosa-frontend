@@ -151,7 +151,7 @@ const getSubjectLabel = val => {
     case 'data':
       return 'What is this dataset about?'
     case 'analysis':
-      return 'In one sentence, what is the conclusion fo your analysis? '
+      return 'In one sentence, what is the conclusion for your analysis? '
     default:
       return null
   }
