@@ -148,6 +148,7 @@ const UserContributions = ({ user, hasSession }) => {
                                 `${user && user.user.id}` ===
                                 `${data && data.userId}`
                               }
+                              detailsClickable
                               data={data}
                               form={false}
                               linesToShow={5}

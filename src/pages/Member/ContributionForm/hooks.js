@@ -169,7 +169,9 @@ export const useQuestionForm = (id, redirectUrl) => {
     onSuccess: data => {
       queryClient.invalidateQueries(CONTRIBUTION_PUT_QUERY_KEY)
       if (data && data.data && data.data.status === 'publish') {
-        if (window.location.href.split('/').pop() === 'new') {
+        if (
+          window.location.href.split('/').pop().includes('new')
+        ) {
           toast.success(
             `${capitalizeText(
               data.data.category
@@ -189,7 +191,10 @@ export const useQuestionForm = (id, redirectUrl) => {
             )
           }
         } else if (
-          window.location.href.split('/').pop() === 'update'
+          window.location.href
+            .split('/')
+            .pop()
+            .includes('update')
         ) {
           toast.success(
             `${capitalizeText(

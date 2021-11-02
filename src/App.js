@@ -57,12 +57,14 @@ const App = () => {
           />
         </Switch>
       </QueryClientProvider>
-      <Tour
-        open={open}
-        setOpen={setOpen}
-        user={user}
-        proxyUser={proxyUser}
-      />
+      {user && proxyUser && open && (
+        <Tour
+          open={open}
+          setOpen={setOpen}
+          user={user}
+          proxyUser={proxyUser}
+        />
+      )}
     </BrowserRouter>
   )
 }
@@ -82,13 +84,7 @@ const Tour = withRouter(
         content: () => (
           <div>
             <h2>Welcome to Mimosa</h2>
-            <p>
-              Lorem Ipsum, sometimes referred to as lipsum, is
-              the placeholder text used in design when creating
-              content. It helps designers plan out where the
-              content will sit, without needing to wait for the
-              content to be written and approved.2
-            </p>
+            <p>Click next to continue onboarding tour.</p>
             <img className="topImg" src={Top} />
             <img className="bottomImg" src={Bottom} />
           </div>

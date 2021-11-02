@@ -227,7 +227,7 @@ const MemberDashboard = ({ user, hasSession }) => {
                                   user.user &&
                                   user.user.id === data.userId
                                 }
-                                detailsClickable={false}
+                                detailsClickable
                                 data={data}
                                 form={false}
                                 linesToShow={5}
