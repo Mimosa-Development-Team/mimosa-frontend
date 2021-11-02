@@ -52,7 +52,7 @@ const schema = yup.object().shape({
   details: yup
     .string()
     .test('details', '** Mandatory Field', function (value) {
-      if (value.match(/<img/)) {
+      if (value && value.match(/<img/)) {
         return true
       }
       if (

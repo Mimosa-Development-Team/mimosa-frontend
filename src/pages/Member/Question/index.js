@@ -39,7 +39,8 @@ const Question = ({ user, hasSession }) => {
 
   const handleClick = contribution => {
     setActiveContribution(contribution)
-    window.history.pushState(null, null, ``)
+    const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?list=7&active=${contribution.id}&from=home`
+    window.history.pushState({ path: newurl }, '', newurl)
   }
 
   const location = useLocation()
