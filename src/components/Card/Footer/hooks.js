@@ -37,7 +37,9 @@ export const useQuestionForm = id => {
       if (data.data.category === 'question') {
         history.push('/')
       } else {
-        window.location.reload()
+        history.push(
+          `/contribution?list=${data.data.mainParentId}&active=${data.data.parentId}&from=home`
+        )
       }
     }
   })
