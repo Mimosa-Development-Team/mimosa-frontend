@@ -184,14 +184,7 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
               {notification &&
                 notification.map((x, i) => {
                   return (
-                    <div
-                      className={`${styles.comment}`}
-                      onClick={() => {
-                        history.push(
-                          `/contribution?list=${x.contributionId}&active=${x.contributionId}&from=home`
-                        )
-                      }}
-                    >
+                    <div className={`${styles.comment}`}>
                       <Grid container key={i}>
                         <Grid item xs={3}>
                           <Avatar
@@ -204,7 +197,15 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
                               x.mmUser.firstName.charAt(0)}
                           </Avatar>
                         </Grid>
-                        <Grid item xs={7}>
+                        <Grid
+                          item
+                          xs={7}
+                          onClick={() => {
+                            history.push(
+                              `/contribution?list=${x.contributionId}&active=${x.contributionId}&from=home`
+                            )
+                          }}
+                        >
                           <span>
                             <b>
                               {x.mmUser && x.mmUser.firstName}{' '}
@@ -255,7 +256,7 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
               marginBottom: '8px',
               cursor: 'pointer',
               position: 'fixed',
-              width: '395px',
+              width: '380px',
               borderBottomLeftRadius: '5px',
               borderBottomRightRadius: '5px'
             }}
