@@ -56,12 +56,13 @@ export default function Input(props) {
     helperText,
     control,
     label,
+    labelFor,
     asterisk,
     ...propsList
   } = props
   return (
     <div className="inputWrapper">
-      <InputLabel className="label">
+      <InputLabel className="label" for={labelFor}>
         {label}{' '}
         {asterisk ? <span className="required">*</span> : null}
       </InputLabel>

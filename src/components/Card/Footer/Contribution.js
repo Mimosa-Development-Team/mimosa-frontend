@@ -29,7 +29,7 @@ const ContributionCount = ({ contribution, data }) => {
                 : ContributionIcon
             }
             style={{ width: '15px', marginTop: '2px' }}
-            alt=""
+            alt="contributionimage"
           />
           {contribution}
           <span

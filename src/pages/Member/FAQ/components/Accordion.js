@@ -5,6 +5,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
+import uuid from 'react-uuid'
 import styles from './styles.module.scss'
 
 const TabPanel = ({ title, content }) => {
@@ -31,10 +32,14 @@ const TabPanel = ({ title, content }) => {
               <AddIcon style={{ color: '#EF8C20' }} />
             )
           }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
+          id={`panel1a-header-${uuid()}`}
         >
-          <Typography variant="h3">{title}</Typography>
+          <Typography
+            className={`${styles.h2style}`}
+            variant="span"
+          >
+            {title}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails
           className={`${styles.accordionDetails}`}

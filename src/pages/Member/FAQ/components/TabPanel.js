@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import uuid from 'react-uuid'
 import styles from './styles.module.scss'
 
 const TabPanel = ({ children, value, index, ...other }) => {
@@ -8,8 +9,7 @@ const TabPanel = ({ children, value, index, ...other }) => {
       className={`${styles.tabPanel}`}
       role="tabpanel"
       hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
+      id={`vertical-tabpanel-${uuid()}`}
       {...other}
     >
       {value === index && <div>{children}</div>}

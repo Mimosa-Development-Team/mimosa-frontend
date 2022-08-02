@@ -46,6 +46,7 @@ const MainNav = ({
           onClick={() => {
             history.push(`/`)
           }}
+          alt="logo"
         />
         {links
           .filter(link => link.location === 'top')
@@ -92,7 +93,7 @@ const MainNav = ({
               className={`${styles.navLink}`}
               onClick={handleClick}
             >
-              <img src={NotificationIcon} alt="" />
+              <img src={NotificationIcon} alt="user image" />
               Notifications
             </h1>
             <Notification

@@ -25,10 +25,12 @@ button {
     align-items: center;
   }
 
-  h5.meta {
+  h5.meta,
+  span.meta {
     font-family: 'Roboto';
     text-transform: none;
     color: $lightgray2;
+    display: inline-flex;
 
     &.author {
       display: inline-flex;

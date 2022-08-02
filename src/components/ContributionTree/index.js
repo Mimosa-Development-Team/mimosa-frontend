@@ -48,7 +48,7 @@ const ContributionTree = ({
 
   return (
     <div className={`${styles.main}`}>
-      <Typography className={`${styles.title}`} variant="h5">
+      <Typography className={`${styles.h5style}`} variant="span">
         Contribution Tree:
       </Typography>
       <div className={`${styles.heirarchyWrapper}`}>

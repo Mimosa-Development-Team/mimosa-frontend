@@ -17,7 +17,7 @@ const PageContentWrapper = ({ children, backNav }) => {
         <div className={`${styles.backNav}`}>
           <Typography
             className={`${styles.back}`}
-            variant="h4"
+            variant="span"
             onClick={() => {
               if (url === 'profile') {
                 history.push('/my-contributions')
