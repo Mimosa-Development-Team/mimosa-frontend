@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 const DateMeta = ({ data }) => {
   return (
     <div className={`${styles.metaWrapper}`}>
-      <Typography className={`${styles.meta}`} variant="h5">
+      <Typography className={`${styles.meta}`} variant="span">
         {(data && data.draft && data.draft.updatedAt) ||
         data.status === 'draft'
           ? moment(

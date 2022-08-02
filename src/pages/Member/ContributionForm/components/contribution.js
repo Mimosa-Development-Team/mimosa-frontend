@@ -579,7 +579,7 @@ function ContributionForm({
                 <div className={`${styles.backNav}`}>
                   <Typography
                     className={`${styles.back}`}
-                    variant="h4"
+                    variant="span"
                     onClick={() => {
                       setBack(true)
                       if (draftData || (isValid && dirty)) {
@@ -625,6 +625,8 @@ function ContributionForm({
                   type="text"
                   name="subject"
                   asterisk
+                  id="subject"
+                  labelFor="subject"
                   label={getSubjectLabel(type)}
                   onChange={handleChange}
                   onBlur={() => {
@@ -646,6 +648,8 @@ function ContributionForm({
                   className="text3 details"
                   name="details"
                   asterisk
+                  id="details"
+                  labelFor="details"
                   label={getDetailsLabel(type)}
                   onChange={v => setFieldValue('details', v)}
                   onBlur={() => {
@@ -671,7 +675,9 @@ function ContributionForm({
                   <Grid item sm={12}>
                     <Controls.Input
                       type="text"
-                      label="Conference Name"
+                      id="conferenceName"
+                      labelFor="conferenceName"
+                      label="conferenceName"
                       name="conferenceName"
                       onChange={handleChange}
                       onBlur={() => {
@@ -691,6 +697,8 @@ function ContributionForm({
                     <Controls.Input
                       type="date"
                       label="Presentation Date"
+                      id="presentationDetails"
+                      labelFor="presentationDetails"
                       name="presentationDetails"
                       onChange={handleChange}
                       onBlur={() => {
@@ -711,6 +719,8 @@ function ContributionForm({
                       type="time"
                       label="Start Time GMT"
                       name="startTime"
+                      id="startTime"
+                      labelFor="startTime"
                       onChange={handleChange}
                       onBlur={() => {
                         if (isValid && dirty) {
@@ -730,6 +740,8 @@ function ContributionForm({
                       type="time"
                       label="End Time GMT"
                       name="endTime"
+                      id="endTime"
+                      labelFor="endTime"
                       onChange={handleChange}
                       onBlur={() => {
                         if (isValid && dirty) {
@@ -801,6 +813,7 @@ function ContributionForm({
                                       <img
                                         src={DeleteIcon}
                                         className={`${styles.deleteIcon}`}
+                                        alt="delete icon"
                                       />{' '}
                                       Remove Media
                                     </Typography>
@@ -818,6 +831,8 @@ function ContributionForm({
                                         }
                                       }}
                                       label="Media Title"
+                                      id="mediatitle"
+                                      labelFor="mediatitle"
                                       value={value.title}
                                       {...(errors &&
                                         errors.relatedmedia &&
@@ -848,6 +863,8 @@ function ContributionForm({
                                         }
                                       }}
                                       label="Media Link"
+                                      id="medialink"
+                                      labelFor="medialink"
                                       value={value.link}
                                       {...(errors &&
                                         errors.relatedmedia &&

@@ -8,7 +8,7 @@ import styles from './styles.module.scss'
 const ContributionDetails = ({ data }) => {
   return (
     <div className={`${styles.contributionDetails}`}>
-      <Typography className={`${styles.title}`} variant="h5">
+      <Typography className={`${styles.title}`} variant="span">
         Contribution Details
       </Typography>
       {data && data.author.length > 0 && (

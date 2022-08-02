@@ -30,6 +30,7 @@ const About = ({ user, hasSession }) => {
               Mimosa is a platform for open collaboration in
               science. Read the Mimosa Manifesto{' '}
               <Link
+                className={`${styles.Linkstyle}`}
                 target="_blank"
                 href="https://drive.google.com/file/d/1A8FXj3euP9u8YCN1KZNAX-WkcM8Bdo_P/view"
               >
@@ -52,7 +53,10 @@ const About = ({ user, hasSession }) => {
               About Mimosa
             </Typography>
 
-            <Typography variant="h5" className="mb-20">
+            <Typography
+              className={`${styles.h5style}`}
+              variant="span"
+            >
               Who we are
             </Typography>
 
@@ -66,6 +70,7 @@ const About = ({ user, hasSession }) => {
               <p>
                 Invision design prototype:{' '}
                 <Link
+                  className={`${styles.Linkstyle}`}
                   target="_blank"
                   href="https://bit.ly/3t4RJNk"
                 >
@@ -74,6 +79,7 @@ const About = ({ user, hasSession }) => {
                 <br />
                 Google doc for comments:{' '}
                 <Link
+                  className={`${styles.Linkstyle}`}
                   target="_blank"
                   href="https://bit.ly/3cgEB0K"
                 >
@@ -82,6 +88,7 @@ const About = ({ user, hasSession }) => {
                 <br />
                 TL;DR in 7 slides:{' '}
                 <Link
+                  className={`${styles.Linkstyle}`}
                   target="_blank"
                   href="https://bit.ly/30wXwi8"
                 >
@@ -89,7 +96,9 @@ const About = ({ user, hasSession }) => {
                 </Link>
               </p>
 
-              <h4 className="mb-15">SCIENCE IS A DEBATE</h4>
+              <span className={`${styles.h4style}`}>
+                SCIENCE IS A DEBATE
+              </span>
 
               <p>
                 Debates happen where there is wiggle room for
@@ -173,7 +182,10 @@ const About = ({ user, hasSession }) => {
               </p>
             </Paper>
 
-            <Typography variant="h5" className="mb-10">
+            <Typography
+              className={`${styles.h6style}`}
+              variant="span"
+            >
               Media and Honors
             </Typography>
 
@@ -187,7 +199,10 @@ const About = ({ user, hasSession }) => {
               <div className={styles.iclr}>ICLR 2021</div>
             </div>
 
-            <Typography variant="h5" className="mb-10">
+            <Typography
+              className={`${styles.h6style}`}
+              variant="span"
+            >
               Special Thanks
             </Typography>
 
@@ -198,8 +213,8 @@ const About = ({ user, hasSession }) => {
 
             <Paper elevation={0} className={styles.contactPaper}>
               <Typography
-                variant="h3"
-                className={`${styles.title}`}
+                variant="span"
+                className={`${styles.h2style}`}
               >
                 Get in touch with us
               </Typography>
@@ -207,6 +222,7 @@ const About = ({ user, hasSession }) => {
               <Typography className="mb-10">
                 Contact{' '}
                 <Link
+                  className={`${styles.Linkstyle}`}
                   target="_blank"
                   href="mailto:hello@openmimosa.org"
                 >
@@ -220,6 +236,7 @@ const About = ({ user, hasSession }) => {
 
               <Typography className="mb-20">
                 <Link
+                  className={`${styles.Linkstyle}`}
                   target="_blank"
                   href="https://github.com/Mimosa-Development-Team"
                 >
@@ -228,7 +245,7 @@ const About = ({ user, hasSession }) => {
               </Typography>
 
               <Typography
-                variant="h3"
+                variant="span"
                 className={`${styles.title}`}
               >
                 Read the blog
@@ -236,6 +253,7 @@ const About = ({ user, hasSession }) => {
 
               <Typography className="mb-20">
                 <Link
+                  className={`${styles.Linkstyle}`}
                   target="_blank"
                   href=" https://openmimosablog.wordpress.com/"
                 >

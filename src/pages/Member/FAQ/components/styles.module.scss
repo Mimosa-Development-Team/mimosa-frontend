@@ -1,5 +1,24 @@
 @import '~global/styles';
 
+.h5style {
+  font-family: 'Roboto-Medium';
+  font-size: 14px;
+  letter-spacing: 0.44px;
+  line-height: 16px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: normal;
+}
+
+.h2style {
+  font-family: 'Roboto';
+  font-size: 20px;
+  letter-spacing: 0.13px;
+  line-height: 24px;
+  color: #3a3a3a;
+  display: inline-block;
+}
+
 .tabsWrapper {
     background-color: transparent;
     height: auto;

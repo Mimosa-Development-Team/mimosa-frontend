@@ -8,14 +8,14 @@ import Hidden from '@material-ui/core/Hidden'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/hookstate/getRawData'
 import Typography from '@material-ui/core/Typography'
+import uuid from 'react-uuid'
 import styles from './styles.module.scss'
 import TabPanel from './TabPanel'
 import Accordion from './Accordion'
 
-function a11yProps(index) {
+function a11yProps() {
   return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`
+    id: `vertical-tab-${uuid()}`
   }
 }
 
@@ -62,7 +62,10 @@ const VerticalTab = ({ data }) => {
           <Grid item xs={12} sm={3} />
         </Hidden>
         <Grid item xs={12} sm={9}>
-          <Typography variant="h5">
+          <Typography
+            className={`${styles.h5style}`}
+            variant="span"
+          >
             Frequently Asked Questions
           </Typography>
         </Grid>

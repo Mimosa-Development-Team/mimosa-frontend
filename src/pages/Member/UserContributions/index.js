@@ -99,20 +99,21 @@ const UserContributions = ({ user, hasSession }) => {
                 <>
                   <div className={`${styles.paperListHeader}`}>
                     <Typography
-                      className={`${styles.title}`}
-                      variant="h5"
+                      className={`${styles.h5style}`}
+                      variant="span"
                     >
                       Contribution List
                       {` (${userContributions.pages[0].totalContributions})`}
                     </Typography>
                     <div className={`${styles.sortWrapper}`}>
                       <Typography
-                        className={`${styles.title}`}
-                        variant="h5"
+                        className={`${styles.h5style}`}
+                        variant="span"
                       >
                         Sort By:
                       </Typography>
                       <SortFilter
+                        className={`${styles.mostrecent}`}
                         sortFilter={sort}
                         onClick={handleSortClick}
                       />

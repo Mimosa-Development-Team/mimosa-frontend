@@ -10,7 +10,7 @@ const AuthorMeta = ({ userColor, author }) => {
     <div>
       <Typography
         className={`${styles.meta} ${styles.author}`}
-        variant="h5"
+        variant="span"
       >
         <Avatar
           className={`${styles.avatar}`}
