@@ -27,16 +27,18 @@ const ContributionTree = ({
       )
     }
     return (
-      <li style={{ listStyle: 'none' }}>
+      <li
+        className={`${
+          activeContribution && item.id === activeContribution.id
+            ? styles.active
+            : ''
+        }`}
+        style={{ listStyle: 'none' }}
+      >
         <span
           className={`${styles.listtree} ${
             styles[item.category]
-          } ${
-            activeContribution &&
-            item.id === activeContribution.id
-              ? styles.active
-              : ''
-          }`}
+          } `}
           onClick={() => onTreeClick(item)}
         >
           {capitalizeText(item.category.charAt(0))}
