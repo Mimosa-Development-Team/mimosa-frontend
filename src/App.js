@@ -10,7 +10,6 @@ import {
 import { Button } from '@material-ui/core'
 import { QueryClientProvider } from 'react-query'
 import Reactour from 'reactour'
-import UsersnapClassicLoader from "usersnap-react-component"
 import Member from 'pages/Member'
 import { Routes } from 'global/routes'
 import { ToastContainer } from 'material-react-toastify'
@@ -38,7 +37,6 @@ const App = () => {
   }
   return (
     <BrowserRouter>
-      <UsersnapClassicLoader apikey="03b2bc23-2106-49a5-b7c6-1d4fd4edc720" />
       <QueryClientProvider client={queryClient}>
         <ToastContainer
           style={{ marginTop: '15px' }}
