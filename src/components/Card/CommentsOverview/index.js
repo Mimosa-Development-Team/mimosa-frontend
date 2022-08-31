@@ -115,7 +115,11 @@ const CommentsOverview = ({
               {!isEmpty(user) && user.user.firstName.charAt(0)}
             </Avatar>
           ) : (
-            <img className={`${styles.guest}`} src={GuestIcon} />
+            <img
+              className={`${styles.guest}`}
+              src={GuestIcon}
+              alt="guess"
+            />
           )}
           <form
             className={`${styles.form}`}

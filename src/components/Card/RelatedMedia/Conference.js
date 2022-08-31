@@ -22,7 +22,7 @@ const Conference = ({ conference }) => {
             <div className={`${styles.metaWrapper}`}>
               <Typography className={`${styles.meta}`}>
                 <span className={`${styles.icon}`}>
-                  <img src={CalendarIcon} alt="" />
+                  <img src={CalendarIcon} alt="Calendar" />
                 </span>
                 {moment(
                   data.conferenceDateDetails.presentationDetails
@@ -30,7 +30,7 @@ const Conference = ({ conference }) => {
               </Typography>
               <Typography className={`${styles.meta}`}>
                 <span className={`${styles.icon}`}>
-                  <img src={TimeIcon} alt="" />
+                  <img src={TimeIcon} alt="Time" />
                 </span>
                 {data.conferenceDateDetails.startTime}
                 {' - '}

@@ -100,7 +100,7 @@ const Login = () => {
           variant="outlined"
           open={loading}
         >
-          <img src={loader} />
+          <img src={loader} alt="loader" />
         </Backdrop>
       ) : null}
       <div className={`${styles.loginWrapper}`}>
@@ -245,7 +245,10 @@ const Login = () => {
                           size="large"
                           className={`${styles.loginBtn}`}
                         >
-                          <img src={OrcidLogo} />
+                          <img
+                            src={OrcidLogo}
+                            alt="orcid logo"
+                          />
                           {data
                             ? `Continue as ${data.given_name} ${data.family_name}`
                             : 'Log in with ORCID'}
@@ -269,7 +272,7 @@ const Login = () => {
                   )
                 }}
               >
-                <img src={OrcidLogo} />
+                <img src={OrcidLogo} alt="orcid logo" />
                 Log in with ORCID
               </Button>
             )}

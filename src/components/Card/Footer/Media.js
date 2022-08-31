@@ -31,7 +31,7 @@ const Media = ({ onMetaClick, contributionId }) => {
                 : MediaIcon
             }
             style={{ width: '15px', marginTop: '2px' }}
-            alt=""
+            alt="Related Media"
           />
           {mediaCount && mediaCount.count !== undefined
             ? mediaCount.count

@@ -85,8 +85,12 @@ const Tour = withRouter(
           <div>
             <h2>Welcome to Mimosa</h2>
             <p>Click next to continue onboarding tour.</p>
-            <img className="topImg" src={Top} />
-            <img className="bottomImg" src={Bottom} />
+            <img className="topImg" src={Top} alt="top image" />
+            <img
+              className="bottomImg"
+              src={Bottom}
+              alt="bottom image"
+            />
           </div>
         )
       },
@@ -102,8 +106,16 @@ const Tour = withRouter(
                     appear on the home feed and in "My
                     Contributions" page
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               )
             },
@@ -117,8 +129,16 @@ const Tour = withRouter(
                     appear on the home feed and in "My
                     Contributions" page
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               ),
               action: () =>
@@ -142,8 +162,16 @@ const Tour = withRouter(
                     research question, check the{' '}
                     <a href="/faq">FAQ</a>
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               )
             },
@@ -158,8 +186,16 @@ const Tour = withRouter(
                     research, or just the reason why you are
                     interested in that question.
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               )
             },
@@ -172,8 +208,16 @@ const Tour = withRouter(
                     Make your question public, or keep it as a
                     draft by leaving this page.
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               )
             },
@@ -189,8 +233,16 @@ const Tour = withRouter(
                     to wait for the content to be written and
                     approved.2
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               ),
               action: () => history.push('/my-contributions')
@@ -211,8 +263,16 @@ const Tour = withRouter(
                     Click on a question to see the related
                     contributions and comments
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               )
             },
@@ -225,8 +285,16 @@ const Tour = withRouter(
                     Click on a question to see the related
                     contributions and comments
                   </p>
-                  <img className="topImg" src={Top} />
-                  <img className="bottomImg" src={Bottom} />
+                  <img
+                    className="topImg"
+                    src={Top}
+                    alt="top image"
+                  />
+                  <img
+                    className="bottomImg"
+                    src={Bottom}
+                    alt="bottom image"
+                  />
                 </div>
               )
             }

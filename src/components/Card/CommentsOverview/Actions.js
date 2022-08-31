@@ -55,7 +55,7 @@ const Actions = ({
                     {...propsList}
                     onClick={() => onEdit(data)}
                   >
-                    <img src={EditIcon} alt="" />
+                    <img src={EditIcon} alt="edit icon" />
                     Edit
                   </IconButton>
                 ) : null}
@@ -68,7 +68,7 @@ const Actions = ({
                     {...propsList}
                     onClick={() => onDelete(data)}
                   >
-                    <img src={DeleteIcon} alt="" />
+                    <img src={DeleteIcon} alt="delete" />
                     Delete
                   </IconButton>
                 ) : null}

@@ -36,7 +36,7 @@ const ContributionTree = ({
         style={{ listStyle: 'none' }}
       >
         <span
-          className={`${styles.listtree} ${
+          className={`list ${styles.listtree} ${
             styles[item.category]
           } `}
           onClick={() => onTreeClick(item)}
