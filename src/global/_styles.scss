@@ -54,6 +54,7 @@ $spacers: (
   }
 }
 
+
 .tour {
   max-width: 461px!important;
   border-radius: 8px!important;
@@ -240,7 +241,7 @@ hr.MuiDivider-root {
     font-size: 14px;
     letter-spacing: 0.09px;
     line-height: 16px;
-    color: $primary;
+    color: #854ea5;
   }
 }
 
@@ -285,7 +286,9 @@ hr.MuiDivider-root {
 }
 
 // Forms
-
+.details{
+  margin-top: 10px;
+}
 .inputWrapper {
   .label {
     color: $darkgray1;
@@ -498,20 +501,20 @@ hr.MuiDivider-root {
 // @temp: move when data is available
 span {
   &.question {
-    color: $yellow;
-    background-color: #FDF4DC;
+    color:#5c3882;
+    background-color:#f1f5f8;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
   &.hypothesis {
-    color: $orange;
-    background-color: #FCEDDC;
+    color: #9C2D00;
+    background-color: #FFF6F1;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
   &.experiment {
-    color: $green;
-    background-color: #DAF3E4;
+    color: #00593D;
+    background-color: #E7F1D0;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
@@ -766,5 +769,84 @@ button.slick-arrow.slick-next {
   ul.slick-dots {
     text-align: left;
     bottom: -7%;
+  }
+}
+
+.style_content__2wnjr {
+  .styles_paper__1G-jE {
+    background-color:#fcfcfc !important;
+  }
+}
+
+.styles_root__pZeBq {
+  li {
+    .styles_chip__gWnJg {
+      .MuiChip-label {
+        color:#3723AC !important;
+      }
+    }
+  }
+}
+
+button.questionClass {
+  background-color:#02549B !important;
+}
+
+.styles_dashboardWrapper__1Hgcs {
+  .styles_userName__1JEjl,
+  .MuiSvgIcon-root {
+    fill: #854ea5 !important;
+    color:#854ea5 !important;
+  }
+}
+
+.styles_paperListHeader__35G5N {
+  .MuiButton-label {
+    color:#854ea5 !important;
+  }
+}
+.style_paperListHeader__33tNS {
+  .style_sortWrapper__1eI4y {
+    .style_actionsWrapper__2i0X1 .style_button__15Mo8 {
+      color:#854ea5 !important;
+    }
+  }
+}
+.style_paperListHeader__33tNS {
+  .style_sortWrapper__1eI4y {
+    .style_actionsWrapper__2i0X1 .style_button__15Mo8 {
+      color:#854ea5 !important;
+    }
+  }
+}
+.style_paperListHeader__1NoQ1 {
+  .style_sortWrapper__15YBa {
+    .style_button__3scl9 {
+      color:#854ea5 !important;
+    }
+  }
+}
+
+.styles_contribute__1BGsS,
+.styles_edit__3U2vv {
+  span.MuiIconButton-label {
+    color:#854ea5 !important;
+  }
+}
+.styles_delete__of9pW {
+  span.MuiIconButton-label {
+    color: #8e0401;
+  }
+}
+
+.styles_support__38pRw {
+  span.MuiChip-label {
+    color:#335941;
+  }
+}
+.styles_question__rr8Io {
+  span.data {
+    background-color:#F1F7FA;
+    color:#2949B5;
   }
 }

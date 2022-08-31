@@ -27,9 +27,35 @@
       text-align: center;
       li {
         width: 0;
-        opacity: 0.9;
+        opacity: 1;
+        span {
+          opacity: 0.7;
+        }
         &.active {
-          opacity: 1;
+          span {
+            opacity: 1 !important;
+          }
+          ul {
+            li {
+              span {
+                opacity: 1 !important;
+              }
+              ul {
+                li {
+                  span {
+                    opacity: 1 !important;
+                  }
+                  ul {
+                    li {
+                      span {
+                        opacity: 1 !important;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
         &.question {
           background-color: $yellow;
@@ -75,11 +101,41 @@
     .uitree {
       color: white;
       li {
+        opacity: 1;
+        span {
+          opacity: 0.7;
+        }
+        &.active {
+          opacity: 1 !important;
+          span {
+            opacity:1 !important;
+          }
+          ul {
+            li {
+              span {
+                opacity: 1 !important;
+              }
+              ul {
+                li {
+                  span {
+                    opacity: 1 !important;
+                  }
+                  ul {
+                    li {
+                      span{
+                        opacity: 1 !important;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
         span {
           color: white;
-          opacity: 0.9;
           &.active {
-            opacity: 1;
+            opacity: 1 !important;
           }
           &.hypothesis {
             background-color: $orange;
@@ -110,4 +166,15 @@
     }
   }
   
+}
+
+.h5style {
+  margin-top: 10px;
+  color: white;
+  font-family: 'Roboto-Medium';
+  font-size: 14px;
+  letter-spacing: 0.44px;
+  line-height: 16px;
+  text-transform: uppercase;
+  display: block;
 }

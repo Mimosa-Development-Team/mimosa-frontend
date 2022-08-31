@@ -16,6 +16,7 @@ import enString from 'react-timeago/lib/language-strings/en'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 import { useGlobalState } from 'store/state'
 import getRawData from 'utils/hookstate/getRawData'
+import uuid from 'react-uuid'
 import { useNotification } from './hooks'
 import styles from './styles.module.scss'
 
@@ -72,7 +73,7 @@ const Notification = ({ anchorEl, setAnchorEl }) => {
   return (
     <div>
       <Menu
-        id="simple-menu"
+        id={`simple-menu-${uuid()}`}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

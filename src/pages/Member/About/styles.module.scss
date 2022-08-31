@@ -34,6 +34,49 @@
     margin-bottom: 40px;
   }
 }
+.underlined,
+.author,
+.Linkstyle {
+  color:#854ea5 !important;
+}
+
+.h5style {
+  font-family: 'Roboto-Medium';
+  font-size: 14px;
+  letter-spacing: 0.44px;
+  line-height: 16px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 20px !important;
+}
+.h6style {
+  font-family: 'Roboto-Medium';
+  font-size: 14px;
+  letter-spacing: 0.44px;
+  line-height: 16px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.h2style {
+  color: #3a3a3a;
+  font-family: 'Roboto-Bold';
+  font-size: 20px;
+  letter-spacing: 0.63px;
+  line-height: 24px;
+}
+
+.h4style {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Roboto-Bold";
+  font-weight: 700;
+  letter-spacing: .1px;
+  margin-bottom: 15px;
+  display: block;
+}
+
 
 .author {
   display: block;

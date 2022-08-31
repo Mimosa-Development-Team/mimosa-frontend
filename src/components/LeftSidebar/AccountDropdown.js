@@ -50,6 +50,7 @@ const AccountDropdown = ({ user, hasSession }) => {
               </Avatar>
             ) : (
               <img
+                alt="guest icon"
                 src={GuestIcon}
                 className={`${styles.guest}`}
               />

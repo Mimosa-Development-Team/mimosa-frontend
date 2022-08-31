@@ -27,16 +27,18 @@ const ContributionTree = ({
       )
     }
     return (
-      <li style={{ listStyle: 'none' }}>
+      <li
+        className={`${
+          activeContribution && item.id === activeContribution.id
+            ? styles.active
+            : ''
+        }`}
+        style={{ listStyle: 'none' }}
+      >
         <span
           className={`${styles.listtree} ${
             styles[item.category]
-          } ${
-            activeContribution &&
-            item.id === activeContribution.id
-              ? styles.active
-              : ''
-          }`}
+          } `}
           onClick={() => onTreeClick(item)}
         >
           {capitalizeText(item.category.charAt(0))}
@@ -48,7 +50,7 @@ const ContributionTree = ({
 
   return (
     <div className={`${styles.main}`}>
-      <Typography className={`${styles.title}`} variant="h5">
+      <Typography className={`${styles.h5style}`} variant="span">
         Contribution Tree:
       </Typography>
       <div className={`${styles.heirarchyWrapper}`}>
