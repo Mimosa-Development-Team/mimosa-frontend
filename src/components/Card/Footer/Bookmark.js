@@ -11,7 +11,7 @@ const Bookmark = () => {
         aria-label="bookmark"
         className={`${styles.metaButton}`}
       >
-        <img src={BookmarkIcon} alt="" />
+        <img src={BookmarkIcon} alt="bookmark" />
       </Button>
     </div>
   )

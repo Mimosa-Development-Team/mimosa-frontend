@@ -70,7 +70,7 @@ const Media = ({ media }) => {
                   target="_blank"
                 >
                   <span className={`${styles.icon}`}>
-                    <img src={LinkIcon} alt="" />
+                    <img src={LinkIcon} alt="details" />
                   </span>
                   {data.mediaDetails.link}
                 </Link>

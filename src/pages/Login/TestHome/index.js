@@ -63,7 +63,7 @@ const Login = () => {
           variant="outlined"
           open={loading}
         >
-          <img src={loader} />
+          <img src={loader} alt="loader" />
         </Backdrop>
       ) : null}
       <div className={`${styles.loginWrapper}`}>

@@ -28,7 +28,9 @@ const CardButton = ({ disabled, action, ...propsList }) => {
           {...propsList}
           disabled={disabled}
         >
-          {!disabled && <img src={icons[action]} alt="" />}
+          {!disabled && (
+            <img src={icons[action]} alt="Contribute" />
+          )}
           {action}
         </IconButton>
       </TooltipUi>

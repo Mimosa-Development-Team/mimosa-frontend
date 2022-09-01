@@ -43,19 +43,22 @@ const Banner = () => {
                 Browse by keywords, authors, or conferences using
                 the{' '}
                 <span>
-                  <img src={SearchIcon} alt="" />
+                  <img src={SearchIcon} alt="search" />
                 </span>{' '}
                 search bar.
               </Typography>
               <Typography className={`${styles.leadContent}`}>
                 Publish a new contribution using the{' '}
                 <span>
-                  <img src={ContributeIcon} alt="" />
+                  <img src={ContributeIcon} alt="contribute" />
                 </span>{' '}
                 button at the top of this page, or add your
                 analysis to an existing experiment by using the{' '}
                 <span>
-                  <img src={ContributeIcon} alt="" />
+                  <img
+                    src={ContributeIcon}
+                    alt="contribute icon"
+                  />
                 </span>{' '}
                 button in the experiment&apos;s page.
               </Typography>

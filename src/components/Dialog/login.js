@@ -134,7 +134,11 @@ export default function ModalDialog({ modal, setModal }) {
               )
             }}
           >
-            <img className={classes.img} src={OrcidLogo} />
+            <img
+              className={classes.img}
+              src={OrcidLogo}
+              alt="orcid login"
+            />
             Log in with ORCID
           </Button>
         </div>

@@ -1,5 +1,38 @@
 @import '~global/styles';
 
+span {
+  &.question {
+    color: white;
+    background-color: #A85CF9;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
+  }
+  &.hypothesis {
+    color: white;
+    background-color: orange;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
+  }
+  &.experiment {
+    color: white;
+    background-color: #00593D;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
+  }
+  &.data {
+    color: white;
+    background-color: $indigo;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
+  }
+  &.analysis {
+    color: white;
+    background-color: $purple;
+    padding: 3px 10px 3px 10px;
+    border-radius: 6px;
+  }
+}
+
 .main {
   .title {
     margin-top: 10px;
