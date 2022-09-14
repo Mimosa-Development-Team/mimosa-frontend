@@ -27,7 +27,7 @@ const CardButton = ({ disabled, action, ...propsList }) => {
           className={`${styles.cardButton} ${styles[action]}`}
           {...propsList}
           disabled={disabled}
-          style={{ color: '#E65722' }}
+          style={{ color: '#B65722' }}
         >
           {!disabled && (
             <img src={icons[action]} alt="Contribute" />
