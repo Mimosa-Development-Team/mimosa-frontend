@@ -35,7 +35,8 @@ const ContributionCount = ({ contribution, data }) => {
           <span
             style={{
               textTransform: 'lowercase',
-              marginLeft: '2px'
+              marginLeft: '2px',
+              color: '#4B4F5D'
             }}
           >
             contributions
