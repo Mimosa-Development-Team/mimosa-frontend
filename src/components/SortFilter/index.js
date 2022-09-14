@@ -24,6 +24,7 @@ const SortFilter = ({ sortFilter, onClick, ...propsList }) => {
           className={`${styles.button}`}
           aria-label="sort filter"
           component="span"
+          // style={{ color: '#633081' }}
           {...bindToggle(popupState)}
         >
           {sortFilter}
