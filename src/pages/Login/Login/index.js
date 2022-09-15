@@ -178,6 +178,7 @@ const Login = () => {
             <Typography
               variant="h2"
               className={`${styles.header}`}
+              color={{ color: '#6C6C6C' }}
             >
               Welcome back
             </Typography>
@@ -282,6 +283,7 @@ const Login = () => {
                 onClick={() => {
                   history.push(`/terms-and-conditions`)
                 }}
+                style={{ color: '#BE5A00' }}
               >
                 Terms and Conditions
               </Link>
