@@ -3,31 +3,31 @@
 span {
   &.question {
     color: white;
-    background-color: #A85CF9;
+    background-color: #834AFB;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
   &.hypothesis {
     color: white;
-    background-color: orange;
+    background-color: #BE5A00;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
   &.experiment {
     color: white;
-    background-color: #00593D;
+    background-color: #258640;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
   &.data {
     color: white;
-    background-color: $indigo;
+    background-color: #276FC1;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
   &.analysis {
     color: white;
-    background-color: $purple;
+    background-color: #AB30E2;
     padding: 3px 10px 3px 10px;
     border-radius: 6px;
   }
