@@ -46,7 +46,7 @@ const MainNav = ({
           onClick={() => {
             history.push(`/`)
           }}
-          alt="logo"
+          alt="mimosa"
         />
         {links
           .filter(link => link.location === 'top')

@@ -50,7 +50,7 @@ const AccountDropdown = ({ user, hasSession }) => {
               </Avatar>
             ) : (
               <img
-                alt="guest icon"
+                alt=""
                 src={GuestIcon}
                 className={`${styles.guest}`}
               />
@@ -59,7 +59,7 @@ const AccountDropdown = ({ user, hasSession }) => {
               ? capitalizeText(user.user.firstName)
               : capitalizeText('guest')}
             <img
-              alt="arrow down"
+              alt=""
               src={ArrowIcon}
               className={`${styles.icon}`}
             />

@@ -51,27 +51,27 @@ const Header = ({
       >
         {type === 'question' && (
           <span className={`${styles.type} ${type}`}>
-            <img src={QuestionIcon} alt="questionicon" /> {type}
+            <img src={QuestionIcon} alt="" /> {type}
           </span>
         )}
         {type === 'hypothesis' && (
           <span className={`${styles.type} ${type}`}>
-            <img src={HypothesisIcon} alt="icon" /> {type}
+            <img src={HypothesisIcon} alt="" /> {type}
           </span>
         )}
         {type === 'experiment' && (
           <span className={`${styles.type} ${type}`}>
-            <img src={ExperimentIcon} alt="icon" /> {type}
+            <img src={ExperimentIcon} alt="" /> {type}
           </span>
         )}
         {type === 'data' && (
           <span className={`${styles.type} ${type}`}>
-            <img src={DataIcon} alt="icon" /> {type}
+            <img src={DataIcon} alt="" /> {type}
           </span>
         )}
         {type === 'analysis' && (
           <span className={`${styles.type} ${type}`}>
-            <img src={AnalysisIcon} alt="icon" /> {type}
+            <img src={AnalysisIcon} alt="" /> {type}
           </span>
         )}{' '}
         {title}
