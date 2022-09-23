@@ -80,13 +80,22 @@
     }
 
     .loginBtn {
-      box-shadow: none;
-      background: $lightgreen;
-      color: $white;
-      border-radius: 12px;
-      text-transform: none;
-      height: 45px;
-      width: 198px;
+      box-shadow: 'none';
+      background-color: '#2A4641';
+      color: 'white';
+      border-radius: '12px';
+      text-transform: 'none';
+      height: '45px';
+      width: '220px';
+      :hover: {
+        box-shadow: 'none';
+        background: '#2A4642';
+        color: 'white';
+        border-radius: '12px';
+        text-transform: 'none';
+        height: '45px';
+        width: '220px';
+      }
 
       span {
         font-family: 'SFNS Display Regular';

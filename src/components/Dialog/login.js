@@ -60,12 +60,22 @@ const useStyles = makeStyles(theme => ({
   },
   buttonLogin: {
     boxShadow: 'none',
-    background: '#a6d120',
+    background: '#2A4641',
     color: 'white',
     borderRadius: '12px',
     textTransform: 'none',
     height: '45px',
-    width: '220px'
+    width: '220px',
+
+    '&:hover': {
+      boxShadow: 'none',
+      background: '#2A4642',
+      color: 'white',
+      borderRadius: '12px',
+      textTransform: 'none',
+      height: '45px',
+      width: '220px'
+    }
   },
   img: {
     width: '22px',
