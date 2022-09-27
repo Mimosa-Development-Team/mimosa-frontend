@@ -8,7 +8,13 @@ const SearchResults = ({ searchTerm, data }) => {
     <div className={`${styles.resultsWrapper}`}>
       <Typography className="mb-20" variant="h5">
         Showing results for
-        <span className="search-term">
+        <span
+          className="search-term"
+          style={{
+            color: '#333333',
+            fontWeight: 'bold'
+          }}
+        >
           {' `'}
           {searchTerm}
           {'`'}

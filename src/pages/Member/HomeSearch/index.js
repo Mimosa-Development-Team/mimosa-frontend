@@ -64,7 +64,13 @@ const HomeSearch = ({ user, hasSession }) => {
                       variant="h5"
                     >
                       Showing results for
-                      <span className={`${styles.term}`}>
+                      <span
+                        className={`${styles.term}`}
+                        style={{
+                          color: '#333333',
+                          fontWeight: 'bold'
+                        }}
+                      >
                         {' `'}
                         {search}
                         {'`'}

@@ -56,9 +56,9 @@ const NavLink = ({
         {...rest}
       >
         {active ? (
-          <img src={activeIcons[icon]} alt="icon" />
+          <img src={activeIcons[icon]} alt="" />
         ) : (
-          <img src={icons[icon]} alt="icon" />
+          <img src={icons[icon]} alt="" />
         )}
         {title}
       </Link>

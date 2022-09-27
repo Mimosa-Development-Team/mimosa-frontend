@@ -30,7 +30,7 @@ const Comments = ({ onMetaClick, contributionId }) => {
                 : CommentIcon
             }
             style={{ width: '15px' }}
-            alt="commentimage"
+            alt=""
           />
           {comment && comment.count !== undefined
             ? comment.count

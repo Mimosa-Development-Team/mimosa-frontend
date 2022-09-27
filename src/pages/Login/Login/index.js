@@ -283,7 +283,7 @@ const Login = () => {
                 onClick={() => {
                   history.push(`/terms-and-conditions`)
                 }}
-                style={{ color: '#BE5A00' }}
+                style={{ color: '#633081' }}
               >
                 Terms and Conditions
               </Link>

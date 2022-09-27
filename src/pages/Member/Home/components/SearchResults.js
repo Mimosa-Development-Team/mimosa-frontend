@@ -23,7 +23,13 @@ const SearchResults = ({
               variant="h5"
             >
               Showing results for
-              <span className="search-term">
+              <span
+                className="search-term"
+                style={{
+                  color: '#333333',
+                  fontWeight: 'bold'
+                }}
+              >
                 {' `'}
                 {searchTerm}
                 {'`'}

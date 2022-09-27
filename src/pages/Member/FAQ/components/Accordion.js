@@ -27,9 +27,9 @@ const TabPanel = ({ title, content }) => {
           expandIcon={
             expanded === 'panel1' ? (
               // temp inline style - set colors usable in components @k
-              <RemoveIcon style={{ color: '#EF8C20' }} />
+              <RemoveIcon style={{ color: '#633081' }} />
             ) : (
-              <AddIcon style={{ color: '#EF8C20' }} />
+              <AddIcon style={{ color: '#633081' }} />
             )
           }
           id={`panel1a-header-${uuid()}`}
