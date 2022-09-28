@@ -178,11 +178,13 @@ const Login = () => {
             <Typography
               variant="h2"
               className={`${styles.header}`}
-              color={{ color: '#6C6C6C' }}
             >
               Welcome back
             </Typography>
-            <Typography className={`${styles.subheader}`}>
+            <Typography
+              className={`${styles.subheader}`}
+              style={{ color: '#6C6C6C' }}
+            >
               Welcome back! You need to log in to publish
               comments and contributions
             </Typography>
@@ -245,13 +247,21 @@ const Login = () => {
                           variant="contained"
                           size="large"
                           className={`${styles.loginBtn}`}
+                          style={{
+                            backgroundColor: '#2A4641',
+                            color: 'white'
+                          }}
                         >
                           <img
                             src={OrcidLogo}
                             alt="orcid logo"
                           />
                           {data
-                            ? `Continue as ${data.given_name} ${data.family_name}`
+                            ? `Continue as ${data.given_name} ${
+                                data.family_name
+                                  ? data.family_name
+                                  : ''
+                              }`
                             : 'Log in with ORCID'}
                         </Button>
                       </Grid>
@@ -271,6 +281,10 @@ const Login = () => {
                   window.location.assign(
                     `${dotenv.orcidUrl}${window.location.href}`
                   )
+                }}
+                style={{
+                  backgroundColor: '#2A4641',
+                  color: 'white'
                 }}
               >
                 <img src={OrcidLogo} alt="orcid logo" />
